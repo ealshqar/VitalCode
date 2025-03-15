@@ -1,0 +1,754 @@
+namespace TCO.DesktopClientDevexpress
+{
+    partial class AdminTab
+    {
+        /// <summary> 
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary> 
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Component Designer generated code
+
+        /// <summary> 
+        /// Required method for Designer support - do not modify 
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AdminTab));
+            this.layoutControlAdmin = new DevExpress.XtraLayout.LayoutControl();
+            this.gridControlCustomers = new DevExpress.XtraGrid.GridControl();
+            this.gridViewCustomers = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.gridColumnName = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.repositoryItemTextEditName = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
+            this.gridColumnCompanyName = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.repositoryItemGridLookUpEditCompany = new DevExpress.XtraEditors.Repository.RepositoryItemGridLookUpEdit();
+            this.repositoryItemGridLookUpEditCustomerCompanyInternal = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.gridColumnCustomerCompanyInternal = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumnEmail = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.repositoryItemTextEditEmail = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
+            this.gridColumnPhoneNumber = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.repositoryItemTextEditPhoneNumber = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
+            this.gridColumnCrmId = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.repositoryItemTextEditCrmId = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
+            this.gridColumnAddressStreet = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.repositoryItemTextEditStreet = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
+            this.gridColumnAddressCity = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.repositoryItemTextEditCity = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
+            this.gridColumnAddressZip = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.repositoryItemTextEditZip = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
+            this.gridColumnAddressState = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.repositoryItemTextEditState = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
+            this.gridColumnAddressCountry = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.repositoryItemTextEditCountry = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
+            this.gridControlCompanies = new DevExpress.XtraGrid.GridControl();
+            this.gridViewCompanies = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.gridColumnCompany = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.repositoryItemTextEditCompanyName = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
+            this.gridControlUsers = new DevExpress.XtraGrid.GridControl();
+            this.gridViewUsers = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.gridColumnUsers = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.repositoryItemTextEditUserName = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
+            this.gridControlVendors = new DevExpress.XtraGrid.GridControl();
+            this.gridViewVendors = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.gridColumnVendor = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.repositoryItemTextEditVendorName = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
+            this.layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
+            this.layoutControlGroupVendors = new DevExpress.XtraLayout.LayoutControlGroup();
+            this.layoutControlItemVendor = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlGroupCompanies = new DevExpress.XtraLayout.LayoutControlGroup();
+            this.layoutControlItemCompanies = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlGroupUsers = new DevExpress.XtraLayout.LayoutControlGroup();
+            this.layoutControlItemUsers = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlGroupCustomers = new DevExpress.XtraLayout.LayoutControlGroup();
+            this.layoutControlItemCustomers = new DevExpress.XtraLayout.LayoutControlItem();
+            this.splitterItem1 = new DevExpress.XtraLayout.SplitterItem();
+            ((System.ComponentModel.ISupportInitialize)(this.dxErrorProviderMain)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlAdmin)).BeginInit();
+            this.layoutControlAdmin.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridControlCustomers)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridViewCustomers)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEditName)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemGridLookUpEditCompany)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemGridLookUpEditCustomerCompanyInternal)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEditEmail)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEditPhoneNumber)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEditCrmId)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEditStreet)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEditCity)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEditZip)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEditState)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEditCountry)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridControlCompanies)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridViewCompanies)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEditCompanyName)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridControlUsers)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridViewUsers)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEditUserName)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridControlVendors)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridViewVendors)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEditVendorName)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroupVendors)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItemVendor)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroupCompanies)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItemCompanies)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroupUsers)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItemUsers)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroupCustomers)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItemCustomers)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.splitterItem1)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // errorImageList
+            // 
+            this.errorImageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("errorImageList.ImageStream")));
+            this.errorImageList.Images.SetKeyName(0, "messageboxerror.ico");
+            // 
+            // layoutControlAdmin
+            // 
+            this.layoutControlAdmin.AllowCustomizationMenu = false;
+            this.layoutControlAdmin.Appearance.DisabledLayoutGroupCaption.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.layoutControlAdmin.Appearance.DisabledLayoutGroupCaption.Options.UseForeColor = true;
+            this.layoutControlAdmin.Appearance.DisabledLayoutItem.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.layoutControlAdmin.Appearance.DisabledLayoutItem.Options.UseForeColor = true;
+            this.layoutControlAdmin.Controls.Add(this.gridControlCustomers);
+            this.layoutControlAdmin.Controls.Add(this.gridControlCompanies);
+            this.layoutControlAdmin.Controls.Add(this.gridControlUsers);
+            this.layoutControlAdmin.Controls.Add(this.gridControlVendors);
+            this.layoutControlAdmin.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.layoutControlAdmin.Location = new System.Drawing.Point(0, 0);
+            this.layoutControlAdmin.Name = "layoutControlAdmin";
+            this.layoutControlAdmin.Root = this.layoutControlGroup1;
+            this.layoutControlAdmin.Size = new System.Drawing.Size(846, 459);
+            this.layoutControlAdmin.TabIndex = 4;
+            this.layoutControlAdmin.Text = "layoutControl1";
+            this.layoutControlAdmin.ToolTipController = this.toolTipControllerMain;
+            // 
+            // gridControlCustomers
+            // 
+            this.gridControlCustomers.EmbeddedNavigator.Buttons.Remove.Visible = false;
+            this.gridControlCustomers.EmbeddedNavigator.CustomButtons.AddRange(new DevExpress.XtraEditors.NavigatorCustomButton[] {
+            new DevExpress.XtraEditors.NavigatorCustomButton(0, 12, "ShowHideFilter")});
+            this.gridControlCustomers.EmbeddedNavigator.ButtonClick += new DevExpress.XtraEditors.NavigatorButtonClickEventHandler(this.gridControlCustomers_EmbeddedNavigator_ButtonClick);
+            this.gridControlCustomers.Location = new System.Drawing.Point(5, 243);
+            this.gridControlCustomers.MainView = this.gridViewCustomers;
+            this.gridControlCustomers.Name = "gridControlCustomers";
+            this.gridControlCustomers.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
+            this.repositoryItemGridLookUpEditCompany,
+            this.repositoryItemTextEditName,
+            this.repositoryItemTextEditEmail,
+            this.repositoryItemTextEditPhoneNumber,
+            this.repositoryItemTextEditCrmId,
+            this.repositoryItemTextEditStreet,
+            this.repositoryItemTextEditCity,
+            this.repositoryItemTextEditZip,
+            this.repositoryItemTextEditState,
+            this.repositoryItemTextEditCountry});
+            this.gridControlCustomers.Size = new System.Drawing.Size(837, 212);
+            this.gridControlCustomers.TabIndex = 7;
+            this.gridControlCustomers.ToolTipController = this.toolTipControllerMain;
+            this.gridControlCustomers.UseEmbeddedNavigator = true;
+            this.gridControlCustomers.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
+            this.gridViewCustomers});
+            // 
+            // gridViewCustomers
+            // 
+            this.gridViewCustomers.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+            this.gridColumnName,
+            this.gridColumnCompanyName,
+            this.gridColumnEmail,
+            this.gridColumnPhoneNumber,
+            this.gridColumnCrmId,
+            this.gridColumnAddressStreet,
+            this.gridColumnAddressCity,
+            this.gridColumnAddressZip,
+            this.gridColumnAddressState,
+            this.gridColumnAddressCountry});
+            this.gridViewCustomers.GridControl = this.gridControlCustomers;
+            this.gridViewCustomers.Name = "gridViewCustomers";
+            this.gridViewCustomers.OptionsCustomization.AllowColumnMoving = false;
+            this.gridViewCustomers.OptionsCustomization.AllowGroup = false;
+            this.gridViewCustomers.OptionsNavigation.EnterMoveNextColumn = true;
+            this.gridViewCustomers.OptionsSelection.MultiSelect = true;
+            this.gridViewCustomers.OptionsView.ColumnAutoWidth = false;
+            this.gridViewCustomers.OptionsView.NewItemRowPosition = DevExpress.XtraGrid.Views.Grid.NewItemRowPosition.Bottom;
+            this.gridViewCustomers.OptionsView.ShowGroupPanel = false;
+            this.gridViewCustomers.CellValueChanged += new DevExpress.XtraGrid.Views.Base.CellValueChangedEventHandler(this.gridViewCustomers_CellValueChanged);
+            // 
+            // gridColumnName
+            // 
+            this.gridColumnName.Caption = "Name *";
+            this.gridColumnName.ColumnEdit = this.repositoryItemTextEditName;
+            this.gridColumnName.Name = "gridColumnName";
+            this.gridColumnName.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
+            this.gridColumnName.Visible = true;
+            this.gridColumnName.VisibleIndex = 0;
+            this.gridColumnName.Width = 217;
+            // 
+            // repositoryItemTextEditName
+            // 
+            this.repositoryItemTextEditName.AutoHeight = false;
+            this.repositoryItemTextEditName.MaxLength = 255;
+            this.repositoryItemTextEditName.Name = "repositoryItemTextEditName";
+            // 
+            // gridColumnCompanyName
+            // 
+            this.gridColumnCompanyName.Caption = "Company *";
+            this.gridColumnCompanyName.ColumnEdit = this.repositoryItemGridLookUpEditCompany;
+            this.gridColumnCompanyName.Name = "gridColumnCompanyName";
+            this.gridColumnCompanyName.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
+            this.gridColumnCompanyName.Visible = true;
+            this.gridColumnCompanyName.VisibleIndex = 1;
+            this.gridColumnCompanyName.Width = 263;
+            // 
+            // repositoryItemGridLookUpEditCompany
+            // 
+            this.repositoryItemGridLookUpEditCompany.AutoHeight = false;
+            this.repositoryItemGridLookUpEditCompany.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.repositoryItemGridLookUpEditCompany.DisplayMember = "Name";
+            this.repositoryItemGridLookUpEditCompany.Name = "repositoryItemGridLookUpEditCompany";
+            this.repositoryItemGridLookUpEditCompany.NullText = "";
+            this.repositoryItemGridLookUpEditCompany.ValueMember = "Id";
+            this.repositoryItemGridLookUpEditCompany.View = this.repositoryItemGridLookUpEditCustomerCompanyInternal;
+            this.repositoryItemGridLookUpEditCompany.QueryPopUp += new System.ComponentModel.CancelEventHandler(this.DropDown_QueryPopUp);
+            // 
+            // repositoryItemGridLookUpEditCustomerCompanyInternal
+            // 
+            this.repositoryItemGridLookUpEditCustomerCompanyInternal.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+            this.gridColumnCustomerCompanyInternal});
+            this.repositoryItemGridLookUpEditCustomerCompanyInternal.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
+            this.repositoryItemGridLookUpEditCustomerCompanyInternal.Name = "repositoryItemGridLookUpEditCustomerCompanyInternal";
+            this.repositoryItemGridLookUpEditCustomerCompanyInternal.OptionsSelection.EnableAppearanceFocusedCell = false;
+            this.repositoryItemGridLookUpEditCustomerCompanyInternal.OptionsView.ShowAutoFilterRow = true;
+            this.repositoryItemGridLookUpEditCustomerCompanyInternal.OptionsView.ShowGroupPanel = false;
+            // 
+            // gridColumnCustomerCompanyInternal
+            // 
+            this.gridColumnCustomerCompanyInternal.Caption = "Company";
+            this.gridColumnCustomerCompanyInternal.FieldName = "Name";
+            this.gridColumnCustomerCompanyInternal.Name = "gridColumnCustomerCompanyInternal";
+            this.gridColumnCustomerCompanyInternal.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
+            this.gridColumnCustomerCompanyInternal.Visible = true;
+            this.gridColumnCustomerCompanyInternal.VisibleIndex = 0;
+            // 
+            // gridColumnEmail
+            // 
+            this.gridColumnEmail.Caption = "Email *";
+            this.gridColumnEmail.ColumnEdit = this.repositoryItemTextEditEmail;
+            this.gridColumnEmail.Name = "gridColumnEmail";
+            this.gridColumnEmail.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
+            this.gridColumnEmail.Visible = true;
+            this.gridColumnEmail.VisibleIndex = 2;
+            this.gridColumnEmail.Width = 218;
+            // 
+            // repositoryItemTextEditEmail
+            // 
+            this.repositoryItemTextEditEmail.AutoHeight = false;
+            this.repositoryItemTextEditEmail.Mask.EditMask = "[a-zA-Z0-9.-]+@[a-zA-Z0-9-]+\\.[A-Za-z]{2,}";
+            this.repositoryItemTextEditEmail.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.RegEx;
+            this.repositoryItemTextEditEmail.Mask.UseMaskAsDisplayFormat = true;
+            this.repositoryItemTextEditEmail.MaxLength = 50;
+            this.repositoryItemTextEditEmail.Name = "repositoryItemTextEditEmail";
+            // 
+            // gridColumnPhoneNumber
+            // 
+            this.gridColumnPhoneNumber.Caption = "Phone Number *";
+            this.gridColumnPhoneNumber.ColumnEdit = this.repositoryItemTextEditPhoneNumber;
+            this.gridColumnPhoneNumber.Name = "gridColumnPhoneNumber";
+            this.gridColumnPhoneNumber.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
+            this.gridColumnPhoneNumber.Visible = true;
+            this.gridColumnPhoneNumber.VisibleIndex = 3;
+            this.gridColumnPhoneNumber.Width = 184;
+            // 
+            // repositoryItemTextEditPhoneNumber
+            // 
+            this.repositoryItemTextEditPhoneNumber.AutoHeight = false;
+            this.repositoryItemTextEditPhoneNumber.Mask.EditMask = "0000000000";
+            this.repositoryItemTextEditPhoneNumber.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Simple;
+            this.repositoryItemTextEditPhoneNumber.Mask.UseMaskAsDisplayFormat = true;
+            this.repositoryItemTextEditPhoneNumber.MaxLength = 10;
+            this.repositoryItemTextEditPhoneNumber.Name = "repositoryItemTextEditPhoneNumber";
+            // 
+            // gridColumnCrmId
+            // 
+            this.gridColumnCrmId.Caption = "CrmId";
+            this.gridColumnCrmId.ColumnEdit = this.repositoryItemTextEditCrmId;
+            this.gridColumnCrmId.Name = "gridColumnCrmId";
+            this.gridColumnCrmId.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
+            this.gridColumnCrmId.Visible = true;
+            this.gridColumnCrmId.VisibleIndex = 4;
+            this.gridColumnCrmId.Width = 177;
+            // 
+            // repositoryItemTextEditCrmId
+            // 
+            this.repositoryItemTextEditCrmId.AutoHeight = false;
+            this.repositoryItemTextEditCrmId.MaxLength = 36;
+            this.repositoryItemTextEditCrmId.Name = "repositoryItemTextEditCrmId";
+            // 
+            // gridColumnAddressStreet
+            // 
+            this.gridColumnAddressStreet.Caption = "Street *";
+            this.gridColumnAddressStreet.ColumnEdit = this.repositoryItemTextEditStreet;
+            this.gridColumnAddressStreet.Name = "gridColumnAddressStreet";
+            this.gridColumnAddressStreet.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
+            this.gridColumnAddressStreet.Visible = true;
+            this.gridColumnAddressStreet.VisibleIndex = 5;
+            this.gridColumnAddressStreet.Width = 234;
+            // 
+            // repositoryItemTextEditStreet
+            // 
+            this.repositoryItemTextEditStreet.AutoHeight = false;
+            this.repositoryItemTextEditStreet.MaxLength = 50;
+            this.repositoryItemTextEditStreet.Name = "repositoryItemTextEditStreet";
+            // 
+            // gridColumnAddressCity
+            // 
+            this.gridColumnAddressCity.Caption = "City *";
+            this.gridColumnAddressCity.ColumnEdit = this.repositoryItemTextEditCity;
+            this.gridColumnAddressCity.Name = "gridColumnAddressCity";
+            this.gridColumnAddressCity.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
+            this.gridColumnAddressCity.Visible = true;
+            this.gridColumnAddressCity.VisibleIndex = 6;
+            this.gridColumnAddressCity.Width = 202;
+            // 
+            // repositoryItemTextEditCity
+            // 
+            this.repositoryItemTextEditCity.AutoHeight = false;
+            this.repositoryItemTextEditCity.MaxLength = 50;
+            this.repositoryItemTextEditCity.Name = "repositoryItemTextEditCity";
+            // 
+            // gridColumnAddressZip
+            // 
+            this.gridColumnAddressZip.Caption = "Zip *";
+            this.gridColumnAddressZip.ColumnEdit = this.repositoryItemTextEditZip;
+            this.gridColumnAddressZip.Name = "gridColumnAddressZip";
+            this.gridColumnAddressZip.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
+            this.gridColumnAddressZip.Visible = true;
+            this.gridColumnAddressZip.VisibleIndex = 7;
+            this.gridColumnAddressZip.Width = 180;
+            // 
+            // repositoryItemTextEditZip
+            // 
+            this.repositoryItemTextEditZip.AutoHeight = false;
+            this.repositoryItemTextEditZip.Mask.EditMask = "00000";
+            this.repositoryItemTextEditZip.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Simple;
+            this.repositoryItemTextEditZip.MaxLength = 9;
+            this.repositoryItemTextEditZip.Name = "repositoryItemTextEditZip";
+            // 
+            // gridColumnAddressState
+            // 
+            this.gridColumnAddressState.Caption = "State *";
+            this.gridColumnAddressState.ColumnEdit = this.repositoryItemTextEditState;
+            this.gridColumnAddressState.Name = "gridColumnAddressState";
+            this.gridColumnAddressState.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
+            this.gridColumnAddressState.Visible = true;
+            this.gridColumnAddressState.VisibleIndex = 8;
+            this.gridColumnAddressState.Width = 216;
+            // 
+            // repositoryItemTextEditState
+            // 
+            this.repositoryItemTextEditState.AutoHeight = false;
+            this.repositoryItemTextEditState.MaxLength = 50;
+            this.repositoryItemTextEditState.Name = "repositoryItemTextEditState";
+            // 
+            // gridColumnAddressCountry
+            // 
+            this.gridColumnAddressCountry.Caption = "Country *";
+            this.gridColumnAddressCountry.ColumnEdit = this.repositoryItemTextEditCountry;
+            this.gridColumnAddressCountry.Name = "gridColumnAddressCountry";
+            this.gridColumnAddressCountry.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
+            this.gridColumnAddressCountry.Visible = true;
+            this.gridColumnAddressCountry.VisibleIndex = 9;
+            this.gridColumnAddressCountry.Width = 222;
+            // 
+            // repositoryItemTextEditCountry
+            // 
+            this.repositoryItemTextEditCountry.AutoHeight = false;
+            this.repositoryItemTextEditCountry.MaxLength = 50;
+            this.repositoryItemTextEditCountry.Name = "repositoryItemTextEditCountry";
+            // 
+            // gridControlCompanies
+            // 
+            this.gridControlCompanies.EmbeddedNavigator.Buttons.Remove.Visible = false;
+            this.gridControlCompanies.EmbeddedNavigator.CustomButtons.AddRange(new DevExpress.XtraEditors.NavigatorCustomButton[] {
+            new DevExpress.XtraEditors.NavigatorCustomButton(0, 12, "ShowHideFilter")});
+            this.gridControlCompanies.EmbeddedNavigator.ButtonClick += new DevExpress.XtraEditors.NavigatorButtonClickEventHandler(this.gridControlCompanies_EmbeddedNavigator_ButtonClick);
+            this.gridControlCompanies.Location = new System.Drawing.Point(551, 22);
+            this.gridControlCompanies.MainView = this.gridViewCompanies;
+            this.gridControlCompanies.Name = "gridControlCompanies";
+            this.gridControlCompanies.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
+            this.repositoryItemTextEditCompanyName});
+            this.gridControlCompanies.Size = new System.Drawing.Size(291, 191);
+            this.gridControlCompanies.TabIndex = 6;
+            this.gridControlCompanies.ToolTipController = this.toolTipControllerMain;
+            this.gridControlCompanies.UseEmbeddedNavigator = true;
+            this.gridControlCompanies.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
+            this.gridViewCompanies});
+            // 
+            // gridViewCompanies
+            // 
+            this.gridViewCompanies.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+            this.gridColumnCompany});
+            this.gridViewCompanies.GridControl = this.gridControlCompanies;
+            this.gridViewCompanies.Name = "gridViewCompanies";
+            this.gridViewCompanies.OptionsCustomization.AllowColumnMoving = false;
+            this.gridViewCompanies.OptionsCustomization.AllowGroup = false;
+            this.gridViewCompanies.OptionsNavigation.EnterMoveNextColumn = true;
+            this.gridViewCompanies.OptionsSelection.MultiSelect = true;
+            this.gridViewCompanies.OptionsView.NewItemRowPosition = DevExpress.XtraGrid.Views.Grid.NewItemRowPosition.Bottom;
+            this.gridViewCompanies.OptionsView.ShowGroupPanel = false;
+            this.gridViewCompanies.CellValueChanged += new DevExpress.XtraGrid.Views.Base.CellValueChangedEventHandler(this.gridViewCompanies_CellValueChanged);
+            this.gridViewCompanies.InitNewRow += new DevExpress.XtraGrid.Views.Grid.InitNewRowEventHandler(this.gridViewCompanies_InitNewRow);
+            // 
+            // gridColumnCompany
+            // 
+            this.gridColumnCompany.Caption = "Company *";
+            this.gridColumnCompany.ColumnEdit = this.repositoryItemTextEditCompanyName;
+            this.gridColumnCompany.FieldName = "Name";
+            this.gridColumnCompany.Name = "gridColumnCompany";
+            this.gridColumnCompany.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
+            this.gridColumnCompany.Visible = true;
+            this.gridColumnCompany.VisibleIndex = 0;
+            // 
+            // repositoryItemTextEditCompanyName
+            // 
+            this.repositoryItemTextEditCompanyName.AutoHeight = false;
+            this.repositoryItemTextEditCompanyName.MaxLength = 255;
+            this.repositoryItemTextEditCompanyName.Name = "repositoryItemTextEditCompanyName";
+            // 
+            // gridControlUsers
+            // 
+            this.gridControlUsers.EmbeddedNavigator.Buttons.Remove.Visible = false;
+            this.gridControlUsers.EmbeddedNavigator.CustomButtons.AddRange(new DevExpress.XtraEditors.NavigatorCustomButton[] {
+            new DevExpress.XtraEditors.NavigatorCustomButton(0, 12, "ShowHideFilter")});
+            this.gridControlUsers.EmbeddedNavigator.ButtonClick += new DevExpress.XtraEditors.NavigatorButtonClickEventHandler(this.gridControlUsers_EmbeddedNavigator_ButtonClick);
+            this.gridControlUsers.Location = new System.Drawing.Point(257, 22);
+            this.gridControlUsers.MainView = this.gridViewUsers;
+            this.gridControlUsers.Name = "gridControlUsers";
+            this.gridControlUsers.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
+            this.repositoryItemTextEditUserName});
+            this.gridControlUsers.Size = new System.Drawing.Size(287, 191);
+            this.gridControlUsers.TabIndex = 5;
+            this.gridControlUsers.ToolTipController = this.toolTipControllerMain;
+            this.gridControlUsers.UseEmbeddedNavigator = true;
+            this.gridControlUsers.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
+            this.gridViewUsers});
+            // 
+            // gridViewUsers
+            // 
+            this.gridViewUsers.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+            this.gridColumnUsers});
+            this.gridViewUsers.GridControl = this.gridControlUsers;
+            this.gridViewUsers.Name = "gridViewUsers";
+            this.gridViewUsers.OptionsCustomization.AllowColumnMoving = false;
+            this.gridViewUsers.OptionsCustomization.AllowGroup = false;
+            this.gridViewUsers.OptionsNavigation.EnterMoveNextColumn = true;
+            this.gridViewUsers.OptionsSelection.MultiSelect = true;
+            this.gridViewUsers.OptionsView.NewItemRowPosition = DevExpress.XtraGrid.Views.Grid.NewItemRowPosition.Bottom;
+            this.gridViewUsers.OptionsView.ShowGroupPanel = false;
+            this.gridViewUsers.CellValueChanged += new DevExpress.XtraGrid.Views.Base.CellValueChangedEventHandler(this.gridViewUsers_CellValueChanged);
+            // 
+            // gridColumnUsers
+            // 
+            this.gridColumnUsers.Caption = "User *";
+            this.gridColumnUsers.ColumnEdit = this.repositoryItemTextEditUserName;
+            this.gridColumnUsers.FieldName = "Name";
+            this.gridColumnUsers.Name = "gridColumnUsers";
+            this.gridColumnUsers.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
+            this.gridColumnUsers.Visible = true;
+            this.gridColumnUsers.VisibleIndex = 0;
+            // 
+            // repositoryItemTextEditUserName
+            // 
+            this.repositoryItemTextEditUserName.AutoHeight = false;
+            this.repositoryItemTextEditUserName.MaxLength = 255;
+            this.repositoryItemTextEditUserName.Name = "repositoryItemTextEditUserName";
+            // 
+            // gridControlVendors
+            // 
+            this.gridControlVendors.EmbeddedNavigator.Buttons.Remove.Visible = false;
+            this.gridControlVendors.EmbeddedNavigator.CustomButtons.AddRange(new DevExpress.XtraEditors.NavigatorCustomButton[] {
+            new DevExpress.XtraEditors.NavigatorCustomButton(0, 12, "ShowHideFilter")});
+            this.gridControlVendors.EmbeddedNavigator.ButtonClick += new DevExpress.XtraEditors.NavigatorButtonClickEventHandler(this.gridControlVendors_EmbeddedNavigator_ButtonClick);
+            this.gridControlVendors.Location = new System.Drawing.Point(5, 22);
+            this.gridControlVendors.MainView = this.gridViewVendors;
+            this.gridControlVendors.Name = "gridControlVendors";
+            this.gridControlVendors.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
+            this.repositoryItemTextEditVendorName});
+            this.gridControlVendors.Size = new System.Drawing.Size(245, 191);
+            this.gridControlVendors.TabIndex = 4;
+            this.gridControlVendors.ToolTipController = this.toolTipControllerMain;
+            this.gridControlVendors.UseEmbeddedNavigator = true;
+            this.gridControlVendors.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
+            this.gridViewVendors});
+            // 
+            // gridViewVendors
+            // 
+            this.gridViewVendors.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+            this.gridColumnVendor});
+            this.gridViewVendors.GridControl = this.gridControlVendors;
+            this.gridViewVendors.Name = "gridViewVendors";
+            this.gridViewVendors.OptionsCustomization.AllowColumnMoving = false;
+            this.gridViewVendors.OptionsCustomization.AllowGroup = false;
+            this.gridViewVendors.OptionsNavigation.EnterMoveNextColumn = true;
+            this.gridViewVendors.OptionsSelection.MultiSelect = true;
+            this.gridViewVendors.OptionsView.NewItemRowPosition = DevExpress.XtraGrid.Views.Grid.NewItemRowPosition.Bottom;
+            this.gridViewVendors.OptionsView.ShowGroupPanel = false;
+            this.gridViewVendors.CellValueChanged += new DevExpress.XtraGrid.Views.Base.CellValueChangedEventHandler(this.gridViewVendors_CellValueChanged);
+            this.gridViewVendors.InitNewRow += new DevExpress.XtraGrid.Views.Grid.InitNewRowEventHandler(this.gridViewVendors_InitNewRow);
+            // 
+            // gridColumnVendor
+            // 
+            this.gridColumnVendor.Caption = "Vendor *";
+            this.gridColumnVendor.ColumnEdit = this.repositoryItemTextEditVendorName;
+            this.gridColumnVendor.FieldName = "Name";
+            this.gridColumnVendor.Name = "gridColumnVendor";
+            this.gridColumnVendor.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
+            this.gridColumnVendor.Visible = true;
+            this.gridColumnVendor.VisibleIndex = 0;
+            // 
+            // repositoryItemTextEditVendorName
+            // 
+            this.repositoryItemTextEditVendorName.AutoHeight = false;
+            this.repositoryItemTextEditVendorName.MaxLength = 255;
+            this.repositoryItemTextEditVendorName.Name = "repositoryItemTextEditVendorName";
+            // 
+            // layoutControlGroup1
+            // 
+            this.layoutControlGroup1.CustomizationFormText = "Root";
+            this.layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
+            this.layoutControlGroupVendors,
+            this.layoutControlGroupCompanies,
+            this.layoutControlGroupUsers,
+            this.layoutControlGroupCustomers,
+            this.splitterItem1});
+            this.layoutControlGroup1.Location = new System.Drawing.Point(0, 0);
+            this.layoutControlGroup1.Name = "Root";
+            this.layoutControlGroup1.Size = new System.Drawing.Size(846, 459);
+            this.layoutControlGroup1.Spacing = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
+            this.layoutControlGroup1.Text = "Root";
+            this.layoutControlGroup1.TextVisible = false;
+            // 
+            // layoutControlGroupVendors
+            // 
+            this.layoutControlGroupVendors.CustomizationFormText = "Vendors";
+            this.layoutControlGroupVendors.ExpandButtonLocation = DevExpress.Utils.GroupElementLocation.AfterText;
+            this.layoutControlGroupVendors.ExpandButtonVisible = true;
+            this.layoutControlGroupVendors.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
+            this.layoutControlItemVendor});
+            this.layoutControlGroupVendors.Location = new System.Drawing.Point(0, 0);
+            this.layoutControlGroupVendors.Name = "layoutControlGroupVendors";
+            this.layoutControlGroupVendors.Size = new System.Drawing.Size(252, 215);
+            this.layoutControlGroupVendors.Text = "Vendors";
+            // 
+            // layoutControlItemVendor
+            // 
+            this.layoutControlItemVendor.Control = this.gridControlVendors;
+            this.layoutControlItemVendor.CustomizationFormText = "Vendors List";
+            this.layoutControlItemVendor.Location = new System.Drawing.Point(0, 0);
+            this.layoutControlItemVendor.Name = "layoutControlItemVendor";
+            this.layoutControlItemVendor.Padding = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
+            this.layoutControlItemVendor.Size = new System.Drawing.Size(246, 192);
+            this.layoutControlItemVendor.Text = "Vendors List";
+            this.layoutControlItemVendor.TextLocation = DevExpress.Utils.Locations.Top;
+            this.layoutControlItemVendor.TextSize = new System.Drawing.Size(0, 0);
+            this.layoutControlItemVendor.TextToControlDistance = 0;
+            this.layoutControlItemVendor.TextVisible = false;
+            // 
+            // layoutControlGroupCompanies
+            // 
+            this.layoutControlGroupCompanies.CustomizationFormText = "Companies";
+            this.layoutControlGroupCompanies.ExpandButtonLocation = DevExpress.Utils.GroupElementLocation.AfterText;
+            this.layoutControlGroupCompanies.ExpandButtonVisible = true;
+            this.layoutControlGroupCompanies.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
+            this.layoutControlItemCompanies});
+            this.layoutControlGroupCompanies.Location = new System.Drawing.Point(546, 0);
+            this.layoutControlGroupCompanies.Name = "layoutControlGroupCompanies";
+            this.layoutControlGroupCompanies.Size = new System.Drawing.Size(298, 215);
+            this.layoutControlGroupCompanies.Text = "Companies";
+            // 
+            // layoutControlItemCompanies
+            // 
+            this.layoutControlItemCompanies.Control = this.gridControlCompanies;
+            this.layoutControlItemCompanies.CustomizationFormText = "Companies";
+            this.layoutControlItemCompanies.Location = new System.Drawing.Point(0, 0);
+            this.layoutControlItemCompanies.Name = "layoutControlItemCompanies";
+            this.layoutControlItemCompanies.Padding = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
+            this.layoutControlItemCompanies.Size = new System.Drawing.Size(292, 192);
+            this.layoutControlItemCompanies.Text = "Companies";
+            this.layoutControlItemCompanies.TextLocation = DevExpress.Utils.Locations.Left;
+            this.layoutControlItemCompanies.TextSize = new System.Drawing.Size(0, 0);
+            this.layoutControlItemCompanies.TextToControlDistance = 0;
+            this.layoutControlItemCompanies.TextVisible = false;
+            // 
+            // layoutControlGroupUsers
+            // 
+            this.layoutControlGroupUsers.CustomizationFormText = "Users";
+            this.layoutControlGroupUsers.ExpandButtonLocation = DevExpress.Utils.GroupElementLocation.AfterText;
+            this.layoutControlGroupUsers.ExpandButtonVisible = true;
+            this.layoutControlGroupUsers.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
+            this.layoutControlItemUsers});
+            this.layoutControlGroupUsers.Location = new System.Drawing.Point(252, 0);
+            this.layoutControlGroupUsers.Name = "layoutControlGroupUsers";
+            this.layoutControlGroupUsers.Size = new System.Drawing.Size(294, 215);
+            this.layoutControlGroupUsers.Text = "Users";
+            // 
+            // layoutControlItemUsers
+            // 
+            this.layoutControlItemUsers.Control = this.gridControlUsers;
+            this.layoutControlItemUsers.CustomizationFormText = "Users";
+            this.layoutControlItemUsers.Location = new System.Drawing.Point(0, 0);
+            this.layoutControlItemUsers.Name = "layoutControlItemUsers";
+            this.layoutControlItemUsers.Padding = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
+            this.layoutControlItemUsers.Size = new System.Drawing.Size(288, 192);
+            this.layoutControlItemUsers.Text = "Users";
+            this.layoutControlItemUsers.TextLocation = DevExpress.Utils.Locations.Left;
+            this.layoutControlItemUsers.TextSize = new System.Drawing.Size(0, 0);
+            this.layoutControlItemUsers.TextToControlDistance = 0;
+            this.layoutControlItemUsers.TextVisible = false;
+            // 
+            // layoutControlGroupCustomers
+            // 
+            this.layoutControlGroupCustomers.CustomizationFormText = "Customers";
+            this.layoutControlGroupCustomers.ExpandButtonLocation = DevExpress.Utils.GroupElementLocation.AfterText;
+            this.layoutControlGroupCustomers.ExpandButtonVisible = true;
+            this.layoutControlGroupCustomers.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
+            this.layoutControlItemCustomers});
+            this.layoutControlGroupCustomers.Location = new System.Drawing.Point(0, 221);
+            this.layoutControlGroupCustomers.Name = "layoutControlGroupCustomers";
+            this.layoutControlGroupCustomers.Size = new System.Drawing.Size(844, 236);
+            this.layoutControlGroupCustomers.Text = "Customers";
+            // 
+            // layoutControlItemCustomers
+            // 
+            this.layoutControlItemCustomers.Control = this.gridControlCustomers;
+            this.layoutControlItemCustomers.CustomizationFormText = "Customers";
+            this.layoutControlItemCustomers.Location = new System.Drawing.Point(0, 0);
+            this.layoutControlItemCustomers.Name = "layoutControlItemCustomers";
+            this.layoutControlItemCustomers.Padding = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
+            this.layoutControlItemCustomers.Size = new System.Drawing.Size(838, 213);
+            this.layoutControlItemCustomers.Text = "Customers";
+            this.layoutControlItemCustomers.TextLocation = DevExpress.Utils.Locations.Left;
+            this.layoutControlItemCustomers.TextSize = new System.Drawing.Size(0, 0);
+            this.layoutControlItemCustomers.TextToControlDistance = 0;
+            this.layoutControlItemCustomers.TextVisible = false;
+            // 
+            // splitterItem1
+            // 
+            this.splitterItem1.CustomizationFormText = "splitterItem1";
+            this.splitterItem1.Location = new System.Drawing.Point(0, 215);
+            this.splitterItem1.Name = "splitterItem1";
+            this.splitterItem1.Size = new System.Drawing.Size(844, 6);
+            // 
+            // AdminTab
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.layoutControlAdmin);
+            this.Name = "AdminTab";
+            this.Controls.SetChildIndex(this.layoutControlAdmin, 0);
+            ((System.ComponentModel.ISupportInitialize)(this.dxErrorProviderMain)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlAdmin)).EndInit();
+            this.layoutControlAdmin.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.gridControlCustomers)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridViewCustomers)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEditName)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemGridLookUpEditCompany)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemGridLookUpEditCustomerCompanyInternal)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEditEmail)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEditPhoneNumber)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEditCrmId)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEditStreet)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEditCity)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEditZip)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEditState)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEditCountry)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridControlCompanies)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridViewCompanies)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEditCompanyName)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridControlUsers)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridViewUsers)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEditUserName)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridControlVendors)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridViewVendors)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEditVendorName)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroupVendors)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItemVendor)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroupCompanies)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItemCompanies)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroupUsers)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItemUsers)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroupCustomers)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItemCustomers)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.splitterItem1)).EndInit();
+            this.ResumeLayout(false);
+
+        }
+
+        #endregion
+
+        private DevExpress.XtraLayout.LayoutControl layoutControlAdmin;
+        private DevExpress.XtraLayout.LayoutControlGroup layoutControlGroup1;
+        private DevExpress.XtraGrid.GridControl gridControlVendors;
+        private DevExpress.XtraGrid.Views.Grid.GridView gridViewVendors;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItemVendor;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumnVendor;
+        private DevExpress.XtraLayout.LayoutControlGroup layoutControlGroupVendors;
+        private DevExpress.XtraGrid.GridControl gridControlUsers;
+        private DevExpress.XtraGrid.Views.Grid.GridView gridViewUsers;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumnUsers;
+        private DevExpress.XtraLayout.LayoutControlGroup layoutControlGroupUsers;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItemUsers;
+        private DevExpress.XtraGrid.GridControl gridControlCompanies;
+        private DevExpress.XtraGrid.Views.Grid.GridView gridViewCompanies;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumnCompany;
+        private DevExpress.XtraLayout.LayoutControlGroup layoutControlGroupCompanies;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItemCompanies;
+        private DevExpress.XtraGrid.GridControl gridControlCustomers;
+        private DevExpress.XtraGrid.Views.Grid.GridView gridViewCustomers;
+        private DevExpress.XtraLayout.LayoutControlGroup layoutControlGroupCustomers;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItemCustomers;
+        private DevExpress.XtraEditors.Repository.RepositoryItemGridLookUpEdit repositoryItemGridLookUpEditCompany;
+        private DevExpress.XtraGrid.Views.Grid.GridView repositoryItemGridLookUpEditCustomerCompanyInternal;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumnCustomerCompanyInternal;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumnName;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumnCompanyName;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumnEmail;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumnPhoneNumber;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumnCrmId;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumnAddressStreet;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumnAddressCity;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumnAddressZip;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumnAddressState;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumnAddressCountry;
+        private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit repositoryItemTextEditName;
+        private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit repositoryItemTextEditEmail;
+        private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit repositoryItemTextEditPhoneNumber;
+        private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit repositoryItemTextEditCrmId;
+        private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit repositoryItemTextEditStreet;
+        private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit repositoryItemTextEditCity;
+        private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit repositoryItemTextEditZip;
+        private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit repositoryItemTextEditState;
+        private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit repositoryItemTextEditCountry;
+        private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit repositoryItemTextEditUserName;
+        private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit repositoryItemTextEditVendorName;
+        private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit repositoryItemTextEditCompanyName;
+        private DevExpress.XtraLayout.SplitterItem splitterItem1;
+    }
+}

@@ -1,0 +1,1010 @@
+//////////////////////////////////////////////////////////////////////////////
+//  
+//  <sourcefile name="AdminTab.cs" creationdate="2/10/09" owner="anasa" >
+//
+//      <project>McKinstry TCO Application</project>
+//  
+//      <description>The tab page for administrative area in tool</description>
+//      
+//      <copyright year="2008" company="McKinstry">
+//          <notice>
+//              Copyright © 2008 McKinstry. All rights reserved
+//  
+//              Developed for McKinstry by
+//                  Equiom - MENA
+//                  www.equiom.com
+//          </notice>
+//  
+//  	<history date="2/10/09" modby="anasa">created</history>
+//  
+//////////////////////////////////////////////////////////////////////////////
+
+#region Library Calls
+//---------------------------------------------------------------------------------------------
+using System;
+using System.ComponentModel;
+using System.Windows.Forms;
+using DevExpress.XtraEditors;
+using Equiom.Tco.BusinessLogicLayer;
+using Equiom.Tco.DataAccessLayer;
+using System.Collections;
+using DevExpress.XtraGrid;
+using DevExpress.XtraGrid.Views.Grid;
+using TCO.DesktopClientDevexpress.Properties;
+//---------------------------------------------------------------------------------------------
+#endregion
+
+namespace TCO.DesktopClientDevexpress
+{
+    public partial class AdminTab : XtraTabPageEntity
+    {
+        #region Constants
+        //---------------------------------------------------------------------------------------------
+        private const string ATTEPT_TO_DELETE_SAVED = "Only new items can be deleted.";
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        #region Fields
+        //---------------------------------------------------------------------------------------------
+        BindingList<LookUpBusinessObject> _deletedVendorsCollection = new BindingList<LookUpBusinessObject>();
+
+        BindingList<LookUpBusinessObject> _deletedCompaniesCollection = new BindingList<LookUpBusinessObject>();
+
+        BusinessObjectList<Customer> _deletedCustomersCollection = new BusinessObjectList<Customer>();
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        #region Properties
+        //---------------------------------------------------------------------------------------------
+        public BusinessObjectList<User> UsersCollection { get; set; }
+
+        public BusinessObjectList<User> DeletedUsersCollection { get; set; }
+
+        public BindingList<LookUpBusinessObject> VendorsCollection { get; set; }
+
+        public BindingList<LookUpBusinessObject> DeletedVendorsCollection
+        {
+            get { return _deletedVendorsCollection; }
+            set { _deletedVendorsCollection = value; }
+        }
+
+        public BindingList<LookUpBusinessObject> CompaniesCollection { get; set; }
+
+        public BindingList<LookUpBusinessObject> DeletedCompaniesCollection
+        {
+            get { return _deletedCompaniesCollection; }
+            set { _deletedCompaniesCollection = value; }
+        }
+
+        public BusinessObjectList<Customer> CustomersCollection { get; set; }
+
+        public BusinessObjectList<Customer> DeletedCustomersCollection
+        {
+            get { return _deletedCustomersCollection; }
+            set { _deletedCustomersCollection = value; }
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        #region Constructors
+        //---------------------------------------------------------------------------------------------
+        public AdminTab()
+        {
+            DeletedUsersCollection = new BusinessObjectList<User>();
+            InitializeComponent();
+        }
+
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        #region Methods
+        //---------------------------------------------------------------------------------------------
+        #region Overriding Methods
+        //---------------------------------------------------------------------------------------------
+        #region Initialization & Binding
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Initialize the binding for the controls in the tab
+        /// </summary>
+        public override void SetBinding()
+        {
+            try
+            {
+                FillLookUps();
+                TabTypeImage = Resources.Administrator;
+                ParentTab.Image = MergeImages(false);
+
+                VendorsCollection = LookUpBusinessObject.GetAll(LookUpBusinessObjectType.Vendor);
+                VendorsCollection.RaiseListChangedEvents = true;
+                VendorsCollection.ListChanged += VendorsCollection_ListChanged;
+                gridControlVendors.DataSource = VendorsCollection;
+
+                CompaniesCollection = LookUpBusinessObject.GetAll(LookUpBusinessObjectType.Company);
+                CompaniesCollection.RaiseListChangedEvents = true;
+                CompaniesCollection.ListChanged += CompaniesCollection_ListChanged;
+                gridControlCompanies.DataSource = CompaniesCollection;
+
+                UsersCollection = User.GetAll();
+                UsersCollection.RaiseListChangedEvents = true;
+                UsersCollection.ListChanged += UsersCollection_ListChanged;
+                gridControlUsers.DataSource = UsersCollection;
+                
+                gridColumnName.FieldName           = Customer.NAME_PROPERTY_NAME;
+                gridColumnCompanyName.FieldName    = Customer.COMPANY_ID_PROPERTY_NAME;
+                gridColumnEmail.FieldName          = Customer.EMAIL_PROPERTY_NAME;
+                gridColumnPhoneNumber.FieldName    = Customer.PHONE_NUMBER_PROPERTY_NAME;
+                gridColumnCrmId.FieldName          = Customer.CRM_ID_PROPERTY_NAME;
+                gridColumnAddressStreet.FieldName  = Customer.ADDRESS_STREET_PROPERTY_NAME;
+                gridColumnAddressCity.FieldName    = Customer.ADDRESS_CITY_PROPERTY_NAME;
+                gridColumnAddressZip.FieldName     = Customer.ADDRESS_ZIP_PROPERTY_NAME;
+                gridColumnAddressState.FieldName   = Customer.ADDRESS_STATE_PROPERTY_NAME;
+                gridColumnAddressCountry.FieldName = Customer.ADDRESS_COUNTRY_PROPERTY_NAME;
+
+                CustomersCollection = Customer.GetAll();
+                CustomersCollection.RaiseListChangedEvents = true;
+                CustomersCollection.ListChanged += CustomersCollection_ListChanged;
+                gridControlCustomers.DataSource = CustomersCollection;
+
+            }
+            catch (DataAccessException dataAccessException)
+            {
+                Equiom.Tco.Common.Application.Logger.LogException(dataAccessException);
+                UIBLLInteraction.Instance.ShowException(dataAccessException);
+            }
+        }
+       
+        /// <summary>
+        /// Enables or disables the controls in the tab
+        /// </summary>
+        /// <param name="isReadOnly"></param>
+        /// <param name="isChangedByUser"></param>
+        public override void SetEditMode(bool isReadOnly, bool isChangedByUser)
+        {
+            SetEditProprtiesOnGrid(gridControlVendors, gridViewVendors, isReadOnly);
+            SetEditProprtiesOnGrid(gridControlUsers, gridViewUsers, isReadOnly);
+            SetEditProprtiesOnGrid(gridControlCompanies, gridViewCompanies, isReadOnly);
+            SetEditProprtiesOnGrid(gridControlCustomers, gridViewCustomers, isReadOnly);
+        }
+
+        /// <summary>
+        /// Fill the lookup controls with the collections of objects from the cache
+        /// </summary>
+        private void FillLookUps()
+        {
+            repositoryItemGridLookUpEditCompany.DataSource = BusinessLayerCache.Instance.GetAllCompanies();
+        }
+
+        /// <summary>
+        /// Sets the editing properties of a grid control in general
+        /// </summary>
+        /// <param name="gridControl"></param>
+        /// <param name="gridView"></param>
+        /// <param name="isReadOnly"></param>
+        private static void SetEditProprtiesOnGrid(GridControl gridControl, GridView gridView, bool isReadOnly)
+        {
+            gridControl.EmbeddedNavigator.Buttons.Remove.Visible = !isReadOnly;
+            gridControl.EmbeddedNavigator.Buttons.Append.Visible = !isReadOnly;
+            gridControl.EmbeddedNavigator.Buttons.Edit.Visible = !isReadOnly;
+            gridControl.EmbeddedNavigator.Buttons.EndEdit.Visible = !isReadOnly;
+            gridControl.EmbeddedNavigator.Buttons.CancelEdit.Visible = !isReadOnly;
+
+            gridView.OptionsBehavior.Editable = !isReadOnly;
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        #region Parent related actions
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Adds the current tab info to the dictionary so user can't close project without closing it first
+        /// </summary>
+        public override void AddParentIDToEditDictionary()
+        {
+            try
+            {
+                if (!UIBLLInteraction.Instance.OtherTabsEditDictionary.ContainsKey(TabTypes.Admin))
+                {
+                    UIBLLInteraction.Instance.OtherTabsEditDictionary.Add(TabTypes.Admin, ParentTab);
+                }
+            }
+            catch (ArgumentException argumentException)
+            {
+                Equiom.Tco.Common.Application.Logger.LogException(argumentException);
+            }
+            catch (NullReferenceException nullReferenceException)
+            {
+                Equiom.Tco.Common.Application.Logger.LogException(nullReferenceException);
+            }
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        #region Save related actions
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Apply project's specific actions after saving a project
+        /// </summary>
+        public override void AfterSaveActions()
+        {
+        }
+
+        /// <summary>
+        /// Apply project's specific actions that should be done before doing the save
+        /// </summary>
+        public override void BeforeSaveActions()
+        {
+        }
+
+        /// <summary>
+        /// Saves the collections in the admin module
+        /// </summary>
+        public override bool CustomSave()
+        {
+            PostValues();
+            if (ValidateCollections())
+            {
+                try
+                {
+                    SaveVendors();
+                    SaveUsers();
+                    SaveCompanies();
+                    SaveCustomers();
+
+                    TabState = EntityTabState.Unchanged;
+                    UpdateActionButtons();
+                    return true;
+                }
+                catch (DataAccessException dataAccessException)
+                {
+                    UIBLLInteraction.Instance.ShowException(dataAccessException);
+                    Equiom.Tco.Common.Application.Logger.LogException(dataAccessException);
+                    CustomCancel();
+                    return false;
+                }
+                catch (NullReferenceException nullReferenceException)
+                {
+                    UIBLLInteraction.Instance.ShowException(nullReferenceException);
+                    Equiom.Tco.Common.Application.Logger.LogException(nullReferenceException);
+                    CustomCancel();
+                    return false;
+                }
+            }
+            return false;
+        }
+
+        private void SaveCompanies()
+        {
+            foreach (LookUpBusinessObject company in CompaniesCollection)
+            {
+                if (company != null)
+                {
+                    company.Save(company);
+                }
+            }
+
+            foreach (LookUpBusinessObject deletedCompany in DeletedCompaniesCollection)
+            {
+                if (deletedCompany != null)
+                {
+                    deletedCompany.Save(deletedCompany);
+                }
+            }
+            DeletedCompaniesCollection = new BindingList<LookUpBusinessObject>();
+            BusinessLayerCache.Instance.RefreshCompanies(CompaniesCollection);
+        }
+
+        private void SaveUsers()
+        {
+            foreach (User user in UsersCollection)
+            {
+                if (user != null)
+                {
+                    user.Save();
+                }
+            }
+
+            foreach (User deleteduser in DeletedUsersCollection)
+            {
+                if (deleteduser != null)
+                {
+                    deleteduser.Save();
+                }
+            }
+            DeletedUsersCollection = new BusinessObjectList<User>();
+            BusinessLayerCache.Instance.RefreshUsers(UsersCollection);
+        }
+
+        private void SaveVendors()
+        {
+            foreach (LookUpBusinessObject vendor in VendorsCollection)
+            {
+                if (vendor != null)
+                {
+                    vendor.Save(vendor);
+                }
+            }
+
+            foreach (LookUpBusinessObject deletedVendor in DeletedVendorsCollection)
+            {
+                if (deletedVendor != null)
+                {
+                    deletedVendor.Save(deletedVendor);
+                }
+            }
+            DeletedVendorsCollection = new BindingList<LookUpBusinessObject>();
+            BusinessLayerCache.Instance.RefreshVendors(VendorsCollection);
+        }
+
+        private void SaveCustomers()
+        {
+            foreach (Customer customer in CustomersCollection)
+            {
+                if (customer != null)
+                {
+                    customer.Save();
+                }
+            }
+
+            foreach (Customer deletedCustomer in DeletedCustomersCollection)
+            {
+                if (deletedCustomer != null)
+                {
+                    deletedCustomer.Save();
+                }
+            }
+            DeletedCustomersCollection = new BusinessObjectList<Customer>();
+            BusinessLayerCache.Instance.RefreshCustomers(CustomersCollection);
+        }
+
+        /// <summary>
+        /// Cancel changes on the collections
+        /// </summary>
+        public override void CustomCancel()
+        {
+            CancelVendors();
+            CancelUsers();
+            CancelCompanies();
+            CancelCustomers();
+            ValidateCollections();
+        }
+
+        private void CancelCompanies()
+        {
+            gridControlCompanies.DataSource = null;
+            CompaniesCollection = LookUpBusinessObject.GetAll(LookUpBusinessObjectType.Company);
+            DeletedCompaniesCollection = new BindingList<LookUpBusinessObject>();
+            CompaniesCollection.RaiseListChangedEvents = true;
+            CompaniesCollection.ListChanged += CompaniesCollection_ListChanged;
+            gridControlCompanies.DataSource = CompaniesCollection;
+            gridControlCompanies.Refresh();
+            gridControlCompanies.Update();
+            gridViewCompanies.RefreshData();
+            gridControlCompanies.RefreshDataSource();
+        }
+
+        private void CancelUsers()
+        {
+            gridControlUsers.DataSource = null;
+            UsersCollection = User.GetAll();
+            DeletedUsersCollection = new BusinessObjectList<User>();
+            UsersCollection.RaiseListChangedEvents = true;
+            UsersCollection.ListChanged += UsersCollection_ListChanged;
+            gridControlUsers.DataSource = UsersCollection;
+            gridControlUsers.Refresh();
+            gridControlUsers.Update();
+            gridViewUsers.RefreshData();
+            gridControlUsers.RefreshDataSource();
+        }
+
+        private void CancelVendors()
+        {
+            gridControlVendors.DataSource = null;
+            VendorsCollection = LookUpBusinessObject.GetAll(LookUpBusinessObjectType.Vendor);
+            DeletedVendorsCollection = new BindingList<LookUpBusinessObject>();
+            VendorsCollection.RaiseListChangedEvents = true;
+            VendorsCollection.ListChanged += VendorsCollection_ListChanged;
+            gridControlVendors.DataSource = VendorsCollection;
+            gridControlVendors.Refresh();
+            gridControlVendors.Update();
+            gridViewVendors.RefreshData();
+            gridControlVendors.RefreshDataSource();
+        }
+
+        private void CancelCustomers()
+        {
+            gridControlCustomers.DataSource = null;
+            CustomersCollection = Customer.GetAll();
+            DeletedCustomersCollection = new BusinessObjectList<Customer>();
+            CustomersCollection.RaiseListChangedEvents = true;
+            CustomersCollection.ListChanged += CustomersCollection_ListChanged;
+            gridControlCustomers.DataSource = CustomersCollection;
+            gridControlCustomers.Refresh();
+            gridControlCustomers.Update();
+            gridViewCustomers.RefreshData();
+            gridControlCustomers.RefreshDataSource();
+        }
+
+        /// <summary>
+        /// Posts the values entered currently in the grid to the data source
+        /// </summary>
+        public override void PostValues()
+        {
+            GridViewPostValues(gridViewVendors);
+            GridViewPostValues(gridViewUsers);
+            GridViewPostValues(gridViewCompanies);
+            GridViewPostValues(gridViewCustomers);
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        #region Validation
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Validates all the collections in the admin tab
+        /// </summary>
+        /// <returns>Returns true if the collections are valid</returns>
+        public bool ValidateCollections()
+        {
+            dxErrorProviderMain.DataSource = VendorsCollection;
+            dxErrorProviderMain.UpdateBinding();
+
+            bool areVendorsValid;
+            ValidateVendors(out areVendorsValid);
+
+            bool areCompaniesValid;
+            ValidateCompanies(out areCompaniesValid);
+
+            bool areUsersValid;
+            ValidateUsers(out areUsersValid);
+
+            bool areCustomersValid;
+            ValidateCustomers(out areCustomersValid);
+
+            dxErrorProviderMain.UpdateBinding();
+           
+            bool areAllValid = areUsersValid && areVendorsValid && areCompaniesValid && areCustomersValid;
+            ParentTab.Image = (areAllValid) ? MergeImages(false) : MergeImages(true);
+            ParentTab.Tooltip = (areAllValid) ? null : SOME_FIELDS_ARE_INVALID_ERROR;
+            return areAllValid;
+        }
+
+        private void ValidateCustomers(out bool areCustomersValid)
+        {
+            areCustomersValid = true;
+            foreach (Customer customer in CustomersCollection)
+            {
+                if (customer != null)
+                {
+                    customer.isDuplicated(CustomersCollection);
+                    if (!customer.Validate())
+                    {
+                        areCustomersValid = false;
+                    }
+                }
+            }
+            layoutControlGroupCustomers.CaptionImage = (areCustomersValid) ? null : Resources.Error;
+            layoutControlGroupCustomers.OptionsToolTip.ToolTip = (areCustomersValid) ? null : SOME_FIELDS_ARE_INVALID_ERROR;
+        }
+
+        private void ValidateUsers(out bool areUsersValid)
+        {
+            areUsersValid = true;
+            foreach (User user in UsersCollection)
+            {
+                if (user != null)
+                {
+                    user.isDuplicated(UsersCollection);
+                    if (!user.Validate())
+                    {
+                        areUsersValid = false;
+                    }
+                }
+            }
+            layoutControlGroupUsers.CaptionImage = (areUsersValid) ? null : Resources.Error;
+            layoutControlGroupUsers.OptionsToolTip.ToolTip = (areUsersValid) ? null : SOME_FIELDS_ARE_INVALID_ERROR;
+        }
+
+        private void ValidateCompanies(out bool areCompaniesValid)
+        {
+            areCompaniesValid = true;
+            foreach (LookUpBusinessObject company in CompaniesCollection)
+            {
+                if (company != null)
+                {
+                    company.isDuplicated(CompaniesCollection);
+                    if (!company.Validate())
+                    {
+                        areCompaniesValid = false;
+                    }
+                }
+            }
+            layoutControlGroupCompanies.CaptionImage = (areCompaniesValid) ? null : Resources.Error;
+            layoutControlGroupCompanies.OptionsToolTip.ToolTip = (areCompaniesValid) ? null : SOME_FIELDS_ARE_INVALID_ERROR;
+        }
+
+        private void ValidateVendors(out bool areVendorsValid)
+        {
+            areVendorsValid = true;
+            foreach (LookUpBusinessObject vendor in VendorsCollection)
+            {
+                if (vendor != null)
+                {
+                    vendor.isDuplicated(VendorsCollection);
+                    if (!vendor.Validate())
+                    {
+                        areVendorsValid = false;
+                    }
+                }
+            }
+            layoutControlGroupVendors.CaptionImage = (areVendorsValid) ? null : Resources.Error;
+            layoutControlGroupVendors.OptionsToolTip.ToolTip = (areVendorsValid) ? null : SOME_FIELDS_ARE_INVALID_ERROR;
+        }
+
+        private void InstantVendorsValidation()
+        {
+            dxErrorProviderMain.DataSource = VendorsCollection;
+            bool areVendorsValid;
+            ValidateVendors(out areVendorsValid);
+            dxErrorProviderMain.UpdateBinding();
+        }
+
+        private void InstantUsersValidation()
+        {
+            dxErrorProviderMain.DataSource = UsersCollection;
+            bool areUsersValid;
+            ValidateUsers(out areUsersValid);
+            dxErrorProviderMain.UpdateBinding();
+        }
+
+        private void InstantCustomersValidation()
+        {
+            dxErrorProviderMain.DataSource = CustomersCollection;
+            //bool areCustomersValid;
+            //ValidateCustomers(out areCustomersValid);
+            dxErrorProviderMain.UpdateBinding();
+        }
+
+        private void InstantCompaniesValidation()
+        {
+            dxErrorProviderMain.DataSource = CompaniesCollection;
+            bool areCompaniesValid;
+            ValidateCompanies(out areCompaniesValid);
+            dxErrorProviderMain.UpdateBinding();
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+        //---------------------------------------------------------------------------------------------
+        #endregion
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        #region Handlers
+        //---------------------------------------------------------------------------------------------
+        #region Vendors
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Changes the state of the tab when the collection changes
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void VendorsCollection_ListChanged(object sender, ListChangedEventArgs e)
+        {
+            try
+            {
+                TabState = EntityTabState.Modified;
+                UpdateActionButtons();
+            }
+            catch (NullReferenceException nullReferenceException)
+            {
+                //UIBLLInteraction.Instance.ShowException(nullReferenceException);
+                Equiom.Tco.Common.Application.Logger.LogException(nullReferenceException);
+            }
+        }
+
+        /// <summary>
+        /// Initilize the type of the new created vendor
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void gridViewVendors_InitNewRow(object sender, InitNewRowEventArgs e)
+        {
+            var currentVendor = gridViewCompanies.GetRow(e.RowHandle) as LookUpBusinessObject;
+            if (currentVendor != null)
+            {
+                currentVendor.ObjectType = LookUpBusinessObjectType.Vendor;
+            }
+        }
+
+        /// <summary>
+        /// Removes the vendors from the collection or show/hide the filteration row
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void gridControlVendors_EmbeddedNavigator_ButtonClick(object sender, NavigatorButtonClickEventArgs e)
+        {
+            switch (e.Button.ButtonType)
+            {
+                case NavigatorButtonType.Custom:
+                    e.Handled = true;
+                    if (e.Button.Hint == "ShowHideFilter")
+                    {
+                        gridViewVendors.OptionsView.ShowAutoFilterRow = !gridViewVendors.OptionsView.ShowAutoFilterRow;
+                    }
+                    break;
+                case NavigatorButtonType.Remove:
+                    e.Handled = true;
+                    bool savedExists = false;
+                    
+                    //Save the indexes of the selected rows in a hashtable in order to remove using
+                    //the index and not the handle in the gridview since it will change when deleting.
+                    int[] selectedObjectsHandles = gridViewVendors.GetSelectedRows();
+                    var indexes = new Hashtable();
+                    foreach (int handle in selectedObjectsHandles)
+                    {
+                        if (handle >= 0)
+                        {
+                            indexes.Add(handle, gridViewVendors.GetDataSourceRowIndex(handle));
+                        }
+                    }
+                    foreach (int handle in indexes.Keys)
+                    {
+                        try
+                        {
+                            //New objects will be removed from collection but not DB
+                            if (VendorsCollection[handle].State == BusinessObjectState.New)
+                            {
+                                VendorsCollection.RemoveAt(handle);
+                            }
+                            else
+                            {
+                                savedExists = true;
+                            }
+                        }
+                        catch (DataAccessException dataAccessException)
+                        {
+                            UIBLLInteraction.Instance.ShowException(dataAccessException);
+                            Equiom.Tco.Common.Application.Logger.LogException(dataAccessException);
+                        }
+                        catch (ArgumentException argumentException)
+                        {
+                            UIBLLInteraction.Instance.ShowException(argumentException);
+                            Equiom.Tco.Common.Application.Logger.LogException(argumentException);
+                        }
+                    }
+                    if (savedExists)
+                    {
+                        XtraMessageBox.Show(ATTEPT_TO_DELETE_SAVED, UIBLLInteraction.ERROR_MESSAGE_TITLE, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Validates the collection on cell value change
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void gridViewVendors_CellValueChanged(object sender, DevExpress.XtraGrid.Views.Base.CellValueChangedEventArgs e)
+        {
+            InstantVendorsValidation();
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        #region Users
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Changes the state of the tab when the collection changes
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UsersCollection_ListChanged(object sender, ListChangedEventArgs e)
+        {
+            try
+            {
+                TabState = EntityTabState.Modified;
+                UpdateActionButtons();
+            }
+            catch (NullReferenceException nullReferenceException)
+            {
+                //UIBLLInteraction.Instance.ShowException(nullReferenceException);
+                Equiom.Tco.Common.Application.Logger.LogException(nullReferenceException);
+            }
+        }
+
+        /// <summary>
+        /// Removes the vendors from the collection or show/hide the filteration row
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void gridControlUsers_EmbeddedNavigator_ButtonClick(object sender, NavigatorButtonClickEventArgs e)
+        {
+            switch (e.Button.ButtonType)
+            {
+                case NavigatorButtonType.Custom:
+                    e.Handled = true;
+                    if (e.Button.Hint == "ShowHideFilter")
+                    {
+                        gridViewUsers.OptionsView.ShowAutoFilterRow = !gridViewUsers.OptionsView.ShowAutoFilterRow;
+                    }
+                    break;
+                case NavigatorButtonType.Remove:
+                    e.Handled = true;
+                    bool savedExists = false;
+                    int[] selectedObjectsHandles = gridViewUsers.GetSelectedRows();
+                    var deletedUserTemp = new BindingList<User>();
+                    try
+                    {
+                        foreach (int handle in selectedObjectsHandles)
+                        {
+                            if (handle >= 0)
+                            {
+                                if (UsersCollection[handle].State == BusinessObjectState.New)
+                                {
+                                    deletedUserTemp.Add(UsersCollection[handle]);
+                                }
+                                else
+                                {
+                                    savedExists = true;
+                                }
+                            }
+                        }
+                        for (int i = 0; i < deletedUserTemp.Count; i++)
+                        {
+                            UsersCollection.Remove(deletedUserTemp[i]);
+                        }
+                    }
+                    catch (DataAccessException dataAccessException)
+                    {
+                        UIBLLInteraction.Instance.ShowException(dataAccessException);
+                        Equiom.Tco.Common.Application.Logger.LogException(dataAccessException);
+                    }
+                    catch (ArgumentException argumentException)
+                    {
+                        UIBLLInteraction.Instance.ShowException(argumentException);
+                        Equiom.Tco.Common.Application.Logger.LogException(argumentException);
+                    }
+                    if (savedExists)
+                    {
+                        XtraMessageBox.Show(ATTEPT_TO_DELETE_SAVED, UIBLLInteraction.ERROR_MESSAGE_TITLE, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Validates the collection on cell value change
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void gridViewUsers_CellValueChanged(object sender, DevExpress.XtraGrid.Views.Base.CellValueChangedEventArgs e)
+        {
+            InstantUsersValidation();
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        #region Companies
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Changes the state of the tab when the collection changes
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CompaniesCollection_ListChanged(object sender, ListChangedEventArgs e)
+        {
+            try
+            {
+                TabState = EntityTabState.Modified;
+                UpdateActionButtons();
+            }
+            catch (NullReferenceException nullReferenceException)
+            {
+                //UIBLLInteraction.Instance.ShowException(nullReferenceException);
+                Equiom.Tco.Common.Application.Logger.LogException(nullReferenceException);
+            }
+        }
+        
+        /// <summary>
+        /// Initilize the type of the new created company
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void gridViewCompanies_InitNewRow(object sender, InitNewRowEventArgs e)
+        {
+            var company = gridViewCompanies.GetRow(e.RowHandle) as LookUpBusinessObject;
+            if (company != null)
+            {
+                company.ObjectType = LookUpBusinessObjectType.Company;
+            }
+        }
+
+        /// <summary>
+        /// Removes the company from the collection or show/hide the filteration row
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void gridControlCompanies_EmbeddedNavigator_ButtonClick(object sender, NavigatorButtonClickEventArgs e)
+        {
+            switch (e.Button.ButtonType)
+            {
+                case NavigatorButtonType.Custom:
+                    e.Handled = true;
+                    if (e.Button.Hint == "ShowHideFilter")
+                    {
+                        gridViewCompanies.OptionsView.ShowAutoFilterRow = !gridViewCompanies.OptionsView.ShowAutoFilterRow;
+                    }
+                    break;
+                case NavigatorButtonType.Remove:
+                    e.Handled = true;
+                    bool savedExists = false;
+                    //Save the indexes of the selected rows in a hashtable in order to remove using
+                    //the index and not the handle in the gridview since it will change when deleting.
+                    int[] selectedObjectsHandles = gridViewCompanies.GetSelectedRows();
+                    var indexes = new Hashtable();
+                    foreach (int handle in selectedObjectsHandles)
+                    {
+                        if (handle >= 0)
+                        {
+                            indexes.Add(handle, gridViewCompanies.GetDataSourceRowIndex(handle));
+                        }
+                    }
+                    foreach (int handle in indexes.Keys)
+                    {
+                        try
+                        {
+                            //New objects will be removed from collection but not DB
+                            if (CompaniesCollection[handle].State == BusinessObjectState.New)
+                            {
+                                CompaniesCollection.RemoveAt(handle);
+                            }
+                            else
+                            {
+                                savedExists = true;
+                            }
+                        }
+                        catch (DataAccessException dataAccessException)
+                        {
+                            UIBLLInteraction.Instance.ShowException(dataAccessException);
+                            Equiom.Tco.Common.Application.Logger.LogException(dataAccessException);
+                        }
+                        catch (ArgumentException argumentException)
+                        {
+                            UIBLLInteraction.Instance.ShowException(argumentException);
+                            Equiom.Tco.Common.Application.Logger.LogException(argumentException);
+                        }
+                    }
+                    if (savedExists)
+                    {
+                        XtraMessageBox.Show(ATTEPT_TO_DELETE_SAVED, UIBLLInteraction.ERROR_MESSAGE_TITLE, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Validates the collection on cell value change
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void gridViewCompanies_CellValueChanged(object sender, DevExpress.XtraGrid.Views.Base.CellValueChangedEventArgs e)
+        {
+            InstantCompaniesValidation();
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        #region Customers
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Changes the state of the tab when the collection changes
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CustomersCollection_ListChanged(object sender, ListChangedEventArgs e)
+        {
+            try
+            {
+                TabState = EntityTabState.Modified;
+                UpdateActionButtons();
+            }
+            catch (NullReferenceException nullReferenceException)
+            {
+                //UIBLLInteraction.Instance.ShowException(nullReferenceException);
+                Equiom.Tco.Common.Application.Logger.LogException(nullReferenceException);
+            }
+        }
+        
+        /// <summary>
+        /// Removes the company from the collection or show/hide the filteration row
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void gridControlCustomers_EmbeddedNavigator_ButtonClick(object sender, NavigatorButtonClickEventArgs e)
+        {
+            switch (e.Button.ButtonType)
+            {
+                case NavigatorButtonType.Custom:
+                    e.Handled = true;
+                    if (e.Button.Hint == "ShowHideFilter")
+                    {
+                        gridViewCustomers.OptionsView.ShowAutoFilterRow = !gridViewCustomers.OptionsView.ShowAutoFilterRow;
+                    }
+                    break;
+                case NavigatorButtonType.Remove:
+                    e.Handled = true;
+                    bool savedExists = false;
+                    int[] selectedObjectsHandles = gridViewCustomers.GetSelectedRows();
+                    var deletedCustomerTemp = new BindingList<Customer>();
+                    try
+                    {
+                        foreach (int handle in selectedObjectsHandles)
+                        {
+                            if (handle >= 0)
+                            {
+                                if (CustomersCollection[handle].State == BusinessObjectState.New)
+                                {
+                                    deletedCustomerTemp.Add(CustomersCollection[handle]);
+                                }
+                                else
+                                {
+                                    savedExists = true;
+                                }
+                            }
+                        }
+                        for (int i = 0; i < deletedCustomerTemp.Count; i++)
+                        {
+                            CustomersCollection.Remove(deletedCustomerTemp[i]);
+                        }
+                    }
+                    catch (DataAccessException dataAccessException)
+                    {
+                        UIBLLInteraction.Instance.ShowException(dataAccessException);
+                        Equiom.Tco.Common.Application.Logger.LogException(dataAccessException);
+                    }
+                    catch (ArgumentException argumentException)
+                    {
+                        UIBLLInteraction.Instance.ShowException(argumentException);
+                        Equiom.Tco.Common.Application.Logger.LogException(argumentException);
+                    }
+                    if (savedExists)
+                    {
+                        XtraMessageBox.Show(ATTEPT_TO_DELETE_SAVED, UIBLLInteraction.ERROR_MESSAGE_TITLE, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void gridViewCustomers_CellValueChanged(object sender, DevExpress.XtraGrid.Views.Base.CellValueChangedEventArgs e)
+        {
+            InstantCustomersValidation();
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        #region Other
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Clears the filter after opening
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DropDown_QueryPopUp(object sender, CancelEventArgs e)
+        {
+            ((GridLookUpEdit) sender).Properties.View.ActiveFilterCriteria = string.Empty;
+            ((GridLookUpEdit) sender).Properties.View.ActiveFilterString = string.Empty;
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion   
+        //---------------------------------------------------------------------------------------------
+        #endregion   
+    }
+}

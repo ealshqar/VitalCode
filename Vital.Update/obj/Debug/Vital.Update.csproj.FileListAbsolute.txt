@@ -1,0 +1,9 @@
+D:\vitalCode\Vital Code - Bayan\Vital Handover\Source\Code Project\1- Dev\VitalExpertCode\Code\Vital\Vital.Update\bin\Debug\Vital.Update.dll
+D:\vitalCode\Vital Code - Bayan\Vital Handover\Source\Code Project\1- Dev\VitalExpertCode\Code\Vital\Vital.Update\bin\Debug\Vital.Update.pdb
+D:\vitalCode\Vital Code - Bayan\Vital Handover\Source\Code Project\1- Dev\VitalExpertCode\Code\Vital\Vital.Update\obj\Debug\Vital.Update.dll
+D:\vitalCode\Vital Code - Bayan\Vital Handover\Source\Code Project\1- Dev\VitalExpertCode\Code\Vital\Vital.Update\obj\Debug\Vital.Update.pdb
+F:\vitalCode\Vital Code - Bayan\Vital Handover\Source\Code Project\1- Dev\VitalExpertCode\Code\Vital\Vital.Update\bin\Debug\Vital.Update.dll
+F:\vitalCode\Vital Code - Bayan\Vital Handover\Source\Code Project\1- Dev\VitalExpertCode\Code\Vital\Vital.Update\bin\Debug\Vital.Update.pdb
+F:\vitalCode\Vital Code - Bayan\Vital Handover\Source\Code Project\1- Dev\VitalExpertCode\Code\Vital\Vital.Update\obj\Debug\Vital.Update.csprojResolveAssemblyReference.cache
+F:\vitalCode\Vital Code - Bayan\Vital Handover\Source\Code Project\1- Dev\VitalExpertCode\Code\Vital\Vital.Update\obj\Debug\Vital.Update.dll
+F:\vitalCode\Vital Code - Bayan\Vital Handover\Source\Code Project\1- Dev\VitalExpertCode\Code\Vital\Vital.Update\obj\Debug\Vital.Update.pdb

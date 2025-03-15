@@ -1,0 +1,1061 @@
+//////////////////////////////////////////////////////////////////////////////
+//  
+//  <sourcefile name="XtraTabPageBuilding.cs" creationdate="8/12/08" owner="anasa" >
+//
+//      <project>McKinstry TCO Application</project>
+//  
+//      <description>The tab page of the building entity</description>
+//      
+//      <copyright year="2008" company="McKinstry">
+//          <notice>
+//              Copyright © 2008 McKinstry. All rights reserved
+//  
+//              Developed for McKinstry by
+//                  Equiom - MENA
+//                  www.equiom.com
+//          </notice>
+//  
+//  	<history date="8/12/08" modby="anasa">created</history>
+//  
+//////////////////////////////////////////////////////////////////////////////
+
+#region Library Calls
+//---------------------------------------------------------------------------------------------
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Windows.Forms;
+using DevExpress.XtraEditors;
+using DevExpress.XtraEditors.Controls;
+using DevExpress.XtraTab;
+using Equiom.Tco.BusinessLogicLayer;
+using TCO.DesktopClientDevexpress.Properties;
+using DevExpress.XtraGrid.Views.Grid.ViewInfo;
+using Equiom.Tco.DataAccessLayer;
+//---------------------------------------------------------------------------------------------
+#endregion
+
+namespace TCO.DesktopClientDevexpress
+{
+    public partial class XtraTabPageBuilding : XtraTabPageEntity
+    {
+        #region Constants
+        //---------------------------------------------------------------------------------------------
+        private const string ADD_COMPONENTS_ERROR = "You are not allowed to add component before saving the building";
+        private const string PRIMARY_CONTACT = "Primary Contact";
+        private const string OWNER = "Owner";
+        private const string ADMINISTRATOR = "Administrator";
+        private const string CREATE_NEW_BUILDING = "New Building";
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        #region Fields
+        //---------------------------------------------------------------------------------------------
+        private const string BUILDINGNAME_DATAMEMBER = "Name";
+        private const string PROJECTNAME_DATAMEMBER = "Name";
+        private const string BUILDINGNUMBER_DATAMEMBER = "Number";
+        private const string DATECREATED_DATAMEMBER = "ActualDate";
+        private const string DESCRIPTION_DATAMEMBER = "Description";
+        private const string CRMIID_DATAMEMBER = "CRMIID";
+        private const string GROSS_SF_DATAMEMBER = "GrossSF";
+        private const string IS_GROSS_SF_APPROXIMATED_DATAMEMBER = "IsGrossSFApproximated";
+        private const string NET_SF_DATAMEMBER = "NetSF";
+        private const string FLOOR_AREA_RATIO_DATAMEMBER = "FloorAreaRatio";
+        private const string RENTABLE_SF_DATAMEMBER = "RentableSF";
+        private const string PRIMARY_CONTACT_ID_DATAMEMBER = "PrimaryContactID";
+        private const string TOTAL_OCCUPANTS_DATAMEMBER = "TotalOccupants";
+        private const string YEAR_BUILT_DATAMEMBER = "YearBuilt";
+        private const string BUILDING_TYPES_DATAMEMBER = "BuildingTypes";
+        private const string COMPONENTS_DATAMEMBER = "Components";
+        private const string OWNER_ID_DATAMEMBER = "OwnerID";
+        private const string ADMINISTRATOR_ID_DATAMEMBER = "AdministratorID";
+        private const string ITRONID_DATAMEMBER = "ItronID";
+        private const string BUILDING_NARRATIVE_DATAMEMBER = "Narrative";
+        private const string ADDRESS_STREET_DATAMEMBER = "AddressStreet";
+        private const string ADDRESS_CITY_DATAMEMBER = "AddressCity";
+        private const string ADDRESS_ZIP_DATAMEMBER = "AddressZip";
+        private const string ADDRESS_STATE_DATAMEMBER = "AddressState";
+        private const string ADDRESS_COUNTRY_DATAMEMBER = "AddressCountry";
+
+        bool isDeletingComponents = false;
+        bool validateContacts = false;
+
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        #region Properties
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Return the tab object as a building after casting its value
+        /// </summary>
+        public Building TabBuilding
+        {
+            get
+            {
+                return TabObject as Building;
+            }
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        #region Constructors
+        //---------------------------------------------------------------------------------------------
+        public XtraTabPageBuilding()
+        {
+            InitializeComponent();
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        #region Methods
+        //---------------------------------------------------------------------------------------------
+        #region Overriding Methods
+        //---------------------------------------------------------------------------------------------
+        #region Initialization & Binding
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Initialize the building object of the tab if it is new tab and initialize some properties
+        /// </summary>
+        /// <param name="isNew">Determine if the tab is new or opened tab</param>
+        public override void PerformSpecificIntializationSteps(bool isNew, EntityBusinessObject parentObject)
+        {
+            TabTypeImage = Resources.Building;
+            TabObject = (TabObject == null) ? new Building() : TabObject;
+            if (isNew)
+            {
+                if (TabBuilding != null)
+                {
+                    //TabBuilding.OwnerID = 1;
+                    //TabBuilding.PrimaryContactID = 1;
+                    AddInitialNecessaryContacts();
+                }
+                SetParentID(parentObject);
+                textEditBuildingName.Focus();                
+            }            
+        }
+
+        /// <summary>
+        /// Bind the controls of the building tab
+        /// </summary>
+        public override void SetBinding()
+        {
+            FillLookUps();
+
+            spinEditGrossSF.Properties.MaxValue = int.MaxValue;
+            spinEditGrossSF.Properties.MinValue = 0;
+
+            gridColumnCustomerId.FieldName = BuildingContact.CUSTOMER_ID_PROPERTY_NAME;
+            gridColumnRoleId.FieldName = BuildingContact.BUILDING_ROLE_ID_PROPERTY_NAME;
+            gridColumnContactEmail.FieldName = BuildingContact.EMAIL_PROPERTY_NAME;
+            gridColumnContactPhone.FieldName = BuildingContact.PHONE_PROPERTY_NAME;
+
+            XtraTabPageEntity.BindControl(ParentTab                     , TEXT_PROPERTYNAME      , TabObject, Building.NAME_PROPERTY_NAME);
+            XtraTabPageEntity.BindControl(textEditBuildingName          , EDITVALUE_PROPERTYNAME , TabObject, Building.NAME_PROPERTY_NAME);
+            XtraTabPageEntity.BindControl(textEditCrmId                 , EDITVALUE_PROPERTYNAME , TabObject, Building.CRM_ID_PROPERTY_NAME);
+            XtraTabPageEntity.BindControl(spinEditYearBuilt             , EDITVALUE_PROPERTYNAME , TabObject, Building.YEAR_BUILT_PROPERTY_NAME);
+            XtraTabPageEntity.BindControl(spinEditTotalOccupants        , EDITVALUE_PROPERTYNAME , TabObject, Building.TOTAL_OCCUPANTS_PROPERTY_NAME);
+            XtraTabPageEntity.BindControl(spinEditFloorAreaRatio        , EDITVALUE_PROPERTYNAME , TabObject, Building.FLOOR_AREA_RATIO_PROPERTY_NAME);
+            XtraTabPageEntity.BindControl(spinEditRentableSF            , EDITVALUE_PROPERTYNAME , TabObject, Building.RENTABLE_SF_PROPERTY_NAME);
+            XtraTabPageEntity.BindControl(spinEditNetSF                 , EDITVALUE_PROPERTYNAME , TabObject, Building.NET_SF_PROPERTY_NAME);
+            XtraTabPageEntity.BindControl(spinEditGrossSF               , EDITVALUE_PROPERTYNAME , TabObject, Building.GROSS_SF_PROPERTY_NAME);
+            XtraTabPageEntity.BindControl(checkEditISGrossSFApproximated, EDITVALUE_PROPERTYNAME , TabObject, Building.IS_GROSS_SF_APPROXIMATED_PROPERTY_NAME);
+            XtraTabPageEntity.BindControl(memoEditBuildingNarrative     , TEXT_PROPERTYNAME      , TabObject, Building.NARRATIVE_PROPERTY_NAME);
+            XtraTabPageEntity.BindControl(textEditCountry               , EDITVALUE_PROPERTYNAME , TabObject, Building.ADDRESS_COUNTRY_PROPERTY_NAME);
+            XtraTabPageEntity.BindControl(textEditState                 , EDITVALUE_PROPERTYNAME , TabObject, Building.ADDRESS_STATE_PROPERTY_NAME);
+            XtraTabPageEntity.BindControl(textEditCity                  , EDITVALUE_PROPERTYNAME , TabObject, Building.ADDRESS_CITY_PROPERTY_NAME);
+            XtraTabPageEntity.BindControl(textEditZip                   , EDITVALUE_PROPERTYNAME , TabObject, Building.ADDRESS_ZIP_PROPERTY_NAME);
+            XtraTabPageEntity.BindControl(textEditAddressStreet1        , EDITVALUE_PROPERTYNAME , TabObject, Building.ADDRESS_STREET_1_PROPERTY_NAME);
+            XtraTabPageEntity.BindControl(textEditAddressStreet2        , EDITVALUE_PROPERTYNAME , TabObject, Building.ADDRESS_STREET_2_PROPERTY_NAME);
+            XtraTabPageEntity.BindControl(gridControlComponentsAdded    , DATASOURCE_PROPERTYNAME, TabObject, Building.COMPONENTS_PROPERTY_NAME);
+            XtraTabPageEntity.BindControl(gridControlBuildingTypeAdd    , DATASOURCE_PROPERTYNAME, TabObject, Building.BUILDING_TYPES_PROPERTY_NAME);
+            XtraTabPageEntity.BindControl(gridControlBuildingContacts   , DATASOURCE_PROPERTYNAME, TabObject, Building.BUILDING_CONTACTS_PROPERTY_NAME);
+            XtraTabPageEntity.BindControl(lookUpEditProjectId           , EDITVALUE_PROPERTYNAME , TabObject, Building.PROJECT_ID_PROPERTY_NAME);
+            //XtraTabPageEntity.BindControl(gridLookUpEditAdministrator   , EDITVALUE_PROPERTYNAME, TabObject, Building.ADMINISTRATOR_ID_PROPERTY_NAME);
+            AddChildernChangesListeners();
+            TabBuilding.ParentProject.PropertyChanged+=new System.ComponentModel.PropertyChangedEventHandler(ParentProject_PropertyChanged);
+            dxErrorProviderMain.DataSource = TabBuilding;
+            dxErrorProviderMain.DataMember = Building.BUILDING_CONTACTS_PROPERTY_NAME;
+            dxErrorProviderMain.ClearErrors();
+        }
+
+        /// <summary>
+        /// Sets the edit mode of the building tab
+        /// </summary>
+        /// <param name="isReadOnly">if true then the tab will be in ready only mode</param>
+        public override void SetEditMode(bool isReadOnly, bool isChangedByUser)
+        {
+            textEditCrmId.Properties.ReadOnly = isReadOnly;
+            textEditBuildingName.Properties.ReadOnly = isReadOnly;
+            textEditCity.Properties.ReadOnly = isReadOnly;
+            textEditCountry.Properties.ReadOnly = isReadOnly;
+            spinEditFloorAreaRatio.Properties.ReadOnly = isReadOnly;
+            spinEditGrossSF.Properties.ReadOnly = isReadOnly;
+            spinEditNetSF.Properties.ReadOnly = isReadOnly;
+            spinEditRentableSF.Properties.ReadOnly = isReadOnly;
+            textEditState.Properties.ReadOnly = isReadOnly;
+            spinEditTotalOccupants.Properties.ReadOnly = isReadOnly;
+            spinEditYearBuilt.Properties.ReadOnly = isReadOnly;
+            textEditZip.Properties.ReadOnly = isReadOnly;
+            memoEditBuildingNarrative.Properties.ReadOnly = isReadOnly;
+            popupContainerEditBuildingType.Properties.ReadOnly = isReadOnly;
+            textEditAddressStreet1.Properties.ReadOnly = isReadOnly;
+            textEditAddressStreet2.Properties.ReadOnly = isReadOnly;
+            gridLookUpEditAdministrator.Properties.ReadOnly = isReadOnly;
+
+            checkEditISGrossSFApproximated.Enabled = !isReadOnly;
+
+            gridControlComponentsAdded.EmbeddedNavigator.Buttons.Append.Visible = !isReadOnly;
+            gridControlComponentsAdded.EmbeddedNavigator.Buttons.Remove.Visible = !isReadOnly;
+            gridControlBuildingTypeAdd.EmbeddedNavigator.Buttons.Remove.Visible = !isReadOnly;
+
+            gridViewBuildingContacts.OptionsBehavior.Editable = !isReadOnly;
+            gridControlBuildingContacts.EmbeddedNavigator.Buttons.Append.Visible = !isReadOnly;
+            gridControlBuildingContacts.EmbeddedNavigator.Buttons.Remove.Visible = !isReadOnly;
+            gridControlBuildingContacts.EmbeddedNavigator.Buttons.Edit.Visible = !isReadOnly;
+            gridControlBuildingContacts.EmbeddedNavigator.Buttons.CancelEdit.Visible = !isReadOnly;
+            gridControlBuildingContacts.EmbeddedNavigator.Buttons.EndEdit.Visible = !isReadOnly;
+        }
+
+        /// <summary>
+        /// Fill the lookup controls with the collections of objects from the cache
+        /// </summary>
+        private void FillLookUps()
+        {
+            try
+            {
+                lookUpEditProjectId.Properties.DataSource = UIBLLInteraction.Instance.ProjectsCollection;
+                gridControlBuildingTypeView.DataSource = BusinessLayerCache.Instance.GetAllBuildingTypes();
+                repositoryItemGridLookUpEditCustomerId.DataSource = BusinessLayerCache.Instance.GetAllCustomers();
+                repositoryItemGridLookUpEditRole.DataSource = BusinessLayerCache.Instance.GetAllBuildingRoles();
+
+            }
+            catch (DataAccessException dataAccessException)
+            {
+                Equiom.Tco.Common.Application.Logger.LogException(dataAccessException);
+            }
+            gridLookUpEditAdministrator.Properties.DataSource = BusinessLayerCache.Instance.GetAllUsers();
+        }
+
+        /// <summary>
+        /// Add handlers to child collections to allow the parent building to know that a child change and so to
+        /// update the tab status and enable the apply button for instance
+        /// </summary>
+        private void AddChildernChangesListeners()
+        {
+            try
+            {
+                TabBuilding.Components.ListChanged += new System.ComponentModel.ListChangedEventHandler(Components_ListChanged);
+                TabBuilding.Components.RaiseListChangedEvents = true;
+            }
+            catch (NullReferenceException nullReferenceException)
+            {
+                Equiom.Tco.Common.Application.Logger.LogException(nullReferenceException);
+            }
+
+            try
+            {
+                TabBuilding.BuildingTypes.ListChanged += new System.ComponentModel.ListChangedEventHandler(BuildingTypes_ListChanged);
+                TabBuilding.BuildingTypes.RaiseListChangedEvents = true;
+            }
+            catch (NullReferenceException nullReferenceException)
+            {
+                Equiom.Tco.Common.Application.Logger.LogException(nullReferenceException);
+            }
+
+            try
+            {
+                TabBuilding.BuildingContacts.ListChanged += new System.ComponentModel.ListChangedEventHandler(BuildingContacts_ListChanged);
+                TabBuilding.BuildingContacts.RaiseListChangedEvents = true;
+            }
+            catch (NullReferenceException nullReferenceException)
+            {
+                Equiom.Tco.Common.Application.Logger.LogException(nullReferenceException);
+            }
+        }
+
+        /// <summary>
+        /// Unregisters the handlers in the tab
+        /// </summary>
+        public override void ClearHandlers()
+        {
+            try
+            {
+                TabBuilding.Components.ListChanged -= new System.ComponentModel.ListChangedEventHandler(Components_ListChanged);
+                TabBuilding.BuildingTypes.ListChanged -= new System.ComponentModel.ListChangedEventHandler(BuildingTypes_ListChanged);
+                TabBuilding.BuildingContacts.ListChanged -= new System.ComponentModel.ListChangedEventHandler(BuildingContacts_ListChanged);
+            }
+            catch (NullReferenceException nullReferenceException)
+            {
+                MessageBox.Show(CLEAR_HANDLERS_ERROR, UIBLLInteraction.ERROR_MESSAGE_TITLE, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        #region Parent related actions
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Add the ID of the current building object into the dictionary if it was enabled for editing
+        /// </summary>
+        public override void AddParentIDToEditDictionary()
+        {
+            try
+            {
+                UIBLLInteraction.Instance.LockProject(GetParentProjectID(),
+                    UIBLLInteraction.Instance.ProjectsNav.GetObjectByID<Project>(GetParentProjectID()));
+            }
+            catch (NullReferenceException nullReferenceException)
+            {
+                Equiom.Tco.Common.Application.Logger.LogException(nullReferenceException);
+            }
+        }
+
+        /// <summary>
+        /// Add the current building object into the collection of the parent project if it was new building
+        /// </summary>
+        public override void AddBusinessObjectToCollection()
+        {
+            try
+            {
+                Project parentProject = UIBLLInteraction.Instance.ProjectsNav.GetObjectByID<Project>(GetParentProjectID()) as Project;
+                parentProject.Buildings.AddSavedObject(TabBuilding);
+            }
+            catch (NullReferenceException nullReferenceException)
+            {
+                Equiom.Tco.Common.Application.Logger.LogException(nullReferenceException);
+            }
+        }
+
+        /// <summary>
+        /// Get the parent ID for the current building
+        /// </summary>
+        /// <returns></returns>
+        public override int GetParentProjectID()
+        {
+            int Id = 0;
+            try
+            {
+                if (TabBuilding != null)
+                {
+                    Id = (TabBuilding.ProjectId == null) ? 0 : TabBuilding.ProjectId.Value;
+                }
+            }
+            catch (NullReferenceException nullReferenceException)
+            {
+                Equiom.Tco.Common.Application.Logger.LogException(nullReferenceException);
+            }
+            return Id;
+        }
+
+        /// <summary>
+        /// Set the parent ID for the current building object
+        /// </summary>
+        /// <param name="parentObject"></param>
+        public override void SetParentID(EntityBusinessObject parentObject)
+        {
+            if (TabBuilding != null && parentObject != null)
+            {
+                TabBuilding.ProjectId = (parentObject as Project).Id;
+                TabBuilding.ParentProject = parentObject as Project;
+            }
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        #region Save related actions
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Checks if a property change should notify the tab
+        /// </summary>
+        /// <param name="propertyName"></param>
+        /// <returns></returns>
+        public override bool ShouldPropertyNotifyTab(string propertyName)
+        {
+            if (propertyName == Building.COMPONENTS_PROPERTY_NAME)
+            {
+                if (isDeletingComponents)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else if (propertyName == Building.PROJECT_ID_PROPERTY_NAME)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        /// <summary>
+        /// Posts the values in the controls that are not yet comitted to the datasource because the user
+        /// clicked save or cancel without leaving the editor to another editor first.
+        /// </summary>
+        public override void PostValues()
+        {
+            GridViewPostValues(gridViewBuildingContacts);
+            GridViewPostValues(gridViewBuildingTypesAdd);
+
+            textEditAddressStreet1.DoValidate();
+            textEditAddressStreet2.DoValidate();
+            textEditBuildingName.DoValidate();
+            textEditCity.DoValidate();
+            textEditCountry.DoValidate();
+            textEditCrmId.DoValidate();
+            textEditState.DoValidate();
+            spinEditYearBuilt.DoValidate();
+            textEditZip.DoValidate();
+
+            memoEditBuildingNarrative.DoValidate();
+
+            spinEditFloorAreaRatio.DoValidate();
+            spinEditGrossSF.DoValidate();
+            spinEditNetSF.DoValidate();
+            spinEditRentableSF.DoValidate();
+            spinEditTotalOccupants.DoValidate();
+
+            gridLookUpEditAdministrator.DoValidate();
+        }
+
+        /// <summary>
+        /// Apply project's specific actions after saving a project
+        /// </summary>
+        public override void AfterSaveActions()
+        {
+            UIBLLInteraction.Instance.RefreshBuildingsView();
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        #region Validation
+        //---------------------------------------------------------------------------------------------
+        public override void ShowHideErrorIcons()
+        {
+            try
+            {
+                bool areAddressesInvalid =
+                       IsPropertyInvalid(Building.ADDRESS_CITY_FRIENDLY_PROPERTY_NAME) ||
+                       IsPropertyInvalid(Building.ADDRESS_COUNTRY_FRIENDLY_PROPERTY_NAME) ||
+                       IsPropertyInvalid(Building.ADDRESS_STATE_FRIENDLY_PROPERTY_NAME) ||
+                       IsPropertyInvalid(Building.ADDRESS_STREET_1_FRIENDLY_PROPERTY_NAME) ||
+                       IsPropertyInvalid(Building.ADDRESS_STREET_2_FRIENDLY_PROPERTY_NAME) ||
+                       IsPropertyInvalid(Building.ADDRESS_ZIP_FRIENDLY_PROPERTY_NAME);
+
+
+                string cityError     = GetErrorText(Building.ADDRESS_CITY_FRIENDLY_PROPERTY_NAME);
+                string countryError  = GetErrorText(Building.ADDRESS_COUNTRY_FRIENDLY_PROPERTY_NAME);
+                string stateError    = GetErrorText(Building.ADDRESS_STATE_FRIENDLY_PROPERTY_NAME);
+                string address1Error = GetErrorText(Building.ADDRESS_STREET_1_FRIENDLY_PROPERTY_NAME);
+                string address2Error = GetErrorText(Building.ADDRESS_STREET_2_FRIENDLY_PROPERTY_NAME);
+                string zipError      = GetErrorText(Building.ADDRESS_ZIP_FRIENDLY_PROPERTY_NAME);
+                string totalError    = string.Empty;
+
+                bool areBuildingTypesInvalid = IsPropertyInvalid(Building.BUILDING_TYPES_FRIENDLY_PROPERTY_NAME);
+
+                if (cityError != string.Empty)
+                {
+                    totalError += "- " + cityError + ".\n";
+                }
+
+                if (countryError != string.Empty)
+                {
+                    totalError += "- " + countryError + ".\n";
+                }
+
+                if (stateError != string.Empty)
+                {
+                    totalError += "- " + stateError + ".\n";
+                }
+
+                if (address1Error != string.Empty)
+                {
+                    totalError += "- " + address1Error + ".\n";
+                }
+                if (address2Error != string.Empty)
+                {
+                    totalError += "- " + address2Error + ".\n";
+                }
+                if (totalError != string.Empty)
+                {
+                    totalError += "- " + totalError + ".";
+                }
+                xtraTabPageAddress.Image   = (areAddressesInvalid) ? Resources.Error : null;
+                xtraTabPageAddress.Tooltip = (areAddressesInvalid) ? totalError : string.Empty;
+
+                if (areAddressesInvalid)
+                {
+                    xtraTabPageDetails.Image   = Resources.Error;
+                    xtraTabPageDetails.Tooltip = "Some controls are invalid";
+                }
+                else
+                {
+                    xtraTabPageDetails.Image   = null;
+                    xtraTabPageDetails.Tooltip = string.Empty;
+                }
+
+                layoutControlGroupBuildingTypes.CaptionImage = (areBuildingTypesInvalid) ? Resources.Error : null;
+                layoutControlGroupBuildingTypes.OptionsToolTip.ToolTip = (areBuildingTypesInvalid) ? GetErrorText(Building.BUILDING_TYPES_FRIENDLY_PROPERTY_NAME) : string.Empty;
+
+                bool areContactsInvalid = IsPropertyInvalid(Building.BUILDING_CONTACTS_FRIENDLY_PROPERTY_NAME);
+
+                layoutControlGroupBuildingContacts.CaptionImage = (areContactsInvalid) ? Resources.Error : null;
+                layoutControlGroupBuildingContacts.OptionsToolTip.ToolTip = (areContactsInvalid) ? GetErrorText(Building.BUILDING_CONTACTS_FRIENDLY_PROPERTY_NAME) : string.Empty;
+
+                bool isCRMIDInvalid          = IsPropertyInvalid(Building.CRM_ID_PROPERTY_NAME);
+                bool isNameInvalid           = IsPropertyInvalid(Building.NAME_PROPERTY_NAME);
+                bool isYearBuildInvalid      = IsPropertyInvalid(Building.YEAR_BUILT_FRIENDLY_PROPERTY_NAME);
+                bool isTotalOccupantsInvalid = IsPropertyInvalid(Building.TOTAL_OCCUPANTS_FRIENDLY_PROPERTY_NAME);
+                bool isGrossSFInvalid        = IsPropertyInvalid(Building.GROSS_SF_FRIENDLY_PROPERTY_NAME);
+                //bool isAdminInvalid          = IsPropertyInvalid(Building.ADMINISTRATOR_ID_FRIENDLY_PROPERTY_NAME);
+                
+
+                if (isCRMIDInvalid ||
+                    isNameInvalid ||
+                    isYearBuildInvalid ||
+                    isTotalOccupantsInvalid ||
+                    isGrossSFInvalid ||
+                    areBuildingTypesInvalid ||
+                    areContactsInvalid/*||
+                    isAdminInvalid*/)
+                {
+                    xtraTabPageGeneralInformation.Image = Resources.Error;
+                    xtraTabPageGeneralInformation.Tooltip = "Some controls are invalid";
+                }
+                else
+                {
+                    xtraTabPageGeneralInformation.Image = null;
+                    xtraTabPageGeneralInformation.Tooltip = string.Empty;
+                }
+            }
+            catch (NullReferenceException nullReferenceException)
+            {
+                Equiom.Tco.Common.Application.Logger.LogException(nullReferenceException);
+            }
+
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        #region Binding Methods
+        //---------------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        #region Building & Modules Specific logic
+        //---------------------------------------------------------------------------------------------
+        #region Components
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Opens a new tab to add a new component to the current building
+        /// </summary>
+        private void AddNewComponent()
+        {
+            try
+            {
+                if (TabBuilding.State != BusinessObjectState.New)
+                {
+                    UIBLLInteraction.Instance.New(EntityType.Components, TabObject);
+                }
+                else
+                {
+                    MessageBox.Show(ADD_COMPONENTS_ERROR, UIBLLInteraction.ERROR_MESSAGE_TITLE,MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (NullReferenceException nullReferenceException)
+            {
+                Equiom.Tco.Common.Application.Logger.LogException(nullReferenceException);
+            }
+        }
+
+        /// <summary>
+        /// Open the current double clicked component
+        /// </summary>
+        private void OpenComponent()
+        {
+            Component openedComponent = gridViewComponentsAdd.GetFocusedRow() as Component;
+            try
+            {
+                EntityBusinessObject openedObject = openedComponent as EntityBusinessObject;
+                if (openedObject != null)
+                {
+                    UIBLLInteraction.Instance.Open(ref openedObject);
+                }
+                else
+                {
+                    MessageBox.Show(ITEM_HAS_NO_VALUE_ERROR, UIBLLInteraction.ERROR_MESSAGE_TITLE, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (NullReferenceException nullReferenceException)
+            {
+                Equiom.Tco.Common.Application.Logger.LogException(nullReferenceException);
+            }
+        }
+
+        /// <summary>
+        /// Determines if the component is assigned or not
+        /// </summary>
+        /// <param name="component"></param>
+        /// <returns></returns>
+        private bool IsComponentAssigned(Component component)
+        {
+            bool isAssigned = false;
+            try
+            {
+                Project parentProject = TabBuilding.ParentProject;
+                if (parentProject != null && component != null)
+                {
+                    foreach (Scenario scenario in parentProject.Scenarios)
+                    {
+                        foreach (ScenarioComponent scenarioComponent in scenario.Components)
+                        {
+                            if (scenarioComponent.Component == component)
+                            {
+                                isAssigned = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            catch (NullReferenceException nullReferenceException)
+            {
+                Equiom.Tco.Common.Application.Logger.LogException(nullReferenceException);
+            }
+            return isAssigned;
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        #region BuildingTypes
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Add a checked building type to the list of building types selected
+        /// </summary>
+        private void AddCheckedBuildingTypes()
+        {
+            int[] selectedTypes = gridViewBuildingTypeView.GetSelectedRows();
+            if (selectedTypes.Length != 0)
+            {
+                Dictionary<int, BuildingBuildingType> buildingAssignedTypes = new Dictionary<int, BuildingBuildingType>();
+                try
+                {
+                    foreach (BuildingBuildingType assignedType in TabBuilding.BuildingTypes)
+                    {
+                        try
+                        {
+                            buildingAssignedTypes.Add(assignedType.BuildingTypeId, assignedType);
+                        }
+                        catch (ArgumentException argumentException)
+                        {
+                            Equiom.Tco.Common.Application.Logger.LogException(argumentException);
+                        }
+                      
+                    }
+                }
+                catch (NullReferenceException nullReferenceException)
+                {
+                    Equiom.Tco.Common.Application.Logger.LogException(nullReferenceException);
+                    //UIBLLInteraction.Instance.ShowException(nullReferenceException);
+                }
+
+                foreach (int handle in selectedTypes)
+                {
+                    gridViewBuildingTypeView.UnselectRow(handle);
+                    LookUpBusinessObject lookUpBusinessObject = gridViewBuildingTypeView.GetRow(handle) as
+                    LookUpBusinessObject;
+
+                    BuildingBuildingType checkType;
+                    try
+                    {
+                        if (lookUpBusinessObject.Id != null)
+                        {
+                            buildingAssignedTypes.TryGetValue(lookUpBusinessObject.Id.Value, out checkType);
+                            if (checkType == null)
+                            {
+                                checkType = new BuildingBuildingType(lookUpBusinessObject);
+                                try
+                                {
+                                    TabBuilding.BuildingTypes.Add(checkType);
+                                }
+                                catch (ArgumentException argumentException)
+                                {
+                                    Equiom.Tco.Common.Application.Logger.LogException(argumentException);
+                                }
+                            }
+                        }
+                    }
+                    catch (NullReferenceException nullReferenceException)
+                    {
+                        Equiom.Tco.Common.Application.Logger.LogException(nullReferenceException);
+                        //UIBLLInteraction.Instance.ShowException(nullReferenceException);
+                    }
+                }
+            }
+            popupContainerControlBuildingType.OwnerEdit.ClosePopup();
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        #region Contacts
+        //---------------------------------------------------------------------------------------------
+        private void AddInitialNecessaryContacts()
+        {
+            BuildingContact owner = new BuildingContact();
+            owner.BuildingRoleId = 9;
+
+            BuildingContact primaryContact = new BuildingContact();
+            primaryContact.BuildingRoleId = 10;
+
+            TabBuilding.BuildingContacts.Add(owner);
+            TabBuilding.BuildingContacts.Add(primaryContact);
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        //---------------------------------------------------------------------------------------------
+        #endregion
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        #region Handlers
+        //---------------------------------------------------------------------------------------------
+        #region BuildingTypes
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Calls a method to add checked building types to the building
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void simpleButtonAddBuildingType_Click(object sender, EventArgs e)
+        {
+            AddCheckedBuildingTypes();
+        }
+
+        /// <summary>
+        /// Calls a method to remove the selected building types
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void gridControlBuildingTypeAdd_EmbeddedNavigator_ButtonClick(object sender, NavigatorButtonClickEventArgs e)
+        {
+            switch (e.Button.ButtonType)
+            {
+                case NavigatorButtonType.Remove:
+                    e.Handled = true;
+                    try
+                    {
+                        DeleteSelectedGridViewObjects(gridViewBuildingTypesAdd, TabBuilding.BuildingTypes);
+                    }
+                    catch (NullReferenceException nullReferenceException)
+                    {
+                        Equiom.Tco.Common.Application.Logger.LogException(nullReferenceException);
+                    }
+                    break;
+                case NavigatorButtonType.Custom:
+                    e.Handled = true;
+                    if (e.Button.Hint == "ShowHideFilter")
+                    {
+                        gridViewBuildingTypesAdd.OptionsView.ShowAutoFilterRow = !gridViewBuildingTypesAdd.OptionsView.ShowAutoFilterRow;
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        #region Components
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Calls a method to add new component or delete selected components when clicking navigator buttons
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void gridControlComponentsAdded_EmbeddedNavigator_ButtonClick(object sender, NavigatorButtonClickEventArgs e)
+        {
+            switch (e.Button.ButtonType)
+            {
+                case NavigatorButtonType.Append:
+                    e.Handled = true;
+                    AddNewComponent();
+                    break;
+                case NavigatorButtonType.Remove:
+                    isDeletingComponents = true;
+                    e.Handled = true;
+                    bool isAllComponentsClosed = true;
+                    bool isAllComponentsUnassigned = true;
+
+                    //We use this to cancel responding the events and refill the group again after the 
+                    //removing is done
+                    //UIBLLInteraction.Instance.ComponentsGroup.RespondToEvent = false;
+                    UIBLLInteraction.Instance.AllowComponentsFilteration = false;
+
+                    int[] selectedComponents = gridViewComponentsAdd.GetSelectedRows();
+                    Hashtable indexes = new Hashtable();
+                    foreach (int handle in selectedComponents)
+                    {
+                        indexes.Add(handle, gridViewComponentsAdd.GetDataSourceRowIndex(handle));
+                    }
+
+                    foreach (int handle in indexes.Keys)
+                    {
+                        int index = -1;
+                        try
+                        {
+                            index = System.Convert.ToInt32(indexes[handle]);
+                        }
+                        catch (OverflowException OverflowException)
+                        {
+                            Equiom.Tco.Common.Application.Logger.LogException(OverflowException);
+                        }
+                        catch (InvalidCastException invalidCastException)
+                        {
+                            Equiom.Tco.Common.Application.Logger.LogException(invalidCastException);
+                        }
+                        catch (FormatException formatException)
+                        {
+                            Equiom.Tco.Common.Application.Logger.LogException(formatException);
+                        }
+                        EntityBusinessObject objectToDelete;
+                        Component componentToDelete;
+                        if (TabBuilding != null)
+                        {
+                            objectToDelete = TabBuilding.Components[index] as EntityBusinessObject;
+                            componentToDelete = TabBuilding.Components[index] as Component;
+                            bool isAssigned = false;
+                            if (componentToDelete != null)
+                            {
+                                if (IsComponentAssigned(componentToDelete))
+                                {
+                                    isAllComponentsUnassigned = false;
+                                    isAssigned = true;
+                                }
+                            }
+                            if (objectToDelete != null)
+                            {
+                                if (!isAssigned)
+                                {
+                                    if (UIBLLInteraction.Instance.CheckIfTabOpened(objectToDelete, false,0))
+                                    {
+                                        isAllComponentsClosed = false;
+                                    }
+                                    else
+                                    {
+                                        try
+                                        {
+                                            TabBuilding.Components.RemoveAt(index);
+                                        }
+                                        catch (DataAccessException dataAccessException)
+                                        {
+                                            UIBLLInteraction.Instance.ShowException(dataAccessException);
+                                            Equiom.Tco.Common.Application.Logger.LogException(dataAccessException);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    //We use this to cancel responding the events and refill the group again after the 
+                    //removing is done
+                    //UIBLLInteraction.Instance.ComponentsGroup.FillGroup();
+                    //UIBLLInteraction.Instance.ComponentsGroup.RespondToEvent = true;
+                    UIBLLInteraction.Instance.AllowComponentsFilteration = true;
+
+                    if (!isAllComponentsClosed)
+                    {
+                        MessageBox.Show("Not all selected components were deleted, please close opened components to delete them.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    if (!isAllComponentsUnassigned)
+                    {
+                        MessageBox.Show("Not all selected components were deleted, components assigned to scenarios can't be deleted, please unassign them first.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    isDeletingComponents = false;
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Calls a method to open the selected component
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void gridControlComponentsAdded_DoubleClick(object sender, EventArgs e)
+        {
+            GridHitInfo gridViewComponentsAddHitInfo = gridViewComponentsAdd.CalcHitInfo(gridControlComponentsAdded.PointToClient(Cursor.Position));
+            if (gridViewComponentsAddHitInfo.InRow)
+            {
+                OpenComponent();
+            }
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        #region Project
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Open the parent project for the building in a tab page
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void lookUpEditProjectId_ButtonClick(object sender, ButtonPressedEventArgs e)
+        {
+            if (e.Button.Kind == ButtonPredefines.Ellipsis)
+            {
+                if(lookUpEditProjectId.EditValue !=null )
+                {
+                    int Id = -1;
+                    try
+                    {
+                        Id = Convert.ToInt32(lookUpEditProjectId.EditValue);
+                    }
+                    catch (OverflowException OverflowException)
+                    {
+                        Equiom.Tco.Common.Application.Logger.LogException(OverflowException);
+                    }
+                    catch (InvalidCastException invalidCastException)
+                    {
+                        Equiom.Tco.Common.Application.Logger.LogException(invalidCastException);
+                    }
+                    catch (FormatException formatException)
+                    {
+                        Equiom.Tco.Common.Application.Logger.LogException(formatException);
+                    }
+                    EntityBusinessObject parentProject = UIBLLInteraction.Instance.ProjectsNav.GetObjectByID<Project>(Id);
+                    if (parentProject != null)
+                    {
+                        UIBLLInteraction.Instance.Open(ref parentProject);
+                    }
+                }
+            }
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        #region Binding complete and property changed events
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Notify the tab that a change happend in it
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BuildingTypes_ListChanged(object sender, System.ComponentModel.ListChangedEventArgs e)
+        {
+            if (TabBuilding != null && TabState != EntityTabState.Unchanged)
+            {
+                if (e.ListChangedType == System.ComponentModel.ListChangedType.ItemAdded ||
+                    e.ListChangedType == System.ComponentModel.ListChangedType.ItemDeleted)
+                {
+                    TabBuilding.NotifyPropertyChanged(BUILDING_TYPES_DATAMEMBER);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Notify the tab that a change happend in it
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Components_ListChanged(object sender, System.ComponentModel.ListChangedEventArgs e)
+        {
+            if (TabBuilding != null && e.ListChangedType == System.ComponentModel.ListChangedType.ItemDeleted && TabState != EntityTabState.Unchanged)
+            {
+                TabBuilding.NotifyPropertyChanged(COMPONENTS_DATAMEMBER);
+            }
+        }
+
+        /// <summary>
+        /// Notify the tab that a change happend in it
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void BuildingContacts_ListChanged(object sender, System.ComponentModel.ListChangedEventArgs e)
+        {
+            if (TabBuilding != null && TabState != EntityTabState.Unchanged)
+            {
+                TabBuilding.NotifyPropertyChanged(Building.BUILDING_CONTACTS_PROPERTY_NAME);
+            }
+        }
+
+        /// <summary>
+        /// Handles showing or hiding the filter of the grid
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void gridControlBuildingContacts_EmbeddedNavigator_ButtonClick(object sender, NavigatorButtonClickEventArgs e)
+        {
+            switch (e.Button.ButtonType)
+            {
+                case NavigatorButtonType.Custom:
+                    e.Handled = true;
+                    if (e.Button.Hint == "ShowHideFilter")
+                    {
+                        gridViewBuildingContacts.OptionsView.ShowAutoFilterRow = !gridViewBuildingContacts.OptionsView.ShowAutoFilterRow;
+                    }
+                    break;
+                case NavigatorButtonType.Remove:
+                    e.Handled = true;
+                    try
+                    {
+                        DeleteSelectedGridViewObjects(gridViewBuildingContacts, TabBuilding.BuildingContacts);
+                    }
+                    catch (NullReferenceException nullReferenceException)
+                    {
+                        Equiom.Tco.Common.Application.Logger.LogException(nullReferenceException);
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Changes the state of the current tab when its parent is locked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ParentProject_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (TabBuilding != null)
+            {
+                if (TabBuilding.ParentProject != null)
+                {
+                    if (e.PropertyName == Project.STATUS_ID_PROPERTY_NAME)
+                    {
+                        SetEditMode(true, false);
+                        UpdateActionButtons();
+                    }
+                }
+            }
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        private void popupContainerEditBuildingType_QueryPopUp(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            gridViewBuildingTypeView.ActiveFilterCriteria = string.Empty;
+            gridViewBuildingTypeView.ActiveFilterString = string.Empty;
+        }
+
+        /// <summary>
+        /// Clears the filter after opening
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DropDown_QueryPopUp(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            (sender as GridLookUpEdit).Properties.View.ActiveFilterCriteria = string.Empty;
+            (sender as GridLookUpEdit).Properties.View.ActiveFilterString = string.Empty;
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+    }
+}

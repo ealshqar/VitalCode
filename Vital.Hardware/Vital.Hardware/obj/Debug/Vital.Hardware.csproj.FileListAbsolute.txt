@@ -1,0 +1,10 @@
+D:\vitalCode\Vital Code - Bayan\Vital Handover\Source\Code Project\1- Dev\VitalExpertCode\Code\Vital\Vital.Hardware\Vital.Hardware\bin\Debug\Vital.Hardware.dll
+D:\vitalCode\Vital Code - Bayan\Vital Handover\Source\Code Project\1- Dev\VitalExpertCode\Code\Vital\Vital.Hardware\Vital.Hardware\bin\Debug\Vital.Hardware.pdb
+D:\vitalCode\Vital Code - Bayan\Vital Handover\Source\Code Project\1- Dev\VitalExpertCode\Code\Vital\Vital.Hardware\Vital.Hardware\obj\Debug\Vital.Hardware.csprojResolveAssemblyReference.cache
+D:\vitalCode\Vital Code - Bayan\Vital Handover\Source\Code Project\1- Dev\VitalExpertCode\Code\Vital\Vital.Hardware\Vital.Hardware\obj\Debug\Vital.Hardware.dll
+D:\vitalCode\Vital Code - Bayan\Vital Handover\Source\Code Project\1- Dev\VitalExpertCode\Code\Vital\Vital.Hardware\Vital.Hardware\obj\Debug\Vital.Hardware.pdb
+F:\vitalCode\Vital Code - Bayan\Vital Handover\Source\Code Project\1- Dev\VitalExpertCode\Code\Vital\Vital.Hardware\Vital.Hardware\bin\Debug\Vital.Hardware.dll
+F:\vitalCode\Vital Code - Bayan\Vital Handover\Source\Code Project\1- Dev\VitalExpertCode\Code\Vital\Vital.Hardware\Vital.Hardware\bin\Debug\Vital.Hardware.pdb
+F:\vitalCode\Vital Code - Bayan\Vital Handover\Source\Code Project\1- Dev\VitalExpertCode\Code\Vital\Vital.Hardware\Vital.Hardware\obj\Debug\Vital.Hardware.csprojResolveAssemblyReference.cache
+F:\vitalCode\Vital Code - Bayan\Vital Handover\Source\Code Project\1- Dev\VitalExpertCode\Code\Vital\Vital.Hardware\Vital.Hardware\obj\Debug\Vital.Hardware.dll
+F:\vitalCode\Vital Code - Bayan\Vital Handover\Source\Code Project\1- Dev\VitalExpertCode\Code\Vital\Vital.Hardware\Vital.Hardware\obj\Debug\Vital.Hardware.pdb

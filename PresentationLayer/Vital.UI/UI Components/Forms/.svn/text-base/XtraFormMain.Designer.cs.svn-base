@@ -1,0 +1,476 @@
+namespace TCO.DesktopClientDevexpress
+{
+    partial class XtraFormMain
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.components = new System.ComponentModel.Container();
+            this.barManagerMain = new DevExpress.XtraBars.BarManager(this.components);
+            this.barStatus = new DevExpress.XtraBars.Bar();
+            this.barStaticItemInternetStatus = new DevExpress.XtraBars.BarStaticItem();
+            this.barMain = new DevExpress.XtraBars.Bar();
+            this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
+            this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
+            this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
+            this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
+            this.dockManagerNavigationPanel = new DevExpress.XtraBars.Docking.DockManager(this.components);
+            this.dockPanelMessagingBar = new DevExpress.XtraBars.Docking.DockPanel();
+            this.dockPanel1_Container = new DevExpress.XtraBars.Docking.ControlContainer();
+            this.dockPanelNavigationPanel = new DevExpress.XtraBars.Docking.DockPanel();
+            this.dockPanelNavigationPanel_Container = new DevExpress.XtraBars.Docking.ControlContainer();
+            this.layoutControlNavigationPanelTabs = new DevExpress.XtraLayout.LayoutControl();
+            this.layoutControlNavigationPanel = new DevExpress.XtraLayout.LayoutControl();
+            this.navigationPanelLayoutControlGroup = new DevExpress.XtraLayout.LayoutControlGroup();
+            this.contextButtonsMain = new TCO.DesktopClientDevexpress.ContextButtons();
+            this.mruEditSearch = new DevExpress.XtraEditors.MRUEdit();
+            this.layoutControlGroupNavigationPanelRoot = new DevExpress.XtraLayout.LayoutControlGroup();
+            this.layoutControlItemSearchCriteria = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlItemContextMenu = new DevExpress.XtraLayout.LayoutControlItem();
+            this.tabbedControlGroupNavigationPanel = new DevExpress.XtraLayout.TabbedControlGroup();
+            this.layoutControlGroupSearch = new DevExpress.XtraLayout.LayoutControlGroup();
+            this.layoutControlItemNavigationGroupesContainer = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlGroupExplore = new DevExpress.XtraLayout.LayoutControlGroup();
+            this.layoutControlGroupFavorite = new DevExpress.XtraLayout.LayoutControlGroup();
+            this.dxErrorProviderMain = new DevExpress.XtraEditors.DXErrorProvider.DXErrorProvider(this.components);
+            this.defaultLookAndFeelMain = new DevExpress.LookAndFeel.DefaultLookAndFeel(this.components);
+            this.xtraTabControlDetailsArea = new DevExpress.XtraTab.XtraTabControl();
+            this.barButtonItemFile = new DevExpress.XtraBars.BarButtonItem();
+            this.barButtonItemEdit = new DevExpress.XtraBars.BarButtonItem();
+            ((System.ComponentModel.ISupportInitialize)(this.barManagerMain)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dockManagerNavigationPanel)).BeginInit();
+            this.dockPanelMessagingBar.SuspendLayout();
+            this.dockPanelNavigationPanel.SuspendLayout();
+            this.dockPanelNavigationPanel_Container.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlNavigationPanelTabs)).BeginInit();
+            this.layoutControlNavigationPanelTabs.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlNavigationPanel)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.navigationPanelLayoutControlGroup)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mruEditSearch.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroupNavigationPanelRoot)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItemSearchCriteria)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItemContextMenu)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tabbedControlGroupNavigationPanel)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroupSearch)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItemNavigationGroupesContainer)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroupExplore)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroupFavorite)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dxErrorProviderMain)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.xtraTabControlDetailsArea)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // barManagerMain
+            // 
+            this.barManagerMain.Bars.AddRange(new DevExpress.XtraBars.Bar[] {
+            this.barStatus,
+            this.barMain});
+            this.barManagerMain.DockControls.Add(this.barDockControlTop);
+            this.barManagerMain.DockControls.Add(this.barDockControlBottom);
+            this.barManagerMain.DockControls.Add(this.barDockControlLeft);
+            this.barManagerMain.DockControls.Add(this.barDockControlRight);
+            this.barManagerMain.Form = this;
+            this.barManagerMain.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
+            this.barStaticItemInternetStatus,
+            this.barButtonItemFile,
+            this.barButtonItemEdit});
+            this.barManagerMain.MainMenu = this.barMain;
+            this.barManagerMain.MaxItemId = 6;
+            this.barManagerMain.StatusBar = this.barStatus;
+            // 
+            // barStatus
+            // 
+            this.barStatus.BarName = "Status bar";
+            this.barStatus.CanDockStyle = DevExpress.XtraBars.BarCanDockStyle.Bottom;
+            this.barStatus.DockCol = 0;
+            this.barStatus.DockRow = 0;
+            this.barStatus.DockStyle = DevExpress.XtraBars.BarDockStyle.Bottom;
+            this.barStatus.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
+            new DevExpress.XtraBars.LinkPersistInfo(this.barStaticItemInternetStatus)});
+            this.barStatus.OptionsBar.DrawDragBorder = false;
+            this.barStatus.OptionsBar.UseWholeRow = true;
+            this.barStatus.Text = "Status bar";
+            // 
+            // barStaticItemInternetStatus
+            // 
+            this.barStaticItemInternetStatus.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
+            this.barStaticItemInternetStatus.Caption = "Investigating ...";
+            this.barStaticItemInternetStatus.Id = 1;
+            this.barStaticItemInternetStatus.Name = "barStaticItemInternetStatus";
+            this.barStaticItemInternetStatus.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph;
+            this.barStaticItemInternetStatus.TextAlignment = System.Drawing.StringAlignment.Near;
+            // 
+            // barMain
+            // 
+            this.barMain.BarName = "Main Menu";
+            this.barMain.DockCol = 0;
+            this.barMain.DockRow = 0;
+            this.barMain.DockStyle = DevExpress.XtraBars.BarDockStyle.Top;
+            this.barMain.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
+            new DevExpress.XtraBars.LinkPersistInfo(this.barButtonItemFile),
+            new DevExpress.XtraBars.LinkPersistInfo(this.barButtonItemEdit)});
+            this.barMain.OptionsBar.MultiLine = true;
+            this.barMain.OptionsBar.UseWholeRow = true;
+            this.barMain.Text = "Main Menu";
+            // 
+            // dockManagerNavigationPanel
+            // 
+            this.dockManagerNavigationPanel.DockingOptions.CloseActiveTabOnly = false;
+            this.dockManagerNavigationPanel.DockingOptions.FloatOnDblClick = false;
+            this.dockManagerNavigationPanel.DockingOptions.HideImmediatelyOnAutoHide = true;
+            this.dockManagerNavigationPanel.DockingOptions.ShowCloseButton = false;
+            this.dockManagerNavigationPanel.DockingOptions.ShowMaximizeButton = false;
+            this.dockManagerNavigationPanel.Form = this;
+            this.dockManagerNavigationPanel.HiddenPanels.AddRange(new DevExpress.XtraBars.Docking.DockPanel[] {
+            this.dockPanelMessagingBar});
+            this.dockManagerNavigationPanel.RootPanels.AddRange(new DevExpress.XtraBars.Docking.DockPanel[] {
+            this.dockPanelNavigationPanel});
+            this.dockManagerNavigationPanel.TopZIndexControls.AddRange(new string[] {
+            "DevExpress.XtraBars.BarDockControl",
+            "System.Windows.Forms.StatusBar",
+            "DevExpress.XtraBars.Ribbon.RibbonStatusBar",
+            "DevExpress.XtraBars.Ribbon.RibbonControl"});
+            // 
+            // dockPanelMessagingBar
+            // 
+            this.dockPanelMessagingBar.Controls.Add(this.dockPanel1_Container);
+            this.dockPanelMessagingBar.Dock = DevExpress.XtraBars.Docking.DockingStyle.Top;
+            this.dockPanelMessagingBar.ID = new System.Guid("1e71d621-0b6b-47bc-b668-b6ac04f6b7f2");
+            this.dockPanelMessagingBar.Location = new System.Drawing.Point(0, 24);
+            this.dockPanelMessagingBar.Name = "dockPanelMessagingBar";
+            this.dockPanelMessagingBar.Options.AllowDockBottom = false;
+            this.dockPanelMessagingBar.Options.AllowDockFill = false;
+            this.dockPanelMessagingBar.Options.AllowDockLeft = false;
+            this.dockPanelMessagingBar.Options.AllowDockRight = false;
+            this.dockPanelMessagingBar.Options.AllowFloating = false;
+            this.dockPanelMessagingBar.Options.FloatOnDblClick = false;
+            this.dockPanelMessagingBar.Options.ShowAutoHideButton = false;
+            this.dockPanelMessagingBar.Options.ShowCloseButton = false;
+            this.dockPanelMessagingBar.Options.ShowMaximizeButton = false;
+            this.dockPanelMessagingBar.SavedDock = DevExpress.XtraBars.Docking.DockingStyle.Top;
+            this.dockPanelMessagingBar.SavedIndex = 0;
+            this.dockPanelMessagingBar.Size = new System.Drawing.Size(1173, 63);
+            this.dockPanelMessagingBar.Text = "Message";
+            this.dockPanelMessagingBar.Visibility = DevExpress.XtraBars.Docking.DockVisibility.Hidden;
+            // 
+            // dockPanel1_Container
+            // 
+            this.dockPanel1_Container.Location = new System.Drawing.Point(3, 24);
+            this.dockPanel1_Container.Name = "dockPanel1_Container";
+            this.dockPanel1_Container.Size = new System.Drawing.Size(1167, 36);
+            this.dockPanel1_Container.TabIndex = 0;
+            // 
+            // dockPanelNavigationPanel
+            // 
+            this.dockPanelNavigationPanel.Controls.Add(this.dockPanelNavigationPanel_Container);
+            this.dockPanelNavigationPanel.Dock = DevExpress.XtraBars.Docking.DockingStyle.Left;
+            this.dockPanelNavigationPanel.ID = new System.Guid("d83191e8-a772-4b6f-8326-f8ad9066636e");
+            this.dockPanelNavigationPanel.Location = new System.Drawing.Point(0, 24);
+            this.dockPanelNavigationPanel.Name = "dockPanelNavigationPanel";
+            this.dockPanelNavigationPanel.Options.AllowDockFill = false;
+            this.dockPanelNavigationPanel.Options.ShowCloseButton = false;
+            this.dockPanelNavigationPanel.Options.ShowMaximizeButton = false;
+            this.dockPanelNavigationPanel.Size = new System.Drawing.Size(294, 641);
+            this.dockPanelNavigationPanel.Text = "Navigation Panel";
+            // 
+            // dockPanelNavigationPanel_Container
+            // 
+            this.dockPanelNavigationPanel_Container.Controls.Add(this.layoutControlNavigationPanelTabs);
+            this.dockPanelNavigationPanel_Container.Location = new System.Drawing.Point(3, 24);
+            this.dockPanelNavigationPanel_Container.Name = "dockPanelNavigationPanel_Container";
+            this.dockPanelNavigationPanel_Container.Size = new System.Drawing.Size(288, 614);
+            this.dockPanelNavigationPanel_Container.TabIndex = 0;
+            // 
+            // layoutControlNavigationPanelTabs
+            // 
+            this.layoutControlNavigationPanelTabs.Appearance.Control.BorderColor = System.Drawing.Color.Transparent;
+            this.layoutControlNavigationPanelTabs.Appearance.Control.Options.UseBorderColor = true;
+            this.layoutControlNavigationPanelTabs.Controls.Add(this.layoutControlNavigationPanel);
+            this.layoutControlNavigationPanelTabs.Controls.Add(this.contextButtonsMain);
+            this.layoutControlNavigationPanelTabs.Controls.Add(this.mruEditSearch);
+            this.layoutControlNavigationPanelTabs.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.layoutControlNavigationPanelTabs.Location = new System.Drawing.Point(0, 0);
+            this.layoutControlNavigationPanelTabs.Name = "layoutControlNavigationPanelTabs";
+            this.layoutControlNavigationPanelTabs.OptionsView.AllowItemSkining = false;
+            this.layoutControlNavigationPanelTabs.OptionsView.ItemBorderColor = System.Drawing.Color.Transparent;
+            this.layoutControlNavigationPanelTabs.Root = this.layoutControlGroupNavigationPanelRoot;
+            this.layoutControlNavigationPanelTabs.Size = new System.Drawing.Size(288, 614);
+            this.layoutControlNavigationPanelTabs.TabIndex = 4;
+            this.layoutControlNavigationPanelTabs.Text = "layoutControl1";
+            // 
+            // layoutControlNavigationPanel
+            // 
+            this.layoutControlNavigationPanel.Location = new System.Drawing.Point(4, 51);
+            this.layoutControlNavigationPanel.Name = "layoutControlNavigationPanel";
+            this.layoutControlNavigationPanel.OptionsView.ItemBorderColor = System.Drawing.Color.Transparent;
+            this.layoutControlNavigationPanel.Root = this.navigationPanelLayoutControlGroup;
+            this.layoutControlNavigationPanel.Size = new System.Drawing.Size(278, 536);
+            this.layoutControlNavigationPanel.TabIndex = 0;
+            this.layoutControlNavigationPanel.Text = "layoutControl1";
+            // 
+            // navigationPanelLayoutControlGroup
+            // 
+            this.navigationPanelLayoutControlGroup.AppearanceGroup.BorderColor = System.Drawing.Color.Transparent;
+            this.navigationPanelLayoutControlGroup.AppearanceGroup.Options.UseBorderColor = true;
+            this.navigationPanelLayoutControlGroup.CustomizationFormText = "layoutControlGroup1";
+            this.navigationPanelLayoutControlGroup.GroupBordersVisible = false;
+            this.navigationPanelLayoutControlGroup.Location = new System.Drawing.Point(0, 0);
+            this.navigationPanelLayoutControlGroup.Name = "Root";
+            this.navigationPanelLayoutControlGroup.Size = new System.Drawing.Size(278, 536);
+            this.navigationPanelLayoutControlGroup.Spacing = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
+            this.navigationPanelLayoutControlGroup.Text = "Root";
+            this.navigationPanelLayoutControlGroup.TextVisible = false;
+            // 
+            // contextButtonsMain
+            // 
+            this.contextButtonsMain.ContextEntity = EntityType.Starred;
+            this.contextButtonsMain.CurrentSelectedItem = null;
+            this.contextButtonsMain.Location = new System.Drawing.Point(1, 21);
+            this.contextButtonsMain.Name = "contextButtonsMain";
+            this.contextButtonsMain.Size = new System.Drawing.Size(287, 26);
+            this.contextButtonsMain.TabIndex = 4;
+            // 
+            // mruEditSearch
+            // 
+            this.mruEditSearch.Location = new System.Drawing.Point(1, 1);
+            this.mruEditSearch.Name = "mruEditSearch";
+            this.mruEditSearch.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.mruEditSearch.Properties.NullText = "Search Criteria";
+            this.mruEditSearch.Size = new System.Drawing.Size(287, 19);
+            this.mruEditSearch.StyleController = this.layoutControlNavigationPanelTabs;
+            this.mruEditSearch.TabIndex = 0;
+            // 
+            // layoutControlGroupNavigationPanelRoot
+            // 
+            this.layoutControlGroupNavigationPanelRoot.CustomizationFormText = "Root";
+            this.layoutControlGroupNavigationPanelRoot.GroupBordersVisible = false;
+            this.layoutControlGroupNavigationPanelRoot.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
+            this.layoutControlItemSearchCriteria,
+            this.layoutControlItemContextMenu,
+            this.tabbedControlGroupNavigationPanel});
+            this.layoutControlGroupNavigationPanelRoot.Location = new System.Drawing.Point(0, 0);
+            this.layoutControlGroupNavigationPanelRoot.Name = "layoutControlGroupNavigationPanelRoot";
+            this.layoutControlGroupNavigationPanelRoot.Size = new System.Drawing.Size(288, 614);
+            this.layoutControlGroupNavigationPanelRoot.Spacing = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
+            this.layoutControlGroupNavigationPanelRoot.Text = "Navigation Panel Root";
+            this.layoutControlGroupNavigationPanelRoot.TextVisible = false;
+            // 
+            // layoutControlItemSearchCriteria
+            // 
+            this.layoutControlItemSearchCriteria.Control = this.mruEditSearch;
+            this.layoutControlItemSearchCriteria.CustomizationFormText = "Search Criteria";
+            this.layoutControlItemSearchCriteria.Location = new System.Drawing.Point(0, 0);
+            this.layoutControlItemSearchCriteria.Name = "layoutControlItemSearchCriteria";
+            this.layoutControlItemSearchCriteria.Padding = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
+            this.layoutControlItemSearchCriteria.Size = new System.Drawing.Size(288, 20);
+            this.layoutControlItemSearchCriteria.Text = "Search Criteria";
+            this.layoutControlItemSearchCriteria.TextLocation = DevExpress.Utils.Locations.Left;
+            this.layoutControlItemSearchCriteria.TextSize = new System.Drawing.Size(0, 0);
+            this.layoutControlItemSearchCriteria.TextToControlDistance = 0;
+            this.layoutControlItemSearchCriteria.TextVisible = false;
+            // 
+            // layoutControlItemContextMenu
+            // 
+            this.layoutControlItemContextMenu.Control = this.contextButtonsMain;
+            this.layoutControlItemContextMenu.CustomizationFormText = "Context Menu";
+            this.layoutControlItemContextMenu.Location = new System.Drawing.Point(0, 20);
+            this.layoutControlItemContextMenu.Name = "layoutControlItemContextMenu";
+            this.layoutControlItemContextMenu.Padding = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
+            this.layoutControlItemContextMenu.Size = new System.Drawing.Size(288, 27);
+            this.layoutControlItemContextMenu.Text = "Context Menu";
+            this.layoutControlItemContextMenu.TextLocation = DevExpress.Utils.Locations.Left;
+            this.layoutControlItemContextMenu.TextSize = new System.Drawing.Size(0, 0);
+            this.layoutControlItemContextMenu.TextToControlDistance = 0;
+            this.layoutControlItemContextMenu.TextVisible = false;
+            // 
+            // tabbedControlGroupNavigationPanel
+            // 
+            this.tabbedControlGroupNavigationPanel.CustomizationFormText = "tabbedControlGroupNavigationPanel";
+            this.tabbedControlGroupNavigationPanel.Location = new System.Drawing.Point(0, 47);
+            this.tabbedControlGroupNavigationPanel.Name = "tabbedControlGroupNavigationPanel";
+            this.tabbedControlGroupNavigationPanel.Padding = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
+            this.tabbedControlGroupNavigationPanel.SelectedTabPage = this.layoutControlGroupSearch;
+            this.tabbedControlGroupNavigationPanel.SelectedTabPageIndex = 0;
+            this.tabbedControlGroupNavigationPanel.Size = new System.Drawing.Size(288, 567);
+            this.tabbedControlGroupNavigationPanel.Spacing = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
+            this.tabbedControlGroupNavigationPanel.TabPages.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
+            this.layoutControlGroupSearch,
+            this.layoutControlGroupExplore,
+            this.layoutControlGroupFavorite});
+            this.tabbedControlGroupNavigationPanel.Text = "tabbedControlGroupNavigationPanel";
+            this.tabbedControlGroupNavigationPanel.TextLocation = DevExpress.Utils.Locations.Bottom;
+            // 
+            // layoutControlGroupSearch
+            // 
+            this.layoutControlGroupSearch.CustomizationFormText = "Search";
+            this.layoutControlGroupSearch.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
+            this.layoutControlItemNavigationGroupesContainer});
+            this.layoutControlGroupSearch.Location = new System.Drawing.Point(0, 0);
+            this.layoutControlGroupSearch.Name = "layoutControlGroupSearch";
+            this.layoutControlGroupSearch.Size = new System.Drawing.Size(279, 537);
+            this.layoutControlGroupSearch.Text = "Search";
+            // 
+            // layoutControlItemNavigationGroupesContainer
+            // 
+            this.layoutControlItemNavigationGroupesContainer.Control = this.layoutControlNavigationPanel;
+            this.layoutControlItemNavigationGroupesContainer.CustomizationFormText = "Navigation Groups";
+            this.layoutControlItemNavigationGroupesContainer.Location = new System.Drawing.Point(0, 0);
+            this.layoutControlItemNavigationGroupesContainer.Name = "layoutControlItemNavigationGroupesContainer";
+            this.layoutControlItemNavigationGroupesContainer.Padding = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
+            this.layoutControlItemNavigationGroupesContainer.Size = new System.Drawing.Size(279, 537);
+            this.layoutControlItemNavigationGroupesContainer.Text = "Navigation Groups";
+            this.layoutControlItemNavigationGroupesContainer.TextLocation = DevExpress.Utils.Locations.Left;
+            this.layoutControlItemNavigationGroupesContainer.TextSize = new System.Drawing.Size(0, 0);
+            this.layoutControlItemNavigationGroupesContainer.TextToControlDistance = 0;
+            this.layoutControlItemNavigationGroupesContainer.TextVisible = false;
+            // 
+            // layoutControlGroupExplore
+            // 
+            this.layoutControlGroupExplore.CustomizationFormText = "Explore";
+            this.layoutControlGroupExplore.Location = new System.Drawing.Point(0, 0);
+            this.layoutControlGroupExplore.Name = "layoutControlGroupExplore";
+            this.layoutControlGroupExplore.Size = new System.Drawing.Size(279, 537);
+            this.layoutControlGroupExplore.Text = "Explore";
+            // 
+            // layoutControlGroupFavorite
+            // 
+            this.layoutControlGroupFavorite.CustomizationFormText = "Favorite";
+            this.layoutControlGroupFavorite.Location = new System.Drawing.Point(0, 0);
+            this.layoutControlGroupFavorite.Name = "layoutControlGroupFavorite";
+            this.layoutControlGroupFavorite.Size = new System.Drawing.Size(279, 537);
+            this.layoutControlGroupFavorite.Text = "Favorite";
+            // 
+            // dxErrorProviderMain
+            // 
+            this.dxErrorProviderMain.ContainerControl = this;
+            // 
+            // defaultLookAndFeelMain
+            // 
+            this.defaultLookAndFeelMain.LookAndFeel.SkinName = "Office 2007 Blue";
+            // 
+            // xtraTabControlDetailsArea
+            // 
+            this.xtraTabControlDetailsArea.AllowDrop = true;
+            this.xtraTabControlDetailsArea.ClosePageButtonShowMode = DevExpress.XtraTab.ClosePageButtonShowMode.InAllTabPagesAndTabControlHeader;
+            this.xtraTabControlDetailsArea.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.xtraTabControlDetailsArea.Location = new System.Drawing.Point(294, 24);
+            this.xtraTabControlDetailsArea.LookAndFeel.SkinName = "Glass Oceans";
+            this.xtraTabControlDetailsArea.Name = "xtraTabControlDetailsArea";
+            this.xtraTabControlDetailsArea.Size = new System.Drawing.Size(879, 641);
+            this.xtraTabControlDetailsArea.TabIndex = 8;
+            this.xtraTabControlDetailsArea.DragDrop += new System.Windows.Forms.DragEventHandler(this.xtraTabControlDetailsArea_DragDrop);
+            this.xtraTabControlDetailsArea.MouseDown += new System.Windows.Forms.MouseEventHandler(this.xtraTabControlDetailsArea_MouseDown);
+            this.xtraTabControlDetailsArea.CloseButtonClick += new System.EventHandler(this.xtraTabControlDetailsArea_CloseButtonClick);
+            this.xtraTabControlDetailsArea.DragEnter += new System.Windows.Forms.DragEventHandler(this.xtraTabControlDetailsArea_DragEnter);
+            // 
+            // barButtonItemFile
+            // 
+            this.barButtonItemFile.Caption = "File";
+            this.barButtonItemFile.Id = 4;
+            this.barButtonItemFile.Name = "barButtonItemFile";
+            // 
+            // barButtonItemEdit
+            // 
+            this.barButtonItemEdit.Caption = "Edit";
+            this.barButtonItemEdit.Id = 5;
+            this.barButtonItemEdit.Name = "barButtonItemEdit";
+            // 
+            // XtraFormMain
+            // 
+            this.Appearance.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Appearance.Options.UseFont = true;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(1173, 688);
+            this.Controls.Add(this.xtraTabControlDetailsArea);
+            this.Controls.Add(this.dockPanelNavigationPanel);
+            this.Controls.Add(this.barDockControlLeft);
+            this.Controls.Add(this.barDockControlRight);
+            this.Controls.Add(this.barDockControlBottom);
+            this.Controls.Add(this.barDockControlTop);
+            this.Name = "XtraFormMain";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "TCO";
+            this.Load += new System.EventHandler(this.XtraFormMain_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.barManagerMain)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dockManagerNavigationPanel)).EndInit();
+            this.dockPanelMessagingBar.ResumeLayout(false);
+            this.dockPanelNavigationPanel.ResumeLayout(false);
+            this.dockPanelNavigationPanel_Container.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlNavigationPanelTabs)).EndInit();
+            this.layoutControlNavigationPanelTabs.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlNavigationPanel)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.navigationPanelLayoutControlGroup)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mruEditSearch.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroupNavigationPanelRoot)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItemSearchCriteria)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItemContextMenu)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tabbedControlGroupNavigationPanel)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroupSearch)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItemNavigationGroupesContainer)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroupExplore)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroupFavorite)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dxErrorProviderMain)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.xtraTabControlDetailsArea)).EndInit();
+            this.ResumeLayout(false);
+
+        }
+
+        #endregion
+
+        private DevExpress.XtraBars.BarManager barManagerMain;
+        private DevExpress.XtraBars.Bar barStatus;
+        private DevExpress.XtraBars.BarDockControl barDockControlTop;
+        private DevExpress.XtraBars.BarDockControl barDockControlBottom;
+        private DevExpress.XtraBars.BarDockControl barDockControlLeft;
+        private DevExpress.XtraBars.BarDockControl barDockControlRight;
+        private DevExpress.XtraBars.Docking.DockManager dockManagerNavigationPanel;
+        private DevExpress.XtraBars.Docking.DockPanel dockPanelNavigationPanel;
+        private DevExpress.XtraBars.Docking.ControlContainer dockPanelNavigationPanel_Container;
+        private DevExpress.XtraLayout.LayoutControl layoutControlNavigationPanelTabs;
+        private ContextButtons contextButtonsMain;
+        private DevExpress.XtraEditors.MRUEdit mruEditSearch;
+        private DevExpress.XtraLayout.LayoutControlGroup layoutControlGroupNavigationPanelRoot;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItemSearchCriteria;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItemContextMenu;
+        private DevExpress.XtraLayout.TabbedControlGroup tabbedControlGroupNavigationPanel;
+        private DevExpress.XtraLayout.LayoutControlGroup layoutControlGroupFavorite;
+        private DevExpress.XtraLayout.LayoutControlGroup layoutControlGroupSearch;
+        private DevExpress.XtraLayout.LayoutControlGroup layoutControlGroupExplore;
+        private DevExpress.XtraLayout.LayoutControl layoutControlNavigationPanel;
+        private DevExpress.XtraLayout.LayoutControlGroup navigationPanelLayoutControlGroup;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItemNavigationGroupesContainer;
+        private DevExpress.XtraBars.Bar barMain;
+        private DevExpress.XtraBars.BarStaticItem barStaticItemInternetStatus;
+        private DevExpress.XtraEditors.DXErrorProvider.DXErrorProvider dxErrorProviderMain;
+        public DevExpress.LookAndFeel.DefaultLookAndFeel defaultLookAndFeelMain;
+        private DevExpress.XtraTab.XtraTabControl xtraTabControlDetailsArea;
+        private DevExpress.XtraBars.Docking.DockPanel dockPanelMessagingBar;
+        private DevExpress.XtraBars.Docking.ControlContainer dockPanel1_Container;
+        private DevExpress.XtraBars.BarButtonItem barButtonItemFile;
+        private DevExpress.XtraBars.BarButtonItem barButtonItemEdit;
+    }
+}

@@ -1,0 +1,2136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{21728AAC-43C0-4E46-9243-E5A0A67E76B0}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Vital.UI</RootNamespace>
+    <AssemblyName>Vital.UI</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <StartupObject>Vital.UI.Program</StartupObject>
+    <RunPostBuildEvent>Always</RunPostBuildEvent>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <PublishUrl>http://localhost/VitalExpert/</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>true</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ProductName>Vital</ProductName>
+    <PublisherName>Standard Equipment Company</PublisherName>
+    <SuiteName>Vital - Standard Equipment Company</SuiteName>
+    <MinimumRequiredVersion>1.0.0.10</MinimumRequiredVersion>
+    <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
+    <WebPage>index.htm</WebPage>
+    <TrustUrlParameters>true</TrustUrlParameters>
+    <ApplicationRevision>371</ApplicationRevision>
+    <ApplicationVersion>1.0.1.%2a</ApplicationVersion>
+    <UseApplicationTrust>true</UseApplicationTrust>
+    <CreateDesktopShortcut>true</CreateDesktopShortcut>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <BootstrapperComponentsLocation>Relative</BootstrapperComponentsLocation>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>VitalIcon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\Vital.UI.exe.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+    <Optimize>true</Optimize>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Release\Vital.UI.exe.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>45B7A5DD0408E2CD62B74753431E67BC1A2390EF</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>Vital.UI_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup />
+  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\Vital.UI.exe.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+    <Optimize>true</Optimize>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Release\Vital.UI.exe.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <NoWin32Manifest>true</NoWin32Manifest>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ClickOnce Deployment|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\ClickOnce Deployment\</OutputPath>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\Vital.UI.exe.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ClickOnce Deployment|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\ClickOnce Deployment\</OutputPath>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\Vital.UI.exe.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ClickOnce Deployment|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\ClickOnce Deployment\</OutputPath>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\Vital.UI.exe.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CefSharp, Version=51.0.0.0, Culture=neutral, PublicKeyToken=40c4b6fc221f4138, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Assemblies\CefSharp\CefSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="CefSharp.Core, Version=51.0.0.0, Culture=neutral, PublicKeyToken=40c4b6fc221f4138, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Assemblies\CefSharp\CefSharp.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="CefSharp.WinForms, Version=51.0.0.0, Culture=neutral, PublicKeyToken=40c4b6fc221f4138, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Assemblies\CefSharp\CefSharp.WinForms.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.BonusSkins.v12.2, Version=12.2.5.0, Culture=neutral, PublicKeyToken=95fc6c5621878f0a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Assemblies\Devexpress\DevExpress.BonusSkins.v12.2.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Charts.v12.2.Core, Version=12.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Assemblies\Devexpress\DevExpress.Charts.v12.2.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Data.v12.2, Version=12.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Assemblies\Devexpress\DevExpress.Data.v12.2.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Office.v12.2.Core, Version=12.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Assemblies\Devexpress\DevExpress.Office.v12.2.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.PivotGrid.v12.2.Core, Version=12.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Assemblies\Devexpress\DevExpress.PivotGrid.v12.2.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Printing.v12.2.Core, Version=12.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Assemblies\Devexpress\DevExpress.Printing.v12.2.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.RichEdit.v12.2.Core, Version=12.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Assemblies\Devexpress\DevExpress.RichEdit.v12.2.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Utils.v12.2, Version=12.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Assemblies\Devexpress\DevExpress.Utils.v12.2.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Utils.v12.2.UI, Version=12.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Assemblies\Devexpress\DevExpress.Utils.v12.2.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraBars.v12.2, Version=12.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Assemblies\Devexpress\DevExpress.XtraBars.v12.2.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraCharts.v12.2, Version=12.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Assemblies\Devexpress\DevExpress.XtraCharts.v12.2.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraCharts.v12.2.UI, Version=12.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Assemblies\Devexpress\DevExpress.XtraCharts.v12.2.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraCharts.v12.2.Wizard, Version=12.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Assemblies\Devexpress\DevExpress.XtraCharts.v12.2.Wizard.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraEditors.v12.2, Version=12.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Assemblies\Devexpress\DevExpress.XtraEditors.v12.2.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraGauges.v12.2.Core, Version=12.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Assemblies\Devexpress\DevExpress.XtraGauges.v12.2.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraGauges.v12.2.Win, Version=12.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Assemblies\Devexpress\DevExpress.XtraGauges.v12.2.Win.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraGrid.v12.2, Version=12.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Assemblies\Devexpress\DevExpress.XtraGrid.v12.2.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraLayout.v12.2, Version=12.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Assemblies\Devexpress\DevExpress.XtraLayout.v12.2.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraNavBar.v12.2, Version=12.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Assemblies\Devexpress\DevExpress.XtraNavBar.v12.2.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraPrinting.v12.2, Version=12.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Assemblies\Devexpress\DevExpress.XtraPrinting.v12.2.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraReports.v12.2, Version=12.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Assemblies\Devexpress\DevExpress.XtraReports.v12.2.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraRichEdit.v12.2, Version=12.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Assemblies\Devexpress\DevExpress.XtraRichEdit.v12.2.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraRichEdit.v12.2.Extensions, Version=12.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Assemblies\Devexpress\DevExpress.XtraRichEdit.v12.2.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraScheduler.v12.2, Version=12.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Assemblies\Devexpress\DevExpress.XtraScheduler.v12.2.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraScheduler.v12.2.Core, Version=12.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Assemblies\Devexpress\DevExpress.XtraScheduler.v12.2.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraTreeList.v12.2, Version=12.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Assemblies\Devexpress\DevExpress.XtraTreeList.v12.2.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraVerticalGrid.v12.2, Version=12.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Assemblies\Devexpress\DevExpress.XtraVerticalGrid.v12.2.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="Microsoft.VisualBasic.PowerPacks.Vs, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Newtonsoft.Json, Version=4.0.8.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Assemblies\Web\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="SD.LLBLGen.Pro.LinqSupportClasses.NET35, Version=3.5.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27" />
+    <Reference Include="SD.LLBLGen.Pro.ORMSupportClasses.NET20, Version=3.5.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27" />
+    <Reference Include="SD.LLBLGen.Pro.QuerySpec, Version=3.5.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27" />
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.ServiceProcess">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CommonResources\CommonResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CommonResources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Enums\UiEnums.cs" />
+    <Compile Include="Logic Classes\AlertsHelper.cs" />
+    <Compile Include="Logic Classes\CacheHelper.cs" />
+    <Compile Include="Logic Classes\CefSharpInstaller.cs" />
+    <Compile Include="Logic Classes\CrossThreadExtensions.cs" />
+    <Compile Include="Logic Classes\DownloadedFileInfo.cs" />
+    <Compile Include="Logic Classes\FilesDownloadDetail.cs" />
+    <Compile Include="Logic Classes\GridCheckMarksSelection.cs" />
+    <Compile Include="Logic Classes\ItemsEqualityComparer.cs" />
+    <Compile Include="Logic Classes\MailHelper.cs" />
+    <Compile Include="Logic Classes\MyFormPainter.cs" />
+    <Compile Include="Logic Classes\ProductInfo.cs" />
+    <Compile Include="Logic Classes\ProductInfoHelper.cs" />
+    <Compile Include="Logic Classes\ProductSeatsHelper.cs" />
+    <Compile Include="Logic Classes\ScheduleAlert.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Logic Classes\VitalEmail.cs" />
+    <Compile Include="Logic Classes\VitalInstanceController.cs" />
+    <Compile Include="Logic Classes\TestHelper.cs" />
+    <Compile Include="Logic Classes\UIBLLInteraction.cs" />
+    <Compile Include="Logic Classes\UiHelperClass.cs" />
+    <Compile Include="Logic Classes\VitalHelper.cs" />
+    <Compile Include="Logic Classes\WebApiConsumer.cs" />
+    <Compile Include="PrintRibbonControllerResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PrintRibbonControllerResources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Forms\frmFreeAutoMeterPhase2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI Components\Forms\frmFreeAutoMeterPhase2.Designer.cs">
+      <DependentUpon>frmFreeAutoMeterPhase2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Forms\frm3DModelDemo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI Components\Forms\frm3DModelDemo.Designer.cs">
+      <DependentUpon>frm3DModelDemo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Forms\frm3DModelDemoMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI Components\Forms\frm3DModelDemoMain.Designer.cs">
+      <DependentUpon>frm3DModelDemoMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Forms\frmFreeAutoMeter.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI Components\Forms\frmFreeAutoMeter.Designer.cs">
+      <DependentUpon>frmFreeAutoMeter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Forms\XtraFormAddAutoResult.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI Components\Forms\XtraFormAddAutoResult.Designer.cs">
+      <DependentUpon>XtraFormAddAutoResult.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Forms\XtraFormAutoTest.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI Components\Forms\XtraFormAutoTest.Designer.cs">
+      <DependentUpon>XtraFormAutoTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Forms\XtraFormInformationMessage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI Components\Forms\XtraFormInformationMessage.Designer.cs">
+      <DependentUpon>XtraFormInformationMessage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Forms\XtraFormRatios.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI Components\Forms\XtraFormRatios.Designer.cs">
+      <DependentUpon>XtraFormRatios.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Forms\XtraFormDongleReset.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI Components\Forms\XtraFormDongleReset.Designer.cs">
+      <DependentUpon>XtraFormDongleReset.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Forms\XtraFormDongleInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI Components\Forms\XtraFormDongleInfo.Designer.cs">
+      <DependentUpon>XtraFormDongleInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Forms\XtraFormFrequencyResultDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI Components\Forms\XtraFormFrequencyResultDialog.Designer.cs">
+      <DependentUpon>XtraFormFrequencyResultDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Forms\XtraFormDescriptionMessage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI Components\Forms\XtraFormDescriptionMessage.Designer.cs">
+      <DependentUpon>XtraFormDescriptionMessage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Forms\XtraFormFrequenciesUpdate.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI Components\Forms\XtraFormFrequenciesUpdate.Designer.cs">
+      <DependentUpon>XtraFormFrequenciesUpdate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Forms\frmFrequencyTest.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI Components\Forms\frmFrequencyTest.Designer.cs">
+      <DependentUpon>frmFrequencyTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Forms\frmProductsInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI Components\Forms\frmProductsInfo.Designer.cs">
+      <DependentUpon>frmProductsInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Forms\WaitFormLoadingDataTopMost.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI Components\Forms\WaitFormLoadingDataTopMost.Designer.cs">
+      <DependentUpon>WaitFormLoadingDataTopMost.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Forms\frmShipping.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI Components\Forms\frmShipping.Designer.cs">
+      <DependentUpon>frmShipping.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Forms\frmShippingOrder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI Components\Forms\frmShippingOrder.Designer.cs">
+      <DependentUpon>frmShippingOrder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Forms\frmFreeMeter.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI Components\Forms\frmFreeMeter.Designer.cs">
+      <DependentUpon>frmFreeMeter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Forms\frmSpotCheck.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI Components\Forms\frmSpotCheck.Designer.cs">
+      <DependentUpon>frmSpotCheck.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Forms\BaseForms\VitalBaseForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI Components\Forms\BaseForms\VitalBaseForm.Designer.cs">
+      <DependentUpon>VitalBaseForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Forms\BaseForms\XtraFormReportViewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI Components\Forms\BaseForms\XtraFormReportViewer.Designer.cs">
+      <DependentUpon>XtraFormReportViewer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Forms\frmVFS.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI Components\Forms\frmVFS.Designer.cs">
+      <DependentUpon>frmVFS.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Forms\XtraFormDownloadFiles.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI Components\Forms\XtraFormDownloadFiles.Designer.cs">
+      <DependentUpon>XtraFormDownloadFiles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Forms\XtraFormHwProfile.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI Components\Forms\XtraFormHwProfile.Designer.cs">
+      <DependentUpon>XtraFormHwProfile.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Forms\XtraFormItemDescription.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI Components\Forms\XtraFormItemDescription.Designer.cs">
+      <DependentUpon>XtraFormItemDescription.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Forms\XtraFormPatientSearch.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI Components\Forms\XtraFormPatientSearch.Designer.cs">
+      <DependentUpon>XtraFormPatientSearch.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Forms\XtraFormPHR.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI Components\Forms\XtraFormPHR.Designer.cs">
+      <DependentUpon>XtraFormPHR.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Forms\XtraFormRestartRequired.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI Components\Forms\XtraFormRestartRequired.Designer.cs">
+      <DependentUpon>XtraFormRestartRequired.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Forms\XtraFormProductDosages.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI Components\Forms\XtraFormProductDosages.Designer.cs">
+      <DependentUpon>XtraFormProductDosages.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Forms\frmBackupRestore.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI Components\Forms\frmBackupRestore.Designer.cs">
+      <DependentUpon>frmBackupRestore.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Forms\DataManagementForms\frmItemRelations.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI Components\Forms\DataManagementForms\frmItemRelations.Designer.cs">
+      <DependentUpon>frmItemRelations.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Forms\DataManagementForms\frmItemManagement.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI Components\Forms\DataManagementForms\frmItemManagement.Designer.cs">
+      <DependentUpon>frmItemManagement.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Forms\XtraFormAbout.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI Components\Forms\XtraFormAbout.Designer.cs">
+      <DependentUpon>XtraFormAbout.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Forms\XtraFormErrorMessage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI Components\Forms\XtraFormErrorMessage.Designer.cs">
+      <DependentUpon>XtraFormErrorMessage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Forms\XtraFormFourFactors.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI Components\Forms\XtraFormFourFactors.Designer.cs">
+      <DependentUpon>XtraFormFourFactors.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Forms\XtraFormMailClient.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI Components\Forms\XtraFormMailClient.Designer.cs">
+      <DependentUpon>XtraFormMailClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Forms\XtraFormSelectItem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI Components\Forms\XtraFormSelectItem.Designer.cs">
+      <DependentUpon>XtraFormSelectItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Forms\XtraFormShippingTarget.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI Components\Forms\XtraFormShippingTarget.Designer.cs">
+      <DependentUpon>XtraFormShippingTarget.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Forms\XtraFormSpotCheckDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI Components\Forms\XtraFormSpotCheckDialog.Designer.cs">
+      <DependentUpon>XtraFormSpotCheckDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Forms\XtraFormTechInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI Components\Forms\XtraFormTechInfo.Designer.cs">
+      <DependentUpon>XtraFormTechInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Forms\XtraFormUpdate.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI Components\Forms\XtraFormUpdate.Designer.cs">
+      <DependentUpon>XtraFormUpdate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Forms\XtraFormVitalForce.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI Components\Forms\DataManagementForms\frmDataManagement.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI Components\Forms\DataManagementForms\frmDataManagement.Designer.cs">
+      <DependentUpon>frmDataManagement.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Forms\DataManagementForms\frmTestProtocolManagement.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI Components\Forms\DataManagementForms\frmTestProtocolManagement.Designer.cs">
+      <DependentUpon>frmTestProtocolManagement.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Forms\DataManagementForms\frmNewProtocolStartingItems.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI Components\Forms\DataManagementForms\frmNewProtocolStartingItems.Designer.cs">
+      <DependentUpon>frmNewProtocolStartingItems.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Forms\frmGeneralTest.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI Components\Forms\frmGeneralTest.Designer.cs">
+      <DependentUpon>frmGeneralTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Forms\frmSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI Components\Forms\frmSettings.Designer.cs">
+      <DependentUpon>frmSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Forms\SplashScreenVital.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI Components\Forms\SplashScreenVital.Designer.cs">
+      <DependentUpon>SplashScreenVital.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Forms\WaitFormLoadingData.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI Components\Forms\WaitFormLoadingData.Designer.cs">
+      <DependentUpon>WaitFormLoadingData.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Forms\XtraFormDisclaimer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI Components\Forms\XtraFormDisclaimer.Designer.cs">
+      <DependentUpon>XtraFormDisclaimer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Forms\XtraFormMeterCounterDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI Components\Forms\XtraFormMeterCounterDialog.Designer.cs">
+      <DependentUpon>XtraFormMeterCounterDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Forms\XtraFormVitalForce.Designer.cs">
+      <DependentUpon>XtraFormVitalForce.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Reports\XtraReportReportHeaderLogoOnly.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI Components\Reports\XtraReportReportHeaderLogoOnly.Designer.cs">
+      <DependentUpon>XtraReportReportHeaderLogoOnly.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Reports\XtraReportAutoTest.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI Components\Reports\XtraReportAutoTest.Designer.cs">
+      <DependentUpon>XtraReportAutoTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Reports\XtraReportFrequencyTest.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI Components\Reports\XtraReportFrequencyTest.Designer.cs">
+      <DependentUpon>XtraReportFrequencyTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Reports\XtraReportClients.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI Components\Reports\XtraReportClients.Designer.cs">
+      <DependentUpon>XtraReportClients.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Reports\XtraReportTestNotes.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI Components\Reports\XtraReportTestNotes.Designer.cs">
+      <DependentUpon>XtraReportTestNotes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Reports\XtraReportImprinting.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI Components\Reports\XtraReportImprinting.Designer.cs">
+      <DependentUpon>XtraReportImprinting.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Reports\XtraReportVFS.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI Components\Reports\XtraReportVFS.Designer.cs">
+      <DependentUpon>XtraReportVFS.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Reports\XtraReportFeedback.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI Components\Reports\XtraReportFeedback.Designer.cs">
+      <DependentUpon>XtraReportFeedback.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\User Controls\BioDigital3DModel\XtraUserControlBioDigital3DModelViewer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI Components\User Controls\BioDigital3DModel\XtraUserControlBioDigital3DModelViewer.Designer.cs">
+      <DependentUpon>XtraUserControlBioDigital3DModelViewer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\User Controls\BioDigital3DModel\XtraUserControlBioDigital3DModel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI Components\User Controls\BioDigital3DModel\XtraUserControlBioDigital3DModel.Designer.cs">
+      <DependentUpon>XtraUserControlBioDigital3DModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Modules\BaseModules\XtraUserControlBaseSettingsBar.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Modules\BaseModules\XtraUserControlBaseSettingsBar.Designer.cs">
+      <DependentUpon>XtraUserControlBaseSettingsBar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Modules\VitalDockManager\VitalDockLayout.cs" />
+    <Compile Include="UI Components\User Controls\Modules\VitalDockManager\VitalDockManager.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Modules\VitalDockManager\VitalDockPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Modules\XtraUserControlAutoTestResults.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Modules\XtraUserControlAutoTestResults.Designer.cs">
+      <DependentUpon>XtraUserControlAutoTestResults.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Modules\XtraUserControlFrequencyTestResults.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Modules\XtraUserControlFrequencyTestResults.Designer.cs">
+      <DependentUpon>XtraUserControlFrequencyTestResults.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Modules\XtraUserControlHwProfiles.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Modules\XtraUserControlHwProfiles.Designer.cs">
+      <DependentUpon>XtraUserControlHwProfiles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Modules\XtraUserControlPrintingOptions.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Modules\XtraUserControlPrintingOptions.Designer.cs">
+      <DependentUpon>XtraUserControlPrintingOptions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Reports\XtraReportShippingOrder.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI Components\Reports\XtraReportShippingOrder.Designer.cs">
+      <DependentUpon>XtraReportShippingOrder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Reports\XtraReportDMPS.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI Components\Reports\XtraReportDMPS.Designer.cs">
+      <DependentUpon>XtraReportDMPS.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Reports\XtraReportCapsolT.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI Components\Reports\XtraReportCapsolT.Designer.cs">
+      <DependentUpon>XtraReportCapsolT.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Reports\XtraReportMinerals.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI Components\Reports\XtraReportMinerals.Designer.cs">
+      <DependentUpon>XtraReportMinerals.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Reports\XtraReportMTE.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI Components\Reports\XtraReportMTE.Designer.cs">
+      <DependentUpon>XtraReportMTE.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Reports\XtraReportProductInvoice.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI Components\Reports\XtraReportProductInvoice.Designer.cs">
+      <DependentUpon>XtraReportProductInvoice.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Reports\ReportCustomControls\ReportProgressBar.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI Components\Reports\XtraReportReportHeader.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI Components\Reports\XtraReportReportHeader.Designer.cs">
+      <DependentUpon>XtraReportReportHeader.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Reports\XtraReportTest.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI Components\Reports\XtraReportTest.Designer.cs">
+      <DependentUpon>XtraReportTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Reports\XtraReportPatientSchedule.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI Components\Reports\XtraReportPatientSchedule.Designer.cs">
+      <DependentUpon>XtraReportPatientSchedule.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\UI Classes\DisabledControl.cs" />
+    <Compile Include="UI Components\UI Classes\UiExtensions.cs" />
+    <Compile Include="UI Components\UI Classes\VisitedItem.cs" />
+    <Compile Include="UI Components\User Controls\Entity Tabs\XtraTabPageMajorIssue.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Entity Tabs\XtraTabPageMajorIssue.Designer.cs">
+      <DependentUpon>XtraTabPageMajorIssue.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Entity Tabs\XtraTabPagePatient.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Entity Tabs\XtraTabPagePatient.Designer.cs">
+      <DependentUpon>XtraTabPagePatient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Main Tabs\XtraTabPageEntity.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Main Tabs\XtraTabPageEntity.Designer.cs">
+      <DependentUpon>XtraTabPageEntity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Logic Classes\Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UI Components\User Controls\Modules\XtraUserControlRealTimeChart.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Modules\XtraUserControlRealTimeChart.Designer.cs">
+      <DependentUpon>XtraUserControlRealTimeChart.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Modules\XtraUserControlShippingTimeBar.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Modules\XtraUserControlShippingTimeBar.Designer.cs">
+      <DependentUpon>XtraUserControlShippingTimeBar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Modules\XtraUserControlSpotCheckResults.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Modules\XtraUserControlSpotCheckResults.Designer.cs">
+      <DependentUpon>XtraUserControlSpotCheckResults.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Modules\XtraUserControlIssue.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Modules\XtraUserControlIssue.Designer.cs">
+      <DependentUpon>XtraUserControlIssue.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Modules\XtraUserControlItemDetails.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Modules\XtraUserControlItemDetails.Designer.cs">
+      <DependentUpon>XtraUserControlItemDetails.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Modules\XtraUserControlItemReadingDetails.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Modules\XtraUserControlItemReadingDetails.Designer.cs">
+      <DependentUpon>XtraUserControlItemReadingDetails.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Modules\XtraUserControlItemsNavGrid.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Modules\XtraUserControlItemsNavGrid.Designer.cs">
+      <DependentUpon>XtraUserControlItemsNavGrid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Modules\XtraUserControlProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Modules\XtraUserControlProperties.Designer.cs">
+      <DependentUpon>XtraUserControlProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Modules\XtraUserControlReadingGauge.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Modules\XtraUserControlReadingGauge.Designer.cs">
+      <DependentUpon>XtraUserControlReadingGauge.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Modules\XtraUserControlSimpleNavGrid.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Modules\XtraUserControlSimpleNavGrid.Designer.cs">
+      <DependentUpon>XtraUserControlSimpleNavGrid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Modules\XtraUserControlVFSItems.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Modules\XtraUserControlVFSItems.Designer.cs">
+      <DependentUpon>XtraUserControlVFSItems.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Modules\XtraUserControlVFSSecondaryItems.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Modules\XtraUserControlVFSSecondaryItems.Designer.cs">
+      <DependentUpon>XtraUserControlVFSSecondaryItems.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Modules\XtraUserControlVitalRichEdit.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Modules\XtraUserControlVitalRichEdit.Designer.cs">
+      <DependentUpon>XtraUserControlVitalRichEdit.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="CommonResources\CommonResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>CommonResources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PrintRibbonControllerResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>PrintRibbonControllerResources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\licenses.licx" />
+    <EmbeddedResource Include="UI Components\Forms\BaseForms\VitalBaseForm.resx">
+      <DependentUpon>VitalBaseForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Forms\BaseForms\XtraFormReportViewer.resx">
+      <DependentUpon>XtraFormReportViewer.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Forms\frmFreeAutoMeterPhase2.resx">
+      <DependentUpon>frmFreeAutoMeterPhase2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Forms\frm3DModelDemo.resx">
+      <DependentUpon>frm3DModelDemo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Forms\frm3DModelDemoMain.resx">
+      <DependentUpon>frm3DModelDemoMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Forms\frmFreeAutoMeter.resx">
+      <DependentUpon>frmFreeAutoMeter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Forms\XtraFormAddAutoResult.resx">
+      <DependentUpon>XtraFormAddAutoResult.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Forms\XtraFormAutoTest.resx">
+      <DependentUpon>XtraFormAutoTest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Forms\XtraFormInformationMessage.resx">
+      <DependentUpon>XtraFormInformationMessage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Forms\XtraFormRatios.resx">
+      <DependentUpon>XtraFormRatios.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Forms\XtraFormDongleReset.resx">
+      <DependentUpon>XtraFormDongleReset.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Forms\XtraFormDongleInfo.resx">
+      <DependentUpon>XtraFormDongleInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Forms\XtraFormFrequencyResultDialog.resx">
+      <DependentUpon>XtraFormFrequencyResultDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Forms\XtraFormDescriptionMessage.resx">
+      <DependentUpon>XtraFormDescriptionMessage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Forms\XtraFormFrequenciesUpdate.resx">
+      <DependentUpon>XtraFormFrequenciesUpdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Forms\frmFrequencyTest.resx">
+      <DependentUpon>frmFrequencyTest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Forms\frmProductsInfo.resx">
+      <DependentUpon>frmProductsInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Forms\WaitFormLoadingDataTopMost.resx">
+      <DependentUpon>WaitFormLoadingDataTopMost.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Forms\frmShipping.resx">
+      <DependentUpon>frmShipping.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Forms\frmShippingOrder.resx">
+      <DependentUpon>frmShippingOrder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Forms\frmFreeMeter.resx">
+      <DependentUpon>frmFreeMeter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Forms\frmSpotCheck.resx">
+      <DependentUpon>frmSpotCheck.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Forms\frmVFS.resx">
+      <DependentUpon>frmVFS.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Forms\XtraFormDownloadFiles.resx">
+      <DependentUpon>XtraFormDownloadFiles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Forms\XtraFormHwProfile.resx">
+      <DependentUpon>XtraFormHwProfile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Forms\XtraFormItemDescription.resx">
+      <DependentUpon>XtraFormItemDescription.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Forms\XtraFormPatientSearch.resx">
+      <DependentUpon>XtraFormPatientSearch.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Forms\XtraFormPHR.resx">
+      <DependentUpon>XtraFormPHR.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Forms\XtraFormRestartRequired.resx">
+      <DependentUpon>XtraFormRestartRequired.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Forms\XtraFormProductDosages.resx">
+      <DependentUpon>XtraFormProductDosages.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Forms\frmBackupRestore.resx">
+      <DependentUpon>frmBackupRestore.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Forms\DataManagementForms\frmItemRelations.resx">
+      <DependentUpon>frmItemRelations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Forms\DataManagementForms\frmItemManagement.resx">
+      <DependentUpon>frmItemManagement.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Forms\XtraFormAbout.resx">
+      <DependentUpon>XtraFormAbout.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Forms\XtraFormErrorMessage.resx">
+      <DependentUpon>XtraFormErrorMessage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Forms\XtraFormFourFactors.resx">
+      <DependentUpon>XtraFormFourFactors.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Forms\XtraFormMailClient.resx">
+      <DependentUpon>XtraFormMailClient.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Forms\XtraFormSelectItem.resx">
+      <DependentUpon>XtraFormSelectItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Forms\XtraFormShippingTarget.resx">
+      <DependentUpon>XtraFormShippingTarget.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Forms\XtraFormSpotCheckDialog.resx">
+      <DependentUpon>XtraFormSpotCheckDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Forms\XtraFormTechInfo.resx">
+      <DependentUpon>XtraFormTechInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Forms\XtraFormUpdate.resx">
+      <DependentUpon>XtraFormUpdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Forms\DataManagementForms\frmDataManagement.resx">
+      <DependentUpon>frmDataManagement.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Forms\DataManagementForms\frmTestProtocolManagement.resx">
+      <DependentUpon>frmTestProtocolManagement.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Forms\DataManagementForms\frmNewProtocolStartingItems.resx">
+      <DependentUpon>frmNewProtocolStartingItems.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Forms\frmGeneralTest.resx">
+      <DependentUpon>frmGeneralTest.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Forms\frmSettings.resx">
+      <DependentUpon>frmSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Forms\SplashScreenVital.resx">
+      <DependentUpon>SplashScreenVital.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Forms\WaitFormLoadingData.resx">
+      <DependentUpon>WaitFormLoadingData.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Forms\XtraFormDisclaimer.resx">
+      <DependentUpon>XtraFormDisclaimer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Forms\XtraFormMeterCounterDialog.resx">
+      <DependentUpon>XtraFormMeterCounterDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Forms\XtraFormVitalForce.resx">
+      <DependentUpon>XtraFormVitalForce.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Reports\XtraReportReportHeaderLogoOnly.resx">
+      <DependentUpon>XtraReportReportHeaderLogoOnly.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Reports\XtraReportAutoTest.resx">
+      <DependentUpon>XtraReportAutoTest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Reports\XtraReportFrequencyTest.resx">
+      <DependentUpon>XtraReportFrequencyTest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Reports\XtraReportClients.resx">
+      <DependentUpon>XtraReportClients.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Reports\XtraReportTestNotes.resx">
+      <DependentUpon>XtraReportTestNotes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Reports\XtraReportImprinting.resx">
+      <DependentUpon>XtraReportImprinting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Reports\XtraReportVFS.resx">
+      <DependentUpon>XtraReportVFS.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Reports\XtraReportFeedback.resx">
+      <DependentUpon>XtraReportFeedback.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\User Controls\BioDigital3DModel\XtraUserControlBioDigital3DModelViewer.resx">
+      <DependentUpon>XtraUserControlBioDigital3DModelViewer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\User Controls\BioDigital3DModel\XtraUserControlBioDigital3DModel.resx">
+      <DependentUpon>XtraUserControlBioDigital3DModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\User Controls\Modules\BaseModules\XtraUserControlBaseSettingsBar.resx">
+      <DependentUpon>XtraUserControlBaseSettingsBar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\User Controls\Modules\XtraUserControlAutoTestResults.resx">
+      <DependentUpon>XtraUserControlAutoTestResults.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\User Controls\Modules\XtraUserControlFrequencyTestResults.resx">
+      <DependentUpon>XtraUserControlFrequencyTestResults.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\User Controls\Modules\XtraUserControlHwProfiles.resx">
+      <DependentUpon>XtraUserControlHwProfiles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\User Controls\Modules\XtraUserControlPrintingOptions.resx">
+      <DependentUpon>XtraUserControlPrintingOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Reports\XtraReportShippingOrder.resx">
+      <DependentUpon>XtraReportShippingOrder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Reports\XtraReportDMPS.resx">
+      <DependentUpon>XtraReportDMPS.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Reports\XtraReportCapsolT.resx">
+      <DependentUpon>XtraReportCapsolT.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Reports\XtraReportMinerals.resx">
+      <DependentUpon>XtraReportMinerals.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Reports\XtraReportMTE.resx">
+      <DependentUpon>XtraReportMTE.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Reports\XtraReportProductInvoice.resx">
+      <DependentUpon>XtraReportProductInvoice.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Reports\XtraReportReportHeader.resx">
+      <DependentUpon>XtraReportReportHeader.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Reports\XtraReportTest.resx">
+      <DependentUpon>XtraReportTest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Reports\XtraReportPatientSchedule.resx">
+      <DependentUpon>XtraReportPatientSchedule.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\User Controls\Entity Tabs\XtraTabPageMajorIssue.resx">
+      <DependentUpon>XtraTabPageMajorIssue.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\User Controls\Entity Tabs\XtraTabPagePatient.resx">
+      <DependentUpon>XtraTabPagePatient.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\User Controls\Main Tabs\XtraTabPageEntity.resx">
+      <DependentUpon>XtraTabPageEntity.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Forms\ribbonFrmMain.resx">
+      <DependentUpon>ribbonFrmMain.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\User Controls\Modules\XtraUserControlIssue.resx">
+      <DependentUpon>XtraUserControlIssue.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\User Controls\Modules\XtraUserControlItemDetails.resx">
+      <DependentUpon>XtraUserControlItemDetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\User Controls\Modules\XtraUserControlItemReadingDetails.resx">
+      <DependentUpon>XtraUserControlItemReadingDetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\User Controls\Modules\XtraUserControlItemsNavGrid.resx">
+      <DependentUpon>XtraUserControlItemsNavGrid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\User Controls\Modules\XtraUserControlProperties.resx">
+      <DependentUpon>XtraUserControlProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\User Controls\Modules\XtraUserControlReadingGauge.resx">
+      <DependentUpon>XtraUserControlReadingGauge.cs</DependentUpon>
+    </EmbeddedResource>
+    <Content Include="Help.chm">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <EmbeddedResource Include="UI Components\User Controls\Modules\XtraUserControlRealTimeChart.resx">
+      <DependentUpon>XtraUserControlRealTimeChart.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\User Controls\Modules\XtraUserControlShippingTimeBar.resx">
+      <DependentUpon>XtraUserControlShippingTimeBar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\User Controls\Modules\XtraUserControlSimpleNavGrid.resx">
+      <DependentUpon>XtraUserControlSimpleNavGrid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\User Controls\Modules\XtraUserControlSpotCheckResults.resx">
+      <DependentUpon>XtraUserControlSpotCheckResults.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\User Controls\Modules\XtraUserControlVFSItems.resx">
+      <DependentUpon>XtraUserControlVFSItems.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\User Controls\Modules\XtraUserControlVFSSecondaryItems.resx">
+      <DependentUpon>XtraUserControlVFSSecondaryItems.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\User Controls\Modules\XtraUserControlVitalRichEdit.resx">
+      <DependentUpon>XtraUserControlVitalRichEdit.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>PublicSettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="UI Components\Forms\ribbonFrmMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI Components\Forms\ribbonFrmMain.Designer.cs">
+      <DependentUpon>ribbonFrmMain.cs</DependentUpon>
+    </Compile>
+    <None Include="Resources\OpenSansExtrabold.ttf" />
+    <None Include="Resources\OpenSansLight.ttf" />
+    <None Include="Resources\OpenSansSemibold.ttf" />
+    <None Include="Resources\Updates.png" />
+    <None Include="Resources\Updates.png" />
+    <None Include="Resources\port16x16.png" />
+    <None Include="Resources\port32x32.png" />
+    <None Include="Resources\RefreshSmall.png" />
+    <None Include="Resources\ExportToExcelFile.png" />
+    <None Include="Resources\Move.png" />
+    <None Include="Resources\Hand.JPG" />
+    <None Include="Resources\edit.png" />
+    <None Include="Resources\refresh.png" />
+    <None Include="Resources\accept1.png" />
+    <None Include="Resources\recycle.png" />
+    <None Include="Resources\Close.png" />
+    <None Include="Resources\List.png" />
+    <None Include="Resources\Money.png" />
+    <None Include="Resources\Client.png" />
+    <None Include="Resources\BellBlue.png" />
+    <None Include="Resources\alert.wav" />
+    <Content Include="PhysiciansHRAd\assets\images\cover.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="PhysiciansHRAd\assets\images\facebook.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="PhysiciansHRAd\assets\images\logo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="PhysiciansHRAd\assets\images\youtube.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="PhysiciansHRAd\assets\stylesheets\animate.min.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="PhysiciansHRAd\assets\stylesheets\style.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="PhysiciansHRAd\index.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="Resources\3DModelViewerBg.png" />
+    <Content Include="Resources\alert.mp3" />
+    <None Include="Resources\CircleBalanced.png" />
+    <None Include="Resources\CircleClear.png" />
+    <None Include="Resources\CircleUnbalanced.png" />
+    <None Include="Resources\Decrease.png" />
+    <None Include="Resources\Elevation.png" />
+    <None Include="Resources\Normal.png" />
+    <None Include="Resources\MarkNotImprintable.png" />
+    <None Include="Resources\Imprint16x16.png" />
+    <None Include="Resources\MinusWhiteSmall.png" />
+    <None Include="Resources\CheckboxNo.png" />
+    <None Include="Resources\CheckboxYes.png" />
+    <None Include="Resources\ImprintingLarge.png" />
+    <None Include="Resources\ImprintingClear.png" />
+    <None Include="Resources\Imp3.png" />
+    <None Include="Resources\Imp0.png" />
+    <None Include="Resources\Imp1.png" />
+    <None Include="Resources\Imp2.png" />
+    <None Include="Resources\ImprintingSound.wav" />
+    <None Include="Resources\NewHardware.jpg" />
+    <None Include="Resources\OldHardware.jpg" />
+    <None Include="Resources\NoPictureAvailable.png" />
+    <None Include="Resources\NextSmall.png" />
+    <None Include="Resources\Dilution256.png" />
+    <None Include="Resources\Bacteria256.png" />
+    <None Include="Resources\ClientsReportLarge.png" />
+    <None Include="Resources\ClientsReportSmall.png" />
+    <None Include="Resources\BlueBell16.png" />
+    <None Include="Resources\FrequencyTest16.png" />
+    <None Include="Resources\FrequencyTest64.png" />
+    <None Include="Resources\DongleInfo48.png" />
+    <None Include="Resources\DongleInfo16.png" />
+    <None Include="Resources\Delete_32.png" />
+    <None Include="Resources\AutoTest_32.png" />
+    <None Include="Resources\Description_16.png" />
+    <None Include="Resources\Calendar_16.png" />
+    <None Include="Resources\AutoTest_16.png" />
+    <None Include="Resources\Breadcrumb_24.png" />
+    <Content Include="Resources\DongleInfo16.ico" />
+    <None Include="Resources\Image_16.png" />
+    <None Include="Resources\Edit_16.png" />
+    <None Include="Resources\Meter_16.png" />
+    <None Include="Resources\noInternet.png" />
+    <None Include="Resources\ErrorLg.png" />
+    <None Include="Resources\Male3dModelViewerBg.jpg" />
+    <None Include="Resources\Female3dModelViewerBg.jpg" />
+    <None Include="Resources\Female3dModelViewerPlaceholder.jpg" />
+    <None Include="Resources\Male3dModelViewerPlaceholder.jpg" />
+    <None Include="Resources\DosageOption_16.png" />
+    <None Include="Resources\Folder_16.png" />
+    <None Include="Resources\HandOutline.jpg" />
+    <Content Include="Resources\PatientSearch.png" />
+    <None Include="Resources\Patient_Search64.png" />
+    <None Include="Resources\Pause_Colored_32.png" />
+    <Content Include="Resources\pause_timeline.png" />
+    <None Include="Resources\Percent.png" />
+    <None Include="Resources\PHRIcon16.ico" />
+    <None Include="Resources\PHRToolbarIcon.png" />
+    <None Include="Resources\PHR16.png" />
+    <None Include="Resources\Play_Colored_32.png" />
+    <Content Include="Resources\play_timeline.png" />
+    <None Include="Resources\PlusWhiteSmall.png" />
+    <None Include="Resources\RefreshLarge.png" />
+    <None Include="Resources\PreviousSmall.png" />
+    <None Include="Resources\Product256.png" />
+    <None Include="Resources\Print_32.png" />
+    <None Include="Resources\Readings_16.png" />
+    <None Include="Resources\ProductSize_16.png" />
+    <None Include="Resources\ProductForms_16.png" />
+    <None Include="Resources\Quantity_16.png" />
+    <None Include="Resources\Price_16.png" />
+    <None Include="Resources\PrintPreview_16.png" />
+    <None Include="Resources\PrintPreview_32.png" />
+    <None Include="Resources\Print_16.png" />
+    <Content Include="Resources\report caption 2.png" />
+    <Content Include="Resources\report caption.png" />
+    <None Include="Resources\Search.png" />
+    <None Include="Resources\RmoveFromImprinting.png" />
+    <None Include="Resources\Search16.png" />
+    <None Include="Resources\Save_32.png" />
+    <None Include="Resources\Results_16.png" />
+    <None Include="Resources\ScanList_16.png" />
+    <None Include="Resources\Screen Shot 2021-04-28 at 14.51.54.png" />
+    <Content Include="Resources\send-small.png" />
+    <Content Include="Resources\send.png" />
+    <None Include="Resources\Star.png" />
+    <None Include="Resources\SpotCheck.png" />
+    <None Include="Resources\StartSpotCheck.png" />
+    <None Include="Resources\stop 24x24.png" />
+    <None Include="Resources\warning.png" />
+    <None Include="Resources\StarsMode.png" />
+    <None Include="Resources\StarsModeOff.png" />
+    <None Include="Resources\SetDetailsOff.png" />
+    <None Include="Resources\SetDetailsOn.png" />
+    <None Include="Resources\TrashActive.png" />
+    <None Include="Resources\Shipping.png" />
+    <None Include="Resources\ShippingCount.png" />
+    <None Include="Resources\ShippingSmall.png" />
+    <None Include="Resources\Technician.png" />
+    <None Include="Resources\SplitArrow.png" />
+    <None Include="Resources\Sound.png" />
+    <None Include="Resources\StageIcon16.png" />
+    <None Include="Resources\Title_16.png" />
+    <None Include="Resources\Steps_16.png" />
+    <None Include="Resources\Stop_Colored_32.png" />
+    <None Include="Resources\TestingPoint.png" />
+    <Content Include="Resources\Trash.png" />
+    <None Include="Resources\VFS.png" />
+    <None Include="Resources\VFSLarge.png" />
+    <None Include="Resources\WirelessError.png" />
+    <Content Include="Shortcuts.chm">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="UI Components\Reports\Report Style Sheets\ReportStyleSheet.repss" />
+    <None Include="Vital.UI_TemporaryKey.pfx" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\BusinessLayer\Vital.Business.Integration\Vital.Business.Integration.csproj">
+      <Project>{d2b14669-182a-4e91-b3b6-9a3a8bfc4a44}</Project>
+      <Name>Vital.Business.Integration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\BusinessLayer\Vital.Business.Shared\Vital.Business.Shared.csproj">
+      <Project>{ADA57A75-5E31-4FAF-829C-4AA513513E2B}</Project>
+      <Name>Vital.Business.Shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\BusinessLayer\Vital.Business\Vital.Business.csproj">
+      <Project>{15207664-0380-4CD6-B827-8505EE109235}</Project>
+      <Name>Vital.Business</Name>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Vital.Update\Vital.Update.csproj">
+      <Project>{94D3BC7D-258A-421F-808F-DA7C5A35ECC7}</Project>
+      <Name>Vital.Update</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Sql.Server.Express.10.0">
+      <Visible>False</Visible>
+      <ProductName>SQL Server 2008 Express</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.4.5">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 4.5</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BackupRestore.png" />
+    <Content Include="VitalIcon.ico" />
+    <None Include="Resources\VitalPNG.png" />
+    <None Include="Resources\VITAL_LOGO.png" />
+    <None Include="Resources\Test_New_Big.png" />
+    <None Include="Resources\VitalForce_16.png" />
+    <None Include="Resources\Test_Tab.png" />
+    <None Include="Resources\Zoom_Out.png" />
+    <None Include="Resources\Zoom_In.png" />
+    <None Include="Resources\up.png" />
+    <None Include="Resources\add 24x24.png" />
+    <None Include="Resources\add16x16.png" />
+    <None Include="Resources\accept.png" />
+    <None Include="Resources\Notes_16.png" />
+    <None Include="Resources\PatientHistory_16.png" />
+    <Content Include="kl2dll32.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="nwkl2_32.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="Resources\Cancel.png" />
+    <None Include="Resources\delete.png" />
+    <None Include="Resources\down.png" />
+    <None Include="Resources\DataManagement.png" />
+    <None Include="Resources\eraser.png" />
+    <None Include="Resources\done.png" />
+    <None Include="Resources\Test_Undo.png" />
+    <None Include="Resources\Test_SaveClose.png" />
+    <None Include="Resources\Test_Info.png" />
+    <None Include="Resources\Test_Save.png" />
+    <None Include="Resources\Test_Play.png" />
+    <None Include="Resources\Test_Pause.png" />
+    <None Include="Resources\Test_New.png" />
+    <None Include="Resources\Test_Lock.png" />
+    <None Include="Resources\Test_Edit.png" />
+    <None Include="Resources\Test_Delete.png" />
+    <None Include="Resources\Patient_Lock.png" />
+    <None Include="Resources\Patient_Open.png" />
+    <None Include="Resources\Patient_Refresh.png" />
+    <None Include="Resources\Patient_SaveClose.png" />
+    <None Include="Resources\Patient_Undo.png" />
+    <None Include="Resources\SettingsSmall.png" />
+    <None Include="Resources\Settings.png" />
+    <None Include="Resources\Protocol.png" />
+    <None Include="Resources\folder_full %285%29.png" />
+    <None Include="Resources\haschildren.png" />
+    <None Include="Resources\Remove.png" />
+    <None Include="Resources\Reading_play.png" />
+    <None Include="Resources\Reading_stop.png" />
+    <None Include="Resources\podcast.png" />
+    <None Include="Resources\split.png" />
+    <None Include="Resources\ItemTesting_16.png" />
+    <None Include="Resources\Items_16.png" />
+    <None Include="Resources\Issue_16.png" />
+    <None Include="Resources\Point_16.png" />
+    <None Include="Resources\Error.png" />
+    <None Include="Resources\lock.png" />
+    <None Include="Resources\clock %282%29.png" />
+    <None Include="Resources\clock.png" />
+    <None Include="Resources\Print.png" />
+    <None Include="Resources\causes.png" />
+    <None Include="Resources\reload.png" />
+    <None Include="Resources\products-1.png" />
+    <None Include="Resources\dilution.png" />
+    <None Include="Resources\products.png" />
+    <None Include="Resources\bacteria.png" />
+    <None Include="Resources\oneByOneOff.png" />
+    <None Include="Resources\OneByOneOn.png" />
+    <EmbeddedResource Include="Resources\ReportProgressBar.bmp" />
+    <None Include="Resources\Info.png" />
+    <None Include="Resources\pin.png" />
+    <Content Include="Resources\balance.png" />
+    <None Include="Resources\BC0.png" />
+    <None Include="Resources\BC1.png" />
+    <None Include="Resources\BC2.png" />
+    <None Include="Resources\BC3.png" />
+    <None Include="Resources\next-product.png" />
+    <None Include="Resources\imprinting.png" />
+    <None Include="Resources\Female.png" />
+    <None Include="Resources\Male.png" />
+    <None Include="Resources\eye.png" />
+    <None Include="Resources\eyeHide.png" />
+    <None Include="Resources\hotkey.png" />
+    <None Include="Resources\key.png" />
+    <None Include="Resources\keyIcon.png" />
+    <None Include="Resources\feedback.png" />
+    <None Include="Resources\feedback_small.png" />
+    <Content Include="Resources\TabEmptyIcon.png" />
+    <None Include="Resources\Patient_Tab.png" />
+    <None Include="Resources\Patient_Search.png" />
+    <None Include="Resources\Patient_Save.png" />
+    <None Include="Resources\Patient_New.png" />
+    <None Include="Resources\Patient_Edit.png" />
+    <None Include="Resources\Patient_Delete.png" />
+    <Content Include="Resources\Help.png" />
+    <None Include="Resources\Splash.png" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <PublishFile Include="DevExpress.BonusSkins.v12.2">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="DevExpress.Charts.v12.2.Core">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="DevExpress.Data.v12.2">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="DevExpress.Office.v12.2.Core">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="DevExpress.PivotGrid.v12.2.Core">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="DevExpress.Printing.v12.2.Core">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="DevExpress.RichEdit.v12.2.Core">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="DevExpress.Utils.v12.2">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="DevExpress.Utils.v12.2.UI">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="DevExpress.XtraBars.v12.2">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="DevExpress.XtraCharts.v12.2">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="DevExpress.XtraCharts.v12.2.UI">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="DevExpress.XtraCharts.v12.2.Wizard">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="DevExpress.XtraEditors.v12.2">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="DevExpress.XtraGauges.v12.2.Core">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="DevExpress.XtraGauges.v12.2.Win">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="DevExpress.XtraGrid.v12.2">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="DevExpress.XtraLayout.v12.2">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="DevExpress.XtraNavBar.v12.2">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="DevExpress.XtraPrinting.v12.2">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="DevExpress.XtraReports.v12.2">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="DevExpress.XtraRichEdit.v12.2">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="DevExpress.XtraRichEdit.v12.2.Extensions">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="DevExpress.XtraScheduler.v12.2">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="DevExpress.XtraScheduler.v12.2.Core">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="DevExpress.XtraTreeList.v12.2">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="DevExpress.XtraVerticalGrid.v12.2">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="de\DevExpress.PivotGrid.v12.2.Core.resources">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Exclude</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Satellite</FileType>
+    </PublishFile>
+    <PublishFile Include="de\DevExpress.Utils.v12.2.UI.resources">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Exclude</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Satellite</FileType>
+    </PublishFile>
+    <PublishFile Include="de\DevExpress.XtraNavBar.v12.2.resources">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Exclude</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Satellite</FileType>
+    </PublishFile>
+    <PublishFile Include="es\DevExpress.PivotGrid.v12.2.Core.resources">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Exclude</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Satellite</FileType>
+    </PublishFile>
+    <PublishFile Include="es\DevExpress.Utils.v12.2.UI.resources">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Exclude</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Satellite</FileType>
+    </PublishFile>
+    <PublishFile Include="es\DevExpress.XtraNavBar.v12.2.resources">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Exclude</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Satellite</FileType>
+    </PublishFile>
+    <PublishFile Include="ja\DevExpress.PivotGrid.v12.2.Core.resources">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Exclude</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Satellite</FileType>
+    </PublishFile>
+    <PublishFile Include="ja\DevExpress.Utils.v12.2.UI.resources">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Exclude</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Satellite</FileType>
+    </PublishFile>
+    <PublishFile Include="ja\DevExpress.XtraNavBar.v12.2.resources">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Exclude</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Satellite</FileType>
+    </PublishFile>
+    <PublishFile Include="Microsoft.SqlServer.ConnectionInfo">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="Microsoft.SqlServer.Diagnostics.STrace">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="Microsoft.SqlServer.Dmf">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="Microsoft.SqlServer.Management.Sdk.Sfc">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="Microsoft.SqlServer.Management.SmoMetadataProvider">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="Microsoft.SqlServer.Management.SqlParser">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="Microsoft.SqlServer.ServiceBrokerEnum">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="Microsoft.SqlServer.Smo">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="Microsoft.SqlServer.SqlClrProvider">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="Microsoft.SqlServer.SqlEnum">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="Microsoft.VisualBasic.PowerPacks.Vs">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="ru\DevExpress.PivotGrid.v12.2.Core.resources">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Exclude</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Satellite</FileType>
+    </PublishFile>
+    <PublishFile Include="ru\DevExpress.Utils.v12.2.UI.resources">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Exclude</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Satellite</FileType>
+    </PublishFile>
+    <PublishFile Include="ru\DevExpress.XtraNavBar.v12.2.resources">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Exclude</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Satellite</FileType>
+    </PublishFile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Images\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>

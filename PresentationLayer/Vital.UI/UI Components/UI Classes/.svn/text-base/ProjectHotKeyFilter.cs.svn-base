@@ -1,0 +1,46 @@
+//////////////////////////////////////////////////////////////////////////////
+//  
+//  <sourcefile name="ProjectHotKeyFilter.cs" creationdate="3/10/09" owner="anasa" >
+//
+//      <project>McKinstry TCO Application</project>
+//  
+//      <description>This is a custom filter class that will monitor the keyboard keydown event in order to </description>
+//      <description>watch for clicking combination of keys </description>
+//      
+//      <copyright year="2008" company="McKinstry">
+//          <notice>
+//              Copyright © 2008 McKinstry. All rights reserved
+//  
+//              Developed for McKinstry by
+//                  Equiom - MENA
+//                  www.equiom.com
+//          </notice>
+//  
+//  	<history date="3/10/09" modby="anasa">created</history>
+//  
+//////////////////////////////////////////////////////////////////////////////
+
+using System.Windows.Forms;
+
+namespace TCO.DesktopClientDevexpress
+{
+    public class ProjectHotKeyFilter : IMessageFilter
+    {
+        private const uint WM_KEYDOWN = 0x100;
+
+        #region IMessageFilter Members
+
+        public bool PreFilterMessage(ref Message m)
+        {
+            if (m.Msg == WM_KEYDOWN)
+            {
+                Keys keyCode = (Keys) m.WParam & Keys.KeyCode;
+                UIBLLInteraction.Instance.HandleProjectHotKeyPress(keyCode);
+                //UIBLLInteraction.Instance.HandleRibbonHotKeyPress(keyCode);
+            }
+            return false;
+        }
+
+        #endregion
+    }
+}

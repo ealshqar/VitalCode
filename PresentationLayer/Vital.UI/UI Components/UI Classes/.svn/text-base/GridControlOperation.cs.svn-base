@@ -1,0 +1,552 @@
+﻿//////////////////////////////////////////////////////////////////////////////
+//  
+//  <sourcefile name="GridControlOperation.cs" creationdate="10/3/08" owner="anasa" >
+//
+//      <project>McKinstry TCO Application</project>
+//  
+//      <description>Provide methods and actions related to the grid controls in general</description>
+//      
+//      <copyright year="2008" company="McKinstry">
+//          <notice>
+//              Copyright © 2008 McKinstry. All rights reserved
+//  
+//              Developed for McKinstry by
+//                  Equiom - MENA
+//                  www.equiom.com
+//          </notice>
+//  
+//  	<history date="10/3/08" modby="anasa">created</history>
+//  
+//////////////////////////////////////////////////////////////////////////////
+
+#region Library Calls
+//---------------------------------------------------------------------------------------------
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using DevExpress.XtraGrid.Views.Base;
+using DevExpress.XtraGrid.Views.Grid;
+using DevExpress.XtraGrid.Columns;
+using System.Reflection;
+using System.Collections;
+using System.Drawing;
+using System.Windows.Forms;
+using DevExpress.Xpo;
+using DevExpress.XtraEditors.DXErrorProvider;
+using TCO.Entity;
+//---------------------------------------------------------------------------------------------
+#endregion
+
+namespace TCO.DesktopClientDevexpress
+{
+    public class GridControlOperation
+    {
+        # region Declarations
+        //---------------------------------------------------------------------------------------------
+        EntityPropertiesOperations propertyOperator = new EntityPropertiesOperations();
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        # region Properties
+        //---------------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        # region Methods
+        //---------------------------------------------------------------------------------------------
+        # region Initialization
+        //---------------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        #region Cell Style and Calculation Methods
+        //---------------------------------------------------------------------------------------------
+        #region Bold and Italic
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Updates the style of the cell as bold, italic or none depending on whether it is entered
+        /// by the user or calculated from other values
+        /// </summary>
+        /// <param name="sender">The gridview the sent the event</param>
+        /// <param name="e">The event args of the cell that was drawn to give required info about it
+        public void UpdateCellStyle(object sender, RowCellCustomDrawEventArgs e)
+        {
+            if (e.RowHandle >= 0)
+            {
+                IQueryTCOPropInfo queryTCOPropInfo = (sender as GridView).GetRow(e.RowHandle) as IQueryTCOPropInfo;
+                ITCOPropInfo tcoPropInfo = queryTCOPropInfo.GetTCOPropInfo();
+                if (tcoPropInfo.AllowStyling(e.Column.FieldName))
+                {
+                    if (tcoPropInfo.GetEntered(e.Column.FieldName))
+                    {
+                        e.Appearance.Font = new Font(e.Appearance.Font, FontStyle.Bold);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Performs the style change because this action might be called from different callers and methods
+        /// so it should be generic
+        /// </summary>
+        /// <param name="style">The style to set to the current cell</param>
+        /// <param name="e">The event containing info about the cell</param>
+        public void PerformStyleUpdate(CellFontStyle style, RowCellCustomDrawEventArgs e)
+        {
+            switch (style)
+            {
+                case CellFontStyle.Bold:
+                    e.Appearance.Font = new Font(e.Appearance.Font, FontStyle.Bold);
+                    break;
+                case CellFontStyle.Italic:
+                    e.Appearance.Font = new Font(e.Appearance.Font, FontStyle.Italic);
+                    break;
+                default:
+                    break;
+            }
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        #region Calculation Change
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Check if the given string value is a numeric value or not
+        /// </summary>
+        /// <param name="value">The string value to be checked</param>
+        /// <returns>True if the value is numeric</returns>
+        public bool IsStringNumeric(string value)
+        {
+            //Temporary buffer for storing the result of the next methods int.TryParse
+            double number;
+            if (double.TryParse(value.ToString(), out number))
+            {
+                double result = Convert.ToDouble(value);
+                if (result >= 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Determine if an expression value is valid or not
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public bool IsEpxressionValid(string value)
+        {
+            //if the result was null, then the expression was invalid, else, the expression is valid and will be saved
+            if (value != null)
+            {
+                if (Convert.ToDouble(value) >= 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Change the calculation of the object and update the cell's style accodring to that
+        /// </summary>
+        /// <param name="e">the event args giving info about the edited cell</param>
+        public void Recalculate(CellValueChangedEventArgs e, object entityObject, object sender)
+        {
+            IQueryTCOPropInfo queryTCOPropInfo = propertyOperator.GetCurrentGridViewObject(sender, e.RowHandle) as IQueryTCOPropInfo;
+            ITCOPropInfo tcoPropInfo = queryTCOPropInfo.GetTCOPropInfo();
+            ConstructionCost costBoject = propertyOperator.GetCurrentGridViewObject(sender, e.RowHandle) as ConstructionCost;
+            if (Eval.IsStringNumeric(e.Value.ToString()))
+            {
+                //if result is numeric, then convert to number and put it also in the calculation
+                tcoPropInfo.SetExpression(e.Column.FieldName, e.Value.ToString());
+                tcoPropInfo.SetEntered(e.Column.FieldName, "true");
+                tcoPropInfo.SetValue(e.Column.FieldName, e.Value.ToString());
+                queryTCOPropInfo.Calculate(e.Column.FieldName);
+                BaseView detailedView = (sender as GridView).GetDetailView(e.RowHandle, 0);
+                if (detailedView != null)
+                {
+                    detailedView.RefreshData();
+                }
+            }
+            else
+            {
+                //if the string entered wasn't number, then pass it to the calculation engine
+                //Check expression validity
+                if (Eval.IsExpressionValid((e.Value.ToString())))
+                {
+                    tcoPropInfo.SetExpression(e.Column.FieldName, e.Value.ToString());
+                    tcoPropInfo.SetValue(e.Column.FieldName, Eval.EvaluateExpression(e.Value.ToString()));
+                    queryTCOPropInfo.Calculate(e.Column.FieldName);
+                    (sender as GridView).RefreshData();
+                }
+                else
+                {
+                    //Inform the user with the invalid expression
+                    if (!Eval.IsExpressionValid(e.Value.ToString()))
+                    {
+                        tcoPropInfo.SetCustomNotificationText(e.Column.FieldName, "Invalid Expression Entered");
+                    }
+                    else
+                    {
+                        tcoPropInfo.SetCustomNotificationText(e.Column.FieldName, "Costs can't be negative values");
+                    }
+                    
+                    tcoPropInfo.SetCustomNotificationType(e.Column.FieldName, ErrorType.Warning.ToString());
+                    tcoPropInfo.SetShowCustomNotification(e.Column.FieldName, "true");
+                    //Restore the previous value
+                    RestoreCellValue(e, entityObject, sender);
+                }
+            }
+            //After editing the cell, cell draw should automatically work and update the style of the cell
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        #region Cell Clear and resotre
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Restore the value of the cell in the event args after clearing using oldeditvalue property
+        /// </summary>
+        /// <param name="e">Event args giving info about the cell</param>
+        public void RestoreCellValue(CellValueChangedEventArgs e, object entityObject, object sender)
+        {
+            IQueryTCOPropInfo category = propertyOperator.GetCurrentGridViewObject(sender, e.RowHandle) as IQueryTCOPropInfo;
+            ITCOPropInfo currentEntityInfo = category.GetTCOPropInfo();
+
+            //If the cell value was entered, then when restoring the cell value, the user should see the expression that
+            //he entered before whether it was expression or just value
+            if (currentEntityInfo.GetEntered(e.Column.FieldName))
+            {
+                currentEntityInfo.SetDisplay(e.Column.FieldName, currentEntityInfo.GetExpression(e.Column.FieldName));
+            }
+            else
+            {
+                //if the cell value was calculated, then we need to restore the caluclation value
+                currentEntityInfo.SetDisplay(e.Column.FieldName, currentEntityInfo.GetValue(e.Column.FieldName));
+            }
+            ((GridView)sender).RefreshRowCell(((GridView)sender).FocusedRowHandle, e.Column);
+        }
+
+        /// <summary>
+        /// Clear the cells of a CUI object when clearing the entered value
+        /// </summary>
+        /// <param name="e">The args giving info about the column and row of the cell cleared</param>
+        public void ClearAllCells(CellValueChangedEventArgs e, object entityObject, object sender)
+        {
+            //TODO[Anas]: Show a confirmation message about clearing the cell entered values
+
+            //If the user accpeted, then delete the value in all the cells
+            if (MessageBox.Show("A values will be deleted, are you sure?", "Warning", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                ITCOPropInfo currentEntity = propertyOperator.GetCurrentGridViewObject(sender, e.RowHandle) as ITCOPropInfo;
+                //currentEntity.ClearCalculation(e.Column.FieldName);
+
+                //foreach (PropertyInfo propertyToClear in entityObject.GetType().GetProperties())
+                //{
+                //    if (propertyOperator.GetPropertyContext(propertyToClear) == propertyOperator.GetPropertyContext(property))
+                //    {
+                //        propertyToClear.SetValue(entityObject, string.Empty, null);
+                //    }
+                //}
+                ////Get the current object in the grid view from the row handle
+                //entityObject.EnteredCalculations[propertyOperator.GetPropertyContext(property)] = string.Empty;
+            }
+            else
+            {
+                //resotre the value of the cell after clearing
+                RestoreCellValue(e, entityObject, sender);
+            }
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        #region General Conditions
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Determine if the cell is cleared or a value changed
+        /// </summary>
+        /// <param name="e"></param>
+        public void HandleCellValueChanged(CellValueChangedEventArgs e, object sender)
+        {
+            object entityObject = propertyOperator.GetCurrentGridViewObject(sender, e.RowHandle);
+            //If the cell is cleared, then check cell clearing action
+            if (e.Value.ToString() != string.Empty)
+            {
+                Recalculate(e, entityObject, sender);
+            }
+            else
+            {
+                HandleCellClear(e, entityObject, sender);
+            }
+        }
+
+        /// <summary>
+        /// Handle the event of clearing a cell and the action of clearing all other cell values
+        /// </summary>
+        /// <param name="e">The event args giving info about the edited cell</param>
+        public void HandleCellClear(CellValueChangedEventArgs e, object entityObject, object sender)
+        {
+            IQueryTCOPropInfo queryTCOPropInfo = propertyOperator.GetCurrentGridViewObject(sender, e.RowHandle) as IQueryTCOPropInfo;
+            ConstructionCost costBoject = propertyOperator.GetCurrentGridViewObject(sender, e.RowHandle) as ConstructionCost;
+            queryTCOPropInfo.ClearCells(e.Column.FieldName);
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        #region Notification
+        //---------------------------------------------------------------------------------------------       
+        /// <summary>
+        /// Inform the user that an invalid calculation was entered
+        /// </summary>
+        /// <param name="e">info about the cell</param>
+        public void InformInvalidExpression(CellValueChangedEventArgs e, object entityObject)
+        {
+            PropertyInfo property = entityObject.GetType().GetProperty(e.Column.FieldName);
+            //entityObject.CurrentFocusedValue = e.Column.FieldName;
+            //entityObject.ShowIncorrectExpressionNotification = true;
+        }
+
+        /// <summary>
+        /// Inform the user that calculated cell values can't be deleted and restore the deleted value
+        /// </summary>
+        /// <param name="e">The Event args giving info about the cell</param>
+        public void showCalculatedValueDeleteNotification(CellValueChangedEventArgs e, object entityObject, object sender)
+        {
+            PropertyInfo property = entityObject.GetType().GetProperty(e.Column.FieldName);
+            //entityObject.CurrentFocusedValue = e.Column.FieldName;
+            //entityObject.ShowCalculatedDeleteNotification = true;
+            RestoreCellValue(e, entityObject, sender);
+        }
+
+        public void ShowCategoryNameChangeNotification(CellValueChangedEventArgs e, ConstructionCost ccObject)
+        {
+            //ccObject.CurrentFocusedValue = e.Column.FieldName;
+            //ccObject.ShowCategoryNameChangeNotification = true;
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        #region Cell contents changes
+        //---------------------------------------------------------------------------------------------
+        public void ShowHideExpression(object sender, bool isShowingExpression)
+        {
+            GridView view = sender as GridView;
+            if (view != null && view.FocusedRowHandle >= 0)
+            {
+                IQueryTCOPropInfo queryTCOPropInfo = view.GetRow(view.FocusedRowHandle) as IQueryTCOPropInfo;
+                ITCOPropInfo tcoPropInfo = queryTCOPropInfo.GetTCOPropInfo();
+                if (tcoPropInfo.AllowStyling(view.FocusedColumn.FieldName))
+                {
+                    if (isShowingExpression && tcoPropInfo.GetEntered(view.FocusedColumn.FieldName))
+                    {
+                        //view.SetFocusedValue(tcoPropInfo.GetExpression(view.FocusedColumn.FieldName));
+                    }
+                    else if (tcoPropInfo.GetEntered(view.FocusedColumn.FieldName))
+                    {
+                        //view.SetFocusedValue(tcoPropInfo.GetValue(view.FocusedColumn.FieldName));
+                    }
+                }
+            }
+        }
+
+        #region General Conditions
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Calls methods to handle showing calculation in focused column and hiding it in previous column
+        /// </summary>
+        /// <param name="e">info about the columns</param>
+        public void HandleColumnChange(FocusedColumnChangedEventArgs e, object sender)
+        {
+            GridView view = sender as GridView;
+            if (e.FocusedColumn != null &&
+                e.PrevFocusedColumn != null &&
+                view.FocusedRowHandle >= 0)
+            {
+
+                IQueryTCOPropInfo queryTCOPropInfo = view.GetRow(view.FocusedRowHandle) as IQueryTCOPropInfo;
+                ITCOPropInfo tcoPropInfo = queryTCOPropInfo.GetTCOPropInfo();
+
+                string currentColumnName = e.FocusedColumn.FieldName;
+                string previousColumnName = e.PrevFocusedColumn.FieldName;
+                if (tcoPropInfo.AllowStyling(currentColumnName))
+                {
+                    if (tcoPropInfo.GetEntered(currentColumnName))
+                    {
+                        tcoPropInfo.SetDisplay(currentColumnName, tcoPropInfo.GetExpression(currentColumnName));
+                    }
+                }
+                if (tcoPropInfo.AllowStyling(previousColumnName))
+                {
+                    if (tcoPropInfo.GetEntered(previousColumnName))
+                    {
+                        tcoPropInfo.SetDisplay(previousColumnName, tcoPropInfo.GetValue(previousColumnName));
+                    }
+                }
+                if (tcoPropInfo.GetShowCustomNotification(previousColumnName))
+                {
+                    tcoPropInfo.SetCustomNotificationText(previousColumnName, "");
+                    tcoPropInfo.SetCustomNotificationType(previousColumnName, ErrorType.None.ToString());
+                    tcoPropInfo.SetShowCustomNotification(previousColumnName, "false");
+                }
+                ((GridView)sender).RefreshRowCell(((GridView)sender).FocusedRowHandle, e.FocusedColumn);
+                ((GridView)sender).RefreshRowCell(((GridView)sender).FocusedRowHandle, e.PrevFocusedColumn);
+            }
+        }
+
+        /// <summary>
+        /// Calls methods to handle showing calculation in focused row and hiding it in previous row
+        /// </summary>
+        /// <param name="e">info about the rows</param>
+        public void HandleRowChange(FocusedRowChangedEventArgs e, object sender)
+        {
+            GridView view = sender as GridView;
+            if (e.FocusedRowHandle >= 0 &&
+                e.PrevFocusedRowHandle >= 0 &&
+                view.FocusedColumn != null)
+            {
+                IQueryTCOPropInfo queryTCOPropFocused = view.GetRow(e.FocusedRowHandle) as IQueryTCOPropInfo;
+                IQueryTCOPropInfo queryTCOPropPrevious = view.GetRow(e.PrevFocusedRowHandle) as IQueryTCOPropInfo;
+
+                ITCOPropInfo tcoPropInfoFocused = queryTCOPropFocused.GetTCOPropInfo();
+                ITCOPropInfo tcoPropInfoPrevious = queryTCOPropPrevious.GetTCOPropInfo();
+
+                string currentColumnName = view.FocusedColumn.FieldName;
+                if (tcoPropInfoFocused.AllowStyling(currentColumnName))
+                {
+                    if (tcoPropInfoFocused.GetEntered(currentColumnName))
+                    {
+                        tcoPropInfoFocused.SetDisplay(currentColumnName, tcoPropInfoFocused.GetExpression(currentColumnName));
+                    }
+                    if (tcoPropInfoPrevious.GetEntered(currentColumnName))
+                    {
+                        tcoPropInfoPrevious.SetDisplay(currentColumnName, tcoPropInfoPrevious.GetValue(currentColumnName));
+                    }
+                }
+                if (tcoPropInfoFocused.GetShowCustomNotification(currentColumnName))
+                {
+                    tcoPropInfoFocused.SetCustomNotificationText(currentColumnName, "");
+                    tcoPropInfoFocused.SetCustomNotificationType(currentColumnName, ErrorType.None.ToString());
+                    tcoPropInfoFocused.SetShowCustomNotification(currentColumnName, "false");
+                }
+                if (tcoPropInfoPrevious.GetShowCustomNotification(currentColumnName))
+                {
+                    tcoPropInfoPrevious.SetCustomNotificationText(currentColumnName, "");
+                    tcoPropInfoPrevious.SetCustomNotificationType(currentColumnName, ErrorType.None.ToString());
+                    tcoPropInfoPrevious.SetShowCustomNotification(currentColumnName, "false");
+                }
+                ((GridView)sender).RefreshRowCell(e.FocusedRowHandle, ((GridView)sender).FocusedColumn);
+                ((GridView)sender).RefreshRowCell(e.PrevFocusedRowHandle, ((GridView)sender).FocusedColumn);
+            }
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        #region Showing Calculation
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Changes the view of the focused column to show a calculation if it contains the cell entered by user
+        /// </summary>
+        /// <param name="objCUI">The object containg the values and the calculation</param>
+        /// <param name="e">The event args containing info about the column</param>
+        public void ShowFocusedColumnCalculation(object entityObject, FocusedColumnChangedEventArgs e)
+        {
+            ShowCalculation(e.FocusedColumn.FieldName, entityObject);
+        }
+
+        /// <summary>
+        /// Show calculation in the focused row
+        /// </summary>
+        /// <param name="e">info about the row</param>
+        public void ShowFocusedRowCalculation(object entityObject, FocusedRowChangedEventArgs e, string propertyName)
+        {
+            ShowCalculation(propertyName, entityObject);
+        }
+
+        public void ShowCalculation(string propertyName, object entityObject)
+        {
+            //Check if the focused column is one of (total, $/sf, quantity) to use its name in getting the enum value
+
+            PropertyInfo property = entityObject.GetType().GetProperty(propertyName);
+            if (propertyOperator.IsPropertyStylingEnabled(property))
+            {
+                //if (propertyOperator.IsPropertyValueEntered(propertyName, entityObject.EnteredProperties))
+                //{
+                //    property.SetValue(entityObject, entityObject.EnteredCalculations[propertyOperator.GetPropertyContext(property)], null);
+                //}
+            }
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        #region Hiding Calculation
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// When leaving a column, if it was showing the calculaion, then show the result
+        /// </summary>
+        /// <param name="objCUI">The object containg the values and the calculation</param>
+        /// <param name="e">The event args containing info about the column</param>
+        public void ShowLastFocusedColumnValue(object focusedEntityObject, FocusedColumnChangedEventArgs e)
+        {
+            HideCalculation(e.PrevFocusedColumn.FieldName, focusedEntityObject);
+        }
+
+        /// <summary>
+        /// Hide the calcuation in the last focused row
+        /// </summary>
+        /// <param name="e">info about the row</param>
+        public void ShowLastFocusedRowValue(object previousEntityObject, FocusedRowChangedEventArgs e, string propertyName)
+        {
+            //Get the CUI object or the last focused row
+            HideCalculation(propertyName, previousEntityObject);
+        }
+
+        public void HideCalculation(string propertyName, object entityObject)
+        {
+            PropertyInfo property = entityObject.GetType().GetProperty(propertyName);
+            if (propertyOperator.IsPropertyStylingEnabled(property))
+            {
+                //if (propertyOperator.IsPropertyValueEntered(propertyName, entityObject.EnteredProperties) &&
+                //string.Empty != entityObject.EnteredCalculations[propertyOperator.GetPropertyContext(property)].ToString())
+                //{
+                //    entityObject.ShowIncorrectExpressionNotification = false;
+                //    entityObject.Calculate(propertyOperator.GetPropertyContext(property));
+                //}
+                //else if (propertyOperator.IsPropertyStylingEnabled(property))
+                //{
+                //    entityObject.ShowCalculatedDeleteNotification = false;
+                //    entityObject.ShowIncorrectExpressionNotification = false;
+                //}
+            }
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        //---------------------------------------------------------------------------------------------
+        #endregion
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        # region Handlers
+        //---------------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------------
+        #endregion
+    }
+}

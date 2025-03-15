@@ -1,0 +1,199 @@
+﻿using System;
+using System.Runtime.Serialization;
+
+namespace Equiom.Tco.Common
+{
+   
+    /// <summary>
+    /// This exception is thrown when a configuration setting is not found or is incorrect
+    /// </summary>
+    /// <remarks>
+    /// This exception is used instead of the built in ConfigurationException because that one is not thrown when settings have
+    /// wrong values or are not present (this is a known issue with .Net configuration classes). Also the built in exception has
+    /// many properties that are not needed
+    /// </remarks>
+    [Serializable]
+    public class ConfigurationException : Exception, ISerializable
+    {
+        #region Constants
+
+        const string GENERAL_CONFIGURATION_ERROR_MESSAGE = "An Error occured while trying to read configuration setting \"{0}\"";
+        const string CONFIG_SETTING_NOT_FOUND_ERROR_MESSAGE = "Configuration setting \"{0}\" is not found";
+        const string CONFIG_SETTING_VALUE_IS_INVALID_ERROR_MESSAGE = "Configuration setting \"{0}\" has an invalid value of \"{1}\"";
+        const string CONNECTION_STRING_SETTING_IS_INVALID_ERROR_MESSAGE = "Connection string setting \"(0)\" is invalid";
+        const string CONNECTION_STRING_SETTING_HAS_INVALID_DATABASE_NAME_ERROR_MESSAGE = "Connection string setting \"(0)\" has invalid database name";
+        const string CONNECTION_STRING_TIMEOUT_SQL_ERROR_MESSAGE = "An error has occurred while establishing a connection to the server using connection string \"{0}\"";
+
+        //serialization property names
+        const string ERROR_CODE_PROPERTY_NAME = "ErrorCode";
+        const string SETTING_NAME_PROPERTY_NAME = "SettingName";
+        const string SETTING_VALUE_PROPERTY_NAME = "SettingValue";
+        
+        #endregion
+
+        #region Fields
+
+        ConfigurationExceptionErrorCode _errorCode;
+        string _settingName;
+        string _settingValue;
+
+        #endregion
+
+        #region Properties
+        
+        /// <summary>
+        /// Gets the configuration error code that identifies the exception
+        /// </summary>
+        public ConfigurationExceptionErrorCode ErrorCode
+        {
+            get
+            {
+                return _errorCode;
+            }
+        }
+
+        /// <summary>
+        /// Gets the name of the settings that caused the exception
+        /// </summary>
+        public string SettingName
+        {
+            get
+            {
+                return _settingName;
+            }
+
+        }
+
+        /// <summary>
+        /// Gets the value of the settings that caused the exception
+        /// </summary>
+        public string SettingValue
+        {
+            get
+            {
+                return _settingValue;
+            }
+        }
+
+
+        #endregion
+
+        #region Constructors
+
+        /// <summary>
+        /// Creates a new Configuration exception
+        /// </summary>
+        /// <param name="configurationExceptionErrorCode">Error code that identifies the exception</param>
+        /// <param name="settingName">Name of setting that caused the exception</param>
+        /// <param name="settingValue">Value of setting that caused the exception</param>
+        /// <param name="innerException">Original exception that occured during reading the configuration setting</param>
+        public ConfigurationException(ConfigurationExceptionErrorCode configurationExceptionErrorCode, string settingName, string settingValue, Exception innerException)
+            : base(GetErrorMessage(configurationExceptionErrorCode,settingName,settingValue), innerException)
+        {
+            _errorCode = configurationExceptionErrorCode;
+            _settingName = settingName;
+            _settingValue = settingValue;
+        }
+
+        /// <summary>
+        /// Creates a new Configuration exception
+        /// </summary>
+        /// <param name="configurationExceptionErrorCode">Error code that identifies the exception</param>
+        /// <param name="settingName">Name of setting that caused the exception</param>
+        /// <param name="settingValue">Value of setting that caused the exception</param>
+        public ConfigurationException(ConfigurationExceptionErrorCode configurationExceptionErrorCode, string settingName, string settingValue)
+            : this(configurationExceptionErrorCode, settingName, settingValue, null)
+        {
+            
+        }
+
+
+        /// <summary>
+        /// Creates a new Configuration exception
+        /// </summary>
+        /// <param name="configurationExceptionErrorCode">Error code that identifies the exception</param>
+        /// <param name="settingName">Name of setting that caused the exception</param>
+        /// <param name="innerException">Original exception that occured during reading the configuration setting</param>
+        public ConfigurationException(ConfigurationExceptionErrorCode configurationExceptionErrorCode, string settingName, Exception innerException)
+            : this(configurationExceptionErrorCode, settingName, null, innerException)
+        {
+            
+        }
+
+        /// <summary>
+        /// Creates a new Configuration exception
+        /// </summary>
+        /// <param name="configurationExceptionErrorCode">Error code that identifies the exception</param>
+        /// <param name="settingName">Name of setting that caused the exception</param>
+        public ConfigurationException(ConfigurationExceptionErrorCode configurationExceptionErrorCode, string settingName)
+            : this(configurationExceptionErrorCode, settingName, null, null)
+        {
+
+        }
+
+        
+        /// <summary>
+        ///  Deserialization constructor
+        /// </summary>
+        /// <param name="info"></param>
+        /// <param name="context"></param>
+        protected ConfigurationException(SerializationInfo info, StreamingContext context)
+            : base(info, context) 
+        {
+
+            //deserialize fields
+            _errorCode = (ConfigurationExceptionErrorCode)info.GetInt32(ERROR_CODE_PROPERTY_NAME);
+            _settingName = info.GetString(SETTING_NAME_PROPERTY_NAME);
+            _settingValue = info.GetString(SETTING_VALUE_PROPERTY_NAME);
+        }
+
+        #endregion
+
+        #region ISerializable Members
+
+        /// <summary>
+        /// Serializes the exception state
+        /// </summary>
+        /// <param name="info"></param>
+        /// <param name="context"></param>
+        void ISerializable.GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            //serialize fields
+            info.AddValue(SETTING_VALUE_PROPERTY_NAME, _settingValue);
+            info.AddValue(SETTING_NAME_PROPERTY_NAME, _settingName);
+            info.AddValue(ERROR_CODE_PROPERTY_NAME, _errorCode);
+
+            //let the base serialize itself
+            base.GetObjectData(info, context);
+
+        }
+
+        #endregion
+
+        #region Helper Methods
+
+        //helper methods to generate the exception message based on the error code
+        private static string GetErrorMessage(ConfigurationExceptionErrorCode configurationExceptionErrorCode, string settingName, string settingValue)
+        {
+
+            switch (configurationExceptionErrorCode)
+            {
+                case ConfigurationExceptionErrorCode.SettingNotFound:
+                    return string.Format(CONFIG_SETTING_NOT_FOUND_ERROR_MESSAGE, settingName);
+                case ConfigurationExceptionErrorCode.SettingValueIsInvalid:
+                    return string.Format(CONFIG_SETTING_VALUE_IS_INVALID_ERROR_MESSAGE, settingName, settingValue);
+                case ConfigurationExceptionErrorCode.ConnectionStringSettingIsInvalid:
+                    return string.Format(CONNECTION_STRING_SETTING_IS_INVALID_ERROR_MESSAGE, settingName);
+                case ConfigurationExceptionErrorCode.ConnectionStringSettingHasInvalidDatabaseName:
+                    return string.Format(CONNECTION_STRING_SETTING_HAS_INVALID_DATABASE_NAME_ERROR_MESSAGE, settingName);
+                case ConfigurationExceptionErrorCode.ConnectionStringTimeout:
+                    return string.Format(CONNECTION_STRING_TIMEOUT_SQL_ERROR_MESSAGE, settingName);
+                default:
+                    return string.Format(GENERAL_CONFIGURATION_ERROR_MESSAGE, settingName);
+            }
+        }
+
+        #endregion
+
+    }
+}

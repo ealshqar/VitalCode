@@ -1,0 +1,425 @@
+namespace TCO.DesktopClientDevexpress.UI_Components.User_Controls.Main_Tabs
+{
+    partial class XtraUserControlBuildingsList
+    {
+        /// <summary> 
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary> 
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Component Designer generated code
+
+        /// <summary> 
+        /// Required method for Designer support - do not modify 
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(XtraUserControlBuildingsList));
+            this.gridControlBuildingsList = new DevExpress.XtraGrid.GridControl();
+            this.contextMenuStripBuilding = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.toolStripMenuItemBuildingOpen = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemBuildingLoadParent = new System.Windows.Forms.ToolStripMenuItem();
+            this.ToolStripMenuItemcopyToNavigationPanelSelectedProject = new System.Windows.Forms.ToolStripMenuItem();
+            this.gridViewBuildingsList = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.gridColumnCRMID = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumnBuildingName = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumnProjectName = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumnBuildingWorkForCustomer = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumnAddress1 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumnAddress2 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumnCity = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumnState = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumnZipCode = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumnDateCreated = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumnDateLastModified = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumnGrossSF = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumnYearBuilt = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumnBuildingType = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumnTechnicalContact = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumnPrimaryContact = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumnTcoProjectNumber = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumnCgcProjectNumbers = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumnVerticalMarket = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumnOrigionalBuildingId = new DevExpress.XtraGrid.Columns.GridColumn();
+            ((System.ComponentModel.ISupportInitialize)(this.dxErrorProviderMain)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridControlBuildingsList)).BeginInit();
+            this.contextMenuStripBuilding.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridViewBuildingsList)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // toolTipControllerMain
+            // 
+            this.toolTipControllerMain.GetActiveObjectInfo += new DevExpress.Utils.ToolTipControllerGetActiveObjectInfoEventHandler(this.toolTipControllerMain_GetActiveObjectInfo);
+            // 
+            // errorImageList
+            // 
+            this.errorImageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("errorImageList.ImageStream")));
+            this.errorImageList.Images.SetKeyName(0, "messageboxerror.ico");
+            // 
+            // gridControlBuildingsList
+            // 
+            this.gridControlBuildingsList.ContextMenuStrip = this.contextMenuStripBuilding;
+            this.gridControlBuildingsList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gridControlBuildingsList.Location = new System.Drawing.Point(0, 0);
+            this.gridControlBuildingsList.MainView = this.gridViewBuildingsList;
+            this.gridControlBuildingsList.Name = "gridControlBuildingsList";
+            this.gridControlBuildingsList.Size = new System.Drawing.Size(887, 578);
+            this.gridControlBuildingsList.TabIndex = 4;
+            this.gridControlBuildingsList.ToolTipController = this.toolTipControllerMain;
+            this.gridControlBuildingsList.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
+            this.gridViewBuildingsList});
+            // 
+            // contextMenuStripBuilding
+            // 
+            this.contextMenuStripBuilding.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItemBuildingOpen,
+            this.toolStripMenuItemBuildingLoadParent,
+            this.ToolStripMenuItemcopyToNavigationPanelSelectedProject});
+            this.contextMenuStripBuilding.Name = "contextMenuStripBuilding";
+            this.contextMenuStripBuilding.Size = new System.Drawing.Size(330, 70);
+            this.contextMenuStripBuilding.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.contextMenuStripBuilding_ItemClicked);
+            this.contextMenuStripBuilding.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStripBuilding_Opening);
+            // 
+            // toolStripMenuItemBuildingOpen
+            // 
+            this.toolStripMenuItemBuildingOpen.Name = "toolStripMenuItemBuildingOpen";
+            this.toolStripMenuItemBuildingOpen.Size = new System.Drawing.Size(329, 22);
+            this.toolStripMenuItemBuildingOpen.Text = "Open Building";
+            // 
+            // toolStripMenuItemBuildingLoadParent
+            // 
+            this.toolStripMenuItemBuildingLoadParent.Name = "toolStripMenuItemBuildingLoadParent";
+            this.toolStripMenuItemBuildingLoadParent.Size = new System.Drawing.Size(329, 22);
+            this.toolStripMenuItemBuildingLoadParent.Text = "Add Parent Project to Navigation Panel";
+            // 
+            // ToolStripMenuItemcopyToNavigationPanelSelectedProject
+            // 
+            this.ToolStripMenuItemcopyToNavigationPanelSelectedProject.Image = global::TCO.DesktopClientDevexpress.Properties.Resources.Copy;
+            this.ToolStripMenuItemcopyToNavigationPanelSelectedProject.Name = "ToolStripMenuItemcopyToNavigationPanelSelectedProject";
+            this.ToolStripMenuItemcopyToNavigationPanelSelectedProject.Size = new System.Drawing.Size(329, 22);
+            this.ToolStripMenuItemcopyToNavigationPanelSelectedProject.Text = "Assign this building(s) to the highlighted project";
+            // 
+            // gridViewBuildingsList
+            // 
+            this.gridViewBuildingsList.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+            this.gridColumnCRMID,
+            this.gridColumnBuildingName,
+            this.gridColumnProjectName,
+            this.gridColumnBuildingWorkForCustomer,
+            this.gridColumnAddress1,
+            this.gridColumnAddress2,
+            this.gridColumnCity,
+            this.gridColumnState,
+            this.gridColumnZipCode,
+            this.gridColumnDateCreated,
+            this.gridColumnDateLastModified,
+            this.gridColumnGrossSF,
+            this.gridColumnYearBuilt,
+            this.gridColumnBuildingType,
+            this.gridColumnTechnicalContact,
+            this.gridColumnPrimaryContact,
+            this.gridColumnTcoProjectNumber,
+            this.gridColumnCgcProjectNumbers,
+            this.gridColumnVerticalMarket,
+            this.gridColumnOrigionalBuildingId});
+            this.gridViewBuildingsList.GridControl = this.gridControlBuildingsList;
+            this.gridViewBuildingsList.HorzScrollVisibility = DevExpress.XtraGrid.Views.Base.ScrollVisibility.Always;
+            this.gridViewBuildingsList.Name = "gridViewBuildingsList";
+            this.gridViewBuildingsList.OptionsBehavior.Editable = false;
+            this.gridViewBuildingsList.OptionsCustomization.AllowColumnMoving = false;
+            this.gridViewBuildingsList.OptionsCustomization.AllowGroup = false;
+            this.gridViewBuildingsList.OptionsCustomization.AllowQuickHideColumns = false;
+            this.gridViewBuildingsList.OptionsDetail.EnableMasterViewMode = false;
+            this.gridViewBuildingsList.OptionsMenu.EnableColumnMenu = false;
+            this.gridViewBuildingsList.OptionsNavigation.EnterMoveNextColumn = true;
+            this.gridViewBuildingsList.OptionsSelection.EnableAppearanceFocusedRow = false;
+            this.gridViewBuildingsList.OptionsSelection.MultiSelect = true;
+            this.gridViewBuildingsList.OptionsView.ColumnAutoWidth = false;
+            this.gridViewBuildingsList.OptionsView.ShowAutoFilterRow = true;
+            this.gridViewBuildingsList.OptionsView.ShowGroupPanel = false;
+            this.gridViewBuildingsList.DoubleClick += new System.EventHandler(this.gridViewBuildingsList_DoubleClick);
+            // 
+            // gridColumnCRMID
+            // 
+            this.gridColumnCRMID.AppearanceCell.Options.UseTextOptions = true;
+            this.gridColumnCRMID.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
+            this.gridColumnCRMID.Caption = "CRM Building ID";
+            this.gridColumnCRMID.FieldName = "CRMID";
+            this.gridColumnCRMID.Name = "gridColumnCRMID";
+            this.gridColumnCRMID.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
+            this.gridColumnCRMID.Visible = true;
+            this.gridColumnCRMID.VisibleIndex = 0;
+            this.gridColumnCRMID.Width = 230;
+            // 
+            // gridColumnBuildingName
+            // 
+            this.gridColumnBuildingName.AppearanceCell.Options.UseTextOptions = true;
+            this.gridColumnBuildingName.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
+            this.gridColumnBuildingName.Caption = "Building Name";
+            this.gridColumnBuildingName.FieldName = "Name";
+            this.gridColumnBuildingName.Name = "gridColumnBuildingName";
+            this.gridColumnBuildingName.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
+            this.gridColumnBuildingName.Visible = true;
+            this.gridColumnBuildingName.VisibleIndex = 1;
+            this.gridColumnBuildingName.Width = 146;
+            // 
+            // gridColumnProjectName
+            // 
+            this.gridColumnProjectName.AppearanceCell.Options.UseTextOptions = true;
+            this.gridColumnProjectName.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
+            this.gridColumnProjectName.Caption = "Project Name";
+            this.gridColumnProjectName.FieldName = "ProjectName";
+            this.gridColumnProjectName.Name = "gridColumnProjectName";
+            this.gridColumnProjectName.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
+            this.gridColumnProjectName.Visible = true;
+            this.gridColumnProjectName.VisibleIndex = 2;
+            this.gridColumnProjectName.Width = 183;
+            // 
+            // gridColumnBuildingWorkForCustomer
+            // 
+            this.gridColumnBuildingWorkForCustomer.AppearanceCell.Options.UseTextOptions = true;
+            this.gridColumnBuildingWorkForCustomer.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
+            this.gridColumnBuildingWorkForCustomer.Caption = "Work For Customer (Company)";
+            this.gridColumnBuildingWorkForCustomer.FieldName = "WorkForCustomer";
+            this.gridColumnBuildingWorkForCustomer.Name = "gridColumnBuildingWorkForCustomer";
+            this.gridColumnBuildingWorkForCustomer.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
+            this.gridColumnBuildingWorkForCustomer.Visible = true;
+            this.gridColumnBuildingWorkForCustomer.VisibleIndex = 3;
+            this.gridColumnBuildingWorkForCustomer.Width = 234;
+            // 
+            // gridColumnAddress1
+            // 
+            this.gridColumnAddress1.AppearanceCell.Options.UseTextOptions = true;
+            this.gridColumnAddress1.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
+            this.gridColumnAddress1.Caption = "Address 1";
+            this.gridColumnAddress1.FieldName = "Address1";
+            this.gridColumnAddress1.Name = "gridColumnAddress1";
+            this.gridColumnAddress1.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
+            this.gridColumnAddress1.Visible = true;
+            this.gridColumnAddress1.VisibleIndex = 4;
+            this.gridColumnAddress1.Width = 216;
+            // 
+            // gridColumnAddress2
+            // 
+            this.gridColumnAddress2.AppearanceCell.Options.UseTextOptions = true;
+            this.gridColumnAddress2.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
+            this.gridColumnAddress2.Caption = "Address 2";
+            this.gridColumnAddress2.FieldName = "Address 2";
+            this.gridColumnAddress2.Name = "gridColumnAddress2";
+            this.gridColumnAddress2.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
+            this.gridColumnAddress2.Visible = true;
+            this.gridColumnAddress2.VisibleIndex = 5;
+            this.gridColumnAddress2.Width = 179;
+            // 
+            // gridColumnCity
+            // 
+            this.gridColumnCity.AppearanceCell.Options.UseTextOptions = true;
+            this.gridColumnCity.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
+            this.gridColumnCity.Caption = "City";
+            this.gridColumnCity.FieldName = "City";
+            this.gridColumnCity.Name = "gridColumnCity";
+            this.gridColumnCity.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
+            this.gridColumnCity.Visible = true;
+            this.gridColumnCity.VisibleIndex = 6;
+            this.gridColumnCity.Width = 121;
+            // 
+            // gridColumnState
+            // 
+            this.gridColumnState.AppearanceCell.Options.UseTextOptions = true;
+            this.gridColumnState.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
+            this.gridColumnState.Caption = "State";
+            this.gridColumnState.FieldName = "State";
+            this.gridColumnState.Name = "gridColumnState";
+            this.gridColumnState.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
+            this.gridColumnState.Visible = true;
+            this.gridColumnState.VisibleIndex = 13;
+            this.gridColumnState.Width = 171;
+            // 
+            // gridColumnZipCode
+            // 
+            this.gridColumnZipCode.AppearanceCell.Options.UseTextOptions = true;
+            this.gridColumnZipCode.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
+            this.gridColumnZipCode.Caption = "Zip Code";
+            this.gridColumnZipCode.FieldName = "Zip Code";
+            this.gridColumnZipCode.Name = "gridColumnZipCode";
+            this.gridColumnZipCode.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
+            this.gridColumnZipCode.Visible = true;
+            this.gridColumnZipCode.VisibleIndex = 7;
+            this.gridColumnZipCode.Width = 190;
+            // 
+            // gridColumnDateCreated
+            // 
+            this.gridColumnDateCreated.AppearanceCell.Options.UseTextOptions = true;
+            this.gridColumnDateCreated.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
+            this.gridColumnDateCreated.Caption = "Date Created";
+            this.gridColumnDateCreated.FieldName = "Date Created";
+            this.gridColumnDateCreated.Name = "gridColumnDateCreated";
+            this.gridColumnDateCreated.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
+            this.gridColumnDateCreated.Visible = true;
+            this.gridColumnDateCreated.VisibleIndex = 8;
+            this.gridColumnDateCreated.Width = 184;
+            // 
+            // gridColumnDateLastModified
+            // 
+            this.gridColumnDateLastModified.AppearanceCell.Options.UseTextOptions = true;
+            this.gridColumnDateLastModified.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
+            this.gridColumnDateLastModified.Caption = "Date Last Modified";
+            this.gridColumnDateLastModified.FieldName = "DateLastModified";
+            this.gridColumnDateLastModified.Name = "gridColumnDateLastModified";
+            this.gridColumnDateLastModified.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
+            this.gridColumnDateLastModified.Visible = true;
+            this.gridColumnDateLastModified.VisibleIndex = 9;
+            this.gridColumnDateLastModified.Width = 219;
+            // 
+            // gridColumnGrossSF
+            // 
+            this.gridColumnGrossSF.AppearanceCell.Options.UseTextOptions = true;
+            this.gridColumnGrossSF.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
+            this.gridColumnGrossSF.Caption = "Gross Square Feet";
+            this.gridColumnGrossSF.FieldName = "GrossSF";
+            this.gridColumnGrossSF.Name = "gridColumnGrossSF";
+            this.gridColumnGrossSF.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
+            this.gridColumnGrossSF.Visible = true;
+            this.gridColumnGrossSF.VisibleIndex = 10;
+            this.gridColumnGrossSF.Width = 174;
+            // 
+            // gridColumnYearBuilt
+            // 
+            this.gridColumnYearBuilt.AppearanceCell.Options.UseTextOptions = true;
+            this.gridColumnYearBuilt.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
+            this.gridColumnYearBuilt.Caption = "Year Built";
+            this.gridColumnYearBuilt.FieldName = "YearBuilt";
+            this.gridColumnYearBuilt.Name = "gridColumnYearBuilt";
+            this.gridColumnYearBuilt.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
+            this.gridColumnYearBuilt.Visible = true;
+            this.gridColumnYearBuilt.VisibleIndex = 11;
+            this.gridColumnYearBuilt.Width = 173;
+            // 
+            // gridColumnBuildingType
+            // 
+            this.gridColumnBuildingType.AppearanceCell.Options.UseTextOptions = true;
+            this.gridColumnBuildingType.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
+            this.gridColumnBuildingType.Caption = "Building Type";
+            this.gridColumnBuildingType.FieldName = "BuildingType";
+            this.gridColumnBuildingType.Name = "gridColumnBuildingType";
+            this.gridColumnBuildingType.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
+            this.gridColumnBuildingType.Visible = true;
+            this.gridColumnBuildingType.VisibleIndex = 12;
+            this.gridColumnBuildingType.Width = 200;
+            // 
+            // gridColumnTechnicalContact
+            // 
+            this.gridColumnTechnicalContact.Caption = "Technical Contact";
+            this.gridColumnTechnicalContact.Name = "gridColumnTechnicalContact";
+            this.gridColumnTechnicalContact.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
+            this.gridColumnTechnicalContact.Visible = true;
+            this.gridColumnTechnicalContact.VisibleIndex = 14;
+            this.gridColumnTechnicalContact.Width = 186;
+            // 
+            // gridColumnPrimaryContact
+            // 
+            this.gridColumnPrimaryContact.Caption = "Internal Poc";
+            this.gridColumnPrimaryContact.Name = "gridColumnPrimaryContact";
+            this.gridColumnPrimaryContact.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
+            this.gridColumnPrimaryContact.Visible = true;
+            this.gridColumnPrimaryContact.VisibleIndex = 15;
+            this.gridColumnPrimaryContact.Width = 256;
+            // 
+            // gridColumnTcoProjectNumber
+            // 
+            this.gridColumnTcoProjectNumber.Caption = "Tco Project Number";
+            this.gridColumnTcoProjectNumber.Name = "gridColumnTcoProjectNumber";
+            this.gridColumnTcoProjectNumber.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
+            this.gridColumnTcoProjectNumber.Visible = true;
+            this.gridColumnTcoProjectNumber.VisibleIndex = 16;
+            this.gridColumnTcoProjectNumber.Width = 268;
+            // 
+            // gridColumnCgcProjectNumbers
+            // 
+            this.gridColumnCgcProjectNumbers.Caption = "Cgc Project Numbers";
+            this.gridColumnCgcProjectNumbers.Name = "gridColumnCgcProjectNumbers";
+            this.gridColumnCgcProjectNumbers.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
+            this.gridColumnCgcProjectNumbers.Visible = true;
+            this.gridColumnCgcProjectNumbers.VisibleIndex = 17;
+            this.gridColumnCgcProjectNumbers.Width = 396;
+            // 
+            // gridColumnVerticalMarket
+            // 
+            this.gridColumnVerticalMarket.Caption = "Vertical Market";
+            this.gridColumnVerticalMarket.Name = "gridColumnVerticalMarket";
+            this.gridColumnVerticalMarket.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
+            this.gridColumnVerticalMarket.Visible = true;
+            this.gridColumnVerticalMarket.VisibleIndex = 18;
+            this.gridColumnVerticalMarket.Width = 200;
+            // 
+            // gridColumnOrigionalBuildingId
+            // 
+            this.gridColumnOrigionalBuildingId.Caption = "Copied From";
+            this.gridColumnOrigionalBuildingId.FieldName = "OrigionalBuildingId";
+            this.gridColumnOrigionalBuildingId.Name = "gridColumnOrigionalBuildingId";
+            this.gridColumnOrigionalBuildingId.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
+            this.gridColumnOrigionalBuildingId.Visible = true;
+            this.gridColumnOrigionalBuildingId.VisibleIndex = 19;
+            this.gridColumnOrigionalBuildingId.Width = 100;
+            // 
+            // XtraUserControlBuildingsList
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.gridControlBuildingsList);
+            this.Name = "XtraUserControlBuildingsList";
+            this.Size = new System.Drawing.Size(887, 637);
+            this.Controls.SetChildIndex(this.gridControlBuildingsList, 0);
+            ((System.ComponentModel.ISupportInitialize)(this.dxErrorProviderMain)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridControlBuildingsList)).EndInit();
+            this.contextMenuStripBuilding.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.gridViewBuildingsList)).EndInit();
+            this.ResumeLayout(false);
+
+        }
+
+        #endregion
+
+        private DevExpress.XtraGrid.GridControl gridControlBuildingsList;
+        private DevExpress.XtraGrid.Views.Grid.GridView gridViewBuildingsList;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumnCRMID;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumnBuildingName;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumnProjectName;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumnBuildingWorkForCustomer;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumnAddress1;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumnAddress2;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumnCity;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumnState;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumnZipCode;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumnDateCreated;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumnDateLastModified;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumnGrossSF;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumnYearBuilt;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumnBuildingType;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStripBuilding;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemBuildingOpen;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemBuildingLoadParent;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumnTechnicalContact;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumnPrimaryContact;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumnTcoProjectNumber;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumnCgcProjectNumbers;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumnVerticalMarket;
+        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemcopyToNavigationPanelSelectedProject;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumnOrigionalBuildingId;
+    }
+}

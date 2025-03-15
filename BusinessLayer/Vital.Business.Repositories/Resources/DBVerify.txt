@@ -1,0 +1,8 @@
+USE [master]
+
+RESTORE DATABASE VitalExpertTemp
+FROM DISK = N'@PATH' 
+WITH MOVE 'VitalExpert' TO '@DATAPATH@VitalExpertTemp.mdf', 
+	 MOVE 'VitalExpert_log' TO '@DATAPATH@VitalExpertTemp.ldf', 
+	 NOUNLOAD, 
+	 REPLACE

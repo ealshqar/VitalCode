@@ -1,0 +1,451 @@
+//////////////////////////////////////////////////////////////////////////////
+//  
+//  <sourcefile name="XtraUserControlProjectsList.cs" creationdate="12/23/08" owner="anasa" >
+//
+//      <project>McKinstry TCO Application</project>
+//  
+//      <description>The tab page for the list of project in the tool</description>
+//      
+//      <copyright year="2008" company="McKinstry">
+//          <notice>
+//              Copyright © 2008 McKinstry. All rights reserved
+//  
+//              Developed for McKinstry by
+//                  Equiom - MENA
+//                  www.equiom.com
+//          </notice>
+//  
+//  	<history date="12/23/08" modby="anasa">created</history>
+//  
+//////////////////////////////////////////////////////////////////////////////
+
+#region Library Calls
+
+//---------------------------------------------------------------------------------------------
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows.Forms;
+using DevExpress.Utils;
+using DevExpress.XtraGrid.Views.Base;
+using DevExpress.XtraGrid.Views.Grid;
+using DevExpress.XtraGrid.Views.Grid.ViewInfo;
+using Equiom.Tco.BusinessLogicLayer;
+using Equiom.Tco.DataAccessLayer;
+using Application=Equiom.Tco.Common.Application;
+using DevExpress.XtraEditors;
+//---------------------------------------------------------------------------------------------
+
+#endregion
+
+namespace TCO.DesktopClientDevexpress
+{
+    public partial class XtraUserControlProjectsList : XtraTabPageEntity
+    {
+        #region Constants
+
+        //---------------------------------------------------------------------------------------------
+
+        private const string PROJECT_HAS_NO_VALUE_ERROR =
+            "The project you selected is empty or corrupted.";
+
+        private const string PROJECT_IS_ADDED_ERROR =
+            "The project you selected is already added to the navigation panel.";
+
+        private const string PROJECT_VIEW_HAS_NO_VALUE_ERROR = "Project view record has no value";
+        private const string PROJECT_COPY_CONFIRM = "Are you sure you want to create a new project that is an exact copy of the selected project?";
+        private const string PROJECT_COPY_WARNING = "It is your responsibility to thoroughly check all Component First Cost, Capex, Asset Impacts and O&M Information for your copy.";
+        private const string PROJECT_OPENED_ERROR = "You are not allowed to copy a project while editing it, please save or cancel changes on the opened tab first.";
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Fields
+
+        //---------------------------------------------------------------------------------------------
+        private BusinessObjectList<ProjectView> projectsListViewCollection;
+        private Dictionary<int, ProjectView> projectsListViewDictionary;
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Properties
+
+        //---------------------------------------------------------------------------------------------
+        public BusinessObjectList<ProjectView> ProjectsListViewCollection
+        {
+            get { return projectsListViewCollection; }
+            set { projectsListViewCollection = value; }
+        }
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Constructors
+
+        //---------------------------------------------------------------------------------------------
+        public XtraUserControlProjectsList()
+        {
+            InitializeComponent();
+        }
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Methods
+
+        #region Overriding Methods
+
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Initialize the binding for the controls in the tab
+        /// </summary>
+        public override void SetBinding()
+        {
+            BindProjects();
+        }
+
+        /// <summary>
+        /// Refreshes the current collection
+        /// </summary>
+        public override void CustomRefresh()
+        {
+            gridControlProjectsList.DataBindings.Clear();
+            gridControlProjectsList.DataSource = null;
+            BindProjects();
+        }
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region UI Methods
+
+        #region Projects
+
+        //---------------------------------------------------------------------------------------------
+        public void BindProjects()
+        {
+            projectsListViewCollection = ProjectView.GetAll();
+            if (projectsListViewCollection != null)
+            {
+                //Issue an event even when adding/removing items and not just for item changes
+                projectsListViewCollection.RaiseListChangedEvents = true;
+                projectsListViewCollection.ListChanged += projectsListViewCollection_ListChanged;
+
+                //Assign the collection to the grid's datasource
+                gridControlProjectsList.DataSource = projectsListViewCollection;
+
+                //Create a dictionary to make it easy to find objects
+                projectsListViewDictionary = new Dictionary<int, ProjectView>();
+                foreach (ProjectView project in projectsListViewCollection)
+                {
+                    projectsListViewDictionary.Add(project.Id, project);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Refresh the gridControlProjectsList control when the list of projects changes
+        /// </summary>
+        private void RefreshProjectsListGrid()
+        {
+            gridControlProjectsList.RefreshDataSource();
+        }
+
+        /// <summary>
+        /// Adds a project from the view to the navigation panel
+        /// </summary>
+        private void AddProjectToNavigationPanel(bool isOpening)
+        {
+            //Create a dictionary to search through projects in the panel
+            var navigationProjectsDictionary = new Dictionary<int, Project>();
+            foreach (Project project in UIBLLInteraction.Instance.ProjectsCollection)
+            {
+                try
+                {
+                    navigationProjectsDictionary.Add(project.Id.Value, project);
+                }
+                catch (NullReferenceException nullReferenceException)
+                {
+                    Application.Logger.LogException(nullReferenceException);
+                }
+                catch (ArgumentException argumentException)
+                {
+                    Application.Logger.LogException(argumentException);
+                }
+            }
+            //Variable to hold the value of the found project if it was found
+
+            //The project that is selected in the view of the projects
+            ProjectView selectedProject = GetSelectedProject();
+            try
+            {
+                Project checkProject;
+                //Set the value of the checkProject if the project with the specified ID is found
+                navigationProjectsDictionary.TryGetValue(selectedProject.Id, out checkProject);
+                //If the project is not in the panel, get it from the DB and create an object for it
+                //and add it to the collection of projects
+                if (checkProject == null)
+                {
+                    checkProject = Project.GetById(selectedProject.Id);
+                    UIBLLInteraction.Instance.ProjectsCollection.Add(checkProject);
+                }
+                else if (!isOpening)
+                {
+                    MessageBox.Show(PROJECT_IS_ADDED_ERROR, UIBLLInteraction.ERROR_MESSAGE_TITLE,
+                                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (NullReferenceException nullReferenceException)
+            {
+                MessageBox.Show(PROJECT_HAS_NO_VALUE_ERROR, UIBLLInteraction.ERROR_MESSAGE_TITLE, MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+                Application.Logger.LogError(PROJECT_VIEW_HAS_NO_VALUE_ERROR);
+                Application.Logger.LogException(nullReferenceException);
+            }
+            catch (ArgumentException argumentException)
+            {
+                Application.Logger.LogException(argumentException);
+            }
+        }
+
+        /// <summary>
+        /// Opens the object for a project view in a project tab
+        /// </summary>
+        private void OpenSelectedProject()
+        {
+            //Create a dictionary to search through projects in the panel
+            var navigationProjectsDictionary = new Dictionary<int, Project>();
+            foreach (Project project in UIBLLInteraction.Instance.ProjectsCollection)
+            {
+                try
+                {
+                    navigationProjectsDictionary.Add(project.Id.Value, project);
+                }
+                catch (NullReferenceException nullReferenceException)
+                {
+                    Application.Logger.LogException(nullReferenceException);
+                }
+                catch (ArgumentException argumentException)
+                {
+                    Application.Logger.LogException(argumentException);
+                }
+            }
+            //Variable to the hold the value for the project to be opened
+
+            //Get the current selected view project
+            ProjectView selectedProject = GetSelectedProject();
+            try
+            {
+                Project projectToOpen;
+                //Search for the project using the ID
+                navigationProjectsDictionary.TryGetValue(selectedProject.Id, out projectToOpen);
+                //If the object is not null somehow, then open it in a new tab
+                var tempObject = projectToOpen as EntityBusinessObject;
+                UIBLLInteraction.Instance.Open(ref tempObject);
+            }
+            catch (NullReferenceException nullReferenceException)
+            {
+                Application.Logger.LogException(nullReferenceException);
+            }
+            catch (ArgumentException argumentException)
+            {
+                Application.Logger.LogException(argumentException);
+            }
+        }
+
+        /// <summary>
+        /// Get the current selected project view from the grid
+        /// </summary>
+        /// <returns></returns>
+        private ProjectView GetSelectedProject()
+        {
+            return gridViewProjectsList.GetFocusedRow() as ProjectView;
+        }
+
+        private void ReplicateProject()
+        {
+            bool isCopyFromEdited = UIBLLInteraction.Instance.CheckTabOpenedAndEditedByIDAndType(GetSelectedProject().Id, typeof(Project));
+
+            if (!isCopyFromEdited)
+            {
+                if (XtraMessageBox.Show(PROJECT_COPY_CONFIRM, "TCO",
+                                    MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
+                {
+                    var nameDialog = new SetNameDialog
+                    {
+                        CurrentText = "New Replicated Project",
+                        MaxLength = Project.NAME_MAX_LENGTH,
+                        Item = new Project()
+                    };
+                    nameDialog.ShowDialog();
+                    if (nameDialog.DialogResult == DialogResult.OK && nameDialog.TextCorrect)
+                    {
+                        try
+                        {
+                            Project sourceProject = Project.GetById(GetSelectedProject().Id);
+                            Project copiedProject = sourceProject.Copy(nameDialog.CurrentText);
+                            UIBLLInteraction.Instance.ProjectsCollection.Add(copiedProject);
+                            UIBLLInteraction.Instance.RefreshProjectsView();
+                            UIBLLInteraction.Instance.ProjectsNav.RefreshGroup();
+                            UIBLLInteraction.ShowWarning(PROJECT_COPY_WARNING);
+                        }
+                        catch (DataAccessException dataAccessException)
+                        {
+                            Application.Logger.LogException(dataAccessException);
+                            UIBLLInteraction.ShowError(PROJECT_HAS_NO_VALUE_ERROR);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                UIBLLInteraction.ShowError(PROJECT_OPENED_ERROR);
+            }
+        }
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        //---------------------------------------------------------------------------------------------
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        //---------------------------------------------------------------------------------------------
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Handlers
+
+        #region Projects
+
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Calls the appropriate method depending on the user's selection
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void contextMenuStripRightClick_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            contextMenuStripProject.Hide();
+            if (e.ClickedItem == toolStripMenuItemAdd)
+            {
+                AddProjectToNavigationPanel(false);
+            }
+            else if (e.ClickedItem == toolStripMenuItemOpen)
+            {
+                AddProjectToNavigationPanel(true);
+                OpenSelectedProject();
+            }
+            else if(e.ClickedItem == ToolStripMenuItemReplicateEntireProject)
+            {
+                ReplicateProject();
+            }
+        }
+
+        
+
+        /// <summary>
+        /// Calls a method to create an object for the project view in the navigation panel and
+        /// to open it in a tab after that
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void gridControlProjectsList_DoubleClick(object sender, EventArgs e)
+        {
+            GridHitInfo gridControlProjectsListHitInfo =
+                gridViewProjectsList.CalcHitInfo(gridControlProjectsList.PointToClient(Cursor.Position));
+            if (gridControlProjectsListHitInfo.InRow)
+            {
+                AddProjectToNavigationPanel(true);
+                OpenSelectedProject();
+            }
+        }
+
+        /// <summary>
+        /// Calls a method to refresh the projects list grid control whenever a change occurs in the 
+        /// list of view projects
+        /// </summary>
+        /// <param name="sender">projectsListViewCollection</param>
+        /// <param name="e"></param>
+        private void projectsListViewCollection_ListChanged(object sender, ListChangedEventArgs e)
+        {
+            RefreshProjectsListGrid();
+        }
+
+        private void contextMenuStripProject_Opening(object sender, CancelEventArgs e)
+        {
+            GridHitInfo gridControlProjectsListHitInfo =
+                gridViewProjectsList.CalcHitInfo(gridControlProjectsList.PointToClient(Cursor.Position));
+            contextMenuStripProject.Enabled = gridControlProjectsListHitInfo.InRow;
+        }
+
+        /// <summary>
+        /// This method will make sure we show the total content of a cell since it won't show all the cell's 
+        /// contents by default when it is long text
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void toolTipControllerMain_GetActiveObjectInfo(object sender,
+                                                               ToolTipControllerGetActiveObjectInfoEventArgs e)
+        {
+            if (e.SelectedControl == gridControlProjectsList)
+            {
+                ToolTipControlInfo info = null;
+                try
+                {
+                    var view = gridControlProjectsList.GetViewAt(e.ControlMousePosition) as GridView;
+                    if (view != null)
+                    {
+                        GridHitInfo hitInfo = view.CalcHitInfo(e.ControlMousePosition);
+                        if (hitInfo.InRowCell && hitInfo.RowHandle >= 0)
+                        {
+                            string text = string.Empty;
+                            try
+                            {
+                                text =
+                                    gridViewProjectsList.GetRowCellValue(hitInfo.RowHandle, hitInfo.Column).ToString();
+                            }
+                            catch (NullReferenceException)
+                            {
+                            }
+                            if (text != null)
+                            {
+                                if (text != string.Empty)
+                                {
+                                    string tooltip = UIBLLInteraction.ProcessLongToolTips(text);
+                                    info = new ToolTipControlInfo(
+                                        new CellToolTipInfo(hitInfo.RowHandle, hitInfo.Column, "cell"),
+                                        tooltip, hitInfo.Column.Caption, ToolTipIconType.Information);
+                                }
+                            }
+                            return;
+                        }
+                    }
+                }
+                finally
+                {
+                    e.Info = info;
+                }
+            }
+        }
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        //---------------------------------------------------------------------------------------------
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+    }
+}

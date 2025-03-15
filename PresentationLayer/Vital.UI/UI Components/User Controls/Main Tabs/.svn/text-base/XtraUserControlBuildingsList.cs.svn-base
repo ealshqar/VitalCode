@@ -1,0 +1,620 @@
+//////////////////////////////////////////////////////////////////////////////
+//  
+//  <sourcefile name="XtraUserControlBuildingsList.cs" creationdate="2/4/09" owner="anasa" >
+//
+//      <project>McKinstry TCO Application</project>
+//  
+//      <description>The tab page for the list of buildings in the tool</description>
+//      
+//      <copyright year="2008" company="McKinstry">
+//          <notice>
+//              Copyright © 2008 McKinstry. All rights reserved
+//  
+//              Developed for McKinstry by
+//                  Equiom - MENA
+//                  www.equiom.com
+//          </notice>
+//  
+//  	<history date="2/4/09" modby="anasa">created</history>
+//  
+//////////////////////////////////////////////////////////////////////////////
+
+#region Library Calls
+
+//---------------------------------------------------------------------------------------------
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows.Forms;
+using DevExpress.Utils;
+using DevExpress.XtraGrid.Views.Base;
+using DevExpress.XtraGrid.Views.Grid;
+using DevExpress.XtraGrid.Views.Grid.ViewInfo;
+using Equiom.Tco.BusinessLogicLayer;
+using Equiom.Tco.DataAccessLayer;
+using Application=Equiom.Tco.Common.Application;
+using System.Linq;
+using DevExpress.XtraEditors;
+//---------------------------------------------------------------------------------------------
+
+#endregion
+
+namespace TCO.DesktopClientDevexpress.UI_Components.User_Controls.Main_Tabs
+{
+    public partial class XtraUserControlBuildingsList : XtraTabPageEntity
+    {
+        #region Constants
+
+        //---------------------------------------------------------------------------------------------
+        private const string BUILDING_HAS_NO_VALUE_ERROR = "The building you selected is empty or corrupted";
+
+        private const string PARENT_PROJECT_IS_ADDED_ERROR =
+            "The parent project is already added to the navigation panel.";
+
+        private const string PROJECT_HAS_NO_VALUE_ERROR =
+            "The project you selected has no value and can't be added to navigation panel.";
+
+        private const string PROJECT_VIEW_HAS_NO_VALUE_ERROR = "Project view record has no value";
+        private const string BUIDLING_COPY_CONFIRM = "Are you sure you want to assign this building(s) to the highlighted project?";
+        private const string BUIDLING_COPY_WARNING = "It is your responsibility to thoroughly check all Component First Cost, Capex, Asset Impacts, and O&M Information for your copy.";
+        private const string BUIDLING_COPIED_OPENED_ERROR = "You are not allowed to copy a building while editing it, please save or cancel changes on the opened tab first.";
+        private const string BUIDLING_TO_OPENED_ERROR = "You are not allowed to copy a building to a project while editing it, please save or cancel changes on the project's opened tab first.";
+        private const string PROJECT_LOCKED_ERROR = "The selected project is locked and no items can be copied into it.";
+        private const string BUILDING_DUPLICATED_ERROR = "A building can't be copied into the same project.";
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Fields
+
+        //---------------------------------------------------------------------------------------------
+
+        public bool areBuildingFieldsSet;
+        private Dictionary<int, BuildingView> buildingsListViewDictionary;
+        private BusinessObjectList<BuildingView> buildingssListViewCollection;
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Properties
+
+        //---------------------------------------------------------------------------------------------
+        public BusinessObjectList<BuildingView> BuildingssListViewCollection
+        {
+            get { return buildingssListViewCollection; }
+            set { buildingssListViewCollection = value; }
+        }
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Constructors
+
+        //---------------------------------------------------------------------------------------------
+        public XtraUserControlBuildingsList()
+        {
+            InitializeComponent();
+        }
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Methods
+
+        #region Overriding Methods
+
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Initialize the binding for the controls in the tab
+        /// </summary>
+        public override void SetBinding()
+        {
+            SetBuildingFieldNames();
+            BindBuildings();
+        }
+
+        /// <summary>
+        /// Refreshes the current collection
+        /// </summary>
+        public override void CustomRefresh()
+        {
+            gridControlBuildingsList.DataBindings.Clear();
+            gridControlBuildingsList.DataSource = null;
+            BindBuildings();
+        }
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region UI Methods
+
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Set the names of the field for the columns of the buildings view
+        /// </summary>
+        private void SetBuildingFieldNames()
+        {
+            if (!areBuildingFieldsSet)
+            {
+                areBuildingFieldsSet = true;
+
+                gridColumnCRMID.FieldName = Building.CRM_ID_PROPERTY_NAME;
+                gridColumnBuildingName.FieldName = Building.NAME_PROPERTY_NAME;
+                gridColumnProjectName.FieldName = BuildingView.PROJECT_NAME_PROPERTY_NAME;
+                gridColumnBuildingWorkForCustomer.FieldName = BuildingView.WORK_FOR_CUSTOMER_PROPERTY_NAME;
+                gridColumnAddress1.FieldName = Building.ADDRESS_STREET_1_PROPERTY_NAME;
+                gridColumnAddress2.FieldName = Building.ADDRESS_STREET_2_PROPERTY_NAME;
+                gridColumnCity.FieldName = Building.ADDRESS_CITY_PROPERTY_NAME;
+                gridColumnState.FieldName = Building.ADDRESS_STATE_PROPERTY_NAME;
+                gridColumnZipCode.FieldName = Building.ADDRESS_ZIP_PROPERTY_NAME;
+                gridColumnDateCreated.FieldName = BuildingView.CREATED_DATE_TIME_PROPERTY_NAME;
+                gridColumnDateLastModified.FieldName = BuildingView.LAST_MODIFIED_DATE_TIME_PROPERTY_NAME;
+                gridColumnGrossSF.FieldName = Building.GROSS_SF_PROPERTY_NAME;
+                gridColumnYearBuilt.FieldName = Building.YEAR_BUILT_PROPERTY_NAME;
+                gridColumnBuildingType.FieldName = Building.BUILDING_TYPES_PROPERTY_NAME;
+                gridColumnTechnicalContact.FieldName = "TechnicalContact";
+                gridColumnPrimaryContact.FieldName = "PrimaryContact";
+                gridColumnTcoProjectNumber.FieldName = "TcoProjectNumber";
+                gridColumnCgcProjectNumbers.FieldName = "CgcProjectNumbers";
+                gridColumnVerticalMarket.FieldName = BuildingView.VERTICAL_MARKET_PROPERTY_NAME;
+            }
+        }
+
+        /// <summary>
+        /// Binds the grid control and the drop downs with the collection of data
+        /// </summary>
+        public void BindBuildings()
+        {
+            try
+            {
+                buildingssListViewCollection = BuildingView.GetAll();
+            }
+            catch (DataAccessException dataAccessException)
+            {
+                Application.Logger.LogException(dataAccessException);
+                UIBLLInteraction.Instance.ShowException(dataAccessException);
+            }
+            if (buildingssListViewCollection != null)
+            {
+                //Issue an event even when adding/removing items and not just for item changes
+                buildingssListViewCollection.RaiseListChangedEvents = true;
+                buildingssListViewCollection.ListChanged += buildingssListViewCollection_ListChanged;
+
+                //Assign the collection to the grid's datasource
+                gridControlBuildingsList.DataSource = buildingssListViewCollection;
+
+                //Create a dictionary to make it easy to find objects
+                buildingsListViewDictionary = new Dictionary<int, BuildingView>();
+                foreach (BuildingView building in buildingssListViewCollection)
+                {
+                    buildingsListViewDictionary.Add(building.Id, building);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Refresh the gridControlBuildingsList control when the list of buildings changes
+        /// </summary>
+        private void RefreshBuildingsListGrid()
+        {
+            gridControlBuildingsList.RefreshDataSource();
+        }
+
+        /// <summary>
+        /// Adds the parent project to the collection of the projects
+        /// </summary>
+        /// <param name="parentProjectId"></param>
+        /// <param name="isOpening"></param>
+        private static void AddParentProjectToNavigationPanel(int parentProjectId, bool isOpening)
+        {
+            //Variable to hold the value of the found project if it was found
+            Project checkProject = null;
+            if (UIBLLInteraction.Instance.ProjectsCollection.Count != 0)
+            {
+                foreach (Project project in UIBLLInteraction.Instance.ProjectsCollection)
+                {
+                    if (project != null)
+                    {
+                        if (project.Id.Value == parentProjectId)
+                        {
+                            checkProject = project;
+                            break;
+                        }
+                    }
+                }
+            }
+            //If the project is not in the panel, get it from the DB and create an object for it
+            //and add it to the collection of projects.
+            if (checkProject == null)
+            {
+                try
+                {
+                    checkProject = Project.GetById(parentProjectId);
+                    if (checkProject != null)
+                    {
+                        UIBLLInteraction.Instance.ProjectsCollection.Add(checkProject);
+                    }
+                    else
+                    {
+                        MessageBox.Show(PROJECT_HAS_NO_VALUE_ERROR, UIBLLInteraction.ERROR_MESSAGE_TITLE,
+                                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        Application.Logger.LogError(PROJECT_VIEW_HAS_NO_VALUE_ERROR);
+                    }
+                }
+                catch (DataAccessException dataAccessException)
+                {
+                    Application.Logger.LogException(dataAccessException);
+                    UIBLLInteraction.Instance.ShowException(dataAccessException);
+                }
+            }
+            else if (!isOpening)
+            {
+                MessageBox.Show(PARENT_PROJECT_IS_ADDED_ERROR, UIBLLInteraction.ERROR_MESSAGE_TITLE,
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// Opens the object for a building view in a building tab
+        /// </summary>
+        private void OpenSelectedBuilding()
+        {
+            //Variable to the hold the value for the parent project
+            var parentProject = new Project();
+            //Object to hold the value of the found building object
+            Building buildingToOpen = null;
+            //Get the current selected view building
+            BuildingView selectedBuilding = GetSelectedBuilding();
+            if (selectedBuilding != null)
+            {
+                //Search for the project using the ID
+                foreach (Project project in UIBLLInteraction.Instance.ProjectsCollection)
+                {
+                    if (project != null)
+                    {
+                        if (project.Id.Value == selectedBuilding.ProjectId)
+                        {
+                            parentProject = project;
+                            break;
+                        }
+                    }
+                }
+                try
+                {
+                    parentProject.LazyLoadChildren();
+                    foreach (Building building in parentProject.Buildings)
+                    {
+                        if (building != null)
+                        {
+                            if (building.Id.Value == selectedBuilding.Id)
+                            {
+                                buildingToOpen = building;
+                                break;
+                            }
+                        }
+                    }
+                    //If the object is not null somehow, then open it in a new tab
+                    if (buildingToOpen != null)
+                    {
+                        var objectToOpen = buildingToOpen as EntityBusinessObject;
+                        UIBLLInteraction.Instance.Open(ref objectToOpen);
+                    }
+                }
+                catch (DataAccessException dataAccessException)
+                {
+                    UIBLLInteraction.Instance.ShowException(dataAccessException);
+                    Application.Logger.LogException(dataAccessException);
+                }
+            }
+            else
+            {
+                MessageBox.Show(BUILDING_HAS_NO_VALUE_ERROR, UIBLLInteraction.ERROR_MESSAGE_TITLE, MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// Get the current selected building view from the grid
+        /// </summary>
+        /// <returns></returns>
+        private BuildingView GetSelectedBuilding()
+        {
+            return gridViewBuildingsList.GetFocusedRow() as BuildingView;
+        }
+
+        /// <summary>
+        /// Get the current selected building view from the grid
+        /// </summary>
+        /// <returns></returns>
+        private BuildingView GetSelectedBuilding(int rowHandle)
+        {
+            return gridViewBuildingsList.GetRow(rowHandle) as BuildingView;
+        }
+
+        /// <summary>
+        /// Loads the building form the DB
+        /// </summary>
+        /// <returns></returns>
+        private Building GetSelectedBuildingObject()
+        {
+            BuildingView buildingView = GetSelectedBuilding();
+            if (buildingView != null)
+            {
+                try
+                {
+                    Building dbBuilding = Building.GetById(buildingView.Id);
+                    return dbBuilding;
+                }
+                catch (DataAccessException dataAccessException)
+                {
+                    Application.Logger.LogException(dataAccessException);
+                    return null;
+                }
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Loads the building form the DB
+        /// </summary>
+        /// <returns></returns>
+        private Building GetSelectedBuildingObject(BuildingView buildingView)
+        {
+            if (buildingView != null)
+            {
+                try
+                {
+                    Building dbBuilding = Building.GetById(buildingView.Id);
+                    return dbBuilding;
+                }
+                catch (DataAccessException dataAccessException)
+                {
+                    Application.Logger.LogException(dataAccessException);
+                    return null;
+                }
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        private void CopyBuilding()
+        {
+            int[] selectedBuildings = gridViewBuildingsList.GetSelectedRows();
+            string errorReport = string.Empty;
+            int copiedBuildings = 0;
+            bool isCopyToEdited = UIBLLInteraction.Instance.CheckTabEditedByObject(UIBLLInteraction.Instance.GetNavSelectedProject());
+
+            if (!isCopyToEdited)
+            {
+                Project selectedProject = UIBLLInteraction.Instance.GetNavSelectedProject();
+                if (selectedProject != null)
+                {
+                    if (!selectedProject.isProjectLocked())
+                    {
+
+                        if (XtraMessageBox.Show(BUIDLING_COPY_CONFIRM, "TCO",
+                            MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
+                        {
+                            foreach (int rowHandle in selectedBuildings)
+                            {
+                                if (rowHandle >= 0)
+                                {
+                                    BuildingView currentBuilding = GetSelectedBuilding(rowHandle);
+                                    bool isCopyFromEdited = UIBLLInteraction.Instance.CheckTabOpenedAndEditedByIDAndType(currentBuilding.Id, typeof(Building));
+
+                                    if (!isCopyToEdited)
+                                    {
+                                        Building currentBuildingObject = GetSelectedBuildingObject(currentBuilding);
+                                        if (currentBuildingObject != null)
+                                        {
+                                            if (selectedProject.Id.Value != currentBuildingObject.ProjectId.Value)
+                                            {
+                                                Building sourceBuilding = GetSelectedBuildingObject();
+                                                Building copiedBuilding = sourceBuilding.Copy(selectedProject, true);
+                                                copiedBuildings += 1;
+                                            }
+                                            else
+                                            {
+                                                //UIBLLInteraction.ShowError(BUILDING_DUPLICATED_ERROR);
+                                                errorReport += "- " + currentBuilding.Name + " : " + BUILDING_DUPLICATED_ERROR + "\n";
+                                            }
+                                        }
+                                        else
+                                        {
+                                            //UIBLLInteraction.ShowError(BUILDING_HAS_NO_VALUE_ERROR);
+                                            errorReport += "- " + currentBuilding.Name + " : " + BUILDING_HAS_NO_VALUE_ERROR + "\n";
+                                        }
+                                    }
+                                    else
+                                    {
+                                        //UIBLLInteraction.ShowError(BUIDLING_COPIED_OPENED_ERROR);
+                                        errorReport += "- " + currentBuilding.Name + " : " + BUIDLING_COPIED_OPENED_ERROR + "\n";
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        UIBLLInteraction.ShowError(PROJECT_LOCKED_ERROR);
+                    }
+                }
+                else
+                {
+                    UIBLLInteraction.ShowError("No Project is selected.");
+                }
+            }
+            else
+            {
+                UIBLLInteraction.ShowError(BUIDLING_TO_OPENED_ERROR);
+            }
+            if (!string.IsNullOrEmpty(errorReport))
+            {
+                if (selectedBuildings.Length > 1)
+                {
+                    UIBLLInteraction.ShowError("Not all buildings were copied, here are the errors occured:\n" + errorReport);
+                }
+                else
+                {
+                    UIBLLInteraction.ShowError(errorReport);
+                }
+            }
+            if (copiedBuildings > 0)
+            {
+                UIBLLInteraction.Instance.RefreshBuildingsView();
+                UIBLLInteraction.Instance.BuildingsNav.RefreshGroup();
+                //UIBLLInteraction.ShowWarning(BUIDLING_COPY_WARNING);
+            }
+        }
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        //---------------------------------------------------------------------------------------------
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Handlers
+
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Calls a method to refresh the buildings list grid control whenever a change occurs in the 
+        /// list of view buildings
+        /// </summary>
+        /// <param name="sender">projectsListViewCollection</param>
+        /// <param name="e"></param>
+        private void buildingssListViewCollection_ListChanged(object sender, ListChangedEventArgs e)
+        {
+            RefreshBuildingsListGrid();
+        }
+
+        /// <summary>
+        /// Handles clicking an item in the context menu
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void contextMenuStripBuilding_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            contextMenuStripBuilding.Hide();
+            BuildingView selectedBuilding = GetSelectedBuilding();
+            if (selectedBuilding != null)
+            {
+                if (e.ClickedItem == toolStripMenuItemBuildingLoadParent)
+                {
+                    AddParentProjectToNavigationPanel(selectedBuilding.ProjectId, false);
+                }
+                else if (e.ClickedItem == toolStripMenuItemBuildingOpen)
+                {
+                    AddParentProjectToNavigationPanel(selectedBuilding.ProjectId, true);
+                    OpenSelectedBuilding();
+                }
+                else if (e.ClickedItem == ToolStripMenuItemcopyToNavigationPanelSelectedProject)
+                {
+                    CopyBuilding();
+                }
+            }
+            else
+            {
+                MessageBox.Show(BUILDING_HAS_NO_VALUE_ERROR, UIBLLInteraction.ERROR_MESSAGE_TITLE, MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// Opens the current focused building when double clicking the view
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void gridViewBuildingsList_DoubleClick(object sender, EventArgs e)
+        {
+            GridHitInfo gridViewBuildingsListHitInfo =
+                gridViewBuildingsList.CalcHitInfo(gridControlBuildingsList.PointToClient(Cursor.Position));
+            BuildingView selectedBuilding = GetSelectedBuilding();
+            if (gridViewBuildingsListHitInfo.InRow)
+            {
+                if (selectedBuilding != null)
+                {
+                    AddParentProjectToNavigationPanel(selectedBuilding.ProjectId, true);
+                    OpenSelectedBuilding();
+                }
+                else
+                {
+                    MessageBox.Show(BUILDING_HAS_NO_VALUE_ERROR, UIBLLInteraction.ERROR_MESSAGE_TITLE,
+                                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        /// <summary>
+        /// When opening the context menu, if there is not record selected, disable all menu items
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void contextMenuStripBuilding_Opening(object sender, CancelEventArgs e)
+        {
+            GridHitInfo gridViewBuildingsListHitInfo =
+                gridViewBuildingsList.CalcHitInfo(gridControlBuildingsList.PointToClient(Cursor.Position));
+            contextMenuStripBuilding.Enabled = gridViewBuildingsListHitInfo.InRow;
+            ToolStripMenuItemcopyToNavigationPanelSelectedProject.Enabled = (UIBLLInteraction.Instance.GetNavSelectedProject() != null);
+        }
+
+        public void toolTipControllerMain_GetActiveObjectInfo(object sender,
+                                                              ToolTipControllerGetActiveObjectInfoEventArgs e)
+        {
+            if (e.SelectedControl == gridControlBuildingsList)
+            {
+                ToolTipControlInfo info = null;
+                try
+                {
+                    var view = gridControlBuildingsList.GetViewAt(e.ControlMousePosition) as GridView;
+                    if (view != null)
+                    {
+                        GridHitInfo hitInfo = view.CalcHitInfo(e.ControlMousePosition);
+                        if (hitInfo.InRowCell && hitInfo.RowHandle >= 0)
+                        {
+                            string text = string.Empty;
+                            try
+                            {
+                                text =
+                                    gridViewBuildingsList.GetRowCellValue(hitInfo.RowHandle, hitInfo.Column).ToString();
+                            }
+                            catch (NullReferenceException)
+                            {
+                            }
+
+                            if (text != null)
+                            {
+                                if (text != string.Empty)
+                                {
+                                    string tooltip = UIBLLInteraction.ProcessLongToolTips(text);
+                                    info = new ToolTipControlInfo(
+                                        new CellToolTipInfo(hitInfo.RowHandle, hitInfo.Column, "cell"),
+                                        tooltip, hitInfo.Column.Caption, ToolTipIconType.Information);
+                                }
+                            }
+                            return;
+                        }
+                    }
+                }
+                finally
+                {
+                    e.Info = info;
+                }
+            }
+        }
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+    }
+}

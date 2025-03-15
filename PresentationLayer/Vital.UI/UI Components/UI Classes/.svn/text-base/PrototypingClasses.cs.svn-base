@@ -1,0 +1,1522 @@
+﻿//////////////////////////////////////////////////////////////////////////////
+//  
+//  <sourcefile name="PrototypingClasses.cs" creationdate="11/9/08" owner="anasa" >
+//
+//      <project>McKinstry TCO Application</project>
+//  
+//      <description>Collection of UI prototyping classes for UI usage only</description>
+//      
+//      <copyright year="2008" company="McKinstry">
+//          <notice>
+//              Copyright © 2008 McKinstry. All rights reserved
+//  
+//              Developed for McKinstry by
+//                  Equiom - MENA
+//                  www.equiom.com
+//          </notice>
+//  
+//  	<history date="11/9/08" modby="anasa">created</history>
+//  
+//////////////////////////////////////////////////////////////////////////////
+
+#region Library Calls
+//---------------------------------------------------------------------------------------------
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Reflection;
+using System.Windows;
+using System.Xml;
+using DevExpress.Xpo;
+using DevExpress.XtraEditors.DXErrorProvider;
+using TCO.Entity;
+//---------------------------------------------------------------------------------------------
+#endregion
+
+namespace TCO.DesktopClientDevexpress
+{
+    public class Scenario : IDXDataErrorInfo, INotifyPropertyChanged
+    {
+        # region Fields
+        //---------------------------------------------------------------------------------------------
+        string[] moduleNames = new string[] { "First Cost", "Maint&Ops", "CAPEX", "Utilities", "Asset Impacts", "Funding Sources" };
+
+        Guid _scenarioID;
+        public Guid ScenarioID
+        {
+            get { return _scenarioID; }
+            set { _scenarioID = value; }
+        }
+        
+        int _order;
+        public int Order
+        {
+            get { return _order; }
+            set 
+            {
+                _order = value;
+                NotifyPropertyChanged("Order");
+            }
+        }
+
+        bool _showInReport;
+        public bool ShowInReport
+        {
+            get { return _showInReport; }
+            set 
+            { 
+                _showInReport = value;
+                NotifyPropertyChanged("ShowInReport");
+            }
+        }
+
+        string _scenarioName;
+        public string ScenarioName
+        {
+            get { return _scenarioName; }
+            set 
+            {
+                _scenarioName = value;
+                NotifyPropertyChanged(ScenarioName);
+            }
+        }
+
+        string _description;
+        public string Description
+        {
+            get { return _description; }
+            set 
+            {
+                _description = value;                
+            }
+        }
+
+        Boolean _isActive;
+        public Boolean IsActive
+        {
+            get { return _isActive; }
+            set 
+            {
+                _isActive = value;
+            }
+        }
+
+        double _total;
+        public double Total
+        {
+            get { return _total; }
+            set 
+            {
+                _total = value;
+            }
+        }
+
+        double _funding;
+        public double Funding
+        {
+            get { return _funding; }
+            set 
+            {
+                _funding = value;
+            }
+        }
+
+        double _fundingPercentage;
+        public double FundingPercentage
+        {
+            get { return _fundingPercentage; }
+            set
+            {
+                _fundingPercentage = value;
+            }
+        }
+
+        Boolean _includeFundingSources;
+        public Boolean IncludeFundingSources
+        {
+            get { return _includeFundingSources; }
+            set
+            {
+                _includeFundingSources = value;
+                NotifyPropertyChanged("IncludeFundingSources");
+            }
+        }
+
+        double _comparisonNPV;
+        public double ComparisonNPV
+        {
+            get { return _comparisonNPV; }
+            set
+            {
+                _comparisonNPV = value;
+            }
+        }
+
+        double _comparisonPercentNPV;
+        public double ComparisonPercentNPV
+        {
+            get { return _comparisonPercentNPV; }
+            set
+            {
+                _comparisonPercentNPV = value;
+            }
+        }
+
+        string _comparedToScenario;
+        public string ComparedToScenario
+        {
+            get { return _comparedToScenario; }
+            set
+            {
+                _comparedToScenario = value;
+            }
+        }
+
+        ScenarioComponents _scenarioComponents;
+        public ScenarioComponents ScenarioComponents
+        {
+            get { return _scenarioComponents; }
+            set 
+            {
+                _scenarioComponents = value;
+            }
+        }
+
+        ScenarioModules _scenarioModules;
+        public ScenarioModules ScenarioModules
+        {
+            get { return _scenarioModules; }
+            set
+            {
+                _scenarioModules = value;
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public void NotifyPropertyChanged(String info)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(info));
+            }
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        # region Methods
+        //---------------------------------------------------------------------------------------------
+        # region Constructors
+        //---------------------------------------------------------------------------------------------
+        public Scenario() 
+        {
+            _scenarioID = Guid.NewGuid();
+            _order = 0;
+            _showInReport = true;
+            _scenarioName = null;
+            _description = null;
+            _isActive = false;
+            _total = 0;
+            _funding = 0;
+            _fundingPercentage = 0;
+            _includeFundingSources = true;
+            _scenarioComponents = new ScenarioComponents();
+            _scenarioModules = new ScenarioModules();
+            _comparedToScenario = null;
+            _comparisonNPV = 0;
+            _comparisonPercentNPV = 0;
+            IntializeScenarioModules();
+        }
+
+        public Scenario(
+            Guid scenarioID,
+            int order,
+            bool showInReport,
+            string scenarioName,
+            string description, 
+            bool isActive, 
+            double total, 
+            double funding,
+            ScenarioComponents scenarioComponents,
+            ScenarioModules scenarioModules,
+            double fundingPercentage,
+            bool includeFundingSources,
+            string comparedToScenario,
+            double comparisonNPV,
+            double comparisonPercentNPV)
+        {
+            _scenarioID = scenarioID;
+            _order = order;
+            _showInReport = showInReport;
+            _scenarioName = scenarioName;
+            _description = description;
+            _isActive = isActive;
+            _total = total;
+            _funding = funding;
+            _scenarioComponents = scenarioComponents;
+            _scenarioModules = scenarioModules;
+            _fundingPercentage = fundingPercentage;
+            _includeFundingSources = includeFundingSources;
+            _comparedToScenario = comparedToScenario;
+            _comparisonNPV = comparisonNPV;
+            _comparisonPercentNPV = comparisonPercentNPV;
+        }
+
+        public override string ToString()
+        {
+            return ScenarioName;
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        #region Validation
+        //---------------------------------------------------------------------------------------------
+        public void GetPropertyError(string propertyName, ErrorInfo info)
+        {
+            switch (propertyName)
+            {
+                case "ScenarioName":
+                    if (ScenarioName == null || ScenarioName == "")
+                    {
+                        info.ErrorText = "Name must not be blank";
+                        info.ErrorType = ErrorType.Critical;
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        public void GetError(ErrorInfo info)
+        {
+            ErrorInfo propertyInfo = new ErrorInfo();
+            foreach (PropertyInfo property in this.GetType().GetProperties())
+            {
+                GetPropertyError(property.Name, propertyInfo);
+            }
+            if (propertyInfo.ErrorText != "")
+                info.ErrorText = "This record has some missing or invalid information";
+        }
+
+        private void Validate()
+        {
+            ErrorInfo info = new ErrorInfo();
+            GetError(info);
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        #region Other
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// This method refreshs the totals and costs in the scenario when anything change in the scenario, 
+        /// components or modules
+        /// </summary>
+        public void RefreshTotals()
+        {
+            //Check the scenario is not null
+            if (this != null)
+            {
+                //Check that there are components
+                if (ScenarioComponents.Count != 0)
+                {
+                    RefreshComponentCosts();
+                    RefreshModuleCosts();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Initialize the modules and their costs for the scenario
+        /// </summary>
+        public void IntializeScenarioModules()
+        {
+            //Create the intital set of modules and add them to the scenario
+            foreach (string moduleName in moduleNames)
+            {
+                ScenarioModule module = new ScenarioModule();
+                module.ModuleName = moduleName;
+                module.Scenario = this;
+                ScenarioModules.Add(module);
+            }
+            RefreshModuleCosts();
+        }
+
+        /// <summary>
+        /// Recalculates the totals for all modules in a sceanrio
+        /// </summary>
+        public void RefreshModuleCosts()
+        {
+            //Temporary total holder for scenario total cost, used to hold to upper limit for random numbers
+            //generated for module costs because double can't be used.
+            int tempScenarioTotal = (Total != 0) ? Convert.ToInt32(Total) : 0;
+            //Used to hold the remaining amount lost when doing the conversion to integer
+            double remaining = Total - tempScenarioTotal;
+            Random random = new Random();
+            //Set a random value for each module so all module costs will lead to the total cost of the scenario
+            foreach (ScenarioModule module in ScenarioModules)
+            {
+                module.Npv = random.Next(0, tempScenarioTotal);
+                //Remove the random amount from the temporary total cost
+                tempScenarioTotal -= Convert.ToInt32(module.Npv);
+            }
+            //if the total cost is not zero, then take the remaining amount and distribute it over all modules,
+            //this way the sum of all modules will lead to the total amount of the scenario and we have two
+            //important things that are satisfied:
+            //1- The sum of costs for component or for modules leads to the same amount.
+            //2- The costs for the modules are random and not the same so this is helpful in prototyping
+            if (tempScenarioTotal > 0)
+            {
+                foreach (ScenarioModule module in ScenarioModules)
+                {
+                    //Add the part of the total
+                    module.Npv += Convert.ToDouble(tempScenarioTotal) / Convert.ToDouble(ScenarioModules.Count);
+                    //if there is a reminding, then distribute it too
+                    if (remaining > 0)
+                    {
+                        module.Npv += Convert.ToDouble(remaining) / Convert.ToDouble(ScenarioModules.Count);
+                    }
+                }
+            }
+            //Calculate the percentages for all modules
+            foreach (ScenarioModule module in ScenarioModules)
+            {
+                module.PercentNPV = (Total == 0) ? 0 : module.Npv / Total;
+            }
+        }
+
+        /// <summary>
+        /// Refresh the totals for all the components
+        /// </summary>
+        public void RefreshComponentCosts()
+        {
+            //Reset the total to zero
+            Total = 0;
+            //For all components, collect the totals
+            foreach (ScenarioComponent component in ScenarioComponents)
+            {
+                if (component.IsAdded)
+                {
+                    Total += component.Npv;
+                }
+                else
+                {
+                    //Reset the percentage for subtracted components
+                    component.PercentNPV = 0;
+                }
+            }
+            //If funding sources are included, then count them in the totals
+            if (IncludeFundingSources)
+            {
+                Total += Funding;
+                FundingPercentage = (Funding / Total);
+            }
+            else
+            {
+                FundingPercentage = 0;
+            }
+            //Calcualte the percentage for each component
+            foreach (ScenarioComponent component in ScenarioComponents)
+            {
+                if (component.IsAdded)
+                {
+                    component.PercentNPV = (component.Npv / Total);
+                }
+            }
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+        //---------------------------------------------------------------------------------------------
+        #endregion
+    }
+
+    public class Scenarios : BindingList<Scenario>
+    {
+        protected override void ApplySortCore(PropertyDescriptor property, ListSortDirection direction)
+        {
+            List<Scenario> items = this.Items as List<Scenario>;
+            PropertyComparer<Scenario> pc = new PropertyComparer<Scenario>(property.Name, direction.ToString());
+            items.Sort(pc);
+        }
+
+        public void SortByName(ListSortDirection direction)
+        {
+            PropertyDescriptorCollection propDescriptors = TypeDescriptor.GetProperties(typeof(Scenario));
+            this.ApplySortCore(propDescriptors["ScenarioName"], direction);
+        }
+
+        public void SortByOrder(ListSortDirection direction)
+        {
+            PropertyDescriptorCollection propDescriptors = TypeDescriptor.GetProperties(typeof(Scenario));
+            this.ApplySortCore(propDescriptors["Order"], direction);
+        }
+    }
+
+    public class ScenarioComponent : IDXDataErrorInfo, INotifyPropertyChanged
+    {
+        # region Fields
+        //---------------------------------------------------------------------------------------------
+        Guid _componentID;
+        public Guid ComponentID
+        {
+            get { return _componentID; }
+            set { _componentID = value;}
+        }
+
+        string _componentName;
+        public string ComponentName
+        {
+            get { return _componentName; }
+            set
+            {
+                _componentName = value;
+            }
+        }
+
+        Boolean _isSelected;
+        public Boolean IsSelected
+        {
+            get { return _isSelected; }
+            set { _isSelected = value;}
+        }
+
+        Boolean _isAdded;
+        public Boolean IsAdded
+        {
+            get { return _isAdded; }
+            set 
+            {
+                _isAdded = value;
+                NotifyParent();
+            }
+        }
+
+        double _npv;
+        public double Npv
+        {
+            get { return _npv; }
+            set 
+            {
+                _npv = value;
+                NotifyPropertyChanged("Npv");
+            }
+        }
+
+        double _percentNPV;
+        public double PercentNPV
+        {
+            get { return _percentNPV; }
+            set
+            {
+                _percentNPV = value;
+            }
+        }
+
+        Scenario _scenario;
+        public Scenario Scenario
+        {
+            get { return _scenario; }
+            set 
+            {
+                _scenario = value;
+                NotifyParent();
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void NotifyPropertyChanged(String info)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(info));
+            }
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        # region Methods
+        //---------------------------------------------------------------------------------------------
+        # region Constructors
+        //---------------------------------------------------------------------------------------------
+        public ScenarioComponent() 
+        {
+            _componentID = Guid.NewGuid();
+            _componentName = null;
+            _isSelected = false;
+            _isAdded = true;
+            _npv = 0;
+            _percentNPV = 0;
+            _scenario = null;
+        }
+
+        public ScenarioComponent(Guid componentID,string componentName,bool isSelected,bool isAdded,double npv,double percentNPV,Scenario scenario)
+        {
+            _componentID = Guid.NewGuid();
+            _componentName = null;
+            _isSelected = false;
+            _isAdded = false;
+            _npv = 0;
+            _percentNPV = 0;
+            _scenario = null;
+        }
+
+        public override string ToString()
+        {
+            return ComponentName;
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        #region Validation
+        //---------------------------------------------------------------------------------------------
+        public void GetPropertyError(string propertyName, ErrorInfo info)
+        {
+            //switch (propertyName)
+            //{
+            //    case "CategoryName":
+            //        if (CategoryName == null || CategoryName == "")
+            //        {
+            //            info.ErrorText = "Name must not be blank";
+            //            info.ErrorType = ErrorType.Critical;
+            //        }
+            //        break;
+            //    case "SellPercentage":
+            //        if (SellPercentage.ToString() == null || SellPercentage.ToString() == "")
+            //        {
+            //            info.ErrorText = "Percentage can't be empty";
+            //            info.ErrorType = ErrorType.Critical;
+            //        }
+            //        else if (SellPercentage< 0)
+            //        {
+            //            info.ErrorText = "Percetage can't be negative";
+            //            info.ErrorType = ErrorType.Warning;
+            //        }
+            //        break;
+            //    case "RecordMarginTo":
+            //        if (RecordMarginTo == null || RecordMarginTo == string.Empty)
+            //        {
+            //            info.ErrorText = "A value should be selected";
+            //            info.ErrorType = ErrorType.Warning;
+            //        }
+            //        break;
+            //    default:
+            //        break;
+            //}
+        }
+
+        public void GetError(ErrorInfo info)
+        {
+            ErrorInfo propertyInfo = new ErrorInfo();
+            foreach (PropertyInfo property in this.GetType().GetProperties())
+            {
+                GetPropertyError(property.Name, propertyInfo);
+            }
+            if (propertyInfo.ErrorText != "")
+                info.ErrorText = "This record has some missing or invalid information";
+        }
+
+        private void Validate()
+        {
+            ErrorInfo info = new ErrorInfo();
+            GetError(info);
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        private void NotifyParent()
+        {
+            if (Scenario != null)
+            {
+                Scenario.RefreshTotals();
+                Scenario.NotifyPropertyChanged("ScenarioComponents");
+            }
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+    }
+
+    public class ScenarioComponents : BindingList<ScenarioComponent>{}
+
+    public class ScenarioModule : IDXDataErrorInfo
+    {
+        # region Fields
+        //---------------------------------------------------------------------------------------------        
+        string _moduleName;
+        public string ModuleName
+        {
+            get { return _moduleName; }
+            set
+            {
+                _moduleName = value;
+            }
+        }
+
+        Boolean _isAdded;
+        public Boolean IsAdded
+        {
+            get { return _isAdded; }
+            set
+            {
+                _isAdded = value;
+            }
+        }
+
+        double _npv;
+        public double Npv
+        {
+            get { return _npv; }
+            set
+            {
+                _npv = value;
+            }
+        }
+
+        double _percentNPV;
+        public double PercentNPV
+        {
+            get { return _percentNPV; }
+            set
+            {
+                _percentNPV = value;
+            }
+        }
+
+        Scenario _scenario;
+        public Scenario Scenario
+        {
+            get { return _scenario; }
+            set
+            {
+                _scenario = value;
+            }
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        # region Methods
+        //---------------------------------------------------------------------------------------------
+        # region Constructors
+        //---------------------------------------------------------------------------------------------
+        public ScenarioModule()
+        {
+            _moduleName = null;
+            _isAdded = true;
+            _npv = 0;
+            _percentNPV = 0;
+            _scenario = null;
+        }
+
+        public ScenarioModule(string moduleName, bool isAdded, double npv, double percentNPV, Scenario scenario)
+        {
+            _moduleName = moduleName;
+            _isAdded = isAdded;
+            _npv = npv;
+            _percentNPV = percentNPV;
+            _scenario = scenario;
+        }
+
+        public override string ToString()
+        {
+            return ModuleName;
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        #region Validation
+        //---------------------------------------------------------------------------------------------
+        public void GetPropertyError(string propertyName, ErrorInfo info)
+        {
+            
+        }
+
+        public void GetError(ErrorInfo info)
+        {
+            ErrorInfo propertyInfo = new ErrorInfo();
+            foreach (PropertyInfo property in this.GetType().GetProperties())
+            {
+                GetPropertyError(property.Name, propertyInfo);
+            }
+            if (propertyInfo.ErrorText != "")
+                info.ErrorText = "This record has some missing or invalid information";
+        }
+
+        private void Validate()
+        {
+            ErrorInfo info = new ErrorInfo();
+            GetError(info);
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+        //---------------------------------------------------------------------------------------------
+        #endregion
+    }
+
+    public class ScenarioModules : BindingList<ScenarioModule> { }
+
+    public class CategoryUI : IDXDataErrorInfo
+    {
+        # region Fields
+        //---------------------------------------------------------------------------------------------
+        int _cateogryID;
+        public int CateogryID
+        {
+            get { return _cateogryID; }
+            set { _cateogryID = value; }
+        }
+
+        string _categoryName;
+        public string CategoryName
+        {
+            get { return _categoryName; }
+            set { _categoryName = value; }
+        }
+
+        Boolean _apply;
+        public Boolean Apply
+        {
+            get { return _apply; }
+            set { _apply = value; }
+        }
+
+        Boolean _isConstruction;
+        public Boolean IsConstruction
+        {
+            get { return _isConstruction; }
+            set { _isConstruction = value; }
+        }
+
+        Boolean _isTax;
+        public Boolean IsTax
+        {
+            get { return _isTax; }
+            set { _isTax = value; }
+        }
+
+        double _sellPercentage;
+        public double SellPercentage
+        {
+            get { return _sellPercentage; }
+            set { _sellPercentage = value; }
+        }
+
+        string _recordMarginTo;
+        public string RecordMarginTo
+        {
+            get { return _recordMarginTo; }
+            set { _recordMarginTo = value; }
+        }
+
+        double _sellDollar;
+        public double SellDollar
+        {
+            get { return _sellDollar; }
+            set { _sellDollar = value; }
+        }
+
+        double _costDollar;
+        public double CostDollar
+        {
+            get { return _costDollar; }
+            set { _costDollar = value; }
+        }
+
+        #region Categories and non construction categories who applies to them
+        //---------------------------------------------------------------------------------------------
+        CategoryUIs _nonConstructionCategories;
+        public CategoryUIs NonConstructionCategories
+        {
+            get { return _nonConstructionCategories; }
+            set { _nonConstructionCategories = value; }
+        }
+
+        CategoryUI constructionCategory;
+        public CategoryUI ConstructionCategory
+        {
+            get { return constructionCategory; }
+            set { constructionCategory = value; }
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        #region Non Construction and Non taxes Categories and taxes who applies to them
+        //---------------------------------------------------------------------------------------------
+        CategoryUIs _nonConstructionTaxes;
+        public CategoryUIs NonConstructionTaxes
+        {
+            get { return _nonConstructionTaxes; }
+            set { _nonConstructionTaxes = value; }
+        }
+
+        CategoryUI _nonConstructionCategory;
+        public CategoryUI NonConstructionCategory
+        {
+            get { return _nonConstructionCategory; }
+            set { _nonConstructionCategory = value; }
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        # region Methods
+        //---------------------------------------------------------------------------------------------
+        # region Constructors
+        //---------------------------------------------------------------------------------------------
+        public CategoryUI(
+            int cateogryID,
+            string categoryName,
+            Boolean apply,
+            Boolean isConstruction,
+            Boolean isTax,
+            double sellPercentage,
+            string recordMarginTo,
+            double sellDollar,
+            double costDollar,
+            CategoryUI nonConstructionCategory,
+            CategoryUIs nonConstructionCategories,
+            CategoryUIs nonConstructionTaxes)
+        {
+            _cateogryID = cateogryID;
+            _categoryName = categoryName;
+            _apply = apply;
+            _isConstruction = isConstruction;
+            _isTax = isTax;
+            _sellPercentage = sellPercentage;
+            _recordMarginTo = recordMarginTo;
+            _sellDollar = sellDollar;
+            _costDollar = costDollar;
+            _nonConstructionCategories = new CategoryUIs();
+            _nonConstructionCategory = null;
+            _nonConstructionTaxes = new CategoryUIs();
+        }
+
+        public CategoryUI()
+        {
+            _cateogryID = 0;
+            _categoryName = null;
+            _apply = false;
+            _isConstruction = false;
+            _isTax = false;
+            _sellPercentage = 0;
+            _recordMarginTo = null;
+            _sellDollar = 0;
+            _costDollar = 0;
+            _nonConstructionCategories = new CategoryUIs();
+            _nonConstructionCategory = null;
+            _nonConstructionTaxes = new CategoryUIs();
+        }
+
+        public override string ToString()
+        {
+            return CategoryName;
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        #region Validation
+        //---------------------------------------------------------------------------------------------
+        public void GetPropertyError(string propertyName, ErrorInfo info)
+        {
+            switch (propertyName)
+            {
+                case "CategoryName":
+                    if (CategoryName == null || CategoryName == "")
+                    {
+                        info.ErrorText = "Name must not be blank";
+                        info.ErrorType = ErrorType.Critical;
+                    }
+                    break;
+                case "SellPercentage":
+                    if (SellPercentage.ToString() == null || SellPercentage.ToString() == "")
+                    {
+                        info.ErrorText = "Percentage can't be empty";
+                        info.ErrorType = ErrorType.Critical;
+                    }
+                    else if (SellPercentage < 0)
+                    {
+                        info.ErrorText = "Percetage can't be negative";
+                        info.ErrorType = ErrorType.Warning;
+                    }
+                    break;
+                case "RecordMarginTo":
+                    if (RecordMarginTo == null || RecordMarginTo == string.Empty)
+                    {
+                        info.ErrorText = "A value should be selected";
+                        info.ErrorType = ErrorType.Warning;
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        public void GetError(ErrorInfo info)
+        {
+            ErrorInfo propertyInfo = new ErrorInfo();
+            foreach (PropertyInfo property in this.GetType().GetProperties())
+            {
+                GetPropertyError(property.Name, propertyInfo);
+            }
+            if (propertyInfo.ErrorText != "")
+                info.ErrorText = "This record has some missing or invalid information";
+        }
+
+        private void Validate()
+        {
+            ErrorInfo info = new ErrorInfo();
+            GetError(info);
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+        //---------------------------------------------------------------------------------------------
+        #endregion
+    }
+
+    public class CategoryUIs : BindingList<CategoryUI> { }
+
+    public class UtilityType : XPObject, IDXDataErrorInfo
+    {
+        # region Declarations
+        //---------------------------------------------------------------------------------------------
+        XPCollection utilityRates;
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        # region Properties
+        //---------------------------------------------------------------------------------------------
+        string utilityTypeName;
+        public string UtilityTypeName
+        {
+            get { return utilityTypeName; }
+            set { SetPropertyValue("UtilityTypeName", ref utilityTypeName, value); }
+        }
+
+        int utilityTypeID;
+        public int UtilityTypeID
+        {
+            get { return utilityTypeID; }
+            set { SetPropertyValue("UtilityTypeID", ref utilityTypeID, value); }
+        }
+
+        string unitName;
+        public string UnitName
+        {
+            get { return unitName; }
+            set { SetPropertyValue("UnitName", ref unitName, value); }
+        }
+
+        int unitID;
+        public int UnitID
+        {
+            get { return unitID; }
+            set { SetPropertyValue("UnitID", ref unitID, value); }
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        # region Methods
+        //---------------------------------------------------------------------------------------------
+        # region Initialization
+        //---------------------------------------------------------------------------------------------
+        public UtilityType(Session session) : base(session) { }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        #region Calculation
+        //---------------------------------------------------------------------------------------------
+        public void Calculate(CalculationParties calculationContext)
+        {
+            //switch (EnteredProperties[calculationContext].ToString())
+            //{
+            //    case "Total":
+            //        Total = Eval.StringEval(EnteredCalculations[CalculationParties.CUIDollarAmounts].ToString());
+            //        DollarPerSF = (Convert.ToDouble(Total) / 100).ToString();
+            //        Quantity = (Convert.ToDouble(Total) / 5).ToString();
+            //        break;
+            //    case "DollarPerSF":
+            //        DollarPerSF = Eval.StringEval(EnteredCalculations[CalculationParties.CUIDollarAmounts].ToString());
+            //        Total = (Convert.ToDouble(DollarPerSF) * 100).ToString();
+            //        Quantity = (Convert.ToDouble(Total) / 5).ToString();
+            //        break;
+            //    case "Quantity":
+            //        Quantity = Eval.StringEval(EnteredCalculations[CalculationParties.CUIDollarAmounts].ToString());
+            //        Total = (Convert.ToDouble(Quantity) * 5).ToString();
+            //        DollarPerSF = (Convert.ToDouble(Total) / 100).ToString();
+            //        break;
+            //    default:
+            //        break;
+            //}
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        #region Validation
+        //---------------------------------------------------------------------------------------------
+        #region IDXDataErrorInfo Members
+        //---------------------------------------------------------------------------------------------
+        public void GetError(ErrorInfo info)
+        {
+            //ErrorInfo propertyInfo = new ErrorInfo();
+            //foreach (PropertyInfo property in this.GetType().GetProperties())
+            //{
+            //    GetPropertyError(property.Name, propertyInfo);
+            //}
+            //if (propertyInfo.ErrorText != "")
+            //    info.ErrorText = "This record has some missing or invalid information";
+        }
+
+        public void GetPropertyError(string propertyName, ErrorInfo info)
+        {
+            //switch (propertyName)
+            //{
+            //    case "UtilityTypeName":
+            //        if (UtilityTypeName == null || UtilityTypeName == "")
+            //        {
+            //            info.ErrorText = "Name must not be blank";
+            //            info.ErrorType = ErrorType.Critical;
+            //        }
+            //        break;
+            //    case "RateName":
+            //        if (UtilityTypeName == null || UtilityTypeName == "")
+            //        {
+            //            info.ErrorText = "Name must not be blank";
+            //            info.ErrorType = ErrorType.Critical;
+            //        }
+            //        break;
+            //    case "Total":
+            //        if (Total == null || Total == string.Empty)
+            //        {
+            //            info.ErrorText = "Value should be entered";
+            //            info.ErrorType = ErrorType.Warning;
+            //        }
+            //        else if (ShowCalculatedDeleteNotification && CurrentFocusedValue == "Total")
+            //        {
+            //            info.ErrorText = "Calcuated value can't be deleted!";
+            //            info.ErrorType = ErrorType.Information;
+            //        }
+            //        if (ShowIncorrectExpressionNotification && CurrentFocusedValue == "Total")
+            //        {
+            //            info.ErrorText = "Invalid expression entered!";
+            //            info.ErrorType = ErrorType.Warning;
+            //        }
+            //        break;
+            //    case "DollarPerSF":
+            //        if (DollarPerSF == null || DollarPerSF == string.Empty)
+            //        {
+            //            info.ErrorText = "Value should be entered";
+            //            info.ErrorType = ErrorType.Warning;
+            //        }
+            //        else if (ShowCalculatedDeleteNotification && CurrentFocusedValue == "DollarPerSF")
+            //        {
+            //            info.ErrorText = "Calcuated value can't be deleted!";
+            //            info.ErrorType = ErrorType.Information;
+            //        }
+            //        if (ShowIncorrectExpressionNotification && CurrentFocusedValue == "DollarPerSF")
+            //        {
+            //            info.ErrorText = "Invalid expression entered!";
+            //            info.ErrorType = ErrorType.Warning;
+            //        }
+            //        break;
+            //    case "Quantity":
+            //        if (Quantity == null || Quantity == string.Empty)
+            //        {
+            //            info.ErrorText = "Value should be entered";
+            //            info.ErrorType = ErrorType.Warning;
+            //        }
+            //        else if (ShowCalculatedDeleteNotification && CurrentFocusedValue == "Quantity")
+            //        {
+            //            info.ErrorText = "Calcuated value can't be deleted!";
+            //            info.ErrorType = ErrorType.Information;
+            //        }
+            //        if (ShowIncorrectExpressionNotification && CurrentFocusedValue == "Quantity")
+            //        {
+            //            info.ErrorText = "Invalid expression entered!";
+            //            info.ErrorType = ErrorType.Warning;
+            //        }
+            //        break;
+            //}
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        protected override void OnSaving()
+        {
+            base.OnSaving();
+            Validate();
+        }
+
+        private void Validate()
+        {
+            DevExpress.XtraEditors.DXErrorProvider.ErrorInfo info = new DevExpress.XtraEditors.DXErrorProvider.ErrorInfo();
+            GetError(info);
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        public override string ToString()
+        {
+            return UtilityTypeName;
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        #region Relations
+        //---------------------------------------------------------------------------------------------
+        [Association("Utility_Rates", typeof(CUI))]
+        public XPCollection UtilityRates
+        {
+            get
+            {
+                return GetCollection("UtilityRates");
+            }
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+    }
+
+    public class CUI : XPObject, IDXDataErrorInfo
+    {
+        # region Declarations
+        //---------------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        # region Properties
+        //---------------------------------------------------------------------------------------------
+        string total;
+        public string Total
+        {
+            get { return total; }
+            set { SetPropertyValue("Total", ref total, value); }
+        }
+
+        string dollarPerSF;
+        public string DollarPerSF
+        {
+            get { return dollarPerSF; }
+            set { SetPropertyValue("DollarPerSF", ref dollarPerSF, value); }
+        }
+
+        string quantity;
+        public string Quantity
+        {
+            get { return quantity; }
+            set { SetPropertyValue("Quantity", ref quantity, value); }
+        }
+
+        int percentCalculated;
+        public int PercentCalculated
+        {
+            get { return percentCalculated; }
+            set { SetPropertyValue("PercentCalculated", ref percentCalculated, value); }
+        }
+
+        double sf;
+        public double SF
+        {
+            get { return sf; }
+            set { SetPropertyValue("SF", ref sf, value); }
+        }
+
+        string rateName;
+        public string RateName
+        {
+            get { return rateName; }
+            set { SetPropertyValue("RateName", ref rateName, value); }
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        # region Methods
+        //---------------------------------------------------------------------------------------------
+        # region Initialization
+        //---------------------------------------------------------------------------------------------
+        public CUI(Session session) : base(session) { }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        #region ITCOPropInfo
+
+        TCOPropInfoImp propInfo;
+        public TCOPropInfoImp PropInfo
+        {
+            get
+            {
+                if (propInfo == null)
+                {
+                    XmlDocument doc = new XmlDocument();
+                    try
+                    {
+                        doc.Load(@"D:\Projects\McKinstry TCO\main\dev\DB\data\propInfo.xml");
+                        propInfo = new TCOPropInfoImp(doc);
+                    }
+                    catch
+                    {
+                        MessageBox.Show("cant load xml doc");
+                        propInfo = null;
+                    }
+                }
+                return propInfo;
+            }
+            set
+            {
+                SetPropertyValue("PropInfo", ref propInfo, value);
+            }
+        }
+
+        public bool Entered(string propName)
+        {
+            return PropInfo.GetEntered(propName);
+        }
+
+        public bool Stylable(string propName)
+        {
+            return PropInfo.AllowStyling(propName);
+        }
+
+        public string GetExpression(string propName)
+        {
+            return PropInfo.GetExpression(propName);
+        }
+
+        public string GetValue(string propName)
+        {
+            return PropInfo.GetValue(propName);
+        }
+
+        public string GetCalculatedCellValue(string propName)
+        {
+            return PropInfo.GetValue(propName);
+        }
+
+        public void ClearCalculation(string propName)
+        {
+            //PropInfo.ClearCalculation(propName);
+        }
+
+        public void SetPropValue(string propName, string value)
+        {
+            PropInfo.SetValue(propName, value);
+        }
+
+        public void SetPropExpression(string propName, string value)
+        {
+            PropInfo.SetExpression(propName, value);
+        }
+
+        public void Calculate(string propName)
+        {
+            //PropInfo.Calculate(propName);
+        }
+
+        #endregion
+
+        #region Calculation
+        //---------------------------------------------------------------------------------------------
+        public void Calculate(CalculationParties calculationContext)
+        {
+            //switch (EnteredProperties[calculationContext].ToString())
+            //{
+            //    case "Total":
+            //        Total = Eval.StringEval(EnteredCalculations[CalculationParties.CUIDollarAmounts].ToString());
+            //        DollarPerSF = (Convert.ToDouble(Total) / 100).ToString();
+            //        Quantity = (Convert.ToDouble(Total) / 5).ToString();
+            //        break;
+            //    case "DollarPerSF":
+            //        DollarPerSF = Eval.StringEval(EnteredCalculations[CalculationParties.CUIDollarAmounts].ToString());
+            //        Total = (Convert.ToDouble(DollarPerSF) * 100).ToString();
+            //        Quantity = (Convert.ToDouble(Total) / 5).ToString();
+            //        break;
+            //    case "Quantity":
+            //        Quantity = Eval.StringEval(EnteredCalculations[CalculationParties.CUIDollarAmounts].ToString());
+            //        Total = (Convert.ToDouble(Quantity) * 5).ToString();
+            //        DollarPerSF = (Convert.ToDouble(Total) / 100).ToString();
+            //        break;
+            //    default:
+            //        break;
+            //}
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        #region Validation
+        //---------------------------------------------------------------------------------------------
+        #region IDXDataErrorInfo Members
+        //---------------------------------------------------------------------------------------------
+        public void GetError(ErrorInfo info)
+        {
+            //ErrorInfo propertyInfo = new ErrorInfo();
+            //foreach (PropertyInfo property in this.GetType().GetProperties())
+            //{
+            //    GetPropertyError(property.Name, propertyInfo);
+            //}
+            //if (propertyInfo.ErrorText != "")
+            //    info.ErrorText = "This record has some missing or invalid information";
+        }
+
+        public void GetPropertyError(string propertyName, ErrorInfo info)
+        {
+            //switch (propertyName)
+            //{
+            //    case "UtilityTypeName":
+            //        if (UtilityTypeName == null || UtilityTypeName == "")
+            //        {
+            //            info.ErrorText = "Name must not be blank";
+            //            info.ErrorType = ErrorType.Critical;
+            //        }
+            //        break;
+            //    case "RateName":
+            //        if (UtilityTypeName == null || UtilityTypeName == "")
+            //        {
+            //            info.ErrorText = "Name must not be blank";
+            //            info.ErrorType = ErrorType.Critical;
+            //        }
+            //        break;
+            //    case "Total":
+            //        if (Total == null || Total == string.Empty)
+            //        {
+            //            info.ErrorText = "Value should be entered";
+            //            info.ErrorType = ErrorType.Warning;
+            //        }
+            //        else if (ShowCalculatedDeleteNotification && CurrentFocusedValue == "Total")
+            //        {
+            //            info.ErrorText = "Calcuated value can't be deleted!";
+            //            info.ErrorType = ErrorType.Information;
+            //        }
+            //        if (ShowIncorrectExpressionNotification && CurrentFocusedValue == "Total")
+            //        {
+            //            info.ErrorText = "Invalid expression entered!";
+            //            info.ErrorType = ErrorType.Warning;
+            //        }
+            //        break;
+            //    case "DollarPerSF":
+            //        if (DollarPerSF == null || DollarPerSF == string.Empty)
+            //        {
+            //            info.ErrorText = "Value should be entered";
+            //            info.ErrorType = ErrorType.Warning;
+            //        }
+            //        else if (ShowCalculatedDeleteNotification && CurrentFocusedValue == "DollarPerSF")
+            //        {
+            //            info.ErrorText = "Calcuated value can't be deleted!";
+            //            info.ErrorType = ErrorType.Information;
+            //        }
+            //        if (ShowIncorrectExpressionNotification && CurrentFocusedValue == "DollarPerSF")
+            //        {
+            //            info.ErrorText = "Invalid expression entered!";
+            //            info.ErrorType = ErrorType.Warning;
+            //        }
+            //        break;
+            //    case "Quantity":
+            //        if (Quantity == null || Quantity == string.Empty)
+            //        {
+            //            info.ErrorText = "Value should be entered";
+            //            info.ErrorType = ErrorType.Warning;
+            //        }
+            //        else if (ShowCalculatedDeleteNotification && CurrentFocusedValue == "Quantity")
+            //        {
+            //            info.ErrorText = "Calcuated value can't be deleted!";
+            //            info.ErrorType = ErrorType.Information;
+            //        }
+            //        if (ShowIncorrectExpressionNotification && CurrentFocusedValue == "Quantity")
+            //        {
+            //            info.ErrorText = "Invalid expression entered!";
+            //            info.ErrorType = ErrorType.Warning;
+            //        }
+            //        break;
+            //}
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        protected override void OnSaving()
+        {
+            base.OnSaving();
+            Validate();
+        }
+
+        private void Validate()
+        {
+            DevExpress.XtraEditors.DXErrorProvider.ErrorInfo info = new DevExpress.XtraEditors.DXErrorProvider.ErrorInfo();
+            GetError(info);
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        #region Relations
+        //---------------------------------------------------------------------------------------------
+        UtilityType utilityType;
+        [Association("Utility_Rates")]
+        public UtilityType UtilityType
+        {
+            get { return utilityType; }
+            set { SetPropertyValue("UtilityType", ref utilityType, value); }
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+    }
+
+    public class Unit : XPObject
+    {
+        public Unit(Session session) : base(session) { }
+
+        string unitName;
+        public string UnitName
+        {
+            get { return unitName; }
+            set { SetPropertyValue("UnitName", ref unitName, value); }
+        }
+
+        int unitID;
+        public int UnitID
+        {
+            get { return unitID; }
+            set { SetPropertyValue("UnitID", ref unitID, value); }
+        }
+
+        int utilityTypeID;
+        public int UtilityTypeID
+        {
+            get { return utilityTypeID; }
+            set { SetPropertyValue("UtilityTypeID", ref utilityTypeID, value); }
+        }
+
+        public override string ToString()
+        {
+            return UnitID.ToString();
+        }
+    }
+
+    /// <summary>
+    /// Used for sorting
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public class PropertyComparer<T> : IComparer<T>
+    {
+        private readonly System.Reflection.PropertyInfo _propertyInfo;
+        private readonly string _sortDirection;
+
+        public PropertyComparer(string propertyToSort, string sortDirection)
+        {
+            _sortDirection = sortDirection;
+            _propertyInfo = typeof(T).GetProperty(propertyToSort, System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.FlattenHierarchy | System.Reflection.BindingFlags.IgnoreCase);
+        }
+
+        public int Compare(T x, T y)
+        {
+            object xValue = _propertyInfo.GetValue(x, null);
+            object yValue = _propertyInfo.GetValue(y, null);
+            if ((_sortDirection == "Ascending"))
+            {
+                return System.Collections.Comparer.Default.Compare(xValue, yValue);
+            }
+            else
+            {
+                return System.Collections.Comparer.Default.Compare(yValue, xValue);
+            }
+        }
+    }
+
+}

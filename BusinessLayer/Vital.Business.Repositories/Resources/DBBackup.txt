@@ -1,0 +1,10 @@
+USE [master]
+
+DECLARE @pathName NVARCHAR(Max)
+DECLARE @dateInfo NVARCHAR(Max)
+DECLARE @databaseName NVARCHAR(512) 
+
+SET @databaseName = 'VitalExpert' 
+SET @dateInfo = REPLACE(CONVERT(VARCHAR(10), GETDATE(), 110) + ' -' + RIGHT(CONVERT(VARCHAR, GETDATE(), 100), 7), ':', '.')
+SET @pathName = '@PATH\Vital Expert Backup - @BRANCH - V@VITALVERSION - D@DBVERSION - '+ @dateInfo + '.bak' 
+BACKUP DATABASE @databaseName TO DISK = @pathName WITH NOFORMAT, NOINIT, NAME = N'VitalExpert', SKIP, NOREWIND, NOUNLOAD,  STATS = 10

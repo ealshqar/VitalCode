@@ -1,0 +1,1758 @@
+namespace TCO.DesktopClientDevexpress
+{
+    partial class TotalFinancialSummaryReportTab
+    {
+        /// <summary> 
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary> 
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Component Designer generated code
+
+        /// <summary> 
+        /// Required method for Designer support - do not modify 
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TotalFinancialSummaryReportTab));
+            this.layoutControlMain = new DevExpress.XtraLayout.LayoutControl();
+            this.spinEditCapRate = new DevExpress.XtraEditors.SpinEdit();
+            this.spinEditNFCHPM = new DevExpress.XtraEditors.SpinEdit();
+            this.spinEditNFCLPM = new DevExpress.XtraEditors.SpinEdit();
+            this.spinEditFCHPM = new DevExpress.XtraEditors.SpinEdit();
+            this.spinEditFCLPM = new DevExpress.XtraEditors.SpinEdit();
+            this.radioGroupCompnentSortMethod = new DevExpress.XtraEditors.RadioGroup();
+            this.checkEditSelectAllScenarios = new DevExpress.XtraEditors.CheckEdit();
+            this.checkEditShowDeltasVSBase = new DevExpress.XtraEditors.CheckEdit();
+            this.checkEditUseUtilityguaranteemultiplier = new DevExpress.XtraEditors.CheckEdit();
+            this.spinEditDiscountRate = new DevExpress.XtraEditors.SpinEdit();
+            this.spinEditInflationRate = new DevExpress.XtraEditors.SpinEdit();
+            this.spinEditNPV = new DevExpress.XtraEditors.SpinEdit();
+            this.spinEditScalingFactor = new DevExpress.XtraEditors.SpinEdit();
+            this.simpleButtonGenerate = new DevExpress.XtraEditors.SimpleButton();
+            this.progressBarControl1 = new DevExpress.XtraEditors.ProgressBarControl();
+            this.gridLookUpEditScenario1 = new DevExpress.XtraEditors.GridLookUpEdit();
+            this.gridViewScenario1 = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.gridColumnScenario1 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridLookUpEditProject = new DevExpress.XtraEditors.GridLookUpEdit();
+            this.gridLookUpEditProjectView = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.gridColumnProjectName = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.printControlMain = new DevExpress.XtraPrinting.Control.PrintControl();
+            this.layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
+            this.layoutControlItemPrintControl = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlGroupSelectionCriteria = new DevExpress.XtraLayout.LayoutControlGroup();
+            this.layoutControlItemProject = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlItem9 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlItem16 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlItem12 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlItemNPV = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlItem14 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlItem15 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlItem10 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlItemScenario1 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlItem17 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlItem18 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlItem11 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlItemDiscountRate = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlItemInflationRate = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlItemScalingFactor = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlItemGenerate = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.printBarManagerMain = new DevExpress.XtraPrinting.Preview.PrintBarManager();
+            this.previewBar1 = new DevExpress.XtraPrinting.Preview.PreviewBar();
+            this.printPreviewBarItem1 = new DevExpress.XtraPrinting.Preview.PrintPreviewBarItem();
+            this.printPreviewBarItem2 = new DevExpress.XtraPrinting.Preview.PrintPreviewBarItem();
+            this.printPreviewBarItem3 = new DevExpress.XtraPrinting.Preview.PrintPreviewBarItem();
+            this.printPreviewBarItem4 = new DevExpress.XtraPrinting.Preview.PrintPreviewBarItem();
+            this.printPreviewBarItem6 = new DevExpress.XtraPrinting.Preview.PrintPreviewBarItem();
+            this.printPreviewBarItem7 = new DevExpress.XtraPrinting.Preview.PrintPreviewBarItem();
+            this.printPreviewBarItem8 = new DevExpress.XtraPrinting.Preview.PrintPreviewBarItem();
+            this.printPreviewBarItem9 = new DevExpress.XtraPrinting.Preview.PrintPreviewBarItem();
+            this.printPreviewBarItem10 = new DevExpress.XtraPrinting.Preview.PrintPreviewBarItem();
+            this.printPreviewBarItem11 = new DevExpress.XtraPrinting.Preview.PrintPreviewBarItem();
+            this.printPreviewBarItem12 = new DevExpress.XtraPrinting.Preview.PrintPreviewBarItem();
+            this.printPreviewBarItem13 = new DevExpress.XtraPrinting.Preview.PrintPreviewBarItem();
+            this.printPreviewBarItem14 = new DevExpress.XtraPrinting.Preview.PrintPreviewBarItem();
+            this.zoomBarEditItem1 = new DevExpress.XtraPrinting.Preview.ZoomBarEditItem();
+            this.printPreviewRepositoryItemComboBox1 = new DevExpress.XtraPrinting.Preview.PrintPreviewRepositoryItemComboBox();
+            this.printPreviewBarItem15 = new DevExpress.XtraPrinting.Preview.PrintPreviewBarItem();
+            this.printPreviewBarItem16 = new DevExpress.XtraPrinting.Preview.PrintPreviewBarItem();
+            this.printPreviewBarItem17 = new DevExpress.XtraPrinting.Preview.PrintPreviewBarItem();
+            this.printPreviewBarItem18 = new DevExpress.XtraPrinting.Preview.PrintPreviewBarItem();
+            this.printPreviewBarItem19 = new DevExpress.XtraPrinting.Preview.PrintPreviewBarItem();
+            this.printPreviewBarItem20 = new DevExpress.XtraPrinting.Preview.PrintPreviewBarItem();
+            this.printPreviewBarItem22 = new DevExpress.XtraPrinting.Preview.PrintPreviewBarItem();
+            this.printPreviewBarItem23 = new DevExpress.XtraPrinting.Preview.PrintPreviewBarItem();
+            this.printPreviewBarItem24 = new DevExpress.XtraPrinting.Preview.PrintPreviewBarItem();
+            this.barButtonItemFullScreen = new DevExpress.XtraBars.BarButtonItem();
+            this.previewBar2 = new DevExpress.XtraPrinting.Preview.PreviewBar();
+            this.printPreviewStaticItem1 = new DevExpress.XtraPrinting.Preview.PrintPreviewStaticItem();
+            this.printPreviewStaticItem2 = new DevExpress.XtraPrinting.Preview.PrintPreviewStaticItem();
+            this.printPreviewStaticItem3 = new DevExpress.XtraPrinting.Preview.PrintPreviewStaticItem();
+            this.previewBar3 = new DevExpress.XtraPrinting.Preview.PreviewBar();
+            this.printPreviewSubItem1 = new DevExpress.XtraPrinting.Preview.PrintPreviewSubItem();
+            this.printPreviewSubItem2 = new DevExpress.XtraPrinting.Preview.PrintPreviewSubItem();
+            this.printPreviewSubItem4 = new DevExpress.XtraPrinting.Preview.PrintPreviewSubItem();
+            this.printPreviewBarItem26 = new DevExpress.XtraPrinting.Preview.PrintPreviewBarItem();
+            this.printPreviewBarItem27 = new DevExpress.XtraPrinting.Preview.PrintPreviewBarItem();
+            this.barToolbarsListItem1 = new DevExpress.XtraBars.BarToolbarsListItem();
+            this.printPreviewSubItem3 = new DevExpress.XtraPrinting.Preview.PrintPreviewSubItem();
+            this.printPreviewBarItem21 = new DevExpress.XtraPrinting.Preview.PrintPreviewBarItem();
+            this.barDockControl1 = new DevExpress.XtraBars.BarDockControl();
+            this.barDockControl2 = new DevExpress.XtraBars.BarDockControl();
+            this.barDockControl3 = new DevExpress.XtraBars.BarDockControl();
+            this.barDockControl4 = new DevExpress.XtraBars.BarDockControl();
+            this.printPreviewBarCheckItem1 = new DevExpress.XtraPrinting.Preview.PrintPreviewBarCheckItem();
+            this.printPreviewBarCheckItem2 = new DevExpress.XtraPrinting.Preview.PrintPreviewBarCheckItem();
+            this.printPreviewBarCheckItem3 = new DevExpress.XtraPrinting.Preview.PrintPreviewBarCheckItem();
+            this.printPreviewBarCheckItem4 = new DevExpress.XtraPrinting.Preview.PrintPreviewBarCheckItem();
+            this.printPreviewBarCheckItem5 = new DevExpress.XtraPrinting.Preview.PrintPreviewBarCheckItem();
+            this.printPreviewBarCheckItem6 = new DevExpress.XtraPrinting.Preview.PrintPreviewBarCheckItem();
+            this.printPreviewBarCheckItem7 = new DevExpress.XtraPrinting.Preview.PrintPreviewBarCheckItem();
+            this.printPreviewBarCheckItem8 = new DevExpress.XtraPrinting.Preview.PrintPreviewBarCheckItem();
+            this.printPreviewBarCheckItem9 = new DevExpress.XtraPrinting.Preview.PrintPreviewBarCheckItem();
+            this.printPreviewBarCheckItem10 = new DevExpress.XtraPrinting.Preview.PrintPreviewBarCheckItem();
+            this.printPreviewBarCheckItem11 = new DevExpress.XtraPrinting.Preview.PrintPreviewBarCheckItem();
+            this.printPreviewBarCheckItem12 = new DevExpress.XtraPrinting.Preview.PrintPreviewBarCheckItem();
+            this.printPreviewBarCheckItem13 = new DevExpress.XtraPrinting.Preview.PrintPreviewBarCheckItem();
+            this.printPreviewBarCheckItem14 = new DevExpress.XtraPrinting.Preview.PrintPreviewBarCheckItem();
+            this.printPreviewBarCheckItem15 = new DevExpress.XtraPrinting.Preview.PrintPreviewBarCheckItem();
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.dxErrorProviderMain)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlMain)).BeginInit();
+            this.layoutControlMain.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.spinEditCapRate.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.spinEditNFCHPM.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.spinEditNFCLPM.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.spinEditFCHPM.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.spinEditFCLPM.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radioGroupCompnentSortMethod.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.checkEditSelectAllScenarios.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.checkEditShowDeltasVSBase.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.checkEditUseUtilityguaranteemultiplier.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.spinEditDiscountRate.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.spinEditInflationRate.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.spinEditNPV.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.spinEditScalingFactor.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.progressBarControl1.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridLookUpEditScenario1.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridViewScenario1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridLookUpEditProject.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridLookUpEditProjectView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItemPrintControl)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroupSelectionCriteria)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItemProject)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem9)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem16)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem12)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItemNPV)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem14)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem15)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem10)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItemScenario1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem17)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem18)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem11)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItemDiscountRate)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItemInflationRate)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItemScalingFactor)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItemGenerate)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.printBarManagerMain)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.printPreviewRepositoryItemComboBox1)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // errorImageList
+            // 
+            this.errorImageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("errorImageList.ImageStream")));
+            this.errorImageList.Images.SetKeyName(0, "messageboxerror.ico");
+            // 
+            // layoutControlMain
+            // 
+            this.layoutControlMain.AllowCustomizationMenu = false;
+            this.layoutControlMain.Appearance.DisabledLayoutGroupCaption.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.layoutControlMain.Appearance.DisabledLayoutGroupCaption.Options.UseForeColor = true;
+            this.layoutControlMain.Appearance.DisabledLayoutItem.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.layoutControlMain.Appearance.DisabledLayoutItem.Options.UseForeColor = true;
+            this.layoutControlMain.Controls.Add(this.spinEditCapRate);
+            this.layoutControlMain.Controls.Add(this.spinEditNFCHPM);
+            this.layoutControlMain.Controls.Add(this.spinEditNFCLPM);
+            this.layoutControlMain.Controls.Add(this.spinEditFCHPM);
+            this.layoutControlMain.Controls.Add(this.spinEditFCLPM);
+            this.layoutControlMain.Controls.Add(this.radioGroupCompnentSortMethod);
+            this.layoutControlMain.Controls.Add(this.checkEditSelectAllScenarios);
+            this.layoutControlMain.Controls.Add(this.checkEditShowDeltasVSBase);
+            this.layoutControlMain.Controls.Add(this.checkEditUseUtilityguaranteemultiplier);
+            this.layoutControlMain.Controls.Add(this.spinEditDiscountRate);
+            this.layoutControlMain.Controls.Add(this.spinEditInflationRate);
+            this.layoutControlMain.Controls.Add(this.spinEditNPV);
+            this.layoutControlMain.Controls.Add(this.spinEditScalingFactor);
+            this.layoutControlMain.Controls.Add(this.simpleButtonGenerate);
+            this.layoutControlMain.Controls.Add(this.progressBarControl1);
+            this.layoutControlMain.Controls.Add(this.gridLookUpEditScenario1);
+            this.layoutControlMain.Controls.Add(this.gridLookUpEditProject);
+            this.layoutControlMain.Controls.Add(this.printControlMain);
+            this.layoutControlMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.layoutControlMain.Location = new System.Drawing.Point(0, 51);
+            this.layoutControlMain.Name = "layoutControlMain";
+            this.layoutControlMain.Root = this.layoutControlGroup1;
+            this.layoutControlMain.Size = new System.Drawing.Size(883, 511);
+            this.layoutControlMain.TabIndex = 4;
+            this.layoutControlMain.Text = "layoutControl1";
+            // 
+            // spinEditCapRate
+            // 
+            this.spinEditCapRate.EditValue = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.spinEditCapRate.Location = new System.Drawing.Point(659, 80);
+            this.spinEditCapRate.Name = "spinEditCapRate";
+            this.spinEditCapRate.Properties.Appearance.Options.UseTextOptions = true;
+            this.spinEditCapRate.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
+            this.spinEditCapRate.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton()});
+            this.spinEditCapRate.Properties.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
+            this.spinEditCapRate.Properties.Mask.EditMask = "p1";
+            this.spinEditCapRate.Properties.Mask.UseMaskAsDisplayFormat = true;
+            this.spinEditCapRate.Size = new System.Drawing.Size(94, 20);
+            this.spinEditCapRate.StyleController = this.layoutControlMain;
+            this.spinEditCapRate.TabIndex = 16;
+            this.spinEditCapRate.ToolTipController = this.toolTipControllerMain;
+            this.spinEditCapRate.EditValueChanged += new System.EventHandler(this.spinEditFCLPM_EditValueChanged);
+            // 
+            // spinEditNFCHPM
+            // 
+            this.spinEditNFCHPM.EditValue = new decimal(new int[] {
+            85,
+            0,
+            0,
+            131072});
+            this.spinEditNFCHPM.Location = new System.Drawing.Point(486, 107);
+            this.spinEditNFCHPM.Name = "spinEditNFCHPM";
+            this.spinEditNFCHPM.Properties.Appearance.Options.UseTextOptions = true;
+            this.spinEditNFCHPM.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
+            this.spinEditNFCHPM.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton()});
+            this.spinEditNFCHPM.Properties.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
+            this.spinEditNFCHPM.Properties.Mask.EditMask = "n";
+            this.spinEditNFCHPM.Properties.Mask.UseMaskAsDisplayFormat = true;
+            this.spinEditNFCHPM.Size = new System.Drawing.Size(93, 20);
+            this.spinEditNFCHPM.StyleController = this.layoutControlMain;
+            this.spinEditNFCHPM.TabIndex = 22;
+            this.spinEditNFCHPM.ToolTipController = this.toolTipControllerMain;
+            this.spinEditNFCHPM.EditValueChanged += new System.EventHandler(this.spinEditFCLPM_EditValueChanged);
+            // 
+            // spinEditNFCLPM
+            // 
+            this.spinEditNFCLPM.EditValue = new decimal(new int[] {
+            11,
+            0,
+            0,
+            65536});
+            this.spinEditNFCLPM.Location = new System.Drawing.Point(485, 80);
+            this.spinEditNFCLPM.Name = "spinEditNFCLPM";
+            this.spinEditNFCLPM.Properties.Appearance.Options.UseTextOptions = true;
+            this.spinEditNFCLPM.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
+            this.spinEditNFCLPM.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton()});
+            this.spinEditNFCLPM.Properties.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
+            this.spinEditNFCLPM.Properties.Mask.EditMask = "n";
+            this.spinEditNFCLPM.Properties.Mask.UseMaskAsDisplayFormat = true;
+            this.spinEditNFCLPM.Size = new System.Drawing.Size(94, 20);
+            this.spinEditNFCLPM.StyleController = this.layoutControlMain;
+            this.spinEditNFCLPM.TabIndex = 14;
+            this.spinEditNFCLPM.ToolTipController = this.toolTipControllerMain;
+            this.spinEditNFCLPM.EditValueChanged += new System.EventHandler(this.spinEditFCLPM_EditValueChanged);
+            // 
+            // spinEditFCHPM
+            // 
+            this.spinEditFCHPM.EditValue = new decimal(new int[] {
+            115,
+            0,
+            0,
+            131072});
+            this.spinEditFCHPM.Location = new System.Drawing.Point(485, 53);
+            this.spinEditFCHPM.Name = "spinEditFCHPM";
+            this.spinEditFCHPM.Properties.Appearance.Options.UseTextOptions = true;
+            this.spinEditFCHPM.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
+            this.spinEditFCHPM.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton()});
+            this.spinEditFCHPM.Properties.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
+            this.spinEditFCHPM.Properties.Mask.EditMask = "n";
+            this.spinEditFCHPM.Properties.Mask.UseMaskAsDisplayFormat = true;
+            this.spinEditFCHPM.Size = new System.Drawing.Size(94, 20);
+            this.spinEditFCHPM.StyleController = this.layoutControlMain;
+            this.spinEditFCHPM.TabIndex = 14;
+            this.spinEditFCHPM.ToolTipController = this.toolTipControllerMain;
+            this.spinEditFCHPM.EditValueChanged += new System.EventHandler(this.spinEditFCLPM_EditValueChanged);
+            // 
+            // spinEditFCLPM
+            // 
+            this.spinEditFCLPM.EditValue = new decimal(new int[] {
+            9,
+            0,
+            0,
+            65536});
+            this.spinEditFCLPM.Location = new System.Drawing.Point(485, 26);
+            this.spinEditFCLPM.Name = "spinEditFCLPM";
+            this.spinEditFCLPM.Properties.Appearance.Options.UseTextOptions = true;
+            this.spinEditFCLPM.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
+            this.spinEditFCLPM.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton()});
+            this.spinEditFCLPM.Properties.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
+            this.spinEditFCLPM.Properties.Mask.EditMask = "n";
+            this.spinEditFCLPM.Properties.Mask.UseMaskAsDisplayFormat = true;
+            this.spinEditFCLPM.Size = new System.Drawing.Size(94, 20);
+            this.spinEditFCLPM.StyleController = this.layoutControlMain;
+            this.spinEditFCLPM.TabIndex = 13;
+            this.spinEditFCLPM.ToolTipController = this.toolTipControllerMain;
+            this.spinEditFCLPM.EditValueChanged += new System.EventHandler(this.spinEditFCLPM_EditValueChanged);
+            // 
+            // radioGroupCompnentSortMethod
+            // 
+            this.radioGroupCompnentSortMethod.Location = new System.Drawing.Point(102, 107);
+            this.radioGroupCompnentSortMethod.MenuManager = this.EntityBarManager;
+            this.radioGroupCompnentSortMethod.Name = "radioGroupCompnentSortMethod";
+            this.radioGroupCompnentSortMethod.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioGroupCompnentSortMethod.Properties.Appearance.Options.UseFont = true;
+            this.radioGroupCompnentSortMethod.Properties.Columns = 1;
+            this.radioGroupCompnentSortMethod.Properties.Items.AddRange(new DevExpress.XtraEditors.Controls.RadioGroupItem[] {
+            new DevExpress.XtraEditors.Controls.RadioGroupItem(null, "By Building Name then by First Cost"),
+            new DevExpress.XtraEditors.Controls.RadioGroupItem(null, "By First Cost")});
+            this.radioGroupCompnentSortMethod.Size = new System.Drawing.Size(197, 47);
+            this.radioGroupCompnentSortMethod.StyleController = this.layoutControlMain;
+            this.radioGroupCompnentSortMethod.TabIndex = 20;
+            this.radioGroupCompnentSortMethod.SelectedIndexChanged += new System.EventHandler(this.radioGroupCompnentSortMethod_SelectedIndexChanged);
+            // 
+            // checkEditSelectAllScenarios
+            // 
+            this.dxErrorProviderMain.SetIconAlignment(this.checkEditSelectAllScenarios, System.Windows.Forms.ErrorIconAlignment.TopLeft);
+            this.checkEditSelectAllScenarios.Location = new System.Drawing.Point(100, 53);
+            this.checkEditSelectAllScenarios.MenuManager = this.EntityBarManager;
+            this.checkEditSelectAllScenarios.Name = "checkEditSelectAllScenarios";
+            this.checkEditSelectAllScenarios.Properties.Caption = "";
+            this.checkEditSelectAllScenarios.Size = new System.Drawing.Size(199, 19);
+            this.checkEditSelectAllScenarios.StyleController = this.layoutControlMain;
+            this.checkEditSelectAllScenarios.TabIndex = 19;
+            this.checkEditSelectAllScenarios.EditValueChanged += new System.EventHandler(this.checkEditSelectAllScenarios_EditValueChanged);
+            this.checkEditSelectAllScenarios.CheckedChanged += new System.EventHandler(this.CheckEdit_CheckedChanged);
+            // 
+            // checkEditShowDeltasVSBase
+            // 
+            this.checkEditShowDeltasVSBase.EditValue = true;
+            this.checkEditShowDeltasVSBase.Location = new System.Drawing.Point(586, 53);
+            this.checkEditShowDeltasVSBase.MenuManager = this.EntityBarManager;
+            this.checkEditShowDeltasVSBase.Name = "checkEditShowDeltasVSBase";
+            this.checkEditShowDeltasVSBase.Properties.Caption = "Show deltas vs. base component or not";
+            this.checkEditShowDeltasVSBase.Size = new System.Drawing.Size(290, 19);
+            this.checkEditShowDeltasVSBase.StyleController = this.layoutControlMain;
+            this.checkEditShowDeltasVSBase.TabIndex = 18;
+            this.checkEditShowDeltasVSBase.CheckedChanged += new System.EventHandler(this.CheckEdit_CheckedChanged);
+            // 
+            // checkEditUseUtilityguaranteemultiplier
+            // 
+            this.checkEditUseUtilityguaranteemultiplier.EditValue = true;
+            this.checkEditUseUtilityguaranteemultiplier.Location = new System.Drawing.Point(586, 26);
+            this.checkEditUseUtilityguaranteemultiplier.MenuManager = this.EntityBarManager;
+            this.checkEditUseUtilityguaranteemultiplier.Name = "checkEditUseUtilityguaranteemultiplier";
+            this.checkEditUseUtilityguaranteemultiplier.Properties.Caption = "Use Utility guarantee multiplier";
+            this.checkEditUseUtilityguaranteemultiplier.Size = new System.Drawing.Size(290, 19);
+            this.checkEditUseUtilityguaranteemultiplier.StyleController = this.layoutControlMain;
+            this.checkEditUseUtilityguaranteemultiplier.TabIndex = 17;
+            this.checkEditUseUtilityguaranteemultiplier.CheckedChanged += new System.EventHandler(this.CheckEdit_CheckedChanged);
+            // 
+            // spinEditDiscountRate
+            // 
+            this.spinEditDiscountRate.EditValue = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.spinEditDiscountRate.Location = new System.Drawing.Point(519, 134);
+            this.spinEditDiscountRate.Name = "spinEditDiscountRate";
+            this.spinEditDiscountRate.Properties.Appearance.Options.UseTextOptions = true;
+            this.spinEditDiscountRate.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
+            this.spinEditDiscountRate.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton()});
+            this.spinEditDiscountRate.Properties.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
+            this.spinEditDiscountRate.Properties.Mask.EditMask = "p1";
+            this.spinEditDiscountRate.Properties.Mask.UseMaskAsDisplayFormat = true;
+            this.spinEditDiscountRate.Properties.MinValue = new decimal(new int[] {
+            99,
+            0,
+            0,
+            -2147352576});
+            this.spinEditDiscountRate.Size = new System.Drawing.Size(60, 20);
+            this.spinEditDiscountRate.StyleController = this.layoutControlMain;
+            this.spinEditDiscountRate.TabIndex = 16;
+            this.spinEditDiscountRate.ToolTipController = this.toolTipControllerMain;
+            // 
+            // spinEditInflationRate
+            // 
+            this.spinEditInflationRate.EditValue = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.spinEditInflationRate.Location = new System.Drawing.Point(379, 134);
+            this.spinEditInflationRate.Name = "spinEditInflationRate";
+            this.spinEditInflationRate.Properties.Appearance.Options.UseTextOptions = true;
+            this.spinEditInflationRate.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
+            this.spinEditInflationRate.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton()});
+            this.spinEditInflationRate.Properties.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
+            this.spinEditInflationRate.Properties.Mask.EditMask = "p1";
+            this.spinEditInflationRate.Properties.Mask.UseMaskAsDisplayFormat = true;
+            this.spinEditInflationRate.Properties.MaxValue = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            65536});
+            this.spinEditInflationRate.Properties.MinValue = new decimal(new int[] {
+            99,
+            0,
+            0,
+            -2147352576});
+            this.spinEditInflationRate.Size = new System.Drawing.Size(60, 20);
+            this.spinEditInflationRate.StyleController = this.layoutControlMain;
+            this.spinEditInflationRate.TabIndex = 15;
+            this.spinEditInflationRate.ToolTipController = this.toolTipControllerMain;
+            // 
+            // spinEditNPV
+            // 
+            this.spinEditNPV.EditValue = new decimal(new int[] {
+            30,
+            0,
+            0,
+            0});
+            this.spinEditNPV.Location = new System.Drawing.Point(659, 134);
+            this.spinEditNPV.Name = "spinEditNPV";
+            this.spinEditNPV.Properties.Appearance.Options.UseTextOptions = true;
+            this.spinEditNPV.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
+            this.spinEditNPV.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton()});
+            this.spinEditNPV.Properties.Mask.EditMask = "f0";
+            this.spinEditNPV.Properties.Mask.UseMaskAsDisplayFormat = true;
+            this.spinEditNPV.Size = new System.Drawing.Size(94, 20);
+            this.spinEditNPV.StyleController = this.layoutControlMain;
+            this.spinEditNPV.TabIndex = 14;
+            this.spinEditNPV.ToolTipController = this.toolTipControllerMain;
+            // 
+            // spinEditScalingFactor
+            // 
+            this.spinEditScalingFactor.EditValue = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.spinEditScalingFactor.Location = new System.Drawing.Point(659, 107);
+            this.spinEditScalingFactor.Name = "spinEditScalingFactor";
+            this.spinEditScalingFactor.Properties.Appearance.Options.UseTextOptions = true;
+            this.spinEditScalingFactor.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
+            this.spinEditScalingFactor.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton()});
+            this.spinEditScalingFactor.Properties.IsFloatValue = false;
+            this.spinEditScalingFactor.Properties.Mask.EditMask = "n0";
+            this.spinEditScalingFactor.Properties.Mask.UseMaskAsDisplayFormat = true;
+            this.spinEditScalingFactor.Properties.MaxValue = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.spinEditScalingFactor.Properties.MinValue = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.spinEditScalingFactor.Size = new System.Drawing.Size(94, 20);
+            this.spinEditScalingFactor.StyleController = this.layoutControlMain;
+            this.spinEditScalingFactor.TabIndex = 12;
+            this.spinEditScalingFactor.ToolTipController = this.toolTipControllerMain;
+            // 
+            // simpleButtonGenerate
+            // 
+            this.simpleButtonGenerate.Image = global::TCO.DesktopClientDevexpress.Properties.Resources.Refresh;
+            this.simpleButtonGenerate.ImageLocation = DevExpress.XtraEditors.ImageLocation.TopCenter;
+            this.simpleButtonGenerate.Location = new System.Drawing.Point(760, 80);
+            this.simpleButtonGenerate.MinimumSize = new System.Drawing.Size(0, 50);
+            this.simpleButtonGenerate.Name = "simpleButtonGenerate";
+            this.simpleButtonGenerate.Size = new System.Drawing.Size(116, 74);
+            this.simpleButtonGenerate.StyleController = this.layoutControlMain;
+            this.simpleButtonGenerate.TabIndex = 11;
+            this.simpleButtonGenerate.Text = "Generate Report";
+            this.simpleButtonGenerate.ToolTipController = this.toolTipControllerMain;
+            this.simpleButtonGenerate.Click += new System.EventHandler(this.simpleButtonGenerate_Click);
+            // 
+            // progressBarControl1
+            // 
+            this.progressBarControl1.Location = new System.Drawing.Point(2, 482);
+            this.progressBarControl1.Name = "progressBarControl1";
+            this.progressBarControl1.Properties.ShowTitle = true;
+            this.progressBarControl1.Size = new System.Drawing.Size(880, 28);
+            this.progressBarControl1.StyleController = this.layoutControlMain;
+            this.progressBarControl1.TabIndex = 13;
+            this.progressBarControl1.ToolTipController = this.toolTipControllerMain;
+            // 
+            // gridLookUpEditScenario1
+            // 
+            this.gridLookUpEditScenario1.Location = new System.Drawing.Point(102, 80);
+            this.gridLookUpEditScenario1.Name = "gridLookUpEditScenario1";
+            this.gridLookUpEditScenario1.Properties.AutoComplete = false;
+            this.gridLookUpEditScenario1.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo),
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Delete, "Clear", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), "Clear Selection")});
+            this.gridLookUpEditScenario1.Properties.DisplayMember = "Name";
+            this.gridLookUpEditScenario1.Properties.NullText = "";
+            this.gridLookUpEditScenario1.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.Standard;
+            this.gridLookUpEditScenario1.Properties.ValueMember = "Id";
+            this.gridLookUpEditScenario1.Properties.View = this.gridViewScenario1;
+            this.gridLookUpEditScenario1.Properties.ButtonClick += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.GridLookUp_ButtonClick);
+            this.gridLookUpEditScenario1.Size = new System.Drawing.Size(197, 20);
+            this.gridLookUpEditScenario1.StyleController = this.layoutControlMain;
+            this.gridLookUpEditScenario1.TabIndex = 6;
+            this.gridLookUpEditScenario1.ToolTipController = this.toolTipControllerMain;
+            this.gridLookUpEditScenario1.EditValueChanged += new System.EventHandler(this.gridLookUpEditScenario1_EditValueChanged);
+            this.gridLookUpEditScenario1.Closed += new DevExpress.XtraEditors.Controls.ClosedEventHandler(this.gridLookUpEdit_Closed);
+            this.gridLookUpEditScenario1.QueryPopUp += new System.ComponentModel.CancelEventHandler(this.DropDown_QueryPopUp);
+            // 
+            // gridViewScenario1
+            // 
+            this.gridViewScenario1.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+            this.gridColumnScenario1});
+            this.gridViewScenario1.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
+            this.gridViewScenario1.Name = "gridViewScenario1";
+            this.gridViewScenario1.OptionsSelection.EnableAppearanceFocusedCell = false;
+            this.gridViewScenario1.OptionsView.ShowAutoFilterRow = true;
+            this.gridViewScenario1.OptionsView.ShowGroupPanel = false;
+            // 
+            // gridColumnScenario1
+            // 
+            this.gridColumnScenario1.Caption = "Scenario";
+            this.gridColumnScenario1.FieldName = "Name";
+            this.gridColumnScenario1.Name = "gridColumnScenario1";
+            this.gridColumnScenario1.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
+            this.gridColumnScenario1.Visible = true;
+            this.gridColumnScenario1.VisibleIndex = 0;
+            // 
+            // gridLookUpEditProject
+            // 
+            this.gridLookUpEditProject.Location = new System.Drawing.Point(102, 26);
+            this.gridLookUpEditProject.Name = "gridLookUpEditProject";
+            this.gridLookUpEditProject.Properties.AutoComplete = false;
+            this.gridLookUpEditProject.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.gridLookUpEditProject.Properties.DisplayMember = "Name";
+            this.gridLookUpEditProject.Properties.NullText = "";
+            this.gridLookUpEditProject.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.Standard;
+            this.gridLookUpEditProject.Properties.ValueMember = "Id";
+            this.gridLookUpEditProject.Properties.View = this.gridLookUpEditProjectView;
+            this.gridLookUpEditProject.Size = new System.Drawing.Size(197, 20);
+            this.gridLookUpEditProject.StyleController = this.layoutControlMain;
+            this.gridLookUpEditProject.TabIndex = 5;
+            this.gridLookUpEditProject.ToolTipController = this.toolTipControllerMain;
+            this.gridLookUpEditProject.EditValueChanged += new System.EventHandler(this.gridLookUpEditProject_EditValueChanged);
+            this.gridLookUpEditProject.QueryPopUp += new System.ComponentModel.CancelEventHandler(this.DropDown_QueryPopUp);
+            // 
+            // gridLookUpEditProjectView
+            // 
+            this.gridLookUpEditProjectView.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+            this.gridColumnProjectName});
+            this.gridLookUpEditProjectView.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
+            this.gridLookUpEditProjectView.Name = "gridLookUpEditProjectView";
+            this.gridLookUpEditProjectView.OptionsFilter.ShowAllTableValuesInFilterPopup = true;
+            this.gridLookUpEditProjectView.OptionsSelection.EnableAppearanceFocusedCell = false;
+            this.gridLookUpEditProjectView.OptionsView.ShowAutoFilterRow = true;
+            this.gridLookUpEditProjectView.OptionsView.ShowGroupPanel = false;
+            // 
+            // gridColumnProjectName
+            // 
+            this.gridColumnProjectName.Caption = "Project";
+            this.gridColumnProjectName.FieldName = "Name";
+            this.gridColumnProjectName.Name = "gridColumnProjectName";
+            this.gridColumnProjectName.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
+            this.gridColumnProjectName.Visible = true;
+            this.gridColumnProjectName.VisibleIndex = 0;
+            // 
+            // printControlMain
+            // 
+            this.printControlMain.BackColor = System.Drawing.Color.Empty;
+            this.printControlMain.ForeColor = System.Drawing.Color.Empty;
+            this.printControlMain.IsMetric = false;
+            this.printControlMain.Location = new System.Drawing.Point(7, 166);
+            this.printControlMain.Name = "printControlMain";
+            this.printControlMain.Size = new System.Drawing.Size(870, 310);
+            this.printControlMain.TabIndex = 4;
+            this.printControlMain.TooltipFont = new System.Drawing.Font("Tahoma", 8F);
+            this.printControlMain.Load += new System.EventHandler(this.printControlMain_Load);
+            // 
+            // layoutControlGroup1
+            // 
+            this.layoutControlGroup1.CustomizationFormText = "Root";
+            this.layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
+            this.layoutControlItemPrintControl,
+            this.layoutControlGroupSelectionCriteria,
+            this.layoutControlItem1});
+            this.layoutControlGroup1.Location = new System.Drawing.Point(0, 0);
+            this.layoutControlGroup1.Name = "Root";
+            this.layoutControlGroup1.Size = new System.Drawing.Size(883, 511);
+            this.layoutControlGroup1.Spacing = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
+            this.layoutControlGroup1.Text = "Root";
+            this.layoutControlGroup1.TextVisible = false;
+            // 
+            // layoutControlItemPrintControl
+            // 
+            this.layoutControlItemPrintControl.Control = this.printControlMain;
+            this.layoutControlItemPrintControl.CustomizationFormText = "layoutControlItemPrintControl";
+            this.layoutControlItemPrintControl.Location = new System.Drawing.Point(0, 159);
+            this.layoutControlItemPrintControl.Name = "layoutControlItemPrintControl";
+            this.layoutControlItemPrintControl.Size = new System.Drawing.Size(881, 321);
+            this.layoutControlItemPrintControl.Text = "layoutControlItemPrintControl";
+            this.layoutControlItemPrintControl.TextLocation = DevExpress.Utils.Locations.Left;
+            this.layoutControlItemPrintControl.TextSize = new System.Drawing.Size(0, 0);
+            this.layoutControlItemPrintControl.TextToControlDistance = 0;
+            this.layoutControlItemPrintControl.TextVisible = false;
+            // 
+            // layoutControlGroupSelectionCriteria
+            // 
+            this.layoutControlGroupSelectionCriteria.CustomizationFormText = "Selection Criteria";
+            this.layoutControlGroupSelectionCriteria.ExpandButtonLocation = DevExpress.Utils.GroupElementLocation.AfterText;
+            this.layoutControlGroupSelectionCriteria.ExpandButtonVisible = true;
+            this.layoutControlGroupSelectionCriteria.ExpandOnDoubleClick = true;
+            this.layoutControlGroupSelectionCriteria.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
+            this.layoutControlItemProject,
+            this.layoutControlItem9,
+            this.layoutControlItem16,
+            this.layoutControlItem12,
+            this.layoutControlItemNPV,
+            this.layoutControlItem14,
+            this.layoutControlItem15,
+            this.layoutControlItem10,
+            this.layoutControlItemScenario1,
+            this.layoutControlItem17,
+            this.layoutControlItem18,
+            this.layoutControlItem11,
+            this.layoutControlItemDiscountRate,
+            this.layoutControlItemInflationRate,
+            this.layoutControlItemScalingFactor,
+            this.layoutControlItemGenerate});
+            this.layoutControlGroupSelectionCriteria.Location = new System.Drawing.Point(0, 0);
+            this.layoutControlGroupSelectionCriteria.Name = "layoutControlGroupSelectionCriteria";
+            this.layoutControlGroupSelectionCriteria.Size = new System.Drawing.Size(881, 159);
+            this.layoutControlGroupSelectionCriteria.Text = "Selection Criteria";
+            // 
+            // layoutControlItemProject
+            // 
+            this.layoutControlItemProject.Control = this.gridLookUpEditProject;
+            this.layoutControlItemProject.CustomizationFormText = "Project";
+            this.layoutControlItemProject.Location = new System.Drawing.Point(0, 0);
+            this.layoutControlItemProject.Name = "layoutControlItemProject";
+            this.layoutControlItemProject.Padding = new DevExpress.XtraLayout.Utils.Padding(3, 3, 3, 3);
+            this.layoutControlItemProject.Size = new System.Drawing.Size(298, 27);
+            this.layoutControlItemProject.Text = "Project";
+            this.layoutControlItemProject.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize;
+            this.layoutControlItemProject.TextLocation = DevExpress.Utils.Locations.Left;
+            this.layoutControlItemProject.TextSize = new System.Drawing.Size(34, 13);
+            this.layoutControlItemProject.TextToControlDistance = 60;
+            // 
+            // layoutControlItem9
+            // 
+            this.layoutControlItem9.Control = this.checkEditUseUtilityguaranteemultiplier;
+            this.layoutControlItem9.CustomizationFormText = "layoutControlItem9";
+            this.layoutControlItem9.Location = new System.Drawing.Point(578, 0);
+            this.layoutControlItem9.Name = "layoutControlItem9";
+            this.layoutControlItem9.Padding = new DevExpress.XtraLayout.Utils.Padding(3, 3, 3, 3);
+            this.layoutControlItem9.Size = new System.Drawing.Size(297, 27);
+            this.layoutControlItem9.Text = "layoutControlItem9";
+            this.layoutControlItem9.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize;
+            this.layoutControlItem9.TextLocation = DevExpress.Utils.Locations.Left;
+            this.layoutControlItem9.TextSize = new System.Drawing.Size(0, 0);
+            this.layoutControlItem9.TextToControlDistance = 0;
+            this.layoutControlItem9.TextVisible = false;
+            // 
+            // layoutControlItem16
+            // 
+            this.layoutControlItem16.Control = this.spinEditNFCLPM;
+            this.layoutControlItem16.CustomizationFormText = "Non first cost low payback multiplier";
+            this.layoutControlItem16.Location = new System.Drawing.Point(298, 54);
+            this.layoutControlItem16.Name = "layoutControlItem16";
+            this.layoutControlItem16.Padding = new DevExpress.XtraLayout.Utils.Padding(3, 3, 3, 3);
+            this.layoutControlItem16.Size = new System.Drawing.Size(280, 27);
+            this.layoutControlItem16.Text = "Non first cost low payback multiplier";
+            this.layoutControlItem16.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize;
+            this.layoutControlItem16.TextLocation = DevExpress.Utils.Locations.Left;
+            this.layoutControlItem16.TextSize = new System.Drawing.Size(171, 13);
+            this.layoutControlItem16.TextToControlDistance = 8;
+            // 
+            // layoutControlItem12
+            // 
+            this.layoutControlItem12.Control = this.radioGroupCompnentSortMethod;
+            this.layoutControlItem12.CustomizationFormText = "Sorting Method";
+            this.layoutControlItem12.Location = new System.Drawing.Point(0, 81);
+            this.layoutControlItem12.Name = "layoutControlItem12";
+            this.layoutControlItem12.Padding = new DevExpress.XtraLayout.Utils.Padding(3, 3, 3, 3);
+            this.layoutControlItem12.Size = new System.Drawing.Size(298, 54);
+            this.layoutControlItem12.Text = "Sorting Method";
+            this.layoutControlItem12.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize;
+            this.layoutControlItem12.TextLocation = DevExpress.Utils.Locations.Left;
+            this.layoutControlItem12.TextSize = new System.Drawing.Size(73, 13);
+            this.layoutControlItem12.TextToControlDistance = 21;
+            // 
+            // layoutControlItemNPV
+            // 
+            this.layoutControlItemNPV.Control = this.spinEditNPV;
+            this.layoutControlItemNPV.CustomizationFormText = "Length of NPV";
+            this.layoutControlItemNPV.Location = new System.Drawing.Point(578, 108);
+            this.layoutControlItemNPV.Name = "layoutControlItemNPV";
+            this.layoutControlItemNPV.Padding = new DevExpress.XtraLayout.Utils.Padding(3, 3, 3, 3);
+            this.layoutControlItemNPV.Size = new System.Drawing.Size(174, 27);
+            this.layoutControlItemNPV.Text = "Length of NPV";
+            this.layoutControlItemNPV.TextLocation = DevExpress.Utils.Locations.Left;
+            this.layoutControlItemNPV.TextSize = new System.Drawing.Size(68, 13);
+            // 
+            // layoutControlItem14
+            // 
+            this.layoutControlItem14.Control = this.spinEditFCLPM;
+            this.layoutControlItem14.CustomizationFormText = "First cost low payback multiplier";
+            this.layoutControlItem14.Location = new System.Drawing.Point(298, 0);
+            this.layoutControlItem14.Name = "layoutControlItem14";
+            this.layoutControlItem14.Padding = new DevExpress.XtraLayout.Utils.Padding(3, 3, 3, 3);
+            this.layoutControlItem14.Size = new System.Drawing.Size(280, 27);
+            this.layoutControlItem14.Text = "First cost low payback multiplier";
+            this.layoutControlItem14.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize;
+            this.layoutControlItem14.TextLocation = DevExpress.Utils.Locations.Left;
+            this.layoutControlItem14.TextSize = new System.Drawing.Size(151, 13);
+            this.layoutControlItem14.TextToControlDistance = 28;
+            // 
+            // layoutControlItem15
+            // 
+            this.layoutControlItem15.Control = this.spinEditFCHPM;
+            this.layoutControlItem15.CustomizationFormText = "First cost high payback multiplier";
+            this.layoutControlItem15.Location = new System.Drawing.Point(298, 27);
+            this.layoutControlItem15.Name = "layoutControlItem15";
+            this.layoutControlItem15.Padding = new DevExpress.XtraLayout.Utils.Padding(3, 3, 3, 3);
+            this.layoutControlItem15.Size = new System.Drawing.Size(280, 27);
+            this.layoutControlItem15.Text = "First cost high payback multiplier";
+            this.layoutControlItem15.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize;
+            this.layoutControlItem15.TextLocation = DevExpress.Utils.Locations.Left;
+            this.layoutControlItem15.TextSize = new System.Drawing.Size(155, 13);
+            this.layoutControlItem15.TextToControlDistance = 24;
+            // 
+            // layoutControlItem10
+            // 
+            this.layoutControlItem10.Control = this.checkEditShowDeltasVSBase;
+            this.layoutControlItem10.CustomizationFormText = "layoutControlItem10";
+            this.layoutControlItem10.Location = new System.Drawing.Point(578, 27);
+            this.layoutControlItem10.Name = "layoutControlItem10";
+            this.layoutControlItem10.Padding = new DevExpress.XtraLayout.Utils.Padding(3, 3, 3, 3);
+            this.layoutControlItem10.Size = new System.Drawing.Size(297, 27);
+            this.layoutControlItem10.Text = "layoutControlItem10";
+            this.layoutControlItem10.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize;
+            this.layoutControlItem10.TextLocation = DevExpress.Utils.Locations.Left;
+            this.layoutControlItem10.TextSize = new System.Drawing.Size(0, 0);
+            this.layoutControlItem10.TextToControlDistance = 0;
+            this.layoutControlItem10.TextVisible = false;
+            // 
+            // layoutControlItemScenario1
+            // 
+            this.layoutControlItemScenario1.Control = this.gridLookUpEditScenario1;
+            this.layoutControlItemScenario1.CustomizationFormText = "Scenario";
+            this.layoutControlItemScenario1.Location = new System.Drawing.Point(0, 54);
+            this.layoutControlItemScenario1.Name = "layoutControlItemScenario1";
+            this.layoutControlItemScenario1.Padding = new DevExpress.XtraLayout.Utils.Padding(3, 3, 3, 3);
+            this.layoutControlItemScenario1.Size = new System.Drawing.Size(298, 27);
+            this.layoutControlItemScenario1.Text = "Scenario";
+            this.layoutControlItemScenario1.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize;
+            this.layoutControlItemScenario1.TextLocation = DevExpress.Utils.Locations.Left;
+            this.layoutControlItemScenario1.TextSize = new System.Drawing.Size(41, 13);
+            this.layoutControlItemScenario1.TextToControlDistance = 53;
+            // 
+            // layoutControlItem17
+            // 
+            this.layoutControlItem17.Control = this.spinEditNFCHPM;
+            this.layoutControlItem17.CustomizationFormText = "Non first cost high payback multiplier";
+            this.layoutControlItem17.Location = new System.Drawing.Point(298, 81);
+            this.layoutControlItem17.Name = "layoutControlItem17";
+            this.layoutControlItem17.Padding = new DevExpress.XtraLayout.Utils.Padding(3, 3, 3, 3);
+            this.layoutControlItem17.Size = new System.Drawing.Size(280, 27);
+            this.layoutControlItem17.Text = "Non first cost high payback multiplier";
+            this.layoutControlItem17.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize;
+            this.layoutControlItem17.TextLocation = DevExpress.Utils.Locations.Left;
+            this.layoutControlItem17.TextSize = new System.Drawing.Size(175, 13);
+            // 
+            // layoutControlItem18
+            // 
+            this.layoutControlItem18.Control = this.spinEditCapRate;
+            this.layoutControlItem18.CustomizationFormText = "Cap Rate";
+            this.layoutControlItem18.Location = new System.Drawing.Point(578, 54);
+            this.layoutControlItem18.Name = "layoutControlItem18";
+            this.layoutControlItem18.Padding = new DevExpress.XtraLayout.Utils.Padding(3, 3, 3, 3);
+            this.layoutControlItem18.Size = new System.Drawing.Size(174, 27);
+            this.layoutControlItem18.Text = "Cape Rate";
+            this.layoutControlItem18.TextLocation = DevExpress.Utils.Locations.Left;
+            this.layoutControlItem18.TextSize = new System.Drawing.Size(68, 13);
+            // 
+            // layoutControlItem11
+            // 
+            this.layoutControlItem11.Control = this.checkEditSelectAllScenarios;
+            this.layoutControlItem11.CustomizationFormText = "layoutControlItem11";
+            this.layoutControlItem11.Location = new System.Drawing.Point(0, 27);
+            this.layoutControlItem11.Name = "layoutControlItem11";
+            this.layoutControlItem11.Padding = new DevExpress.XtraLayout.Utils.Padding(3, 3, 3, 3);
+            this.layoutControlItem11.Size = new System.Drawing.Size(298, 27);
+            this.layoutControlItem11.Text = "Select All Scenarios";
+            this.layoutControlItem11.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize;
+            this.layoutControlItem11.TextLocation = DevExpress.Utils.Locations.Left;
+            this.layoutControlItem11.TextSize = new System.Drawing.Size(92, 13);
+            this.layoutControlItem11.TextToControlDistance = 0;
+            // 
+            // layoutControlItemDiscountRate
+            // 
+            this.layoutControlItemDiscountRate.Control = this.spinEditDiscountRate;
+            this.layoutControlItemDiscountRate.CustomizationFormText = "Discount Rate";
+            this.layoutControlItemDiscountRate.FillControlToClientArea = false;
+            this.layoutControlItemDiscountRate.Location = new System.Drawing.Point(438, 108);
+            this.layoutControlItemDiscountRate.Name = "layoutControlItemDiscountRate";
+            this.layoutControlItemDiscountRate.Padding = new DevExpress.XtraLayout.Utils.Padding(3, 3, 3, 3);
+            this.layoutControlItemDiscountRate.Size = new System.Drawing.Size(140, 27);
+            this.layoutControlItemDiscountRate.Text = "Discount Rate";
+            this.layoutControlItemDiscountRate.TextLocation = DevExpress.Utils.Locations.Left;
+            this.layoutControlItemDiscountRate.TextSize = new System.Drawing.Size(68, 13);
+            // 
+            // layoutControlItemInflationRate
+            // 
+            this.layoutControlItemInflationRate.Control = this.spinEditInflationRate;
+            this.layoutControlItemInflationRate.CustomizationFormText = "Inflation Rate";
+            this.layoutControlItemInflationRate.Location = new System.Drawing.Point(298, 108);
+            this.layoutControlItemInflationRate.Name = "layoutControlItemInflationRate";
+            this.layoutControlItemInflationRate.Padding = new DevExpress.XtraLayout.Utils.Padding(3, 3, 3, 3);
+            this.layoutControlItemInflationRate.Size = new System.Drawing.Size(140, 27);
+            this.layoutControlItemInflationRate.Text = "Inflation Rate";
+            this.layoutControlItemInflationRate.TextLocation = DevExpress.Utils.Locations.Left;
+            this.layoutControlItemInflationRate.TextSize = new System.Drawing.Size(68, 13);
+            // 
+            // layoutControlItemScalingFactor
+            // 
+            this.layoutControlItemScalingFactor.Control = this.spinEditScalingFactor;
+            this.layoutControlItemScalingFactor.CustomizationFormText = "Scaling Factor";
+            this.layoutControlItemScalingFactor.Location = new System.Drawing.Point(578, 81);
+            this.layoutControlItemScalingFactor.Name = "layoutControlItemScalingFactor";
+            this.layoutControlItemScalingFactor.Padding = new DevExpress.XtraLayout.Utils.Padding(3, 3, 3, 3);
+            this.layoutControlItemScalingFactor.Size = new System.Drawing.Size(174, 27);
+            this.layoutControlItemScalingFactor.Text = "Scaling Factor";
+            this.layoutControlItemScalingFactor.TextLocation = DevExpress.Utils.Locations.Left;
+            this.layoutControlItemScalingFactor.TextSize = new System.Drawing.Size(68, 13);
+            // 
+            // layoutControlItemGenerate
+            // 
+            this.layoutControlItemGenerate.Control = this.simpleButtonGenerate;
+            this.layoutControlItemGenerate.CustomizationFormText = "Generate Report";
+            this.layoutControlItemGenerate.Location = new System.Drawing.Point(752, 54);
+            this.layoutControlItemGenerate.Name = "layoutControlItemGenerate";
+            this.layoutControlItemGenerate.Padding = new DevExpress.XtraLayout.Utils.Padding(3, 3, 3, 3);
+            this.layoutControlItemGenerate.Size = new System.Drawing.Size(123, 81);
+            this.layoutControlItemGenerate.Text = "Generate Report";
+            this.layoutControlItemGenerate.TextLocation = DevExpress.Utils.Locations.Left;
+            this.layoutControlItemGenerate.TextSize = new System.Drawing.Size(0, 0);
+            this.layoutControlItemGenerate.TextToControlDistance = 0;
+            this.layoutControlItemGenerate.TextVisible = false;
+            this.layoutControlItemGenerate.TrimClientAreaToControl = false;
+            // 
+            // layoutControlItem1
+            // 
+            this.layoutControlItem1.Control = this.progressBarControl1;
+            this.layoutControlItem1.CustomizationFormText = "layoutControlItem1";
+            this.layoutControlItem1.Location = new System.Drawing.Point(0, 480);
+            this.layoutControlItem1.MaxSize = new System.Drawing.Size(0, 29);
+            this.layoutControlItem1.MinSize = new System.Drawing.Size(57, 29);
+            this.layoutControlItem1.Name = "layoutControlItem1";
+            this.layoutControlItem1.Padding = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
+            this.layoutControlItem1.Size = new System.Drawing.Size(881, 29);
+            this.layoutControlItem1.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+            this.layoutControlItem1.Text = "layoutControlItem1";
+            this.layoutControlItem1.TextLocation = DevExpress.Utils.Locations.Left;
+            this.layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
+            this.layoutControlItem1.TextToControlDistance = 0;
+            this.layoutControlItem1.TextVisible = false;
+            // 
+            // printBarManagerMain
+            // 
+            this.printBarManagerMain.AllowCustomization = false;
+            this.printBarManagerMain.Bars.AddRange(new DevExpress.XtraBars.Bar[] {
+            this.previewBar1,
+            this.previewBar2,
+            this.previewBar3});
+            this.printBarManagerMain.DockControls.Add(this.barDockControl1);
+            this.printBarManagerMain.DockControls.Add(this.barDockControl2);
+            this.printBarManagerMain.DockControls.Add(this.barDockControl3);
+            this.printBarManagerMain.DockControls.Add(this.barDockControl4);
+            this.printBarManagerMain.Form = this;
+            this.printBarManagerMain.ImageStream = ((DevExpress.Utils.ImageCollectionStreamer)(resources.GetObject("printBarManagerMain.ImageStream")));
+            this.printBarManagerMain.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
+            this.printPreviewStaticItem1,
+            this.printPreviewStaticItem2,
+            this.printPreviewStaticItem3,
+            this.printPreviewBarItem1,
+            this.printPreviewBarItem2,
+            this.printPreviewBarItem3,
+            this.printPreviewBarItem4,
+            this.printPreviewBarItem6,
+            this.printPreviewBarItem7,
+            this.printPreviewBarItem8,
+            this.printPreviewBarItem9,
+            this.printPreviewBarItem10,
+            this.printPreviewBarItem11,
+            this.printPreviewBarItem12,
+            this.printPreviewBarItem13,
+            this.printPreviewBarItem14,
+            this.zoomBarEditItem1,
+            this.printPreviewBarItem15,
+            this.printPreviewBarItem16,
+            this.printPreviewBarItem17,
+            this.printPreviewBarItem18,
+            this.printPreviewBarItem19,
+            this.printPreviewBarItem20,
+            this.printPreviewBarItem21,
+            this.printPreviewBarItem22,
+            this.printPreviewBarItem23,
+            this.printPreviewBarItem24,
+            this.printPreviewSubItem1,
+            this.printPreviewSubItem2,
+            this.printPreviewSubItem3,
+            this.printPreviewSubItem4,
+            this.printPreviewBarItem26,
+            this.printPreviewBarItem27,
+            this.barToolbarsListItem1,
+            this.printPreviewBarCheckItem1,
+            this.printPreviewBarCheckItem2,
+            this.printPreviewBarCheckItem3,
+            this.printPreviewBarCheckItem4,
+            this.printPreviewBarCheckItem5,
+            this.printPreviewBarCheckItem6,
+            this.printPreviewBarCheckItem7,
+            this.printPreviewBarCheckItem8,
+            this.printPreviewBarCheckItem9,
+            this.printPreviewBarCheckItem10,
+            this.printPreviewBarCheckItem11,
+            this.printPreviewBarCheckItem12,
+            this.printPreviewBarCheckItem13,
+            this.printPreviewBarCheckItem14,
+            this.printPreviewBarCheckItem15,
+            this.barButtonItemFullScreen});
+            this.printBarManagerMain.MainMenu = this.previewBar3;
+            this.printBarManagerMain.MaxItemId = 52;
+            this.printBarManagerMain.PreviewBar = this.previewBar1;
+            this.printBarManagerMain.PrintControl = this.printControlMain;
+            this.printBarManagerMain.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
+            this.printPreviewRepositoryItemComboBox1});
+            this.printBarManagerMain.StatusBar = this.previewBar2;
+            this.printBarManagerMain.ToolTipController = this.toolTipControllerMain;
+            // 
+            // previewBar1
+            // 
+            this.previewBar1.BarName = "Toolbar";
+            this.previewBar1.DockCol = 0;
+            this.previewBar1.DockRow = 1;
+            this.previewBar1.DockStyle = DevExpress.XtraBars.BarDockStyle.Top;
+            this.previewBar1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
+            new DevExpress.XtraBars.LinkPersistInfo(this.printPreviewBarItem1),
+            new DevExpress.XtraBars.LinkPersistInfo(this.printPreviewBarItem2),
+            new DevExpress.XtraBars.LinkPersistInfo(this.printPreviewBarItem3),
+            new DevExpress.XtraBars.LinkPersistInfo(this.printPreviewBarItem4, true),
+            new DevExpress.XtraBars.LinkPersistInfo(this.printPreviewBarItem6),
+            new DevExpress.XtraBars.LinkPersistInfo(this.printPreviewBarItem7, true),
+            new DevExpress.XtraBars.LinkPersistInfo(this.printPreviewBarItem8),
+            new DevExpress.XtraBars.LinkPersistInfo(this.printPreviewBarItem9),
+            new DevExpress.XtraBars.LinkPersistInfo(this.printPreviewBarItem10),
+            new DevExpress.XtraBars.LinkPersistInfo(this.printPreviewBarItem11),
+            new DevExpress.XtraBars.LinkPersistInfo(this.printPreviewBarItem12, true),
+            new DevExpress.XtraBars.LinkPersistInfo(this.printPreviewBarItem13),
+            new DevExpress.XtraBars.LinkPersistInfo(this.printPreviewBarItem14, true),
+            new DevExpress.XtraBars.LinkPersistInfo(this.zoomBarEditItem1),
+            new DevExpress.XtraBars.LinkPersistInfo(this.printPreviewBarItem15),
+            new DevExpress.XtraBars.LinkPersistInfo(this.printPreviewBarItem16, true),
+            new DevExpress.XtraBars.LinkPersistInfo(this.printPreviewBarItem17),
+            new DevExpress.XtraBars.LinkPersistInfo(this.printPreviewBarItem18),
+            new DevExpress.XtraBars.LinkPersistInfo(this.printPreviewBarItem19),
+            new DevExpress.XtraBars.LinkPersistInfo(this.printPreviewBarItem20, true),
+            new DevExpress.XtraBars.LinkPersistInfo(this.printPreviewBarItem22),
+            new DevExpress.XtraBars.LinkPersistInfo(this.printPreviewBarItem23, true),
+            new DevExpress.XtraBars.LinkPersistInfo(this.printPreviewBarItem24),
+            new DevExpress.XtraBars.LinkPersistInfo(this.barButtonItemFullScreen)});
+            this.previewBar1.Text = "Toolbar";
+            // 
+            // printPreviewBarItem1
+            // 
+            this.printPreviewBarItem1.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.Check;
+            this.printPreviewBarItem1.Caption = "Document Map";
+            this.printPreviewBarItem1.Command = DevExpress.XtraPrinting.PrintingSystemCommand.DocumentMap;
+            this.printPreviewBarItem1.Enabled = false;
+            this.printPreviewBarItem1.Hint = "Document Map";
+            this.printPreviewBarItem1.Id = 3;
+            this.printPreviewBarItem1.ImageIndex = 19;
+            this.printPreviewBarItem1.Name = "printPreviewBarItem1";
+            this.printPreviewBarItem1.Visibility = DevExpress.XtraBars.BarItemVisibility.Never;
+            // 
+            // printPreviewBarItem2
+            // 
+            this.printPreviewBarItem2.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.Check;
+            this.printPreviewBarItem2.Caption = "Parameters";
+            this.printPreviewBarItem2.Command = DevExpress.XtraPrinting.PrintingSystemCommand.Parameters;
+            this.printPreviewBarItem2.Enabled = false;
+            this.printPreviewBarItem2.Hint = "Parameters";
+            this.printPreviewBarItem2.Id = 4;
+            this.printPreviewBarItem2.ImageIndex = 22;
+            this.printPreviewBarItem2.Name = "printPreviewBarItem2";
+            this.printPreviewBarItem2.Visibility = DevExpress.XtraBars.BarItemVisibility.Never;
+            // 
+            // printPreviewBarItem3
+            // 
+            this.printPreviewBarItem3.Caption = "Search";
+            this.printPreviewBarItem3.Command = DevExpress.XtraPrinting.PrintingSystemCommand.Find;
+            this.printPreviewBarItem3.Enabled = false;
+            this.printPreviewBarItem3.Hint = "Search";
+            this.printPreviewBarItem3.Id = 5;
+            this.printPreviewBarItem3.ImageIndex = 20;
+            this.printPreviewBarItem3.Name = "printPreviewBarItem3";
+            // 
+            // printPreviewBarItem4
+            // 
+            this.printPreviewBarItem4.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.Check;
+            this.printPreviewBarItem4.Caption = "Customize";
+            this.printPreviewBarItem4.Command = DevExpress.XtraPrinting.PrintingSystemCommand.Customize;
+            this.printPreviewBarItem4.Enabled = false;
+            this.printPreviewBarItem4.Hint = "Customize";
+            this.printPreviewBarItem4.Id = 6;
+            this.printPreviewBarItem4.ImageIndex = 14;
+            this.printPreviewBarItem4.Name = "printPreviewBarItem4";
+            // 
+            // printPreviewBarItem6
+            // 
+            this.printPreviewBarItem6.Caption = "Save";
+            this.printPreviewBarItem6.Command = DevExpress.XtraPrinting.PrintingSystemCommand.Save;
+            this.printPreviewBarItem6.Enabled = false;
+            this.printPreviewBarItem6.Hint = "Save the document";
+            this.printPreviewBarItem6.Id = 8;
+            this.printPreviewBarItem6.ImageIndex = 24;
+            this.printPreviewBarItem6.Name = "printPreviewBarItem6";
+            // 
+            // printPreviewBarItem7
+            // 
+            this.printPreviewBarItem7.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.Check;
+            this.printPreviewBarItem7.Caption = "&Print...";
+            this.printPreviewBarItem7.Command = DevExpress.XtraPrinting.PrintingSystemCommand.Print;
+            this.printPreviewBarItem7.Enabled = false;
+            this.printPreviewBarItem7.Hint = "Print";
+            this.printPreviewBarItem7.Id = 9;
+            this.printPreviewBarItem7.ImageIndex = 0;
+            this.printPreviewBarItem7.Name = "printPreviewBarItem7";
+            // 
+            // printPreviewBarItem8
+            // 
+            this.printPreviewBarItem8.Caption = "P&rint";
+            this.printPreviewBarItem8.Command = DevExpress.XtraPrinting.PrintingSystemCommand.PrintDirect;
+            this.printPreviewBarItem8.Enabled = false;
+            this.printPreviewBarItem8.Hint = "Quick Print";
+            this.printPreviewBarItem8.Id = 10;
+            this.printPreviewBarItem8.ImageIndex = 1;
+            this.printPreviewBarItem8.Name = "printPreviewBarItem8";
+            // 
+            // printPreviewBarItem9
+            // 
+            this.printPreviewBarItem9.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.Check;
+            this.printPreviewBarItem9.Caption = "Page Set&up...";
+            this.printPreviewBarItem9.Command = DevExpress.XtraPrinting.PrintingSystemCommand.PageSetup;
+            this.printPreviewBarItem9.Enabled = false;
+            this.printPreviewBarItem9.Hint = "Page Setup";
+            this.printPreviewBarItem9.Id = 11;
+            this.printPreviewBarItem9.ImageIndex = 2;
+            this.printPreviewBarItem9.Name = "printPreviewBarItem9";
+            // 
+            // printPreviewBarItem10
+            // 
+            this.printPreviewBarItem10.Caption = "Header And Footer";
+            this.printPreviewBarItem10.Command = DevExpress.XtraPrinting.PrintingSystemCommand.EditPageHF;
+            this.printPreviewBarItem10.Enabled = false;
+            this.printPreviewBarItem10.Hint = "Header And Footer";
+            this.printPreviewBarItem10.Id = 12;
+            this.printPreviewBarItem10.ImageIndex = 15;
+            this.printPreviewBarItem10.Name = "printPreviewBarItem10";
+            // 
+            // printPreviewBarItem11
+            // 
+            this.printPreviewBarItem11.ActAsDropDown = true;
+            this.printPreviewBarItem11.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.DropDown;
+            this.printPreviewBarItem11.Caption = "Scale";
+            this.printPreviewBarItem11.Command = DevExpress.XtraPrinting.PrintingSystemCommand.Scale;
+            this.printPreviewBarItem11.Enabled = false;
+            this.printPreviewBarItem11.Hint = "Scale";
+            this.printPreviewBarItem11.Id = 13;
+            this.printPreviewBarItem11.ImageIndex = 25;
+            this.printPreviewBarItem11.Name = "printPreviewBarItem11";
+            // 
+            // printPreviewBarItem12
+            // 
+            this.printPreviewBarItem12.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.Check;
+            this.printPreviewBarItem12.Caption = "Hand Tool";
+            this.printPreviewBarItem12.Command = DevExpress.XtraPrinting.PrintingSystemCommand.HandTool;
+            this.printPreviewBarItem12.Enabled = false;
+            this.printPreviewBarItem12.Hint = "Hand Tool";
+            this.printPreviewBarItem12.Id = 14;
+            this.printPreviewBarItem12.ImageIndex = 16;
+            this.printPreviewBarItem12.Name = "printPreviewBarItem12";
+            // 
+            // printPreviewBarItem13
+            // 
+            this.printPreviewBarItem13.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.Check;
+            this.printPreviewBarItem13.Caption = "Magnifier";
+            this.printPreviewBarItem13.Command = DevExpress.XtraPrinting.PrintingSystemCommand.Magnifier;
+            this.printPreviewBarItem13.Enabled = false;
+            this.printPreviewBarItem13.Hint = "Magnifier";
+            this.printPreviewBarItem13.Id = 15;
+            this.printPreviewBarItem13.ImageIndex = 3;
+            this.printPreviewBarItem13.Name = "printPreviewBarItem13";
+            // 
+            // printPreviewBarItem14
+            // 
+            this.printPreviewBarItem14.Caption = "Zoom Out";
+            this.printPreviewBarItem14.Command = DevExpress.XtraPrinting.PrintingSystemCommand.ZoomOut;
+            this.printPreviewBarItem14.Enabled = false;
+            this.printPreviewBarItem14.Hint = "Zoom Out";
+            this.printPreviewBarItem14.Id = 16;
+            this.printPreviewBarItem14.ImageIndex = 5;
+            this.printPreviewBarItem14.Name = "printPreviewBarItem14";
+            // 
+            // zoomBarEditItem1
+            // 
+            this.zoomBarEditItem1.Caption = "Zoom";
+            this.zoomBarEditItem1.Edit = this.printPreviewRepositoryItemComboBox1;
+            this.zoomBarEditItem1.EditValue = "100%";
+            this.zoomBarEditItem1.Enabled = false;
+            this.zoomBarEditItem1.Hint = "Zoom";
+            this.zoomBarEditItem1.Id = 17;
+            this.zoomBarEditItem1.Name = "zoomBarEditItem1";
+            this.zoomBarEditItem1.Width = 70;
+            // 
+            // printPreviewRepositoryItemComboBox1
+            // 
+            this.printPreviewRepositoryItemComboBox1.AutoComplete = false;
+            this.printPreviewRepositoryItemComboBox1.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.printPreviewRepositoryItemComboBox1.DropDownRows = 11;
+            this.printPreviewRepositoryItemComboBox1.Name = "printPreviewRepositoryItemComboBox1";
+            // 
+            // printPreviewBarItem15
+            // 
+            this.printPreviewBarItem15.Caption = "Zoom In";
+            this.printPreviewBarItem15.Command = DevExpress.XtraPrinting.PrintingSystemCommand.ZoomIn;
+            this.printPreviewBarItem15.Enabled = false;
+            this.printPreviewBarItem15.Hint = "Zoom In";
+            this.printPreviewBarItem15.Id = 18;
+            this.printPreviewBarItem15.ImageIndex = 4;
+            this.printPreviewBarItem15.Name = "printPreviewBarItem15";
+            // 
+            // printPreviewBarItem16
+            // 
+            this.printPreviewBarItem16.Caption = "First Page";
+            this.printPreviewBarItem16.Command = DevExpress.XtraPrinting.PrintingSystemCommand.ShowFirstPage;
+            this.printPreviewBarItem16.Enabled = false;
+            this.printPreviewBarItem16.Hint = "First Page";
+            this.printPreviewBarItem16.Id = 19;
+            this.printPreviewBarItem16.ImageIndex = 7;
+            this.printPreviewBarItem16.Name = "printPreviewBarItem16";
+            // 
+            // printPreviewBarItem17
+            // 
+            this.printPreviewBarItem17.Caption = "Previous Page";
+            this.printPreviewBarItem17.Command = DevExpress.XtraPrinting.PrintingSystemCommand.ShowPrevPage;
+            this.printPreviewBarItem17.Enabled = false;
+            this.printPreviewBarItem17.Hint = "Previous Page";
+            this.printPreviewBarItem17.Id = 20;
+            this.printPreviewBarItem17.ImageIndex = 8;
+            this.printPreviewBarItem17.Name = "printPreviewBarItem17";
+            // 
+            // printPreviewBarItem18
+            // 
+            this.printPreviewBarItem18.Caption = "Next Page";
+            this.printPreviewBarItem18.Command = DevExpress.XtraPrinting.PrintingSystemCommand.ShowNextPage;
+            this.printPreviewBarItem18.Enabled = false;
+            this.printPreviewBarItem18.Hint = "Next Page";
+            this.printPreviewBarItem18.Id = 21;
+            this.printPreviewBarItem18.ImageIndex = 9;
+            this.printPreviewBarItem18.Name = "printPreviewBarItem18";
+            // 
+            // printPreviewBarItem19
+            // 
+            this.printPreviewBarItem19.Caption = "Last Page";
+            this.printPreviewBarItem19.Command = DevExpress.XtraPrinting.PrintingSystemCommand.ShowLastPage;
+            this.printPreviewBarItem19.Enabled = false;
+            this.printPreviewBarItem19.Hint = "Last Page";
+            this.printPreviewBarItem19.Id = 22;
+            this.printPreviewBarItem19.ImageIndex = 10;
+            this.printPreviewBarItem19.Name = "printPreviewBarItem19";
+            // 
+            // printPreviewBarItem20
+            // 
+            this.printPreviewBarItem20.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.DropDown;
+            this.printPreviewBarItem20.Caption = "Multiple Pages";
+            this.printPreviewBarItem20.Command = DevExpress.XtraPrinting.PrintingSystemCommand.MultiplePages;
+            this.printPreviewBarItem20.Enabled = false;
+            this.printPreviewBarItem20.Hint = "Multiple Pages";
+            this.printPreviewBarItem20.Id = 23;
+            this.printPreviewBarItem20.ImageIndex = 11;
+            this.printPreviewBarItem20.Name = "printPreviewBarItem20";
+            // 
+            // printPreviewBarItem22
+            // 
+            this.printPreviewBarItem22.Caption = "&Watermark...";
+            this.printPreviewBarItem22.Command = DevExpress.XtraPrinting.PrintingSystemCommand.Watermark;
+            this.printPreviewBarItem22.Enabled = false;
+            this.printPreviewBarItem22.Hint = "Watermark";
+            this.printPreviewBarItem22.Id = 25;
+            this.printPreviewBarItem22.ImageIndex = 21;
+            this.printPreviewBarItem22.Name = "printPreviewBarItem22";
+            // 
+            // printPreviewBarItem23
+            // 
+            this.printPreviewBarItem23.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.DropDown;
+            this.printPreviewBarItem23.Caption = "Export Document...";
+            this.printPreviewBarItem23.Command = DevExpress.XtraPrinting.PrintingSystemCommand.ExportFile;
+            this.printPreviewBarItem23.Enabled = false;
+            this.printPreviewBarItem23.Hint = "Export Document...";
+            this.printPreviewBarItem23.Id = 26;
+            this.printPreviewBarItem23.ImageIndex = 18;
+            this.printPreviewBarItem23.Name = "printPreviewBarItem23";
+            // 
+            // printPreviewBarItem24
+            // 
+            this.printPreviewBarItem24.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.DropDown;
+            this.printPreviewBarItem24.Caption = "Send via E-Mail...";
+            this.printPreviewBarItem24.Command = DevExpress.XtraPrinting.PrintingSystemCommand.SendFile;
+            this.printPreviewBarItem24.Enabled = false;
+            this.printPreviewBarItem24.Hint = "Send via E-Mail...";
+            this.printPreviewBarItem24.Id = 27;
+            this.printPreviewBarItem24.ImageIndex = 17;
+            this.printPreviewBarItem24.Name = "printPreviewBarItem24";
+            // 
+            // barButtonItemFullScreen
+            // 
+            this.barButtonItemFullScreen.Caption = "Show Full Screen";
+            this.barButtonItemFullScreen.Enabled = false;
+            this.barButtonItemFullScreen.Id = 51;
+            this.barButtonItemFullScreen.Name = "barButtonItemFullScreen";
+            this.barButtonItemFullScreen.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItemShowFullScreen_ItemClick);
+            // 
+            // previewBar2
+            // 
+            this.previewBar2.BarName = "Status Bar";
+            this.previewBar2.CanDockStyle = DevExpress.XtraBars.BarCanDockStyle.Bottom;
+            this.previewBar2.DockCol = 0;
+            this.previewBar2.DockRow = 0;
+            this.previewBar2.DockStyle = DevExpress.XtraBars.BarDockStyle.Bottom;
+            this.previewBar2.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
+            new DevExpress.XtraBars.LinkPersistInfo(this.printPreviewStaticItem1),
+            new DevExpress.XtraBars.LinkPersistInfo(this.printPreviewStaticItem2),
+            new DevExpress.XtraBars.LinkPersistInfo(this.printPreviewStaticItem3)});
+            this.previewBar2.OptionsBar.AllowQuickCustomization = false;
+            this.previewBar2.OptionsBar.DrawDragBorder = false;
+            this.previewBar2.OptionsBar.UseWholeRow = true;
+            this.previewBar2.Text = "Status Bar";
+            // 
+            // printPreviewStaticItem1
+            // 
+            this.printPreviewStaticItem1.AutoSize = DevExpress.XtraBars.BarStaticItemSize.Spring;
+            this.printPreviewStaticItem1.Caption = "Current Page: none";
+            this.printPreviewStaticItem1.Id = 0;
+            this.printPreviewStaticItem1.Name = "printPreviewStaticItem1";
+            this.printPreviewStaticItem1.TextAlignment = System.Drawing.StringAlignment.Near;
+            this.printPreviewStaticItem1.Type = "CurrentPageNo";
+            this.printPreviewStaticItem1.Width = 200;
+            // 
+            // printPreviewStaticItem2
+            // 
+            this.printPreviewStaticItem2.AutoSize = DevExpress.XtraBars.BarStaticItemSize.Spring;
+            this.printPreviewStaticItem2.Caption = "Total Pages: 0";
+            this.printPreviewStaticItem2.Id = 1;
+            this.printPreviewStaticItem2.Name = "printPreviewStaticItem2";
+            this.printPreviewStaticItem2.TextAlignment = System.Drawing.StringAlignment.Near;
+            this.printPreviewStaticItem2.Type = "TotalPageNo";
+            this.printPreviewStaticItem2.Width = 200;
+            // 
+            // printPreviewStaticItem3
+            // 
+            this.printPreviewStaticItem3.AutoSize = DevExpress.XtraBars.BarStaticItemSize.Spring;
+            this.printPreviewStaticItem3.Caption = "Zoom Factor: 100%";
+            this.printPreviewStaticItem3.Id = 2;
+            this.printPreviewStaticItem3.Name = "printPreviewStaticItem3";
+            this.printPreviewStaticItem3.TextAlignment = System.Drawing.StringAlignment.Near;
+            this.printPreviewStaticItem3.Type = "ZoomFactor";
+            this.printPreviewStaticItem3.Width = 200;
+            // 
+            // previewBar3
+            // 
+            this.previewBar3.BarName = "Main Menu";
+            this.previewBar3.DockCol = 0;
+            this.previewBar3.DockRow = 0;
+            this.previewBar3.DockStyle = DevExpress.XtraBars.BarDockStyle.Top;
+            this.previewBar3.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
+            new DevExpress.XtraBars.LinkPersistInfo(this.printPreviewSubItem1),
+            new DevExpress.XtraBars.LinkPersistInfo(this.printPreviewSubItem2),
+            new DevExpress.XtraBars.LinkPersistInfo(this.printPreviewSubItem3)});
+            this.previewBar3.OptionsBar.MultiLine = true;
+            this.previewBar3.OptionsBar.UseWholeRow = true;
+            this.previewBar3.Text = "Main Menu";
+            this.previewBar3.Visible = false;
+            // 
+            // printPreviewSubItem1
+            // 
+            this.printPreviewSubItem1.Caption = "&File";
+            this.printPreviewSubItem1.Command = DevExpress.XtraPrinting.PrintingSystemCommand.File;
+            this.printPreviewSubItem1.Id = 29;
+            this.printPreviewSubItem1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
+            new DevExpress.XtraBars.LinkPersistInfo(this.printPreviewBarItem9),
+            new DevExpress.XtraBars.LinkPersistInfo(this.printPreviewBarItem7),
+            new DevExpress.XtraBars.LinkPersistInfo(this.printPreviewBarItem8),
+            new DevExpress.XtraBars.LinkPersistInfo(this.printPreviewBarItem23, true),
+            new DevExpress.XtraBars.LinkPersistInfo(this.printPreviewBarItem24)});
+            this.printPreviewSubItem1.Name = "printPreviewSubItem1";
+            // 
+            // printPreviewSubItem2
+            // 
+            this.printPreviewSubItem2.Caption = "&View";
+            this.printPreviewSubItem2.Command = DevExpress.XtraPrinting.PrintingSystemCommand.View;
+            this.printPreviewSubItem2.Id = 30;
+            this.printPreviewSubItem2.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
+            new DevExpress.XtraBars.LinkPersistInfo(this.printPreviewSubItem4, true),
+            new DevExpress.XtraBars.LinkPersistInfo(this.barToolbarsListItem1, true)});
+            this.printPreviewSubItem2.Name = "printPreviewSubItem2";
+            // 
+            // printPreviewSubItem4
+            // 
+            this.printPreviewSubItem4.Caption = "&Page Layout";
+            this.printPreviewSubItem4.Command = DevExpress.XtraPrinting.PrintingSystemCommand.PageLayout;
+            this.printPreviewSubItem4.Id = 32;
+            this.printPreviewSubItem4.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
+            new DevExpress.XtraBars.LinkPersistInfo(this.printPreviewBarItem26),
+            new DevExpress.XtraBars.LinkPersistInfo(this.printPreviewBarItem27)});
+            this.printPreviewSubItem4.Name = "printPreviewSubItem4";
+            // 
+            // printPreviewBarItem26
+            // 
+            this.printPreviewBarItem26.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.Check;
+            this.printPreviewBarItem26.Caption = "&Facing";
+            this.printPreviewBarItem26.Command = DevExpress.XtraPrinting.PrintingSystemCommand.PageLayoutFacing;
+            this.printPreviewBarItem26.Enabled = false;
+            this.printPreviewBarItem26.GroupIndex = 100;
+            this.printPreviewBarItem26.Id = 33;
+            this.printPreviewBarItem26.Name = "printPreviewBarItem26";
+            // 
+            // printPreviewBarItem27
+            // 
+            this.printPreviewBarItem27.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.Check;
+            this.printPreviewBarItem27.Caption = "&Continuous";
+            this.printPreviewBarItem27.Command = DevExpress.XtraPrinting.PrintingSystemCommand.PageLayoutContinuous;
+            this.printPreviewBarItem27.Enabled = false;
+            this.printPreviewBarItem27.GroupIndex = 100;
+            this.printPreviewBarItem27.Id = 34;
+            this.printPreviewBarItem27.Name = "printPreviewBarItem27";
+            // 
+            // barToolbarsListItem1
+            // 
+            this.barToolbarsListItem1.Caption = "Bars";
+            this.barToolbarsListItem1.Id = 35;
+            this.barToolbarsListItem1.Name = "barToolbarsListItem1";
+            // 
+            // printPreviewSubItem3
+            // 
+            this.printPreviewSubItem3.Caption = "&Background";
+            this.printPreviewSubItem3.Command = DevExpress.XtraPrinting.PrintingSystemCommand.Background;
+            this.printPreviewSubItem3.Id = 31;
+            this.printPreviewSubItem3.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
+            new DevExpress.XtraBars.LinkPersistInfo(this.printPreviewBarItem21),
+            new DevExpress.XtraBars.LinkPersistInfo(this.printPreviewBarItem22)});
+            this.printPreviewSubItem3.Name = "printPreviewSubItem3";
+            // 
+            // printPreviewBarItem21
+            // 
+            this.printPreviewBarItem21.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.DropDown;
+            this.printPreviewBarItem21.Caption = "&Color...";
+            this.printPreviewBarItem21.Command = DevExpress.XtraPrinting.PrintingSystemCommand.FillBackground;
+            this.printPreviewBarItem21.Enabled = false;
+            this.printPreviewBarItem21.Hint = "Background";
+            this.printPreviewBarItem21.Id = 24;
+            this.printPreviewBarItem21.ImageIndex = 12;
+            this.printPreviewBarItem21.Name = "printPreviewBarItem21";
+            // 
+            // printPreviewBarCheckItem1
+            // 
+            this.printPreviewBarCheckItem1.Caption = "PDF File";
+            this.printPreviewBarCheckItem1.Checked = true;
+            this.printPreviewBarCheckItem1.Command = DevExpress.XtraPrinting.PrintingSystemCommand.ExportPdf;
+            this.printPreviewBarCheckItem1.Enabled = false;
+            this.printPreviewBarCheckItem1.GroupIndex = 2;
+            this.printPreviewBarCheckItem1.Hint = "PDF File";
+            this.printPreviewBarCheckItem1.Id = 36;
+            this.printPreviewBarCheckItem1.Name = "printPreviewBarCheckItem1";
+            // 
+            // printPreviewBarCheckItem2
+            // 
+            this.printPreviewBarCheckItem2.Caption = "HTML File";
+            this.printPreviewBarCheckItem2.Command = DevExpress.XtraPrinting.PrintingSystemCommand.ExportHtm;
+            this.printPreviewBarCheckItem2.Enabled = false;
+            this.printPreviewBarCheckItem2.GroupIndex = 2;
+            this.printPreviewBarCheckItem2.Hint = "HTML File";
+            this.printPreviewBarCheckItem2.Id = 37;
+            this.printPreviewBarCheckItem2.Name = "printPreviewBarCheckItem2";
+            // 
+            // printPreviewBarCheckItem3
+            // 
+            this.printPreviewBarCheckItem3.Caption = "MHT File";
+            this.printPreviewBarCheckItem3.Command = DevExpress.XtraPrinting.PrintingSystemCommand.ExportMht;
+            this.printPreviewBarCheckItem3.Enabled = false;
+            this.printPreviewBarCheckItem3.GroupIndex = 2;
+            this.printPreviewBarCheckItem3.Hint = "MHT File";
+            this.printPreviewBarCheckItem3.Id = 38;
+            this.printPreviewBarCheckItem3.Name = "printPreviewBarCheckItem3";
+            // 
+            // printPreviewBarCheckItem4
+            // 
+            this.printPreviewBarCheckItem4.Caption = "RTF File";
+            this.printPreviewBarCheckItem4.Command = DevExpress.XtraPrinting.PrintingSystemCommand.ExportRtf;
+            this.printPreviewBarCheckItem4.Enabled = false;
+            this.printPreviewBarCheckItem4.GroupIndex = 2;
+            this.printPreviewBarCheckItem4.Hint = "RTF File";
+            this.printPreviewBarCheckItem4.Id = 39;
+            this.printPreviewBarCheckItem4.Name = "printPreviewBarCheckItem4";
+            // 
+            // printPreviewBarCheckItem5
+            // 
+            this.printPreviewBarCheckItem5.Caption = "Excel File";
+            this.printPreviewBarCheckItem5.Command = DevExpress.XtraPrinting.PrintingSystemCommand.ExportXls;
+            this.printPreviewBarCheckItem5.Enabled = false;
+            this.printPreviewBarCheckItem5.GroupIndex = 2;
+            this.printPreviewBarCheckItem5.Hint = "Excel File";
+            this.printPreviewBarCheckItem5.Id = 40;
+            this.printPreviewBarCheckItem5.Name = "printPreviewBarCheckItem5";
+            // 
+            // printPreviewBarCheckItem6
+            // 
+            this.printPreviewBarCheckItem6.Caption = "CSV File";
+            this.printPreviewBarCheckItem6.Command = DevExpress.XtraPrinting.PrintingSystemCommand.ExportCsv;
+            this.printPreviewBarCheckItem6.Enabled = false;
+            this.printPreviewBarCheckItem6.GroupIndex = 2;
+            this.printPreviewBarCheckItem6.Hint = "CSV File";
+            this.printPreviewBarCheckItem6.Id = 41;
+            this.printPreviewBarCheckItem6.Name = "printPreviewBarCheckItem6";
+            // 
+            // printPreviewBarCheckItem7
+            // 
+            this.printPreviewBarCheckItem7.Caption = "Text File";
+            this.printPreviewBarCheckItem7.Command = DevExpress.XtraPrinting.PrintingSystemCommand.ExportTxt;
+            this.printPreviewBarCheckItem7.Enabled = false;
+            this.printPreviewBarCheckItem7.GroupIndex = 2;
+            this.printPreviewBarCheckItem7.Hint = "Text File";
+            this.printPreviewBarCheckItem7.Id = 42;
+            this.printPreviewBarCheckItem7.Name = "printPreviewBarCheckItem7";
+            // 
+            // printPreviewBarCheckItem8
+            // 
+            this.printPreviewBarCheckItem8.Caption = "Image File";
+            this.printPreviewBarCheckItem8.Command = DevExpress.XtraPrinting.PrintingSystemCommand.ExportGraphic;
+            this.printPreviewBarCheckItem8.Enabled = false;
+            this.printPreviewBarCheckItem8.GroupIndex = 2;
+            this.printPreviewBarCheckItem8.Hint = "Image File";
+            this.printPreviewBarCheckItem8.Id = 43;
+            this.printPreviewBarCheckItem8.Name = "printPreviewBarCheckItem8";
+            // 
+            // printPreviewBarCheckItem9
+            // 
+            this.printPreviewBarCheckItem9.Caption = "PDF File";
+            this.printPreviewBarCheckItem9.Checked = true;
+            this.printPreviewBarCheckItem9.Command = DevExpress.XtraPrinting.PrintingSystemCommand.SendPdf;
+            this.printPreviewBarCheckItem9.Enabled = false;
+            this.printPreviewBarCheckItem9.GroupIndex = 1;
+            this.printPreviewBarCheckItem9.Hint = "PDF File";
+            this.printPreviewBarCheckItem9.Id = 44;
+            this.printPreviewBarCheckItem9.Name = "printPreviewBarCheckItem9";
+            // 
+            // printPreviewBarCheckItem10
+            // 
+            this.printPreviewBarCheckItem10.Caption = "MHT File";
+            this.printPreviewBarCheckItem10.Command = DevExpress.XtraPrinting.PrintingSystemCommand.SendMht;
+            this.printPreviewBarCheckItem10.Enabled = false;
+            this.printPreviewBarCheckItem10.GroupIndex = 1;
+            this.printPreviewBarCheckItem10.Hint = "MHT File";
+            this.printPreviewBarCheckItem10.Id = 45;
+            this.printPreviewBarCheckItem10.Name = "printPreviewBarCheckItem10";
+            // 
+            // printPreviewBarCheckItem11
+            // 
+            this.printPreviewBarCheckItem11.Caption = "RTF File";
+            this.printPreviewBarCheckItem11.Command = DevExpress.XtraPrinting.PrintingSystemCommand.SendRtf;
+            this.printPreviewBarCheckItem11.Enabled = false;
+            this.printPreviewBarCheckItem11.GroupIndex = 1;
+            this.printPreviewBarCheckItem11.Hint = "RTF File";
+            this.printPreviewBarCheckItem11.Id = 46;
+            this.printPreviewBarCheckItem11.Name = "printPreviewBarCheckItem11";
+            // 
+            // printPreviewBarCheckItem12
+            // 
+            this.printPreviewBarCheckItem12.Caption = "Excel File";
+            this.printPreviewBarCheckItem12.Command = DevExpress.XtraPrinting.PrintingSystemCommand.SendXls;
+            this.printPreviewBarCheckItem12.Enabled = false;
+            this.printPreviewBarCheckItem12.GroupIndex = 1;
+            this.printPreviewBarCheckItem12.Hint = "Excel File";
+            this.printPreviewBarCheckItem12.Id = 47;
+            this.printPreviewBarCheckItem12.Name = "printPreviewBarCheckItem12";
+            // 
+            // printPreviewBarCheckItem13
+            // 
+            this.printPreviewBarCheckItem13.Caption = "CSV File";
+            this.printPreviewBarCheckItem13.Command = DevExpress.XtraPrinting.PrintingSystemCommand.SendCsv;
+            this.printPreviewBarCheckItem13.Enabled = false;
+            this.printPreviewBarCheckItem13.GroupIndex = 1;
+            this.printPreviewBarCheckItem13.Hint = "CSV File";
+            this.printPreviewBarCheckItem13.Id = 48;
+            this.printPreviewBarCheckItem13.Name = "printPreviewBarCheckItem13";
+            // 
+            // printPreviewBarCheckItem14
+            // 
+            this.printPreviewBarCheckItem14.Caption = "Text File";
+            this.printPreviewBarCheckItem14.Command = DevExpress.XtraPrinting.PrintingSystemCommand.SendTxt;
+            this.printPreviewBarCheckItem14.Enabled = false;
+            this.printPreviewBarCheckItem14.GroupIndex = 1;
+            this.printPreviewBarCheckItem14.Hint = "Text File";
+            this.printPreviewBarCheckItem14.Id = 49;
+            this.printPreviewBarCheckItem14.Name = "printPreviewBarCheckItem14";
+            // 
+            // printPreviewBarCheckItem15
+            // 
+            this.printPreviewBarCheckItem15.Caption = "Image File";
+            this.printPreviewBarCheckItem15.Command = DevExpress.XtraPrinting.PrintingSystemCommand.SendGraphic;
+            this.printPreviewBarCheckItem15.Enabled = false;
+            this.printPreviewBarCheckItem15.GroupIndex = 1;
+            this.printPreviewBarCheckItem15.Hint = "Image File";
+            this.printPreviewBarCheckItem15.Id = 50;
+            this.printPreviewBarCheckItem15.Name = "printPreviewBarCheckItem15";
+            // 
+            // imageList1
+            // 
+            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
+            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageList1.Images.SetKeyName(0, "Information.png");
+            // 
+            // TotalFinancialSummaryReportTab
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.layoutControlMain);
+            this.Controls.Add(this.barDockControl3);
+            this.Controls.Add(this.barDockControl4);
+            this.Controls.Add(this.barDockControl2);
+            this.Controls.Add(this.barDockControl1);
+            this.Name = "TotalFinancialSummaryReportTab";
+            this.Size = new System.Drawing.Size(883, 646);
+            this.Controls.SetChildIndex(this.barDockControl1, 0);
+            this.Controls.SetChildIndex(this.barDockControl2, 0);
+            this.Controls.SetChildIndex(this.barDockControl4, 0);
+            this.Controls.SetChildIndex(this.barDockControl3, 0);
+            this.Controls.SetChildIndex(this.layoutControlMain, 0);
+            ((System.ComponentModel.ISupportInitialize)(this.dxErrorProviderMain)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlMain)).EndInit();
+            this.layoutControlMain.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.spinEditCapRate.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.spinEditNFCHPM.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.spinEditNFCLPM.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.spinEditFCHPM.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.spinEditFCLPM.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radioGroupCompnentSortMethod.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.checkEditSelectAllScenarios.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.checkEditShowDeltasVSBase.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.checkEditUseUtilityguaranteemultiplier.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.spinEditDiscountRate.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.spinEditInflationRate.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.spinEditNPV.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.spinEditScalingFactor.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.progressBarControl1.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridLookUpEditScenario1.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridViewScenario1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridLookUpEditProject.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridLookUpEditProjectView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItemPrintControl)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroupSelectionCriteria)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItemProject)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem9)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem16)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem12)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItemNPV)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem14)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem15)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem10)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItemScenario1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem17)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem18)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem11)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItemDiscountRate)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItemInflationRate)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItemScalingFactor)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItemGenerate)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.printBarManagerMain)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.printPreviewRepositoryItemComboBox1)).EndInit();
+            this.ResumeLayout(false);
+
+        }
+
+        #endregion
+
+        private DevExpress.XtraLayout.LayoutControl layoutControlMain;
+        private DevExpress.XtraLayout.LayoutControlGroup layoutControlGroup1;
+        private DevExpress.XtraPrinting.Control.PrintControl printControlMain;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItemPrintControl;
+        private DevExpress.XtraLayout.LayoutControlGroup layoutControlGroupSelectionCriteria;
+        private DevExpress.XtraPrinting.Preview.PrintBarManager printBarManagerMain;
+        private DevExpress.XtraPrinting.Preview.PreviewBar previewBar1;
+        private DevExpress.XtraPrinting.Preview.PrintPreviewBarItem printPreviewBarItem1;
+        private DevExpress.XtraPrinting.Preview.PrintPreviewBarItem printPreviewBarItem2;
+        private DevExpress.XtraPrinting.Preview.PrintPreviewBarItem printPreviewBarItem3;
+        private DevExpress.XtraPrinting.Preview.PrintPreviewBarItem printPreviewBarItem4;
+        private DevExpress.XtraPrinting.Preview.PrintPreviewBarItem printPreviewBarItem6;
+        private DevExpress.XtraPrinting.Preview.PrintPreviewBarItem printPreviewBarItem7;
+        private DevExpress.XtraPrinting.Preview.PrintPreviewBarItem printPreviewBarItem8;
+        private DevExpress.XtraPrinting.Preview.PrintPreviewBarItem printPreviewBarItem9;
+        private DevExpress.XtraPrinting.Preview.PrintPreviewBarItem printPreviewBarItem10;
+        private DevExpress.XtraPrinting.Preview.PrintPreviewBarItem printPreviewBarItem11;
+        private DevExpress.XtraPrinting.Preview.PrintPreviewBarItem printPreviewBarItem12;
+        private DevExpress.XtraPrinting.Preview.PrintPreviewBarItem printPreviewBarItem13;
+        private DevExpress.XtraPrinting.Preview.PrintPreviewBarItem printPreviewBarItem14;
+        private DevExpress.XtraPrinting.Preview.ZoomBarEditItem zoomBarEditItem1;
+        private DevExpress.XtraPrinting.Preview.PrintPreviewRepositoryItemComboBox printPreviewRepositoryItemComboBox1;
+        private DevExpress.XtraPrinting.Preview.PrintPreviewBarItem printPreviewBarItem15;
+        private DevExpress.XtraPrinting.Preview.PrintPreviewBarItem printPreviewBarItem16;
+        private DevExpress.XtraPrinting.Preview.PrintPreviewBarItem printPreviewBarItem17;
+        private DevExpress.XtraPrinting.Preview.PrintPreviewBarItem printPreviewBarItem18;
+        private DevExpress.XtraPrinting.Preview.PrintPreviewBarItem printPreviewBarItem19;
+        private DevExpress.XtraPrinting.Preview.PrintPreviewBarItem printPreviewBarItem20;
+        private DevExpress.XtraPrinting.Preview.PrintPreviewBarItem printPreviewBarItem21;
+        private DevExpress.XtraPrinting.Preview.PrintPreviewBarItem printPreviewBarItem22;
+        private DevExpress.XtraPrinting.Preview.PrintPreviewBarItem printPreviewBarItem23;
+        private DevExpress.XtraPrinting.Preview.PrintPreviewBarItem printPreviewBarItem24;
+        private DevExpress.XtraPrinting.Preview.PreviewBar previewBar2;
+        private DevExpress.XtraPrinting.Preview.PrintPreviewStaticItem printPreviewStaticItem1;
+        private DevExpress.XtraPrinting.Preview.PrintPreviewStaticItem printPreviewStaticItem2;
+        private DevExpress.XtraPrinting.Preview.PrintPreviewStaticItem printPreviewStaticItem3;
+        private DevExpress.XtraPrinting.Preview.PreviewBar previewBar3;
+        private DevExpress.XtraPrinting.Preview.PrintPreviewSubItem printPreviewSubItem1;
+        private DevExpress.XtraPrinting.Preview.PrintPreviewSubItem printPreviewSubItem2;
+        private DevExpress.XtraPrinting.Preview.PrintPreviewSubItem printPreviewSubItem4;
+        private DevExpress.XtraPrinting.Preview.PrintPreviewBarItem printPreviewBarItem26;
+        private DevExpress.XtraPrinting.Preview.PrintPreviewBarItem printPreviewBarItem27;
+        private DevExpress.XtraBars.BarToolbarsListItem barToolbarsListItem1;
+        private DevExpress.XtraPrinting.Preview.PrintPreviewSubItem printPreviewSubItem3;
+        private DevExpress.XtraBars.BarDockControl barDockControl1;
+        private DevExpress.XtraBars.BarDockControl barDockControl2;
+        private DevExpress.XtraBars.BarDockControl barDockControl3;
+        private DevExpress.XtraBars.BarDockControl barDockControl4;
+        private DevExpress.XtraPrinting.Preview.PrintPreviewBarCheckItem printPreviewBarCheckItem1;
+        private DevExpress.XtraPrinting.Preview.PrintPreviewBarCheckItem printPreviewBarCheckItem2;
+        private DevExpress.XtraPrinting.Preview.PrintPreviewBarCheckItem printPreviewBarCheckItem3;
+        private DevExpress.XtraPrinting.Preview.PrintPreviewBarCheckItem printPreviewBarCheckItem4;
+        private DevExpress.XtraPrinting.Preview.PrintPreviewBarCheckItem printPreviewBarCheckItem5;
+        private DevExpress.XtraPrinting.Preview.PrintPreviewBarCheckItem printPreviewBarCheckItem6;
+        private DevExpress.XtraPrinting.Preview.PrintPreviewBarCheckItem printPreviewBarCheckItem7;
+        private DevExpress.XtraPrinting.Preview.PrintPreviewBarCheckItem printPreviewBarCheckItem8;
+        private DevExpress.XtraPrinting.Preview.PrintPreviewBarCheckItem printPreviewBarCheckItem9;
+        private DevExpress.XtraPrinting.Preview.PrintPreviewBarCheckItem printPreviewBarCheckItem10;
+        private DevExpress.XtraPrinting.Preview.PrintPreviewBarCheckItem printPreviewBarCheckItem11;
+        private DevExpress.XtraPrinting.Preview.PrintPreviewBarCheckItem printPreviewBarCheckItem12;
+        private DevExpress.XtraPrinting.Preview.PrintPreviewBarCheckItem printPreviewBarCheckItem13;
+        private DevExpress.XtraPrinting.Preview.PrintPreviewBarCheckItem printPreviewBarCheckItem14;
+        private DevExpress.XtraPrinting.Preview.PrintPreviewBarCheckItem printPreviewBarCheckItem15;
+        private DevExpress.XtraEditors.GridLookUpEdit gridLookUpEditProject;
+        private DevExpress.XtraGrid.Views.Grid.GridView gridLookUpEditProjectView;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItemProject;
+        private DevExpress.XtraEditors.GridLookUpEdit gridLookUpEditScenario1;
+        private DevExpress.XtraGrid.Views.Grid.GridView gridViewScenario1;
+        private DevExpress.XtraEditors.SimpleButton simpleButtonGenerate;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItemScenario1;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItemGenerate;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumnProjectName;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumnScenario1;
+        private DevExpress.XtraEditors.SpinEdit spinEditScalingFactor;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItemScalingFactor;
+        private DevExpress.XtraEditors.ProgressBarControl progressBarControl1;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem1;
+        private DevExpress.XtraBars.BarButtonItem barButtonItemFullScreen;
+        private DevExpress.XtraEditors.SpinEdit spinEditInflationRate;
+        private DevExpress.XtraEditors.SpinEdit spinEditNPV;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItemNPV;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItemInflationRate;
+        private DevExpress.XtraEditors.SpinEdit spinEditDiscountRate;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItemDiscountRate;
+        private System.Windows.Forms.ImageList imageList1;
+        private DevExpress.XtraEditors.CheckEdit checkEditShowDeltasVSBase;
+        private DevExpress.XtraEditors.CheckEdit checkEditUseUtilityguaranteemultiplier;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem9;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem10;
+        private DevExpress.XtraEditors.CheckEdit checkEditSelectAllScenarios;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem11;
+        private DevExpress.XtraEditors.RadioGroup radioGroupCompnentSortMethod;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem12;
+        private DevExpress.XtraEditors.SpinEdit spinEditFCLPM;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem14;
+        private DevExpress.XtraEditors.SpinEdit spinEditFCHPM;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem15;
+        private DevExpress.XtraEditors.SpinEdit spinEditNFCLPM;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem16;
+        private DevExpress.XtraEditors.SpinEdit spinEditNFCHPM;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem17;
+        private DevExpress.XtraEditors.SpinEdit spinEditCapRate;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem18;
+    }
+}

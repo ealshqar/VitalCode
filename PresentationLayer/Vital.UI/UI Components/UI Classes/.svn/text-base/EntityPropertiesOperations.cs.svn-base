@@ -1,0 +1,229 @@
+﻿//////////////////////////////////////////////////////////////////////////////
+//  
+//  <sourcefile name="EntityPropertiesOperations.cs" creationdate="10/4/08" owner="anasa" >
+//
+//      <project>McKinstry TCO Application</project>
+//  
+//      <description>Provide checking and data retriveal operations on the objects properties</description>
+//      
+//      <copyright year="2008" company="McKinstry">
+//          <notice>
+//              Copyright © 2008 McKinstry. All rights reserved
+//  
+//              Developed for McKinstry by
+//                  Equiom - MENA
+//                  www.equiom.com
+//          </notice>
+//  
+//  	<history date="10/4/08" modby="anasa">created</history>
+//  
+//////////////////////////////////////////////////////////////////////////////
+
+#region Library Calls
+//---------------------------------------------------------------------------------------------
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Reflection;
+using System.Collections;
+using DevExpress.Xpo;
+using DevExpress.XtraGrid.Views.Grid;
+//---------------------------------------------------------------------------------------------
+#endregion
+
+namespace TCO.DesktopClientDevexpress
+{
+    public class EntityPropertiesOperations
+    {
+        # region Declarations
+        //---------------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        # region Properties
+        //---------------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        # region Methods
+        //---------------------------------------------------------------------------------------------
+        # region Initialization
+        //---------------------------------------------------------------------------------------------
+        public EntityPropertiesOperations() { }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        #region Checking, Object and property related methods about calculation handling
+        //---------------------------------------------------------------------------------------------
+        #region Checking
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Determine if a property should be style or not using the attribute "CellStyle"
+        /// </summary>
+        /// <param name="property">The property info of the property that we want to check</param>
+        /// <returns>True if the property has styling enabled</returns>
+        public Boolean IsPropertyStylingEnabled(PropertyInfo property)
+        {
+            //Default is false
+            Boolean isStyleEnabled = false;
+            //if the styling is enabled then return true
+            if (CellStyles.StyleEnabled == GetPropertyStyle(property))
+            {
+                isStyleEnabled = true;
+            }
+            return isStyleEnabled;
+        }
+
+        /// <summary>
+        /// Determine if the specified hash table contains the property name, and if it does so, then that property value
+        /// is entered and not calculated
+        /// </summary>
+        /// <param name="propertyName">The name of the property</param>
+        /// <param name="enteredProperties">The hashtable to search in for the property</param>
+        /// <returns></returns>
+        public Boolean IsPropertyValueEntered(string propertyName, Hashtable enteredProperties)
+        {
+            if (enteredProperties.ContainsValue(propertyName))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        #region Get Data
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Get the style attribute for a specific property
+        /// </summary>
+        /// <param name="property">The property to get the style value for</param>
+        /// <returns>The specified style vlaue if it exists</returns>
+        public CellStyles GetPropertyStyle(PropertyInfo property)
+        {
+            //Check if a style attribute is assigned to the property in the class so as not to return null
+            if (0 != property.GetCustomAttributes(typeof(CellStyle), false).Length)
+            {
+                //Get the attribute required
+                object[] styleAttributes = property.GetCustomAttributes(typeof(CellStyle), false);
+                CellStyle style = (CellStyle)styleAttributes[0];
+                return style.PropertyStyle;
+            }
+            else
+            {
+                //If not style was found, then it should be disbaled
+                return CellStyles.StyleDisabled;
+            }
+        }
+
+        /// <summary>
+        /// Get the context attribute of a property
+        /// </summary>
+        /// <param name="property">The property to gert the context attribute for</param>
+        /// <returns>A context value</returns>
+        public CalculationParties GetPropertyContext(PropertyInfo property)
+        {
+            //Check if a context attribute is assigned to the property in the class so as not to return null
+            if (property.GetCustomAttributes(typeof(CommonContext), false).Length != 0)
+            {
+                //Get the attribute required
+                object[] contextAttributes = property.GetCustomAttributes(typeof(CommonContext), false);
+                CommonContext context = (CommonContext)contextAttributes[0];
+                return context.Context;
+
+            }
+            else
+            {
+                //If no context was found, then return null
+                return CalculationParties.None;
+            }
+        }
+
+        /// <summary>
+        /// Determine if the style of a specific cell is Bold, italic or normal
+        /// </summary>
+        /// <param name="propertyName">The property name of the drawn cell</param>
+        /// <param name="objectType">The type of the object were we look for the property and its attributes</param>
+        /// <param name="enteredProperties">The collection of properties to check if the property exists, if it exists, then it is 
+        /// entered and its value should appear bold</param>
+        /// <returns></returns>
+        public CellFontStyle GetCellFontStyle(string propertyName, Type objectType, Hashtable enteredProperties)
+        {
+            
+            //Get the property value from the specified object type using the property name
+            PropertyInfo property = objectType.GetProperty(propertyName);
+
+            //Check if the property should by styled or not since not all columns in a grid should accepts styling
+            if (IsPropertyStylingEnabled(property))
+            {
+                //Determine if the list of added properties (Who have value entered by user) contains the property
+                //This table contains only entered properties not calclulated ones to they should come up bold
+                if (IsPropertyValueEntered(propertyName, enteredProperties))
+                {
+                    return CellFontStyle.Bold;
+                }
+                else
+                {
+                    return CellFontStyle.Italic;
+                }
+            }
+            else
+            {
+                //if not styling was found, then don't change the font style
+                return CellFontStyle.None;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="rowHandle"></param>
+        /// <returns></returns>
+        public Object GetCurrentGridViewObject(object sender, int rowHandle)
+        {
+            XPCollection collection = (XPCollection)((GridView)sender).DataSource;
+            int index = ((GridView)sender).GetDataSourceRowIndex(rowHandle);
+            Object entityObject = collection[index] as Object;
+            return entityObject;
+        }
+
+        /// <summary>
+        /// Get the requirment state attribute of a property
+        /// </summary>
+        /// <param name="property">The property to get the context attribute for</param>
+        /// <returns>A requiremnt value</returns>
+        public RequirmentOptions GetPropertyRequirment(PropertyInfo property)
+        {
+            //Check if a requiremnt attribute is assigned to the property in the class so as not to return null
+            if (property.GetCustomAttributes(typeof(PropertyRequirment), false).Length != 0)
+            {
+                //Get the attribute required
+                object[] requiremntAttributes = property.GetCustomAttributes(typeof(PropertyRequirment), false);
+                PropertyRequirment requiremnt = (PropertyRequirment)requiremntAttributes[0];
+                return requiremnt.Requirment;
+
+            }
+            else
+            {
+                //If no requiremnt was not found, then return not required
+                return RequirmentOptions.NotRequired;
+            }
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+        //---------------------------------------------------------------------------------------------
+        #endregion
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        # region Handlers
+        //---------------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------------
+        #endregion
+    }
+}

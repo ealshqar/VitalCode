@@ -1,0 +1,716 @@
+﻿//////////////////////////////////////////////////////////////////////////////
+//  
+//  <sourcefile name="TablesCreator.cs" creationdate="8/17/08" owner="anasa" >
+//
+//      <project>McKinstry TCO Application</project>
+//  
+//      <description>Create the specification of each table in the project</description>
+//      
+//      <copyright year="2008" company="McKinstry">
+//          <notice>
+//              Copyright © 2008 McKinstry. All rights reserved
+//  
+//              Developed for McKinstry by
+//                  Equiom - MENA
+//                  www.equiom.com
+//          </notice>
+//  
+//  	<history date="8/17/08" modby="anasa">created</history>
+//  
+//////////////////////////////////////////////////////////////////////////////
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Data;
+
+namespace TCO.DesktopClientDevexpress
+{
+    class TablesCreator
+    {
+        #region Methods
+        //---------------------------------------------------------------------------------------------
+        #region Projects
+        //---------------------------------------------------------------------------------------------
+
+        #region CGC
+        //---------------------------------------------------------------------------------------------]
+        /// <summary>
+        /// Creates a table to add the CGC projects to it
+        /// </summary>
+        /// <returns>The created table to the caller </returns>
+        public void CreateCGCNumbersGridTable(DataSet dataset, string tablename)
+        {
+            DataTable table = dataset.Tables.Add(tablename);
+            table.Columns.Add("ProjectNumber");
+            table.Columns.Add("ProjectName");
+            table.Columns.Add("ProjectCustomer");
+            table.Columns.Add("BusinessUnitNumber");
+            table.Columns.Add("BusinessUnitName");
+            table.Columns.Add("ProjectSelect", typeof(Boolean));
+
+            DataColumn[] myPrimaryKeyColumns = new DataColumn[1];
+            myPrimaryKeyColumns[0] = table.Columns[0];
+            table.PrimaryKey = myPrimaryKeyColumns;
+        }
+
+        /// <summary>
+        /// Creates a table to add the CGC projects to it and delete them later
+        /// </summary>
+        /// <returns>The created table to the caller </returns>
+        public void CreateCGCNumbersDeleteTable(DataSet dataset, string tablename)
+        {
+            DataTable table = dataset.Tables.Add(tablename);
+            table.Columns.Add("ProjectNumber");
+            table.Columns.Add("ProjectName");
+            table.Columns.Add("ProjectCustomer");
+            table.Columns.Add("BusinessUnitNumber");
+            table.Columns.Add("BusinessUnitName");
+            table.Columns.Add("ProjectSelect", typeof(Boolean));
+
+            DataColumn[] myPrimaryKeyColumns = new DataColumn[1];
+            myPrimaryKeyColumns[0] = table.Columns[0];
+            table.PrimaryKey = myPrimaryKeyColumns;
+        }
+
+        /// <summary>
+        /// Creates a table to view all the CGC projects available to select from.
+        /// </summary>
+        /// <returns>The created table to the caller </returns>
+        public void CreateCGCNumbersViewTable(DataSet dataset, string tablename)
+        {
+            DataTable table = dataset.Tables.Add(tablename);
+            table.Columns.Add("ProjectNumber");
+            table.Columns.Add("ProjectName");
+            table.Columns.Add("ProjectCustomer");
+            table.Columns.Add("BusinessUnitNumber");
+            table.Columns.Add("BusinessUnitName");
+            table.Columns.Add("ProjectSelect", typeof(Boolean));
+
+            DataColumn[] myPrimaryKeyColumns = new DataColumn[1];
+            myPrimaryKeyColumns[0] = table.Columns[0];
+            table.PrimaryKey = myPrimaryKeyColumns;
+        }
+        //---------------------------------------------------------------------------------------------]
+        #endregion
+
+        #region Project Fields
+        //---------------------------------------------------------------------------------------------]
+        /// <summary>
+        /// Creates a table to view all the milestones of a project
+        /// </summary>
+        /// <returns>The created table to the caller </returns>
+        public void CreateProjectMileStonesTable(DataSet dataset, string tablename)
+        {
+            DataTable table = dataset.Tables.Add(tablename);
+            table.Columns.Add("InstanceID");
+            table.Columns.Add("Number");
+            table.Columns.Add("ProjectedDate", System.Type.GetType("System.DateTime"));
+            table.Columns.Add("ActiveDate", System.Type.GetType("System.DateTime"));
+            table.Columns.Add("Name");
+
+            DataColumn[] myPrimaryKeyColumns = new DataColumn[2];
+            myPrimaryKeyColumns[0] = table.Columns[0];
+            myPrimaryKeyColumns[1] = table.Columns[1];
+            table.PrimaryKey = myPrimaryKeyColumns;
+        }
+
+        /// <summary>
+        /// Creates a table to view all the managers of a project
+        /// </summary>
+        /// <returns>The created table to the caller </returns>
+        public void CreateProjectManagersTable(DataSet dataset, string tablename)
+        {
+            DataTable table = dataset.Tables.Add(tablename);
+            table.Columns.Add("ManagerNumber");
+            table.Columns.Add("ManagerName");
+
+            DataColumn[] myPrimaryKeyColumns = new DataColumn[1];
+            myPrimaryKeyColumns[0] = table.Columns[0];
+            table.PrimaryKey = myPrimaryKeyColumns;
+        }
+
+        /// <summary>
+        /// Creates a table to view all the directors of a project
+        /// </summary>
+        /// <returns>The created table to the caller </returns>
+        public void CreateProjectDirectorsTable(DataSet dataset, string tablename)
+        {
+            DataTable table = dataset.Tables.Add(tablename);
+            table.Columns.Add("DirectorNumber");
+            table.Columns.Add("DirectorName");
+
+            DataColumn[] myPrimaryKeyColumns = new DataColumn[1];
+            myPrimaryKeyColumns[0] = table.Columns[0];
+            table.PrimaryKey = myPrimaryKeyColumns;
+        }
+
+        //---------------------------------------------------------------------------------------------]
+        #endregion
+
+        #region Work For Customer
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Creates a table to view all work for customers
+        /// </summary>
+        /// <returns>The created table to the caller </returns>
+        public void CreateWorkForCustomerTable(DataSet dataset, string tablename)
+        {
+            DataTable table = dataset.Tables.Add(tablename);
+            table.Columns.Add("WorkForCustomerNumber");
+            table.Columns.Add("WorkForCustomerName");
+            table.Columns.Add("Address1");
+            table.Columns.Add("Address2");
+            table.Columns.Add("City");
+            table.Columns.Add("State");
+            table.Columns.Add("Zipcode ");
+            table.Columns.Add("Areacode ");
+            table.Columns.Add("PhoneNumber ");
+
+            DataColumn[] myPrimaryKeyColumns = new DataColumn[1];
+            myPrimaryKeyColumns[0] = table.Columns[0];
+            table.PrimaryKey = myPrimaryKeyColumns;
+        }
+
+        /// <summary>
+        /// Creates a table to view all the work for customer contacts
+        /// </summary>
+        /// <returns>The created table to the caller </returns>
+        public void CreateWorkForCustomerContactsTable(DataSet dataset, string tablename)
+        {
+            DataTable table = dataset.Tables.Add(tablename);
+            table.Columns.Add("WorkForCustomerContactNumber");
+            table.Columns.Add("WorkForCustomerContactName");
+
+            DataColumn[] myPrimaryKeyColumns = new DataColumn[1];
+            myPrimaryKeyColumns[0] = table.Columns[0];
+            table.PrimaryKey = myPrimaryKeyColumns;
+        }
+
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        #region Bill To Customer
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Creates a table to view all bill to customers
+        /// </summary>
+        /// <returns>The created table to the caller </returns>
+        public void CreateBillToCustomerTable(DataSet dataset, string tablename)
+        {
+            DataTable table = dataset.Tables.Add(tablename);
+            table.Columns.Add("BillToCustomerNumber");
+            table.Columns.Add("BillToCustomerName");
+
+            DataColumn[] myPrimaryKeyColumns = new DataColumn[1];
+            myPrimaryKeyColumns[0] = table.Columns[0];
+            table.PrimaryKey = myPrimaryKeyColumns;
+        }
+
+        /// <summary>
+        /// Creates a table to view all the bill to customer contacts
+        /// </summary>
+        /// <returns>The created table to the caller </returns>
+        public void CreateBillToCustomerContactsTable(DataSet dataset, string tablename)
+        {
+            DataTable table = dataset.Tables.Add(tablename);
+            table.Columns.Add("BillToCustomerContactNumber");
+            table.Columns.Add("BillToCustomerContactName");
+
+            DataColumn[] myPrimaryKeyColumns = new DataColumn[1];
+            myPrimaryKeyColumns[0] = table.Columns[0];
+            table.PrimaryKey = myPrimaryKeyColumns;
+        }
+
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        /// <summary>
+        /// Create a table for list of projects to view in a building
+        /// </summary>
+        /// <param name="dataset">data set to hold data</param>
+        /// <param name="tablename">Name of table</param>
+        public void CreateProjectSelectTable(DataSet dataset, string tablename)
+        {
+            DataTable table = dataset.Tables.Add(tablename);
+            table.Columns.Add("ProjectID");
+            table.Columns.Add("ProjectInstanceID");
+            table.Columns.Add("ProjectNumber");
+            table.Columns.Add("ProjectName");
+            table.Columns.Add("ProjectDescription");
+
+            DataColumn[] myPrimaryKeyColumns = new DataColumn[2];
+            myPrimaryKeyColumns[0] = table.Columns[0];
+            myPrimaryKeyColumns[1] = table.Columns[1];
+            table.PrimaryKey = myPrimaryKeyColumns;
+        }
+
+        #region Utility Rates
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Create a table for buildings utility rates
+        /// </summary>
+        /// <param name="dataset">data set to hold data</param>
+        /// <param name="tablename">Name of table</param>
+        public DataTable CreateBuildingsUtilityRatesTable(DataSet dataset, string tablename)
+        {
+            DataTable table = dataset.Tables.Add(tablename);
+            table.Columns.Add("Index");
+            table.Columns.Add("BuildingID");
+            table.Columns.Add("BuildingInstanceID");
+            table.Columns.Add("BuildingName");
+
+            DataColumn[] myPrimaryKeyColumns = new DataColumn[1];
+            myPrimaryKeyColumns[0] = table.Columns[0];
+            table.PrimaryKey = myPrimaryKeyColumns;
+            return table;
+        }
+
+        /// <summary>
+        /// Create a table for updates in the buildings utility rates
+        /// </summary>
+        /// <param name="dataset">data set to hold data</param>
+        /// <param name="tablename">Name of table</param>
+        public DataTable CreateBuildingsUtilityRatesUpdatesTable(DataSet dataset, string tablename)
+        {
+            DataTable table = dataset.Tables.Add(tablename);
+            table.Columns.Add("buildingID", System.Type.GetType("System.Int32"));
+            table.Columns.Add("buildingInstanceID", System.Type.GetType("System.Guid"));
+            table.Columns.Add("utilityRateID", System.Type.GetType("System.Int32"));
+            table.Columns.Add("utilityRateInstanceID", System.Type.GetType("System.Guid"));
+            table.Columns.Add("effectiveDate", System.Type.GetType("System.DateTime"));
+            table.Columns.Add("IsEffective", typeof(bool));
+
+            DataColumn[] myPrimaryKeyColumns = new DataColumn[4];
+            myPrimaryKeyColumns[0] = table.Columns[0];
+            myPrimaryKeyColumns[1] = table.Columns[1];
+            myPrimaryKeyColumns[2] = table.Columns[2];
+            myPrimaryKeyColumns[3] = table.Columns[3];
+            table.PrimaryKey = myPrimaryKeyColumns;
+            return table;
+        }
+
+        /// <summary>
+        /// Create a table for creating utility rates in a project
+        /// </summary>
+        /// <param name="dataset"></param>
+        /// <param name="tablename"></param>
+        public void CreateUtilityRatesByProject(DataSet dataset, string tablename)
+        {
+            DataTable table = dataset.Tables.Add(tablename);
+            table.Columns.Add("UtilityRateID");
+            table.Columns.Add("InstanceID");
+            table.Columns.Add("ProjectID");
+            table.Columns.Add("ProjectInstanceID");
+            table.Columns.Add("UtilityName");
+            table.Columns.Add("UtilityTypeID");
+            table.Columns.Add("RateName");
+            table.Columns.Add("StartDate", typeof(DateTime));
+            table.Columns.Add("UnitID");
+            table.Columns.Add("DollarPerUnit");
+            table.Columns.Add("IsStartDateChanged");
+            table.Columns.Add("IsAnyOtherColumnChanged");
+
+            DataColumn[] myPrimaryKeyColumns = new DataColumn[2];
+            myPrimaryKeyColumns[0] = table.Columns[0];
+            myPrimaryKeyColumns[1] = table.Columns[1];
+            table.PrimaryKey = myPrimaryKeyColumns;
+        }
+
+        /// <summary>
+        /// Create a table for the units
+        /// </summary>
+        /// <param name="dataset"></param>
+        /// <param name="tablename"></param>
+        public void CreateUnitsTable(DataSet dataset, string tablename)
+        {
+            DataTable table = dataset.Tables.Add(tablename);
+            table.Columns.Add("UnitID");
+            table.Columns.Add("UnitName");
+
+            DataColumn[] myPrimaryKeyColumns = new DataColumn[1];
+            myPrimaryKeyColumns[0] = table.Columns[0];
+            table.PrimaryKey = myPrimaryKeyColumns;
+        }
+
+        /// <summary>
+        /// Create a table for the units
+        /// </summary>
+        /// <param name="dataset"></param>
+        /// <param name="tablename"></param>
+        public void CreateUtilityTypesTable(DataSet dataset, string tablename)
+        {
+            DataTable table = dataset.Tables.Add(tablename);
+            table.Columns.Add("UtilityTypeID");
+            table.Columns.Add("UtilityTypeName");
+
+            DataColumn[] myPrimaryKeyColumns = new DataColumn[1];
+            myPrimaryKeyColumns[0] = table.Columns[0];
+            table.PrimaryKey = myPrimaryKeyColumns;
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        #region Buildings
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Creates a table to add the buildings to it
+        /// </summary>
+        /// <returns>The created table to the caller </returns>
+        public void CreateBuildingsAddTable(DataSet dataset, string tablename)
+        {
+            DataTable table = dataset.Tables.Add(tablename);
+            table.Columns.Add("BuildingID");
+            table.Columns.Add("BuildingInstanceID");
+            table.Columns.Add("BuildingName");
+            table.Columns.Add("BuildingAddressID");
+            //table.Columns.Add("BuildingTypeID");
+            table.Columns.Add("BuildingNarrative");
+            table.Columns.Add("BuildingProjectID");
+            table.Columns.Add("BuildingOwnerID");
+            table.Columns.Add("BuildingITRONID");
+            table.Columns.Add("BuildingSelect", typeof(Boolean));
+
+            DataColumn[] myPrimaryKeyColumns = new DataColumn[2];
+            myPrimaryKeyColumns[0] = table.Columns[0];
+            myPrimaryKeyColumns[1] = table.Columns[1];
+            table.PrimaryKey = myPrimaryKeyColumns;
+        }
+
+        /// <summary>
+        /// Creates a table to view all the buildings
+        /// </summary>
+        /// <returns>The created table to the caller </returns>
+        public void CreateBuildingsViewTable(DataSet dataset, string tablename)
+        {
+            DataTable table = dataset.Tables.Add(tablename);
+            table.Columns.Add("BuildingID");
+            table.Columns.Add("BuildingInstanceID");
+            table.Columns.Add("BuildingName");
+            table.Columns.Add("BuildingAddressID");
+            //table.Columns.Add("BuildingTypeID");
+            table.Columns.Add("BuildingNarrative");
+            table.Columns.Add("BuildingProjectID");
+            table.Columns.Add("BuildingOwnerID");
+            table.Columns.Add("BuildingITRONID");
+            table.Columns.Add("BuildingSelect", typeof(Boolean));
+
+            DataColumn[] myPrimaryKeyColumns = new DataColumn[2];
+            myPrimaryKeyColumns[0] = table.Columns[0];
+            myPrimaryKeyColumns[1] = table.Columns[1];
+            table.PrimaryKey = myPrimaryKeyColumns;
+        }
+
+        /// <summary>
+        /// Create table to view all Building types
+        /// </summary>
+        /// <param name="dataset"> data set to hold date</param>
+        /// <param name="tablename">Name of table</param>
+        public void CreateBuildingTypeTable(DataSet dataset, string tablename)
+        {
+            DataTable table = dataset.Tables.Add(tablename);
+            table.Columns.Add("BuildingTypeID");
+            table.Columns.Add("BuildingTypeName");
+            table.Columns.Add("BuildingTypeSelect", typeof(Boolean));
+
+            DataColumn[] myPrimaryKeyColumns = new DataColumn[1];
+            myPrimaryKeyColumns[0] = table.Columns[0];
+            table.PrimaryKey = myPrimaryKeyColumns;
+
+        }
+
+        /// <summary>
+        /// Create table to Select building owner
+        /// </summary>
+        /// <param name="dataset">data set to hold data</param>
+        /// <param name="tablename">Name of table</param>
+        public void CreateBuildingOwnerViewTable(DataSet dataset, string tablename)
+        {
+            DataTable table = dataset.Tables.Add(tablename);
+            table.Columns.Add("BuilidingOwnerID");
+            table.Columns.Add("BuildingOwnerName");
+
+            DataColumn[] myPrimaryKeyColumns = new DataColumn[1];
+            myPrimaryKeyColumns[0] = table.Columns[0];
+            table.PrimaryKey = myPrimaryKeyColumns;
+
+        }
+
+        /// <summary>
+        /// Create Address table to view building address
+        /// </summary>
+        /// <param name="dataset">data set to hold data</param>
+        /// <param name="tablename">Name of table</param>
+        public void CreateBuildingAddressViewTable(DataSet dataset, string tablename)
+        {
+            DataTable table = dataset.Tables.Add(tablename);
+            table.Columns.Add("AddressID");
+            table.Columns.Add("Address1");
+            table.Columns.Add("Address2");
+            table.Columns.Add("Address3");
+            table.Columns.Add("City");
+            table.Columns.Add("State");
+            table.Columns.Add("Zip");
+            table.Columns.Add("Country");
+            table.Columns.Add("CountryCode");
+
+            DataColumn[] myPrimaryKeyColumns = new DataColumn[1];
+            myPrimaryKeyColumns[0] = table.Columns[0];
+            table.PrimaryKey = myPrimaryKeyColumns;
+
+        }
+
+        /// <summary>
+        /// Create a table for list of tenants in a building
+        /// </summary>
+        /// <param name="dataset">data set to hold data</param>
+        /// <param name="tablename">Name of table</param>
+        public void CreateTenantsTable(DataSet dataset, string tablename)
+        {
+            DataTable table = dataset.Tables.Add(tablename);
+            table.Columns.Add("TenantID");
+            table.Columns.Add("CompanyID");
+            table.Columns.Add("BuildingID");
+            table.Columns.Add("Name");
+            table.Columns.Add("TenantArea");
+            table.Columns.Add("EmployeeCount");
+            table.Columns.Add("ContactID");
+            table.Columns.Add("StartDate");
+
+            DataColumn[] myPrimaryKeyColumns = new DataColumn[1];
+            myPrimaryKeyColumns[0] = table.Columns[0];
+            table.PrimaryKey = myPrimaryKeyColumns;
+        }
+
+        /// <summary>
+        /// Create company table 
+        /// </summary>
+        /// <param name="dataset">data set to hold data</param>
+        /// <param name="tablename">Name of table</param>
+        public void CreateCompanyTable(DataSet dataset, string tablename)
+        {
+            DataTable table = dataset.Tables.Add(tablename);
+            table.Columns.Add("CompanyID");
+            table.Columns.Add("Number");
+            table.Columns.Add("Name");
+            table.Columns.Add("CompanyTypeID");
+            table.Columns.Add("CompanyDescription");
+            table.Columns.Add("AddressID");
+            table.Columns.Add("ContactID");
+            table.Columns.Add("VerticalMarketID");
+
+            DataColumn[] myPrimaryKeyColumns = new DataColumn[1];
+            myPrimaryKeyColumns[0] = table.Columns[0];
+            table.PrimaryKey = myPrimaryKeyColumns;
+        }
+
+        /// <summary>
+        /// Create company types table 
+        /// </summary>
+        /// <param name="dataset">data set to hold data</param>
+        /// <param name="tablename">Name of table</param>
+        public void CreateCompanyTypeTable(DataSet dataset, string tablename)
+        {
+            DataTable table = dataset.Tables.Add(tablename);
+            table.Columns.Add("CompanyTypeID");
+            table.Columns.Add("CompanyTypeName");
+
+            DataColumn[] myPrimaryKeyColumns = new DataColumn[1];
+            myPrimaryKeyColumns[0] = table.Columns[0];
+            table.PrimaryKey = myPrimaryKeyColumns;
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        #region Components
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Creates a table to add the components to it
+        /// </summary>
+        /// <returns>The created table to the caller </returns>
+        public void CreateComponentsAddTable(DataSet dataset, string tablename)
+        {
+            DataTable table = dataset.Tables.Add(tablename);
+            table.Columns.Add("ComponentID");
+            table.Columns.Add("InstanceID");
+            table.Columns.Add("ComponentNumber");
+            table.Columns.Add("ComponentName");
+            table.Columns.Add("ComponentProjectID");
+            table.Columns.Add("ComponentComponentDescription");
+            table.Columns.Add("ComponentGeneralRecommendation");
+
+            DataColumn[] myPrimaryKeyColumns = new DataColumn[2];
+            myPrimaryKeyColumns[0] = table.Columns[0];
+            myPrimaryKeyColumns[1] = table.Columns[1];
+            table.PrimaryKey = myPrimaryKeyColumns;
+        }
+
+        /// <summary>
+        /// Creates a table to view all the components
+        /// </summary>
+        /// <returns>The created table to the caller </returns>
+        public void CreateComponentsViewTable(DataSet dataset, string tablename)
+        {
+            DataTable table = dataset.Tables.Add(tablename);
+            table.Columns.Add("ComponentID");
+            table.Columns.Add("InstanceID");
+            table.Columns.Add("ComponentNumber");
+            table.Columns.Add("ComponentName");
+            table.Columns.Add("ComponentProjectID");
+            table.Columns.Add("ComponentDescription");
+            table.Columns.Add("GeneralRecommendation");
+            table.Columns.Add("BuildingName");
+            table.Columns.Add("ComponentSelect", typeof(Boolean));
+
+            DataColumn[] myPrimaryKeyColumns = new DataColumn[2];
+            myPrimaryKeyColumns[0] = table.Columns[0];
+            myPrimaryKeyColumns[1] = table.Columns[1];
+            table.PrimaryKey = myPrimaryKeyColumns;
+        }
+
+        /// <summary>
+        /// Create StartingCondition table to add it to component
+        /// </summary>
+        /// <param name="dataset">data set to hold data</param>
+        /// <param name="tablename">Name of table</param>
+        public void CreateComponentStartingConditionViewTable(DataSet dataset, string tablename)
+        {
+            DataTable table = dataset.Tables.Add(tablename);
+            table.Columns.Add("StartingConditionID");
+            table.Columns.Add("StartingConditionName");
+
+            DataColumn[] myPrimaryKeyColumns = new DataColumn[1];
+            myPrimaryKeyColumns[0] = table.Columns[0];
+            table.PrimaryKey = myPrimaryKeyColumns;
+
+        }
+
+        /// <summary>
+        /// Create table to view all component
+        /// </summary>
+        /// <param name="dataset">data set to hold data</param>
+        /// <param name="tablename">Name of table</param>
+        public void CreateComponentCategoryViewTable(DataSet dataset, string tablename)
+        {
+            DataTable table = dataset.Tables.Add(tablename);
+            table.Columns.Add("CategoryID");
+            table.Columns.Add("ParentCategoryID");
+            table.Columns.Add("CategoryName");
+            table.Columns.Add("CategorySelect", typeof(Boolean));
+
+            DataColumn[] myPrimaryKeyColumns = new DataColumn[1];
+            myPrimaryKeyColumns[0] = table.Columns[0];
+            table.PrimaryKey = myPrimaryKeyColumns;
+
+        }
+
+        /// <summary>
+        /// Create Category table to add it to component
+        /// </summary>
+        /// <param name="dataset">data set to hold data</param>
+        /// <param name="tablename">Name of table</param>
+        public void CreateComponentCategoryAddTable(DataSet dataset, string tablename)
+        {
+            DataTable table = dataset.Tables.Add(tablename);
+            table.Columns.Add("CategoryID");
+            table.Columns.Add("ParentCategoryID");
+            table.Columns.Add("CategoryName");
+
+            DataColumn[] myPrimaryKeyColumns = new DataColumn[1];
+            myPrimaryKeyColumns[0] = table.Columns[0];
+            table.PrimaryKey = myPrimaryKeyColumns;
+        }
+
+        /// <summary>
+        /// Create a table to view all the categories that user can select from in a component
+        /// </summary>
+        /// <param name="dataset"></param>
+        /// <param name="tablename"></param>
+        public void CreateCategoryTable(DataSet dataset, string tablename)
+        {
+            DataTable table = dataset.Tables.Add(tablename);
+            table.Columns.Add("SubCategoryID");
+            table.Columns.Add("SubCategoryName");
+            table.Columns.Add("ParentCategoryID");
+            table.Columns.Add("ParentCategoryName");
+            table.Columns.Add("KeyWord");
+            table.Columns.Add("SubCatSelect", typeof(Boolean));
+
+            DataColumn[] myPrimaryKeyColumns = new DataColumn[1];
+            myPrimaryKeyColumns[0] = table.Columns[0];
+            table.PrimaryKey = myPrimaryKeyColumns;
+        }
+
+        /// <summary>
+        /// Create a table to view all the starting conditions in a component
+        /// </summary>
+        /// <param name="dataset"></param>
+        /// <param name="tablename"></param>
+        public void CreateStartingConditionTable(DataSet dataset, string tablename)
+        {
+            DataTable table = dataset.Tables.Add(tablename);
+            table.Columns.Add("StaringConditionID");
+            table.Columns.Add("StartingConditionName");
+
+            DataColumn[] myPrimaryKeyColumns = new DataColumn[1];
+            myPrimaryKeyColumns[0] = table.Columns[0];
+            table.PrimaryKey = myPrimaryKeyColumns;
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        #region Contacts
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Creates a table to add the contacts to it
+        /// </summary>
+        /// <returns>The created table to the caller </returns>
+        public void CreateContactsAddTable(DataSet dataset, string tablename)
+        {
+            DataTable table = dataset.Tables.Add(tablename);
+            table.Columns.Add("ContactNumber");
+            table.Columns.Add("ContactName");
+            table.Columns.Add("ContactRole");
+            table.Columns.Add("ContactPhoneNumber");
+            table.Columns.Add("ContactFax");
+            table.Columns.Add("ContactEmail");
+            table.Columns.Add("ContactAddress");
+            table.Columns.Add("ContactSelect", typeof(Boolean));
+
+            DataColumn[] myPrimaryKeyColumns = new DataColumn[1];
+            myPrimaryKeyColumns[0] = table.Columns[0];
+            table.PrimaryKey = myPrimaryKeyColumns;
+        }
+
+        /// <summary>
+        /// Creates a table to view all the contacts
+        /// </summary>
+        /// <returns>The created table to the caller </returns>
+        public void CreateContactsViewTable(DataSet dataset, string tablename)
+        {
+            DataTable table = dataset.Tables.Add(tablename);
+            table.Columns.Add("ContactNumber");
+            table.Columns.Add("ContactName");
+            table.Columns.Add("ContactRole");
+            table.Columns.Add("ContactPhoneNumber");
+            table.Columns.Add("ContactFax");
+            table.Columns.Add("ContactEmail");
+            table.Columns.Add("ContactAddress");
+            table.Columns.Add("ContactSelect", typeof(Boolean));
+
+            DataColumn[] myPrimaryKeyColumns = new DataColumn[1];
+            myPrimaryKeyColumns[0] = table.Columns[0];
+            table.PrimaryKey = myPrimaryKeyColumns;
+        }
+
+        //---------------------------------------------------------------------------------------------
+        #endregion
+        //---------------------------------------------------------------------------------------------
+        #endregion 
+    }
+}
+

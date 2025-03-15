@@ -1,0 +1,668 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{21728AAC-43C0-4E46-9243-E5A0A67E76B0}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TCO.DesktopClientDevexpress</RootNamespace>
+    <AssemblyName>DesktopClientDevexpress</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <StartupObject>TCO.DesktopClientDevexpress.Program</StartupObject>
+    <PublishUrl>http://localhost/DesktopClient/</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <RunPostBuildEvent>Always</RunPostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DevExpress.BonusSkins.v9.1, Version=9.1.2.0, Culture=neutral, PublicKeyToken=95fc6c5621878f0a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DevExpress.Charts.v9.1.Core, Version=9.1.2.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Data.v9.1, Version=9.1.2.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.OfficeSkins.v9.1, Version=9.1.2.0, Culture=neutral, PublicKeyToken=95fc6c5621878f0a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Utils.v9.1, Version=9.1.2.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraBars.v9.1, Version=9.1.2.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraCharts.v9.1, Version=9.1.2.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraEditors.v9.1, Version=9.1.2.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraGrid.v9.1, Version=9.1.2.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraLayout.v9.1, Version=9.1.2.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraPivotGrid.v9.1, Version=9.1.2.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraPivotGrid.v9.1.Core, Version=9.1.2.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraPrinting.v9.1, Version=9.1.2.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraReports.v9.1, Version=9.1.2.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraRichEdit.v9.1, Version=9.1.2.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="DevExpress.XtraRichEdit.v9.1.Extensions, Version=9.1.2.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraSpellChecker.v9.1, Version=9.1.2.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraSpellChecker.v9.1.Core, Version=9.1.2.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraTreeList.v9.1, Version=9.1.2.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraWizard.v9.1, Version=9.1.2.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Logic Classes\UIBLLInteraction.cs" />
+    <Compile Include="UI Components\Reports\AnnualCashFlowReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI Components\Reports\AnnualCashFlowReport.designer.cs">
+      <DependentUpon>AnnualCashFlowReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Reports\AssetImpactsDetailReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI Components\Reports\AssetImpactsDetailReport.designer.cs">
+      <DependentUpon>AssetImpactsDetailReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Reports\CapRenewalDetailReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI Components\Reports\CapRenewalDetailReport.designer.cs">
+      <DependentUpon>CapRenewalDetailReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Reports\OAndMDetailReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI Components\Reports\OAndMDetailReport.designer.cs">
+      <DependentUpon>OAndMDetailReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Reports\TFSColumnSubReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI Components\Reports\TFSColumnSubReport.designer.cs">
+      <DependentUpon>TFSColumnSubReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Reports\TFSLabelsSubReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI Components\Reports\TFSLabelsSubReport.designer.cs">
+      <DependentUpon>TFSLabelsSubReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Reports\TotalFinancialSummaryReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI Components\Reports\TotalFinancialSummaryReport.designer.cs">
+      <DependentUpon>TotalFinancialSummaryReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Reports\UtilityReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI Components\Reports\UtilityReport.Designer.cs">
+      <DependentUpon>UtilityReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Reports\FirstCostSubReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI Components\Reports\FirstCostSubReport.designer.cs">
+      <DependentUpon>FirstCostSubReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Reports\SFCLineItemsSubReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI Components\Reports\SFCLineItemsSubReport.designer.cs">
+      <DependentUpon>SFCLineItemsSubReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\Reports\BudgetSummaryParentReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI Components\Reports\BudgetSummaryParentReport.designer.cs">
+      <DependentUpon>BudgetSummaryParentReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\UI Classes\ProjectHotKeyFilter.cs" />
+    <Compile Include="UI Components\UI Classes\XtraTabFactory.cs" />
+    <Compile Include="UI Components\User Controls\Main Tabs\AdminTab.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Main Tabs\AdminTab.Designer.cs">
+      <DependentUpon>AdminTab.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Main Tabs\AnnualCashFlowReportTab.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Main Tabs\AnnualCashFlowReportTab.Designer.cs">
+      <DependentUpon>AnnualCashFlowReportTab.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Main Tabs\BudgetSummaryReportTab.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Main Tabs\BudgetSummaryReportTab.designer.cs">
+      <DependentUpon>BudgetSummaryReportTab.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Main Tabs\AssetImpactsDetailReportTab.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Main Tabs\AssetImpactsDetailReportTab.designer.cs">
+      <DependentUpon>AssetImpactsDetailReportTab.cs</DependentUpon>
+    </Compile>
+<<<<<<< .mine
+    <Compile Include="UI Components\User Controls\Main Tabs\CapRenewalDetailReportTab.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Main Tabs\CapRenewalDetailReportTab.designer.cs">
+      <DependentUpon>CapRenewalDetailReportTab.cs</DependentUpon>
+    </Compile>
+=======
+    <Compile Include="UI Components\User Controls\Main Tabs\CapRenewalDetailReportTab.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Main Tabs\CapRenewalDetailReportTab.designer.cs">
+      <DependentUpon>CapRenewalDetailReportTab.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Main Tabs\MaintenanceAndOperationsDetailReportTab.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Main Tabs\MaintenanceAndOperationsDetailReportTab.designer.cs">
+      <DependentUpon>MaintenanceAndOperationsDetailReportTab.cs</DependentUpon>
+    </Compile>
+>>>>>>> .r2427
+    <Compile Include="UI Components\User Controls\Main Tabs\TotalFinancialSummaryReportTab.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Main Tabs\TotalFinancialSummaryReportTab.designer.cs">
+      <DependentUpon>TotalFinancialSummaryReportTab.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Main Tabs\UtilityReportTab.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Main Tabs\UtilityReportTab.designer.cs">
+      <DependentUpon>UtilityReportTab.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Main Tabs\XtraUserControlBuildingsList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Main Tabs\XtraUserControlBuildingsList.Designer.cs">
+      <DependentUpon>XtraUserControlBuildingsList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Main Tabs\XtraUserControlComponentsList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Main Tabs\XtraUserControlComponentsList.Designer.cs">
+      <DependentUpon>XtraUserControlComponentsList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Main Tabs\XtraUserControlProjectsList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Main Tabs\XtraUserControlProjectsList.Designer.cs">
+      <DependentUpon>XtraUserControlProjectsList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Modules\Component Modules\AssetImpactsModule.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Modules\Component Modules\AssetImpactsModule.designer.cs">
+      <DependentUpon>AssetImpactsModule.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Modules\Component Modules\CAPEXModule.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Modules\Component Modules\CAPEXModule.Designer.cs">
+      <DependentUpon>CAPEXModule.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Modules\Component Modules\ComponentFirstCostModule.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Modules\Component Modules\ComponentFirstCostModule.designer.cs">
+      <DependentUpon>ComponentFirstCostModule.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Modules\Component Modules\ComponentUtilityInfoModule.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Modules\Component Modules\ComponentUtilityInfoModule.designer.cs">
+      <DependentUpon>ComponentUtilityInfoModule.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Main Tabs\XtraTabPageEntity.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Main Tabs\XtraTabPageEntity.Designer.cs">
+      <DependentUpon>XtraTabPageEntity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Main Tabs\XtraTabPageBuilding.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Main Tabs\XtraTabPageBuilding.Designer.cs">
+      <DependentUpon>XtraTabPageBuilding.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Main Tabs\XtraTabPageProject.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Main Tabs\XtraTabPageProject.Designer.cs">
+      <DependentUpon>XtraTabPageProject.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Logic Classes\Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="UI Components\User Controls\Main Tabs\XtraTabPageEntity.resx">
+      <DependentUpon>XtraTabPageEntity.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\User Controls\Main Tabs\XtraTabPageBuilding.resx">
+      <DependentUpon>XtraTabPageBuilding.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\User Controls\Main Tabs\XtraTabPageProject.resx">
+      <DependentUpon>XtraTabPageProject.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\licenses.licx" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Forms\ribbonFrmMain.resx">
+      <DependentUpon>ribbonFrmMain.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\User Controls\Main Tabs\XtraTabPageComponent.resx">
+      <DependentUpon>XtraTabPageComponent.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="Properties\Settings.settings">
+      <Generator>PublicSettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="UI Components\Forms\ribbonFrmMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI Components\Forms\ribbonFrmMain.Designer.cs">
+      <DependentUpon>ribbonFrmMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Main Tabs\XtraTabPageComponent.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Main Tabs\XtraTabPageComponent.Designer.cs">
+      <DependentUpon>XtraTabPageComponent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Modules\Component Modules\MaintenanceAndOperationsModule.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Modules\Component Modules\MaintenanceAndOperationsModule.Designer.cs">
+      <DependentUpon>MaintenanceAndOperationsModule.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Modules\General Modules\NavigationGridControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Modules\General Modules\NavigationGridControl.Designer.cs">
+      <DependentUpon>NavigationGridControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Modules\General Modules\PasswordDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Modules\General Modules\PasswordDialog.Designer.cs">
+      <DependentUpon>PasswordDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Modules\General Modules\RenameDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Modules\General Modules\RenameDialog.designer.cs">
+      <DependentUpon>RenameDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Modules\Project Modules\BSGImportingDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Modules\Project Modules\BSGImportingDialog.designer.cs">
+      <DependentUpon>BSGImportingDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Modules\Project Modules\FinancialInformationModule.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Modules\Project Modules\FinancialInformationModule.designer.cs">
+      <DependentUpon>FinancialInformationModule.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Modules\Project Modules\ScenaiorsModule.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Modules\Project Modules\ScenaiorsModule.designer.cs">
+      <DependentUpon>ScenaiorsModule.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Modules\Project Modules\ScenarioFirstCostModule.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Modules\Project Modules\ScenarioFirstCostModule.Designer.cs">
+      <DependentUpon>ScenarioFirstCostModule.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Modules\Project Modules\SFUGrid.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI Components\User Controls\Modules\Project Modules\SFUGrid.Designer.cs">
+      <DependentUpon>SFUGrid.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Equiom.Tco.BusinessLogicLayer\Equiom.Tco.BusinessLogicLayer.csproj">
+      <Project>{32F1A59E-6C0A-42E3-99C2-2210F79042F8}</Project>
+      <Name>Equiom.Tco.BusinessLogicLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Equiom.Tco.Common\Equiom.Tco.Common.csproj">
+      <Project>{408B7116-1ADA-4D07-8D8D-2BABF33BA943}</Project>
+      <Name>Equiom.Tco.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Equiom.Tco.DataAccessLayer\Equiom.Tco.DataAccessLayer.csproj">
+      <Project>{868D3C4D-F948-4525-9557-77EC13522DB9}</Project>
+      <Name>Equiom.Tco.DataAccessLayer</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="UI Components\Reports\AnnualCashFlowReport.resx">
+      <DependentUpon>AnnualCashFlowReport.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Reports\AssetImpactsDetailReport.resx">
+      <DependentUpon>AssetImpactsDetailReport.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Reports\CapRenewalDetailReport.resx">
+      <DependentUpon>CapRenewalDetailReport.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Reports\OAndMDetailReport.resx">
+      <DependentUpon>OAndMDetailReport.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Reports\TFSColumnSubReport.resx">
+      <DependentUpon>TFSColumnSubReport.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Reports\TFSLabelsSubReport.resx">
+      <DependentUpon>TFSLabelsSubReport.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Reports\TotalFinancialSummaryReport.resx">
+      <DependentUpon>TotalFinancialSummaryReport.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Reports\UtilityReport.resx">
+      <DependentUpon>UtilityReport.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Reports\FirstCostSubReport.resx">
+      <DependentUpon>FirstCostSubReport.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Reports\SFCLineItemsSubReport.resx">
+      <DependentUpon>SFCLineItemsSubReport.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\Reports\BudgetSummaryParentReport.resx">
+      <DependentUpon>BudgetSummaryParentReport.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\User Controls\Main Tabs\AdminTab.resx">
+      <DependentUpon>AdminTab.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\User Controls\Main Tabs\AnnualCashFlowReportTab.resx">
+      <DependentUpon>AnnualCashFlowReportTab.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\User Controls\Main Tabs\BudgetSummaryReportTab.resx">
+      <DependentUpon>BudgetSummaryReportTab.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\User Controls\Main Tabs\AssetImpactsDetailReportTab.resx">
+      <DependentUpon>AssetImpactsDetailReportTab.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+<<<<<<< .mine
+    <EmbeddedResource Include="UI Components\User Controls\Main Tabs\CapRenewalDetailReportTab.resx">
+      <DependentUpon>CapRenewalDetailReportTab.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+=======
+    <EmbeddedResource Include="UI Components\User Controls\Main Tabs\CapRenewalDetailReportTab.resx">
+      <DependentUpon>CapRenewalDetailReportTab.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\User Controls\Main Tabs\MaintenanceAndOperationsDetailReportTab.resx">
+      <DependentUpon>MaintenanceAndOperationsDetailReportTab.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+>>>>>>> .r2427
+    <EmbeddedResource Include="UI Components\User Controls\Main Tabs\TotalFinancialSummaryReportTab.resx">
+      <DependentUpon>TotalFinancialSummaryReportTab.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\User Controls\Main Tabs\UtilityReportTab.resx">
+      <DependentUpon>UtilityReportTab.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\User Controls\Main Tabs\XtraUserControlBuildingsList.resx">
+      <DependentUpon>XtraUserControlBuildingsList.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\User Controls\Main Tabs\XtraUserControlComponentsList.resx">
+      <DependentUpon>XtraUserControlComponentsList.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\User Controls\Main Tabs\XtraUserControlProjectsList.resx">
+      <DependentUpon>XtraUserControlProjectsList.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\User Controls\Modules\Component Modules\AssetImpactsModule.resx">
+      <DependentUpon>AssetImpactsModule.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\User Controls\Modules\Component Modules\CAPEXModule.resx">
+      <DependentUpon>CAPEXModule.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\User Controls\Modules\Component Modules\ComponentFirstCostModule.resx">
+      <DependentUpon>ComponentFirstCostModule.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\User Controls\Modules\Component Modules\ComponentUtilityInfoModule.resx">
+      <DependentUpon>ComponentUtilityInfoModule.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\User Controls\Modules\Component Modules\MaintenanceAndOperationsModule.resx">
+      <DependentUpon>MaintenanceAndOperationsModule.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\User Controls\Modules\General Modules\NavigationGridControl.resx">
+      <DependentUpon>NavigationGridControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\User Controls\Modules\General Modules\PasswordDialog.resx">
+      <DependentUpon>PasswordDialog.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\User Controls\Modules\General Modules\RenameDialog.resx">
+      <DependentUpon>RenameDialog.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\User Controls\Modules\Project Modules\BSGImportingDialog.resx">
+      <DependentUpon>BSGImportingDialog.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\User Controls\Modules\Project Modules\FinancialInformationModule.resx">
+      <DependentUpon>FinancialInformationModule.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\User Controls\Modules\Project Modules\ScenaiorsModule.resx">
+      <DependentUpon>ScenaiorsModule.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\User Controls\Modules\Project Modules\ScenarioFirstCostModule.resx">
+      <DependentUpon>ScenarioFirstCostModule.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI Components\User Controls\Modules\Project Modules\SFUGrid.resx">
+      <DependentUpon>SFUGrid.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TotalEmpty.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CheckOut.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Favorite.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Online.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Offline.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Copy.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\EmptyBox.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Locked.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\Administrator.png" />
+    <Content Include="Resources\AnnualCashFlow.png" />
+    <Content Include="Resources\AssetImpacts.png" />
+    <Content Include="Resources\BudgetSummary.png" />
+    <Content Include="Resources\Building.png" />
+    <Content Include="Resources\cancel.png" />
+    <Content Include="Resources\CapRenewal.png" />
+    <Content Include="Resources\chart_bar.png" />
+    <Content Include="Resources\CleanDeleted.png" />
+    <Content Include="Resources\CloseTab.png" />
+    <Content Include="Resources\Component.png" />
+    <Content Include="Resources\Deleted.png" />
+    <Content Include="Resources\Edit.png" />
+    <Content Include="Resources\Help.png" />
+    <Content Include="Resources\Information.png" />
+    <Content Include="Resources\ItemDeleted.png" />
+    <Content Include="Resources\ItemModified.png" />
+    <Content Include="Resources\ItemNew.png" />
+    <Content Include="Resources\ItemUnchanged.png" />
+    <Content Include="Resources\Loading.png" />
+    <Content Include="Resources\Lock.png" />
+    <Content Include="Resources\MaintenanceAndOperations.png" />
+    <Content Include="Resources\Project.png" />
+    <Content Include="Resources\Refresh.png" />
+    <Content Include="Resources\Save.png" />
+    <Content Include="Resources\SaveAndClose.png" />
+    <Content Include="Resources\TabEmptyIcon.png" />
+    <Content Include="Resources\TabRename.png" />
+    <Content Include="Resources\TCO.png" />
+    <Content Include="Resources\TotalFinancialSummary.png" />
+    <Content Include="Resources\Utilites.png" />
+    <None Include="App.config" />
+    <None Include="Properties\DataSources\Equiom.Tco.BusinessLogicLayer.BudgetSummeryReport.datasource" />
+    <None Include="Properties\DataSources\Equiom.Tco.BusinessLogicLayer.ReportROMMatrixRecord.datasource" />
+    <None Include="Properties\DataSources\Equiom.Tco.BusinessLogicLayer.UtilityReportRecord.datasource" />
+    <None Include="Resources\Error.png" />
+    <None Include="Resources\Selected.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="UI Components\User Controls\Modules\Building Modules\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+    <PostBuildEvent>copy "$(ProjectDir)Resources\EnglishAlphabet.txt" "$(TargetDir)EnglishAlphabet.txt"
+copy "$(ProjectDir)Resources\English.aff" "$(TargetDir)English.aff"
+copy "$(ProjectDir)Resources\American.xlg" "$(TargetDir)American.xlg"</PostBuildEvent>
+  </PropertyGroup>
+</Project>

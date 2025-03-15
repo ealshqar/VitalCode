@@ -1,0 +1,96 @@
+//////////////////////////////////////////////////////////////////////////////
+//  
+//  <sourcefile name="Program.cs" creationdate="09/11/08" owner="anasa" >
+//
+//      <project>McKinstry TCO Application</project>
+//  
+//      <description>Program that calls the main form</description>
+//      
+//      <copyright year="2008" company="McKinstry">
+//          <notice>
+//              Copyright © 2008 McKinstry. All rights reserved
+//  
+//              Developed for McKinstry by
+//                  Equiom - MENA
+//                  www.equiom.com
+//          </notice>
+//  
+//  	<history date="09/11/08" modby="anasa">created</history>
+//  
+//////////////////////////////////////////////////////////////////////////////
+
+using System;
+using System.Windows.Forms;
+using DevExpress.UserSkins;
+using Equiom.Tco.Common;
+using Application=Equiom.Tco.Common.Application;
+using TcoCommon = Equiom.Tco.Common;
+
+namespace TCO.DesktopClientDevexpress
+{
+    internal static class Program
+    {
+        private const string CONFIGURATION_ERROR = "Configuration error, check with your administrator.";
+        private const string SETTING_ERROR = "Failed to access TCO database, please check with your administrator.";
+        private const string APPLICATION_IS_RUNNING = "You can't run two instances to the The TCO application.";
+
+        /// <summary>
+        /// The main entry point for the application.
+        /// </summary>
+        [STAThread]
+        private static void Main()
+        {
+            //intialize the application settings
+            try
+            {
+                Application.Initialize();
+            }
+            catch (ConfigurationException exp)
+            {
+                switch (exp.ErrorCode)
+                {
+                        //MessageBox.Show(exp.Message);
+                    case ConfigurationExceptionErrorCode.ConnectionStringSettingHasInvalidDatabaseName:
+                        MessageBox.Show(CONFIGURATION_ERROR, UIBLLInteraction.ERROR_MESSAGE_TITLE, MessageBoxButtons.OK,
+                                        MessageBoxIcon.Error);
+                        break;
+                    case ConfigurationExceptionErrorCode.ConnectionStringSettingIsInvalid:
+                        MessageBox.Show(CONFIGURATION_ERROR, UIBLLInteraction.ERROR_MESSAGE_TITLE, MessageBoxButtons.OK,
+                                        MessageBoxIcon.Error);
+                        break;
+                    case ConfigurationExceptionErrorCode.ConnectionStringTimeout:
+                        MessageBox.Show(CONFIGURATION_ERROR, UIBLLInteraction.ERROR_MESSAGE_TITLE, MessageBoxButtons.OK,
+                                        MessageBoxIcon.Error);
+                        break;
+                    case ConfigurationExceptionErrorCode.GeneralConfigurationError:
+                        MessageBox.Show(CONFIGURATION_ERROR, UIBLLInteraction.ERROR_MESSAGE_TITLE, MessageBoxButtons.OK,
+                                        MessageBoxIcon.Error);
+                        break;
+                    case ConfigurationExceptionErrorCode.SettingNotFound:
+                        MessageBox.Show(SETTING_ERROR, UIBLLInteraction.ERROR_MESSAGE_TITLE, MessageBoxButtons.OK,
+                                        MessageBoxIcon.Error);
+                        break;
+                    case ConfigurationExceptionErrorCode.SettingValueIsInvalid:
+                        MessageBox.Show(SETTING_ERROR, UIBLLInteraction.ERROR_MESSAGE_TITLE, MessageBoxButtons.OK,
+                                        MessageBoxIcon.Error);
+                        break;
+                }
+
+                return;
+            }
+            System.Windows.Forms.Application.EnableVisualStyles();
+            System.Windows.Forms.Application.SetCompatibleTextRenderingDefault(false);
+            BonusSkins.Register();
+            OfficeSkins.Register();
+
+            ////start the refresh thread
+            //UIBLLInteraction.Instance.StartProjectsCacheRefreshThread();
+
+            //start the main form
+            System.Windows.Forms.Application.Run(new ribbonFrmMain());
+
+            ////stop the refresh thread
+            //UIBLLInteraction.Instance.StopProjectsCacheRefreshThread();
+        }
+    }
+}

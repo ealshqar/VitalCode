@@ -1,0 +1,48 @@
+﻿using System;
+using System.Data;
+
+namespace TCO.DesktopClientDevexpress
+{
+    public static class ExpressionOperator
+    {
+        public static bool IsExpressionValid(string expression)
+        {
+            DataTable dataTable = new DataTable();
+            DataRow dataRow = dataTable.Rows.Add();
+            DataColumn dataColumn = dataTable.Columns.Add();
+            try
+            {
+                dataColumn.Expression = expression;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public static string EvaluateExpression(string expression)
+        {
+            DataTable dataTable = new DataTable();
+            DataRow dataRow = dataTable.Rows.Add();
+            DataColumn dataColumn = dataTable.Columns.Add();
+            dataColumn.Expression = expression;
+            return dataRow[0].ToString();
+        }
+
+        public static bool IsStringNumeric(string value)
+        {
+            //Temporary buffer for storing the result of the next methods int.TryParse
+            double number;
+            if (double.TryParse(value.ToString(), out number))
+            {
+                double result = Convert.ToDouble(value);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
+}

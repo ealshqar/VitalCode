@@ -1,0 +1,1909 @@
+//////////////////////////////////////////////////////////////////////////////
+//  
+//  <sourcefile name="UIBLLInteraction.cs" creationdate="8/5/08" owner="anasa" >
+//
+//      <project>McKinstry TCO Application</project>
+//  
+//      <description>Provides a communication between the UI & BLL</description>
+//      
+//      <copyright year="2008" company="McKinstry">
+//          <notice>
+//              Copyright © 2008 McKinstry. All rights reserved
+//  
+//              Developed for McKinstry by
+//                  Equiom - MENA
+//                  www.equiom.com
+//          </notice>
+//  
+//  	<history date="8/5/08" modby="anasa">created</history>
+//  
+//////////////////////////////////////////////////////////////////////////////
+
+#region Library Calls
+
+//---------------------------------------------------------------------------------------------
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.IO;
+using System.Linq;
+using System.Threading;
+using System.Windows.Forms;
+using System.Xml;
+using DevExpress.XtraEditors.Controls;
+using DevExpress.XtraEditors.DXErrorProvider;
+using DevExpress.XtraTab;
+using Equiom.Tco.BusinessLogicLayer;
+using Equiom.Tco.DataAccessLayer;
+using TCO.DesktopClientDevexpress.UI_Components.User_Controls.Main_Tabs;
+using Component=Equiom.Tco.BusinessLogicLayer.Component;
+using DevExpress.XtraEditors;
+//---------------------------------------------------------------------------------------------
+
+#endregion
+
+namespace TCO.DesktopClientDevexpress
+{
+    public class UIBLLInteraction
+    {
+        #region Singleton Code
+
+        //---------------------------------------------------------------------------------------------
+        private static UIBLLInteraction _instance;
+
+        public static UIBLLInteraction Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    _instance = new UIBLLInteraction();
+                }
+                return _instance;
+            }
+        }
+
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Constants
+
+        //---------------------------------------------------------------------------------------------
+        public const string EDIT_DICTIONARY_HAS_NO_VALUE_ERROR = "Failed to check current project.";
+
+        public const string ENTITY_LOADING_ERROR =
+            "The specified item can't be loaded because an error occured or the item's data is corrupted, please contact your administrator.";
+
+        public const string ERROR_MESSAGE_TITLE = "Error";
+        public const string INFORMATION_MESSAGE_TITLE = "Information";
+        public const string INVALID_EXPRESSION_ERROR = "The expression you entered is invalid.";
+        public const string NEGATIVE_NUMBER_ERROR = "The number you entered is negative and can't be accepted.";
+        public const string OBJECT_HAS_NO_VALUE_ERROR = "The item to be opened has no value.";
+        public const string QUESTION_MESSAGE_TITLE = "Question";
+        public const string RECENT_SELECTION_FILE_ERROR = "The recent reports criteria file is invalid.";
+        private const int REFRESH_THREAD_SLEEP_PERIOD = 30*1000; //30 minutes
+
+        public const string UI_ITEM_HAS_NO_VALUE_ERROR = "User interface item has no value.";
+
+        public const string VERY_LARGE_NUMBER_ERROR = "The number you entered is very large and can't be accepted.";
+        public const string WARNING_MESSAGE_TITLE = "Warning";
+
+        public DXErrorProvider mainErrorProvider = new DXErrorProvider();
+
+        //TODO: change to 30 minutes
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Fields
+
+        //---------------------------------------------------------------------------------------------
+        private readonly object m_lockObject = new object();
+        private bool _allowComponentsFilteration = true;
+
+        private Dictionary<int, EntityBusinessObject> entityEditDictionary = new Dictionary<int, EntityBusinessObject>();
+        private BusinessObjectList<Project> m_ProjectsCache = new BusinessObjectList<Project>();
+        public BusinessObjectList<Project> m_ProjectsCollection = new BusinessObjectList<Project>();
+        private volatile bool m_RefreshDataReady;
+        private Thread m_RefreshThread;
+        private Dictionary<TabTypes, XtraTabPage> otherTabsEditDictionary = new Dictionary<TabTypes, XtraTabPage>();
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Properties
+
+        #region UI Related
+
+        //---------------------------------------------------------------------------------------------
+        public ribbonFrmMain MainForm { get; set; }
+
+        /// <summary>
+        /// A pointer to the XtraTab control in the main form
+        /// </summary>
+        public XtraTabControl FormTabControl { get; set; }
+
+        public NavigationGridControl ProjectsNav { get; set; }
+        public NavigationGridControl BuildingsNav { get; set; }
+        public NavigationGridControl ScenariosNav { get; set; }
+        public NavigationGridControl ComponentsNav { get; set; }
+
+        public string TCORECENTS_FILE_NAME
+        {
+            get { return Application.StartupPath + "\\TCORecents.xml"; }
+        }
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Collections
+
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Contains all the projects that are in the navigation panel
+        /// </summary>
+        public BusinessObjectList<Project> ProjectsCollection
+        {
+            get { return m_ProjectsCollection; }
+            set { m_ProjectsCollection = value; }
+        }
+
+        /// <summary>
+        /// Contains projects refreshed from the refresh thread
+        /// </summary>
+        public BusinessObjectList<Project> RefreshedProjectsCollection
+        {
+            get { return m_ProjectsCache; }
+            set { m_ProjectsCache = value; }
+        }
+
+        /// <summary>
+        /// Used to contain the ID's of the projects that were edited or any if its childs were edited
+        /// </summary>
+        public Dictionary<int, EntityBusinessObject> EntityEditDictionary
+        {
+            get { return entityEditDictionary; }
+            set { entityEditDictionary = value; }
+        }
+
+        /// <summary>
+        /// Used to record the tabs that are being currently edited but are not representing an entity
+        /// </summary>
+        public Dictionary<TabTypes, XtraTabPage> OtherTabsEditDictionary
+        {
+            get { return otherTabsEditDictionary; }
+            set { otherTabsEditDictionary = value; }
+        }
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Other
+
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// A falg to enable or disable components filteration
+        /// </summary>
+        public bool AllowComponentsFilteration
+        {
+            get { return _allowComponentsFilteration; }
+            set { _allowComponentsFilteration = value; }
+        }
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        //---------------------------------------------------------------------------------------------
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Methods
+
+        #region Checking
+
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Check if a tab is opened or not, and if it is opened, only activate the tab and don't create a new one
+        /// </summary>
+        ///<param name="activateTab">flag to indicate if tab should be activated or not</param>
+        /// <param name="openedObject">The entity to open the tab for</param>
+        /// <param name="tabType">The type of the tab to open</param>
+        /// <returns></returns>       
+        public bool CheckIfTabOpened(EntityBusinessObject openedObject, bool activateTab, TabTypes tabType)
+        {
+            //Create a dictionary to search faster through it
+            if (tabType == TabTypes.BuildingsList ||
+                tabType == TabTypes.ComponentList ||
+                tabType == TabTypes.ProjectList ||
+                tabType == TabTypes.Admin ||
+                tabType == TabTypes.AnnualCashFlow ||
+                tabType == TabTypes.UtilityReport ||
+                tabType == TabTypes.BudgetSummaryReport ||
+                tabType == TabTypes.TotalFinancialSummary ||
+                tabType == TabTypes.AssetImpactsReport ||
+                tabType == TabTypes.CapRenewalReport ||
+                tabType == TabTypes.MaintenanceAndOperations ||
+                tabType == TabTypes.UtilityRatesReport ||
+                tabType == TabTypes.BuildingUtilityRatesReport)
+            {
+                if (FormTabControl != null)
+                {
+                    foreach (XtraTabPage tab in FormTabControl.TabPages)
+                    {
+                        try
+                        {
+                            var inspectedEntity = tab.Controls[0] as XtraTabPageEntity;
+                            if (inspectedEntity != null)
+                            {
+                                if (inspectedEntity.TabType == tabType)
+                                {
+                                    if (activateTab)
+                                    {
+                                        ActivateTab(tab);
+                                    }
+                                    return true;
+                                }
+                            }
+                        }
+                        catch (NullReferenceException nullReferenceException)
+                        {
+                            Equiom.Tco.Common.Application.Logger.LogException(nullReferenceException);
+                        }
+                    }
+                }
+                return false;
+            }
+            var tabsObjectDictionary = new Dictionary<EntityBusinessObject, XtraTabPage>();
+            var tabsIDDictionary = new Dictionary<int, XtraTabPage>();
+
+            foreach (XtraTabPage tab in FormTabControl.TabPages)
+            {
+                try
+                {
+                    var inspectedEntity = tab.Controls[0] as XtraTabPageEntity;
+                    if (inspectedEntity != null)
+                    {
+                        if (inspectedEntity.TabObject != null)
+                        {
+                            if (inspectedEntity.TabObject.Id != null)
+                            {
+                                tabsObjectDictionary.Add(inspectedEntity.TabObject, tab);
+                                if (openedObject != null)
+                                {
+                                    if (inspectedEntity.TabObject.GetType() == openedObject.GetType())
+                                    {
+                                        tabsIDDictionary.Add(inspectedEntity.TabObject.Id.Value, tab);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                catch (NullReferenceException nullReferenceException)
+                {
+                    Equiom.Tco.Common.Application.Logger.LogException(nullReferenceException);
+                }
+                catch (ArgumentException argumentException)
+                {
+                    Equiom.Tco.Common.Application.Logger.LogException(argumentException);
+                }
+            }
+            XtraTabPage pageToActivate = null;
+            if (openedObject != null)
+            {
+                tabsObjectDictionary.TryGetValue(openedObject, out pageToActivate);
+            }
+            if (pageToActivate == null)
+            {
+                if (openedObject != null)
+                {
+                    tabsIDDictionary.TryGetValue(openedObject.Id.Value, out pageToActivate);
+                }
+            }
+            if (activateTab && pageToActivate != null)
+            {
+                ActivateTab(pageToActivate);
+            }
+            return (pageToActivate != null) ? true : false;
+        }
+
+        /// <summary>
+        /// Checks if the project exists in the dictionary and return true if it exists
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        public bool IsProjectLocked(int Id)
+        {
+            EntityBusinessObject checkObject = new Project();
+            try
+            {
+                checkObject = null;
+                EntityEditDictionary.TryGetValue(Id, out checkObject);
+            }
+            catch (NullReferenceException)
+            {
+                MessageBox.Show(EDIT_DICTIONARY_HAS_NO_VALUE_ERROR, ERROR_MESSAGE_TITLE, MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+            }
+            return (checkObject == null) ? false : true;
+        }
+
+        /// <summary>
+        /// Loads all the children of an object and returns false if an error occured during the loading
+        /// </summary>
+        /// <param name="entityToLoad">The entity to load children for</param>
+        /// <returns></returns>
+        public bool AreAllChildrenLoaded(EntityBusinessObject entityToLoad)
+        {
+            //A flag that is set to true to allow the open operation to complete unless a collection
+            //in the object is corrupted
+            bool continueOpen = true;
+            try
+            {
+                entityToLoad.LazyLoadChildren();
+            }
+            catch (DataAccessException dataAccessException)
+            {
+                continueOpen = false;
+                MessageBox.Show(ENTITY_LOADING_ERROR, ERROR_MESSAGE_TITLE, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Equiom.Tco.Common.Application.Logger.LogException(dataAccessException);
+            }
+
+            return continueOpen;
+        }
+
+        /// <summary>
+        /// Determines if the current tab is focused or not.
+        /// </summary>
+        /// <param name="tab">The tab to check</param>
+        /// <returns>True if the tab is selected</returns>
+        public bool IsThisTabSelected(XtraTabPage tab)
+        {
+            return (FormTabControl.SelectedTabPage == tab);
+        }
+
+        public bool CheckTabOpenedAndEditedByIDAndType(int Id, Type objectType)
+        {
+            bool isTabOpenedAndEdited = false;
+            foreach (XtraTabPage tab in FormTabControl.TabPages)
+            {
+                try
+                {
+                    var inspectedEntity = tab.Controls[0] as XtraTabPageEntity;
+                    //Case of the tab for the project list view where tab object = null
+                    if (inspectedEntity != null)
+                    {
+                        if (inspectedEntity.TabObject != null)
+                        {
+                            if (inspectedEntity.TabObject.Id.Value == Id &&
+                                inspectedEntity.TabObject.GetType() == objectType &&
+                                inspectedEntity.TabState == EntityTabState.Modified)
+                            {
+                                isTabOpenedAndEdited = true;
+                            }
+                        }
+                    }
+                }
+                catch (NullReferenceException nullReferenceException)
+                {
+                    Equiom.Tco.Common.Application.Logger.LogException(nullReferenceException);
+                }
+            }
+            return isTabOpenedAndEdited;
+        }
+
+        public bool CheckTabEditedByObject(EntityBusinessObject searchObject)
+        {
+            bool isTabOpenedAndEdited = false;
+            foreach (XtraTabPage tab in FormTabControl.TabPages)
+            {
+                try
+                {
+                    var inspectedEntity = tab.Controls[0] as XtraTabPageEntity;
+                    //Case of the tab for the project list view where tab object = null
+                    if (inspectedEntity != null)
+                    {
+                        if (inspectedEntity.TabObject != null)
+                        {
+                            if (inspectedEntity.TabObject == searchObject &&
+                                inspectedEntity.TabState == EntityTabState.Modified)
+                            {
+                                isTabOpenedAndEdited = true;
+                            }
+                        }
+                    }
+                }
+                catch (NullReferenceException nullReferenceException)
+                {
+                    Equiom.Tco.Common.Application.Logger.LogException(nullReferenceException);
+                }
+            }
+            return isTabOpenedAndEdited;
+        }
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Get data
+
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="tabObject"></param>
+        /// <returns></returns>
+        public XtraTabPageEntity GetTabByObject(EntityBusinessObject tabObject)
+        {
+            var tabsDictionary = new Dictionary<EntityBusinessObject, XtraTabPage>();
+            if (FormTabControl != null)
+            {
+                foreach (XtraTabPage tab in FormTabControl.TabPages)
+                {
+                    try
+                    {
+                        var inspectedEntity = tab.Controls[0] as XtraTabPageEntity;
+                        //Case of the tab for the project list view where tab object = null
+                        if (inspectedEntity != null)
+                        {
+                            if (inspectedEntity.TabObject != null)
+                            {
+                                tabsDictionary.Add(inspectedEntity.TabObject, tab);
+                            }
+                        }
+                    }
+                    catch (NullReferenceException nullReferenceException)
+                    {
+                        Equiom.Tco.Common.Application.Logger.LogException(nullReferenceException);
+                    }
+                    catch (ArgumentException argumentException)
+                    {
+                        Equiom.Tco.Common.Application.Logger.LogException(argumentException);
+                    }
+                }
+            }
+            XtraTabPage tabToFind;
+            tabsDictionary.TryGetValue(tabObject, out tabToFind);
+            return (tabToFind == null) ? null : tabToFind.Controls[0] as XtraTabPageEntity;
+        }
+
+        
+
+        /// <summary>
+        /// Return the current selected object from the projects group as project
+        /// </summary>
+        /// <returns></returns>
+        public Project GetNavSelectedProject()
+        {
+            try
+            {
+                return ProjectsNav.SelectedItem as Project;
+            }
+            catch (NullReferenceException nullReferenceException)
+            {
+                //UIBLLInteraction.Instance.ShowException(nullReferenceException);
+                Equiom.Tco.Common.Application.Logger.LogException(nullReferenceException);
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Return the current selected object from the buildings group as building
+        /// </summary>
+        /// <returns></returns>
+        public Building GetNavSelectedBuilding()
+        {
+            try
+            {
+                return BuildingsNav.SelectedItem as Building;
+            }
+            catch (NullReferenceException nullReferenceException)
+            {
+                //UIBLLInteraction.Instance.ShowException(nullReferenceException);
+                Equiom.Tco.Common.Application.Logger.LogException(nullReferenceException);
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Return the current selected object from the components group as component
+        /// </summary>
+        /// <returns></returns>
+        public Component GetNavSelectedComponent()
+        {
+            try
+            {
+                return ComponentsNav.SelectedItem as Component;
+            }
+            catch (NullReferenceException nullReferenceException)
+            {
+                //UIBLLInteraction.Instance.ShowException(nullReferenceException);
+                Equiom.Tco.Common.Application.Logger.LogException(nullReferenceException);
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Return the current selected object from the scenarios group as scenario
+        /// </summary>
+        /// <returns></returns>
+        public Scenario GetNavSelectedScenario()
+        {
+            try
+            {
+                return ScenariosNav.SelectedItem as Scenario;
+            }
+            catch (NullReferenceException nullReferenceException)
+            {
+                //UIBLLInteraction.Instance.ShowException(nullReferenceException);
+                Equiom.Tco.Common.Application.Logger.LogException(nullReferenceException);
+            }
+            return null;
+        }
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region UI Changes
+
+        //---------------------------------------------------------------------------------------------
+        public static void ShowError(string errorText)
+        {
+            XtraMessageBox.Show(errorText, ERROR_MESSAGE_TITLE, MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+        public static void ShowWarning(string warningText)
+        {
+            XtraMessageBox.Show(warningText, WARNING_MESSAGE_TITLE, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+        public static void ShowInformation(string infoText)
+        {
+            XtraMessageBox.Show(infoText, INFORMATION_MESSAGE_TITLE, MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+
+        /// <summary>
+        /// Shows the specified exception in a message box
+        /// </summary>
+        /// <param name="exception"></param>
+        public void ShowException(Exception exception)
+        {
+            MessageBox.Show(
+                exception.Message,
+                ERROR_MESSAGE_TITLE,
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+        }
+
+        /// <summary>
+        /// This method will check the current focused tab, and if it was project tab, it will check the pressed
+        /// keyboard keys combination and perform a specific action.
+        /// </summary>
+        /// <param name="pressedKey"></param>
+        public void HandleProjectHotKeyPress(Keys pressedKey)
+        {
+            //if the keys pressed are Control + G
+            if (Control.ModifierKeys == Keys.Control && pressedKey == Keys.G)
+            {
+                if (FormTabControl.TabPages.Count != 0)
+                {
+                    try
+                    {
+                        var currentTab = FormTabControl.SelectedTabPage.Controls[0] as XtraTabPageEntity;
+                        if (currentTab != null)
+                        {
+                            if (currentTab.TabType == TabTypes.Project)
+                            {
+                                var currentProjectTab = currentTab as XtraTabPageProject;
+                                if (currentProjectTab != null)
+                                {
+                                    currentProjectTab.ChangeEnergyGuaranteeRiskVisibility();
+                                }
+                            }
+                        }
+                    }
+                    catch (NullReferenceException)
+                    {
+                    }
+                }
+            }
+            else if (Control.ModifierKeys.ToString() == "Shift, Control" && pressedKey == Keys.G)
+            {
+                if (FormTabControl.TabPages.Count != 0)
+                {
+                    try
+                    {
+                        var currentTab = FormTabControl.SelectedTabPage.Controls[0] as XtraTabPageEntity;
+                        if (currentTab != null)
+                        {
+                            if (currentTab.TabType == TabTypes.Project)
+                            {
+                                var currentProjectTab = currentTab as XtraTabPageProject;
+                                if (currentProjectTab != null)
+                                {
+                                    currentProjectTab.ChangeSFCTabVisibility();
+                                }
+                            }
+                        }
+                    }
+                    catch (NullReferenceException)
+                    {
+                    }
+                }
+            }
+            else if (Control.ModifierKeys.ToString() == "Shift, Control" && pressedKey == Keys.F)
+            {
+                if (FormTabControl.TabPages.Count != 0)
+                {
+                    try
+                    {
+                        var currentTab = FormTabControl.SelectedTabPage.Controls[0] as XtraTabPageEntity;
+                        if (currentTab != null)
+                        {
+                            if (currentTab.TabType == TabTypes.Component)
+                            {
+                                var currentComponentTab = currentTab as XtraTabPageComponent;
+                                if (currentComponentTab != null)
+                                {
+                                    currentComponentTab.ChangeCFCTabVisibility();
+                                }
+                            }
+                        }
+                    }
+                    catch (NullReferenceException)
+                    {
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// This method will check the current focused tab, and it will check the pressed
+        /// keyboard keys combination and perform a save action
+        /// </summary>
+        /// <param name="pressedKey"></param>
+        public void HandleRibbonHotKeyPress(Keys pressedKey)
+        {
+            if (FormTabControl.TabPages.Count != 0)
+            {
+                try
+                {
+                    var currentTab = FormTabControl.SelectedTabPage.Controls[0] as XtraTabPageEntity;
+                    if (currentTab != null)
+                    {
+                        if (currentTab.TabType == TabTypes.Admin ||
+                            currentTab.TabType == TabTypes.Project ||
+                            currentTab.TabType == TabTypes.Building ||
+                            currentTab.TabType == TabTypes.Component)
+                        {
+                            //if the keys pressed are Control + S
+                            if (Control.ModifierKeys == Keys.Control && pressedKey == Keys.S &&
+                                MainForm.IsSaveButtonEnabled())
+                            {
+                                currentTab.SaveAction();
+                            }
+                            else if (Control.ModifierKeys == Keys.Control && pressedKey == Keys.D &&
+                                     MainForm.IsDisableButtonEnabled())
+                            {
+                                currentTab.LockAction();
+                            }
+                            else if (Control.ModifierKeys == Keys.Control && pressedKey == Keys.T &&
+                                     MainForm.IsEditButtonEnabled())
+                            {
+                                currentTab.UnlockTab();
+                            }
+                            //else if (Control.ModifierKeys == Keys.Control && pressedKey == Keys.Z && MainForm.IsCancelButtonEnabled())
+                            //{
+                            //    currentTab.CancelOrCancelCloseAction(false);
+                            //}
+                        }
+                        if (currentTab.TabType == TabTypes.ProjectList ||
+                            currentTab.TabType == TabTypes.BuildingsList ||
+                            currentTab.TabType == TabTypes.ComponentList ||
+                            currentTab.TabType == TabTypes.Project ||
+                            currentTab.TabType == TabTypes.Building ||
+                            currentTab.TabType == TabTypes.Component)
+                        {
+                            if (Control.ModifierKeys == Keys.Control && pressedKey == Keys.R &&
+                                MainForm.IsRefreshButtonEnabled())
+                            {
+                                currentTab.RefreshAction();
+                            }
+                        }
+                    }
+                }
+                catch (NullReferenceException)
+                {
+                }
+            }
+        }
+
+        /// <summary>
+        /// Checks if the recent report criteria file exists and creates it if it doesn't
+        /// </summary>
+        public void CheckAndCreateRecentReportCriteriaFile()
+        {
+            try
+            {
+                var document = new XmlDocument();
+                document.Load(TCORECENTS_FILE_NAME);
+            }
+            catch (XmlException)
+            {
+                MessageBox.Show(RECENT_SELECTION_FILE_ERROR, ERROR_MESSAGE_TITLE, MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+                CheckAndCreateRecentReportCriteriaFile();
+            }
+            catch (FileNotFoundException fileNotFoundException)
+            {
+                Equiom.Tco.Common.Application.Logger.LogException(fileNotFoundException);
+                try
+                {
+                    string path = CreateNewRecentsDocument();
+
+                    var document = new XmlDocument();
+                    document.Load(path);
+                    XmlNode annualCashFlowReport = GetAnnualCashFlowReportElement(document);
+                    XmlNode utilityReport = GetUtilityReportElement(document);
+                    XmlNode scenarioFirstCost = GetScenarioFirstCostElement(document);
+                    XmlNode totalFinancialSummary = GetTotalFinancialSummaryElement(document);
+                    XmlNode assetImpactsDetailReport = GetAssetImpactsDetailReportElement(document);
+                    XmlNode oAndMDetailReport = GetOAndMDetailReportElement(document);
+                    XmlNode caprenewalDetailReport = GetCapRenewalDetailReportElement(document);
+                    XmlNode utilityRateReport = GetUtilityRatesReportElement(document);
+                    XmlNode projectsImportPaths = document.CreateElement("ProjectsImportPaths");
+
+                    XmlNode rootNode = document.SelectSingleNode("Root");
+                    rootNode.AppendChild(annualCashFlowReport);
+                    rootNode.AppendChild(utilityReport);
+                    rootNode.AppendChild(scenarioFirstCost);
+                    rootNode.AppendChild(totalFinancialSummary);
+                    rootNode.AppendChild(assetImpactsDetailReport);
+                    rootNode.AppendChild(oAndMDetailReport);
+                    rootNode.AppendChild(caprenewalDetailReport);
+                    rootNode.AppendChild(utilityRateReport);
+                    rootNode.AppendChild(projectsImportPaths);
+                    document.Save(path);
+                }
+                catch (XmlException)
+                {
+                    MessageBox.Show(RECENT_SELECTION_FILE_ERROR, ERROR_MESSAGE_TITLE, MessageBoxButtons.OK,
+                                    MessageBoxIcon.Error);
+                }
+                catch (FileNotFoundException fileNotFoundEx)
+                {
+                    MessageBox.Show(fileNotFoundEx.Message, ERROR_MESSAGE_TITLE, MessageBoxButtons.OK,
+                                    MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Create a new file for the recents document
+        /// </summary>
+        /// <returns></returns>
+        public string CreateNewRecentsDocument()
+        {
+            string path = TCORECENTS_FILE_NAME;
+            var recentProjectsXMLTextWriter = new XmlTextWriter(path, null) {Formatting = Formatting.Indented};
+            recentProjectsXMLTextWriter.WriteStartDocument(false);
+            recentProjectsXMLTextWriter.WriteStartElement("Root");
+            recentProjectsXMLTextWriter.Flush();
+            recentProjectsXMLTextWriter.Close();
+            return path;
+        }
+
+        /// <summary>
+        /// Creates an element in the recents doc for TotalFinancialSummary
+        /// </summary>
+        /// <param name="document"></param>
+        /// <returns></returns>
+        private static XmlNode GetTotalFinancialSummaryElement(XmlDocument document)
+        {
+            XmlNode totalFinancialSummary = document.CreateElement("TotalFinancialSummary");
+            XmlAttribute projectTFC = document.CreateAttribute("Project");
+            XmlAttribute scenarioTFC = document.CreateAttribute("Scenario");
+            XmlAttribute showDeltasVSBase = document.CreateAttribute("ShowDeltasVSBase");
+            XmlAttribute useUtilityGuaranteeMultiplier = document.CreateAttribute("UseUtilityGuaranteeMultiplier");
+            XmlAttribute selectAllScenarios = document.CreateAttribute("SelectAllScenarios");
+            XmlAttribute componentSortMethod = document.CreateAttribute("ComponentSortMethod");
+            XmlAttribute fCLPM = document.CreateAttribute("FCLPM");
+            XmlAttribute fCHPM = document.CreateAttribute("FCHPM");
+            XmlAttribute nFCLPM = document.CreateAttribute("NFCLPM");
+            XmlAttribute nFCHPM = document.CreateAttribute("NFCHPM");
+            XmlAttribute capRate = document.CreateAttribute("CapRate");
+            projectTFC.Value = "Null";
+            scenarioTFC.Value = "Null";
+            showDeltasVSBase.Value = "true";
+            useUtilityGuaranteeMultiplier.Value = "true";
+            selectAllScenarios.Value = "false";
+            componentSortMethod.Value = "0";
+            fCLPM.Value = "0.9";
+            fCHPM.Value = "1.15";
+            nFCLPM.Value = "1.1";
+            nFCHPM.Value = "0.85";
+            capRate.Value = "0";
+
+            totalFinancialSummary.Attributes.Append(projectTFC);
+            totalFinancialSummary.Attributes.Append(scenarioTFC);
+            totalFinancialSummary.Attributes.Append(showDeltasVSBase);
+            totalFinancialSummary.Attributes.Append(useUtilityGuaranteeMultiplier);
+            totalFinancialSummary.Attributes.Append(selectAllScenarios);
+            totalFinancialSummary.Attributes.Append(componentSortMethod);
+            totalFinancialSummary.Attributes.Append(fCLPM);
+            totalFinancialSummary.Attributes.Append(fCHPM);
+            totalFinancialSummary.Attributes.Append(nFCLPM);
+            totalFinancialSummary.Attributes.Append(nFCHPM);
+            totalFinancialSummary.Attributes.Append(capRate);
+            return totalFinancialSummary;
+        }
+
+        /// <summary>
+        /// Creates an element in the recents doc for Asset Impacts Details Report
+        /// </summary>
+        /// <param name="document"></param>
+        /// <returns></returns>
+        private static XmlNode GetAssetImpactsDetailReportElement(XmlDocument document)
+        {
+            XmlNode assetImpactsDetailReport = document.CreateElement("AssetImpactsDetailReport");
+            XmlAttribute projectAI = document.CreateAttribute("Project");
+            XmlAttribute scenarioAI = document.CreateAttribute("Scenario");
+            XmlAttribute selectAllComponents = document.CreateAttribute("SelectAllComponents");
+            projectAI.Value = "Null";
+            scenarioAI.Value = "Null";
+            selectAllComponents.Value = "False";
+
+            assetImpactsDetailReport.Attributes.Append(projectAI);
+            assetImpactsDetailReport.Attributes.Append(scenarioAI);
+            assetImpactsDetailReport.Attributes.Append(selectAllComponents);
+            return assetImpactsDetailReport;
+        }
+
+        /// <summary>
+        /// Creates an element in the recents doc for M & O Details Report
+        /// </summary>
+        /// <param name="document"></param>
+        /// <returns></returns>
+        private static XmlNode GetOAndMDetailReportElement(XmlDocument document)
+        {
+            XmlNode oAndMDetailReport = document.CreateElement("MaintenanceAndOperationDetailReport");
+            XmlAttribute projectMO = document.CreateAttribute("Project");
+            XmlAttribute scenarioMO = document.CreateAttribute("Scenario");
+            XmlAttribute selectAllComponentsMO = document.CreateAttribute("SelectAllComponents");
+            projectMO.Value = "Null";
+            scenarioMO.Value = "Null";
+            selectAllComponentsMO.Value = "False";
+
+            oAndMDetailReport.Attributes.Append(projectMO);
+            oAndMDetailReport.Attributes.Append(scenarioMO);
+            oAndMDetailReport.Attributes.Append(selectAllComponentsMO);
+            return oAndMDetailReport;
+        }
+
+        /// <summary>
+        /// Creates an element in the recents doc for cap renewal Details Report
+        /// </summary>
+        /// <param name="document"></param>
+        /// <returns></returns>
+        private static XmlNode GetCapRenewalDetailReportElement(XmlDocument document)
+        {
+            XmlNode capRenewalDetailReport = document.CreateElement("CapRenewalDetailReport");
+            XmlAttribute projectCR = document.CreateAttribute("Project");
+            XmlAttribute scenarioCR = document.CreateAttribute("Scenario");
+            XmlAttribute selectAllComponentsCR = document.CreateAttribute("SelectAllComponents");
+            projectCR.Value = "Null";
+            scenarioCR.Value = "Null";
+            selectAllComponentsCR.Value = "False";
+
+            capRenewalDetailReport.Attributes.Append(projectCR);
+            capRenewalDetailReport.Attributes.Append(scenarioCR);
+            capRenewalDetailReport.Attributes.Append(selectAllComponentsCR);
+            return capRenewalDetailReport;
+        }
+
+        /// <summary>
+        /// Creates an element in the recents doc for Utility Rates Report
+        /// </summary>
+        /// <param name="document"></param>
+        /// <returns></returns>
+        private static XmlNode GetUtilityRatesReportElement(XmlDocument document)
+        {
+            XmlNode utilityRatesDetailReport = document.CreateElement("UtilityRatesReport");
+            XmlAttribute projectUR = document.CreateAttribute("Project");
+            projectUR.Value = "Null";
+            utilityRatesDetailReport.Attributes.Append(projectUR);
+
+            return utilityRatesDetailReport;
+        }
+
+        /// <summary>
+        /// Creates an element in the recents doc for ScenarioFirstCost
+        /// </summary>
+        /// <param name="document"></param>
+        /// <returns></returns>
+        private static XmlNode GetScenarioFirstCostElement(XmlDocument document)
+        {
+            XmlNode scenarioFirstCost = document.CreateElement("ScenarioFirstCost");
+            XmlAttribute projectSFC = document.CreateAttribute("Project");
+            XmlAttribute scenarioSFC = document.CreateAttribute("Scenario");
+            projectSFC.Value = "Null";
+            scenarioSFC.Value = "Null";
+            scenarioFirstCost.Attributes.Append(projectSFC);
+            scenarioFirstCost.Attributes.Append(scenarioSFC);
+            return scenarioFirstCost;
+        }
+
+        /// <summary>
+        /// Creates an element in the recents doc for UtilityReport
+        /// </summary>
+        /// <param name="document"></param>
+        /// <returns></returns>
+        public XmlNode GetUtilityReportElement(XmlDocument document)
+        {
+            XmlNode utilityReport = document.CreateElement("UtilityReport");
+            XmlAttribute projectUR = document.CreateAttribute("Project");
+            XmlAttribute scenarioUR = document.CreateAttribute("Scenario");
+            XmlAttribute includedGuaranteeMultiplier = document.CreateAttribute("IncludedGuaranteeMultiplier");
+            XmlAttribute hideBaseColumns = document.CreateAttribute("HideBaseColumns");
+            XmlAttribute hideSavingsColumns = document.CreateAttribute("HideSavingsColumns");
+            XmlAttribute hideProposedColumns = document.CreateAttribute("HideProposedColumns");
+            projectUR.Value = "Null";
+            scenarioUR.Value = "Null";
+            includedGuaranteeMultiplier.Value = "true";
+            hideBaseColumns.Value = "true";
+            hideSavingsColumns.Value = "true";
+            hideProposedColumns.Value = "true";
+            utilityReport.Attributes.Append(projectUR);
+            utilityReport.Attributes.Append(scenarioUR);
+            utilityReport.Attributes.Append(includedGuaranteeMultiplier);
+            utilityReport.Attributes.Append(hideBaseColumns);
+            utilityReport.Attributes.Append(hideSavingsColumns);
+            utilityReport.Attributes.Append(hideProposedColumns);
+            return utilityReport;
+        }
+
+        /// <summary>
+        /// Creates an element in the recents doc for AnnualCashFlowReport
+        /// </summary>
+        /// <param name="document"></param>
+        /// <returns></returns>
+        public XmlNode GetAnnualCashFlowReportElement(XmlDocument document)
+        {
+            XmlNode annualCashFlowReport = document.CreateElement("AnnualCashFlow");
+            XmlAttribute project = document.CreateAttribute("Project");
+            XmlAttribute scenario1 = document.CreateAttribute("Scenario1");
+            XmlAttribute scenario2 = document.CreateAttribute("Scenario2");
+            XmlAttribute component1 = document.CreateAttribute("Component1");
+            XmlAttribute component2 = document.CreateAttribute("Component2");
+            project.Value = "Null";
+            scenario1.Value = "Null";
+            scenario2.Value = "Null";
+            component1.Value = "Null";
+            component2.Value = "Null";
+            annualCashFlowReport.Attributes.Append(project);
+            annualCashFlowReport.Attributes.Append(scenario1);
+            annualCashFlowReport.Attributes.Append(scenario2);
+            annualCashFlowReport.Attributes.Append(component1);
+            annualCashFlowReport.Attributes.Append(component2);
+            return annualCashFlowReport;
+        }
+
+        public XmlDocument GetRecentsDocment()
+        {
+            string path = TCORECENTS_FILE_NAME;
+            try
+            {
+                var document = new XmlDocument();
+                document.Load(path);
+                return document;
+            }
+            catch (FileNotFoundException fileNotFoundException)
+            {
+                MessageBox.Show(
+                    "Recents data file wasn't found, however a new file was created and your changes will be saved in it.",
+                    "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Equiom.Tco.Common.Application.Logger.LogException(fileNotFoundException);
+                CheckAndCreateRecentReportCriteriaFile();
+                var document = new XmlDocument();
+                document.Load(path);
+                return document;
+            }
+            catch (XmlException xmlException)
+            {
+                MessageBox.Show(
+                    "Recents data file wasn't found, however a new file was created and your changes will be saved in it.",
+                    "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Equiom.Tco.Common.Application.Logger.LogException(xmlException);
+                CheckAndCreateRecentReportCriteriaFile();
+                var document = new XmlDocument();
+                document.Load(path);
+                return document;
+            }
+        }
+
+        #region Ribbon Related
+
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Enables or disabled the button
+        /// </summary>
+        /// <param name="isEnabled"></param>
+        public void IsSaveButtonEnabled(bool isEnabled)
+        {
+            try
+            {
+                MainForm.barButtonItemSave.Enabled = isEnabled;
+            }
+            catch (NullReferenceException)
+            {
+                MessageBox.Show(UI_ITEM_HAS_NO_VALUE_ERROR, ERROR_MESSAGE_TITLE, MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// Enables or disabled the button
+        /// </summary>
+        /// <param name="isEnabled"></param>
+        public void IsSaveAndCloseButtonEnabled(bool isEnabled)
+        {
+            try
+            {
+                MainForm.barButtonItemSaveClose.Enabled = isEnabled;
+            }
+            catch (NullReferenceException)
+            {
+                MessageBox.Show(UI_ITEM_HAS_NO_VALUE_ERROR, ERROR_MESSAGE_TITLE, MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// Enables or disabled the button
+        /// </summary>
+        /// <param name="isEnabled"></param>
+        public void IsCancelButtonEnabled(bool isEnabled)
+        {
+            try
+            {
+                MainForm.barButtonItemCancel.Enabled = isEnabled;
+            }
+            catch (NullReferenceException)
+            {
+                MessageBox.Show(UI_ITEM_HAS_NO_VALUE_ERROR, ERROR_MESSAGE_TITLE, MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// Enables or disabled the button
+        /// </summary>
+        /// <param name="isEnabled"></param>
+        public void IsEditButtonEnabled(bool isEnabled)
+        {
+            try
+            {
+                MainForm.barButtonItemEdit.Enabled = isEnabled;
+            }
+            catch (NullReferenceException)
+            {
+                MessageBox.Show(UI_ITEM_HAS_NO_VALUE_ERROR, ERROR_MESSAGE_TITLE, MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// Enables or disabled the button
+        /// </summary>
+        /// <param name="isEnabled"></param>
+        public void IsLockButtonEnabled(bool isEnabled)
+        {
+            try
+            {
+                MainForm.barButtonItemLock.Enabled = isEnabled;
+            }
+            catch (NullReferenceException)
+            {
+                MessageBox.Show(UI_ITEM_HAS_NO_VALUE_ERROR, ERROR_MESSAGE_TITLE, MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// Enables or disabled the button
+        /// </summary>
+        /// <param name="isEnabled"></param>
+        public void IsRefreshButtonEnabled(bool isEnabled)
+        {
+            try
+            {
+                //MainForm.barButtonItemRefresh.Enabled = isEnabled;
+            }
+            catch (NullReferenceException)
+            {
+                MessageBox.Show(UI_ITEM_HAS_NO_VALUE_ERROR, ERROR_MESSAGE_TITLE, MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+            }
+        }
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Tab Related
+
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Activate the specified tab in the tab control
+        /// </summary>
+        /// <param name="tab"> The tab to be activated</param>
+        /// <returns></returns>       
+        private void ActivateTab(XtraTabPage tab)
+        {
+            if (tab != null)
+            {
+                try
+                {
+                    FormTabControl.SelectedTabPage = tab;
+                }
+                catch (NullReferenceException)
+                {
+                    MessageBox.Show(UI_ITEM_HAS_NO_VALUE_ERROR, ERROR_MESSAGE_TITLE, MessageBoxButtons.OK,
+                                    MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Close the specified tab page
+        /// </summary>
+        /// <param name="tab"> The tab to be closed</param>
+        /// <returns></returns>       
+        public void CloseTabPage(XtraTabPage tab)
+        {
+            if (tab == null)
+            {
+            }
+            else
+            {
+                try
+                {
+                    if (FormTabControl.TabPages.Count != 0 && FormTabControl.TabPages.Contains(tab))
+                    {
+                        var currentEntityTab = tab.Controls[0] as XtraTabPageEntity;
+                        if (currentEntityTab != null)
+                        {
+                            currentEntityTab.PerformBeforeCloseActions();
+                            currentEntityTab.ClearHandlers();
+                        }
+
+                        MainForm.spellChecker1.ParentContainer = null;
+                        FormTabControl.TabPages.Remove(tab);
+                        FormTabControl.SelectedTabPageIndex = FormTabControl.TabPages.Count - 1;
+                    }
+                }
+                catch (NullReferenceException)
+                {
+                    MessageBox.Show(UI_ITEM_HAS_NO_VALUE_ERROR, ERROR_MESSAGE_TITLE, MessageBoxButtons.OK,
+                                    MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Component Filteration
+
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Filter the collection of components in the navigation panel according to user's selection
+        /// </summary>
+        public void FilterComponentsBySelection()
+        {
+            if (!AllowComponentsFilteration)
+            {
+            }
+            else
+            {
+                var finalComponentsCollection = new BindingList<Component>();
+                try
+                {
+                    var selectedProject = ProjectsNav.SelectedItem as Project;
+                    var selectedBuilding = BuildingsNav.SelectedItem as Building;
+                    var selectedScenario = ScenariosNav.SelectedItem as Scenario;
+
+                    if (selectedBuilding == null && selectedScenario == null)
+                    {
+                        try
+                        {
+                            if (selectedProject != null)
+                            {
+                                finalComponentsCollection = selectedProject.Components;
+                            }
+                        }
+                        catch (NullReferenceException nullReferenceException)
+                        {
+                            Equiom.Tco.Common.Application.Logger.LogException(nullReferenceException);
+                        }
+                    }
+                    else if (selectedBuilding != null && selectedScenario == null)
+                    {
+                        try
+                        {
+                            finalComponentsCollection = selectedBuilding.Components;
+                        }
+                        catch (NullReferenceException nullReferenceException)
+                        {
+                            //UIBLLInteraction.Instance.ShowException(nullReferenceException);
+                            Equiom.Tco.Common.Application.Logger.LogException(nullReferenceException);
+                        }
+                    }
+                    else if (selectedBuilding == null)
+                    {
+                        try
+                        {
+                            IEnumerable<Component> query =
+                                (from scenarioComp in selectedScenario.Components
+                                 select scenarioComp.Component);
+
+                            var list = new List<Component>(query);
+                            finalComponentsCollection = new BindingList<Component>(list);
+                        }
+                        catch (NullReferenceException nullReferenceException)
+                        {
+                            Instance.ShowException(nullReferenceException);
+                            Equiom.Tco.Common.Application.Logger.LogException(nullReferenceException);
+                        }
+                    }
+                    else
+                    {
+                        try
+                        {
+                            IEnumerable<Component> query =
+                                from scenarioComp in selectedScenario.Components
+                                from buildingComp in selectedBuilding.Components
+                                where scenarioComp.ComponentId == buildingComp.Id
+                                select buildingComp;
+
+                            var list = new List<Component>(query);
+                            finalComponentsCollection = new BindingList<Component>(list);
+                        }
+                        catch (NullReferenceException nullReferenceException)
+                        {
+                            Instance.ShowException(nullReferenceException);
+                            Equiom.Tco.Common.Application.Logger.LogException(nullReferenceException);
+                        }
+                    }
+                }
+                catch (NullReferenceException nullReferenceException)
+                {
+                    Instance.ShowException(nullReferenceException);
+                    Equiom.Tco.Common.Application.Logger.LogException(nullReferenceException);
+                }
+                try
+                {
+                    var componentsBindingSource = new BindingSource {DataSource = finalComponentsCollection};
+                    ComponentsNav.DataSource = componentsBindingSource;
+                    ComponentsNav.ClearSelection();
+                }
+                catch (NullReferenceException nullReferenceException)
+                {
+                    Instance.ShowException(nullReferenceException);
+                    Equiom.Tco.Common.Application.Logger.LogException(nullReferenceException);
+                }
+            }
+        }
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region General Common Functionalities
+
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Splits the long text so it can fit in super tooltip
+        /// </summary>
+        /// <param name="tooltip"></param>
+        /// <returns></returns>
+        public static string ProcessLongToolTips(string tooltip)
+        {
+            const int MaxWordLength = 50;
+            string[] words = tooltip.Split(' ');
+            for (int i = 0; i < words.Length; i++)
+                if (words[i].Length > MaxWordLength)
+                    for (int j = MaxWordLength; j < words[i].Length; j += MaxWordLength + 2)
+                        words[i] = words[i].Insert(j, "\n");
+            tooltip = string.Join(" ", words);
+            return tooltip;
+        }
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Actions Select
+
+        #region Tab Actions
+
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Opens a tab page and load it with the passed business object
+        /// </summary>
+        /// <param name="openedObject">The business object to be opened</param>
+        public XtraTabPageEntity Open(ref EntityBusinessObject openedObject)
+        {
+            //Check if the tab was opened before, and activate it in that case
+            if (openedObject != null)
+            {
+                if (openedObject is Scenario)
+                {
+                    var openedTab = new XtraTabPageEntity();
+                    try
+                    {
+                        EntityBusinessObject projectToOpen =
+                            Instance.ProjectsNav.GetObjectByID<Project>((openedObject as Scenario).ProjectId);
+                        if (projectToOpen != null)
+                        {
+                            if (!CheckIfTabOpened(projectToOpen, true, 0))
+                            {
+                                //Get the correct tab type using the object type
+                                openedTab = XtraTabFactory.GetTab(projectToOpen);
+                                //Reload the tab before opening
+                                projectToOpen.Reload();
+                                //Open the tab in the UI
+                                openedTab.Open(projectToOpen, 0);
+                            }
+                            XtraTabPageEntity entityToOpen = GetTabByObject(projectToOpen);
+                            ((XtraTabPageProject) entityToOpen).FocusOnScenario(openedObject as Scenario);
+                        }
+                    }
+                    catch (NullReferenceException nullReferenceException)
+                    {
+                        //UIBLLInteraction.Instance.ShowException(nullReferenceException);
+                        Equiom.Tco.Common.Application.Logger.LogException(nullReferenceException);
+                    }
+                    return openedTab;
+                }
+                try
+                {
+                    bool continueOpen = AreAllChildrenLoaded(openedObject);
+                    if (!CheckIfTabOpened(openedObject, true, 0) && continueOpen)
+                    {
+                        //Get the correct tab type using the object type
+                        XtraTabPageEntity openedTab = XtraTabFactory.GetTab(openedObject);
+                        //Reload the tab before opening
+                        openedObject.Reload();
+                        //Open the tab in the UI
+                        openedTab.Open(openedObject, 0);
+                        return openedTab;
+                    }
+                }
+                catch (NullReferenceException nullReferenceException)
+                {
+                    //UIBLLInteraction.Instance.ShowException(nullReferenceException);
+                    Equiom.Tco.Common.Application.Logger.LogException(nullReferenceException);
+                }
+                return new XtraTabPageEntity();
+            }
+            MessageBox.Show(OBJECT_HAS_NO_VALUE_ERROR, ERROR_MESSAGE_TITLE, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return null;
+        }
+
+        /// <summary>
+        /// Create a new tab for a specified object type
+        /// </summary>
+        /// <param name="entityType">The type of the entity</param>
+        /// <param name="parentObject">The parent project to the new tab</param>
+        public XtraTabPageEntity New(EntityType entityType, EntityBusinessObject parentObject)
+        {
+            switch (entityType)
+            {
+                case EntityType.Scenarios:
+                    try
+                    {
+                        XtraTabPageEntity openedTab;
+                        if (!CheckIfTabOpened(parentObject, true, 0))
+                        {
+                            //Get the correct tab type using the object type
+                            openedTab = XtraTabFactory.GetTab(parentObject);
+                            //Open the tab in the UI
+                            openedTab.Open(parentObject, 0);
+                        }
+                        var projectTab = GetTabByObject(parentObject) as XtraTabPageProject;
+                        if (projectTab != null)
+                        {
+                            projectTab.AddNewScenario();
+                        }
+                    }
+                    catch (NullReferenceException nullReferenceException)
+                    {
+                        //UIBLLInteraction.Instance.ShowException(nullReferenceException);
+                        Equiom.Tco.Common.Application.Logger.LogException(nullReferenceException);
+                    }
+                    return null;
+                case EntityType.Components:
+                case EntityType.Projects:
+                case EntityType.Buildings:
+                    try
+                    {
+                        XtraTabPageEntity newTab = XtraTabFactory.GetTab(entityType);
+                        newTab.New(parentObject);
+                        //newTab.SetParentID(parentObject);
+                        return newTab;
+                    }
+                    catch (NullReferenceException nullReferenceException)
+                    {
+                        //UIBLLInteraction.Instance.ShowException(nullReferenceException);
+                        Equiom.Tco.Common.Application.Logger.LogException(nullReferenceException);
+                    }
+                    return null;
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Opens a tab for a list view
+        /// </summary>
+        /// <param name="tabType"></param>
+        /// <returns></returns>
+        public XtraTabPageEntity OpenListTab(TabTypes tabType)
+        {
+            XtraTabPageEntity openedTab;
+            if (!CheckIfTabOpened(null, true, tabType))
+            {
+                switch (tabType)
+                {
+                    case TabTypes.ProjectList:
+                        openedTab = new XtraUserControlProjectsList {TabType = TabTypes.ProjectList};
+                        openedTab.Open(null, TabTypes.ProjectList);
+                        return openedTab;
+                    case TabTypes.BuildingsList:
+                        openedTab = new XtraUserControlBuildingsList {TabType = TabTypes.BuildingsList};
+                        openedTab.Open(null, TabTypes.BuildingsList);
+                        return openedTab;
+                    case TabTypes.ComponentList:
+                        openedTab = new XtraUserControlComponentsList {TabType = TabTypes.ComponentList};
+                        openedTab.Open(null, TabTypes.ComponentList);
+                        return openedTab;
+                    case TabTypes.Admin:
+                        var dialog = new PasswordDialog();
+                        dialog.ShowDialog();
+                        if (dialog.DialogResult == DialogResult.OK && dialog.PasswordCorrect)
+                        {
+                            openedTab = new AdminTab {TabType = TabTypes.Admin};
+                            openedTab.Open(null, TabTypes.Admin);
+                            return openedTab;
+                        }
+                        return null;
+                    case TabTypes.AnnualCashFlow:
+                        openedTab = new AnnualCashFlowReportTab {TabType = TabTypes.AnnualCashFlow};
+                        openedTab.Open(null, TabTypes.AnnualCashFlow);
+                        return openedTab;
+                    case TabTypes.UtilityReport:
+                        openedTab = new UtilityReportTab {TabType = TabTypes.UtilityReport};
+                        openedTab.Open(null, TabTypes.UtilityReport);
+                        return openedTab;
+                    case TabTypes.BudgetSummaryReport:
+                        openedTab = new BudgetSummaryReportTab {TabType = TabTypes.BudgetSummaryReport};
+                        openedTab.Open(null, TabTypes.BudgetSummaryReport);
+                        return openedTab;
+                    case TabTypes.TotalFinancialSummary:
+                        openedTab = new TotalFinancialSummaryReportTab {TabType = TabTypes.TotalFinancialSummary};
+                        openedTab.Open(null, TabTypes.TotalFinancialSummary);
+                        return openedTab;
+                    case TabTypes.AssetImpactsReport:
+                        openedTab = new AssetImpactsDetailReportTab {TabType = TabTypes.AssetImpactsReport};
+                        openedTab.Open(null, TabTypes.AssetImpactsReport);
+                        return openedTab;
+                    case TabTypes.CapRenewalReport:
+                        openedTab = new CapRenewalDetailReportTab {TabType = TabTypes.CapRenewalReport};
+                        openedTab.Open(null, TabTypes.CapRenewalReport);
+                        return openedTab;
+                    case TabTypes.MaintenanceAndOperations:
+                        openedTab = new MaintenanceAndOperationsDetailReportTab
+                                        {TabType = TabTypes.MaintenanceAndOperations};
+                        openedTab.Open(null, TabTypes.MaintenanceAndOperations);
+                        return openedTab;
+                    case TabTypes.UtilityRatesReport:
+                        openedTab = new UtilityRatesReportTab { TabType = TabTypes.UtilityRatesReport };
+                        openedTab.Open(null, TabTypes.UtilityRatesReport);
+                        return openedTab;
+                    case TabTypes.BuildingUtilityRatesReport:
+                        openedTab = new BuildingUtilityRatesReportTab { TabType = TabTypes.BuildingUtilityRatesReport };
+                        openedTab.Open(null, TabTypes.BuildingUtilityRatesReport);
+                        return openedTab;
+                    default:
+                        return null;
+                }
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Refreshes the lists when a changes occurs to a project tab
+        /// </summary>
+        public void RefreshProjectsView()
+        {
+            try
+            {
+                foreach (XtraTabPage tab in FormTabControl.TabPages)
+                {
+                    var viewTab = tab.Controls[0] as XtraTabPageEntity;
+                    if (viewTab != null)
+                    {
+                        switch (viewTab.TabType)
+                        {
+                            case TabTypes.ProjectList:
+                                ((XtraUserControlProjectsList) viewTab).BindProjects();
+                                break;
+                            case TabTypes.BuildingsList:
+                                ((XtraUserControlBuildingsList) viewTab).BindBuildings();
+                                break;
+                            case TabTypes.ComponentList:
+                                ((XtraUserControlComponentsList) viewTab).BindComponents();
+                                break;
+                        }
+                    }
+                }
+            }
+            catch (NullReferenceException nullReferenceException)
+            {
+                //UIBLLInteraction.Instance.ShowException(nullReferenceException);
+                Equiom.Tco.Common.Application.Logger.LogException(nullReferenceException);
+            }
+        }
+
+        /// <summary>
+        /// Refreshes the lists when a changes occurs to a building tab
+        /// </summary>
+        public void RefreshBuildingsView()
+        {
+            try
+            {
+                foreach (XtraTabPage tab in FormTabControl.TabPages)
+                {
+                    var viewTab = tab.Controls[0] as XtraTabPageEntity;
+                    if (viewTab != null)
+                    {
+                        if (viewTab.TabType == TabTypes.BuildingsList)
+                        {
+                            ((XtraUserControlBuildingsList) viewTab).BindBuildings();
+                        }
+                        else if (viewTab.TabType == TabTypes.ComponentList)
+                        {
+                            ((XtraUserControlComponentsList) viewTab).BindComponents();
+                        }
+                    }
+                }
+            }
+            catch (NullReferenceException nullReferenceException)
+            {
+                Equiom.Tco.Common.Application.Logger.LogException(nullReferenceException);
+            }
+        }
+
+        /// <summary>
+        /// Refreshes the lists when a changes occurs to a component tab
+        /// </summary>
+        public void RefreshComponentsView()
+        {
+            try
+            {
+                foreach (XtraTabPage tab in FormTabControl.TabPages)
+                {
+                    var viewTab = tab.Controls[0] as XtraTabPageEntity;
+                    if (viewTab != null)
+                    {
+                        if (viewTab.TabType == TabTypes.ComponentList)
+                        {
+                            ((XtraUserControlComponentsList) viewTab).BindComponents();
+                        }
+                    }
+                }
+            }
+            catch (NullReferenceException nullReferenceException)
+            {
+                Equiom.Tco.Common.Application.Logger.LogException(nullReferenceException);
+            }
+        }
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Lock Actions
+
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Adds a project object to the list of current edited projects
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <param name="projectObject"></param>
+        public void LockProject(int Id, EntityBusinessObject projectObject)
+        {
+            if (!IsProjectLocked(Id))
+            {
+                try
+                {
+                    EntityEditDictionary.Add(Id, projectObject);
+                }
+                catch (ArgumentException argumentException)
+                {
+                    //UIBLLInteraction.Instance.ShowException(argumentException);
+                    Equiom.Tco.Common.Application.Logger.LogException(argumentException);
+                }
+                catch (NullReferenceException nullReferenceException)
+                {
+                    //UIBLLInteraction.Instance.ShowException(nullReferenceException);
+                    Equiom.Tco.Common.Application.Logger.LogException(nullReferenceException);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Removes the project with the specified ID from the list of the edited projects
+        /// </summary>
+        /// <param name="Id"></param>
+        public void ReleaseProject(int Id)
+        {
+            if (IsProjectLocked(Id))
+            {
+                try
+                {
+                    if (EntityEditDictionary.ContainsKey(Id))
+                    {
+                        EntityEditDictionary.Remove(Id);
+                    }
+                }
+                catch (ArgumentException argumentException)
+                {
+                    //UIBLLInteraction.Instance.ShowException(argumentException);
+                    Equiom.Tco.Common.Application.Logger.LogException(argumentException);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Releases the current tab by removing its info from the collection
+        /// </summary>
+        /// <param name="tabType"></param>
+        public void ReleaseTab(TabTypes tabType)
+        {
+            try
+            {
+                if (OtherTabsEditDictionary.ContainsKey(tabType))
+                {
+                    OtherTabsEditDictionary.Remove(tabType);
+                }
+            }
+            catch (ArgumentException argumentException)
+            {
+                //UIBLLInteraction.Instance.ShowException(argumentException);
+                Equiom.Tco.Common.Application.Logger.LogException(argumentException);
+            }
+        }
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Navigation Panel Actions
+
+        //---------------------------------------------------------------------------------------------
+        public void RemoveProjectFromNavigation(Project project)
+        {
+            try
+            {
+                bool relatedTabOpened = false;
+                if (CheckIfTabOpened(project, false, 0))
+                {
+                    relatedTabOpened = true;
+                }
+                else
+                {
+                    foreach (Component childComponent in project.Components)
+                    {
+                        if (CheckIfTabOpened(childComponent, false, 0))
+                        {
+                            relatedTabOpened = true;
+                            break;
+                        }
+                    }
+                    foreach (Building childBuilding in project.Buildings)
+                    {
+                        if (CheckIfTabOpened(childBuilding, false, 0))
+                        {
+                            relatedTabOpened = true;
+                            break;
+                        }
+                    }
+                }
+                if (relatedTabOpened)
+                {
+                    MessageBox.Show(
+                        "The item you selected can't be removed because it is opened or one if its childern is already opened!",
+                        "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    ProjectsNav.ClearSelection();
+                    if (Instance.ProjectsCollection.Contains(project))
+                    {
+                        try
+                        {
+                            if (Instance != null) Instance.ProjectsCollection.Remove(project);
+                        }
+                        catch (ArgumentException argumentException)
+                        {
+                            //UIBLLInteraction.Instance.ShowException(argumentException);
+                            Equiom.Tco.Common.Application.Logger.LogException(argumentException);
+                        }
+                    }
+                }
+            }
+            catch (NullReferenceException nullReferenceException)
+            {
+                //UIBLLInteraction.Instance.ShowException(nullReferenceException);
+                Equiom.Tco.Common.Application.Logger.LogException(nullReferenceException);
+            }
+        }
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        //---------------------------------------------------------------------------------------------
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Refresh Methods
+
+        // starts the thread that will refresh the projects cache 
+        internal void StartProjectsCacheRefreshThread()
+        {
+            m_RefreshThread = new Thread(RefreshProjectsCacheThreadMethod);
+            m_RefreshThread.Start();
+        }
+
+        // stops the thread that will refresh the projects cache 
+        internal void StopProjectsCacheRefreshThread()
+        {
+            //this is only called when the application is closes, so it is safe to abort at this point
+            m_RefreshThread.Abort();
+        }
+
+        // the thread method for the refresh projects cache thread
+        private void RefreshProjectsCacheThreadMethod()
+        {
+            while (true)
+            {
+                //sleep for 30 minutes
+                Thread.Sleep(REFRESH_THREAD_SLEEP_PERIOD);
+
+                //indicate the refresh data is not ready (so that the UI timer won't attempt to refresh the UI)
+                m_RefreshDataReady = false;
+
+                // get projects from DB
+                var refreshedProjects = new BusinessObjectList<Project>();
+
+                foreach (Project project in m_ProjectsCollection)
+                {
+                    refreshedProjects.Add(Project.GetById(project.Id.Value));
+                }
+
+                //set the new values for the cache (ensure only one thread has access to the cache during setting its values)
+                lock (m_lockObject)
+                {
+                    m_ProjectsCache = refreshedProjects;
+                }
+
+                //indicate that refresh data is ready, so that the UI timer can now refresh the UI
+                m_RefreshDataReady = true;
+            }
+        }
+
+        internal void RefreshProjectsUIFromCache()
+        {
+            //check if refresh data is ready
+            if (m_RefreshDataReady)
+            {
+                //ensure only one thread accesses the project arrays
+                lock (m_lockObject)
+                {
+                    //refresh the UI
+                    Project.CopyProjects(m_ProjectsCache, m_ProjectsCollection);
+
+                    //ensure we don't refresh again until the refresh thread indicate that refresh data is ready
+                    m_RefreshDataReady = false;
+                }
+            }
+        }
+
+        #endregion
+
+        //---------------------------------------------------------------------------------------------
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Handlers
+
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// This handler will prevent entering values in spinEdits larger than it can handle.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void spinEdit_EditValueChanging(object sender, ChangingEventArgs e)
+        {
+            //DONT DELETE THIS CODE, IT WILL BE USED IN LATER SPRINTS
+
+
+            //SpinEdit currentControl = sender as SpinEdit;
+            //decimal maxValue = currentControl.Properties.MaxValue;
+            //decimal minValue = currentControl.Properties.MinValue;
+
+            //if (e.NewValue != null)
+            //{
+            //    decimal value = Convert.ToDecimal(e.NewValue);
+            //    if (currentControl.Properties.Mask.EditMask.ToUpper().Contains("P"))
+            //    {
+            //        if (value - Math.Truncate(value) == 0)
+            //        {
+            //            value = value / 100;
+            //        }
+
+            //    }
+            //    if (value < minValue | value > maxValue)
+            //    {
+            //        e.Cancel = true;
+            //        if (currentControl.Properties.Mask.EditMask.ToUpper().Contains("P"))
+            //        {
+            //            if (maxValue == 1)
+            //            {
+            //                maxValue *= 100;
+            //            }
+            //        }
+            //        mainErrorProvider.SetError(sender as Control,
+            //                                   "Number can be only between " + minValue + " and " + maxValue,
+            //                                   DevExpress.XtraEditors.DXErrorProvider.ErrorType.Information);
+            //    }
+            //    else
+            //    {
+
+            //        mainErrorProvider.SetError(sender as Control,
+            //                                   string.Empty,
+            //                                   DevExpress.XtraEditors.DXErrorProvider.ErrorType.None);
+
+            //    }
+            //}
+            //else
+            //{
+            //    mainErrorProvider.SetError(sender as Control,
+            //                                   string.Empty,
+            //                                   DevExpress.XtraEditors.DXErrorProvider.ErrorType.None);
+            //}
+        }
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+    }
+}

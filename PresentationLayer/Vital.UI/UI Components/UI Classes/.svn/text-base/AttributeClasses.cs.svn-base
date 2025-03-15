@@ -1,0 +1,83 @@
+﻿using System;
+
+namespace TCO.DesktopClientDevexpress
+{
+    /// <summary>
+    /// Attribute class that provides objects properties with attributes to determine if their corresponding cells 
+    /// can appear in bold or italic or shouldn't be given a style
+    /// </summary>
+    [AttributeUsage(AttributeTargets.All)]
+    public class CellStyle : Attribute
+    {
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public CellStyle() { }
+
+        /// <summary>
+        /// Construcotr using the property style
+        /// </summary>
+        /// <param name="PropertyStyle"></param>
+        public CellStyle(CellStyles propertyStyle)
+        {
+            PropertyStyle = propertyStyle;
+        }
+
+        /// <summary>
+        /// Get or set the style of the property using the enum CellStyle values
+        /// </summary>
+        public CellStyles PropertyStyle { get; set; }
+    }
+
+    /// <summary>
+    /// Attribute class that provides objects properties with attributes to determine what the common context that they share
+    /// </summary>
+    [AttributeUsage(AttributeTargets.All)]
+    public class CommonContext : Attribute
+    {
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public CommonContext() { }
+
+        /// <summary>
+        /// Construcotr using the property style
+        /// </summary>
+        /// <param name="PropertyStyle"></param>
+        public CommonContext(CalculationParties context)
+        {
+            Context = context;
+        }
+
+        /// <summary>
+        /// Get or set the style of the property using the enum CellStyle values
+        /// </summary>
+        public CalculationParties Context { get; set; }
+    }
+
+    /// <summary>
+    /// Attribute class that provides objects properties with attributes to determine if the property is required or not
+    /// </summary>
+    [AttributeUsage(AttributeTargets.All)]
+    public class PropertyRequirment : Attribute
+    {
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public PropertyRequirment() { }
+
+        /// <summary>
+        /// Construcotr using the property requiremnt
+        /// </summary>
+        /// <param name="PropertyStyle"></param>
+        public PropertyRequirment(RequirmentOptions requirment)
+        {
+            Requirment = requirment;
+        }
+
+        /// <summary>
+        /// Get if the property is reqquired or not
+        /// </summary>
+        public RequirmentOptions Requirment { get; set; }
+    }
+}

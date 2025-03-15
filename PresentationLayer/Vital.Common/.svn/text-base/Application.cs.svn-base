@@ -1,0 +1,94 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace Equiom.Tco.Common
+{
+    /// <summary>
+    /// Holds Application common helper functionality, including hanlding configuration settings and logging.
+    /// </summary>
+    public static class Application
+    {
+        #region Constants
+
+        const string APPLICATION_NOT_INITIALIZED_ERROR_MESSAGE = "Application must be initialized before any propery is accessed";
+        
+        #endregion
+
+        #region Fields
+
+        private static Settings _settings   = null;
+        private static Logger   _logger     = null;
+
+        //True, if application instance is initialized, false otherwise
+        private static bool _isIntialized = false;
+
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        /// Returnes the object holding the applications configuration settings
+        /// </summary>
+        public static Settings Settings
+        {
+            get
+            {
+                //If initlaized, then proceed, otherwise throw exception
+                CheckIfInitialized();
+
+                return _settings;
+            }
+        }
+
+        /// <summary>
+        /// Returnes the object used to log applications events and messages
+        /// </summary>
+        public static Logger Logger
+        {
+            get
+            {
+                //If initlaized, then proceed, otherwise throw exception
+                CheckIfInitialized();
+
+                return _logger;
+            }
+        }
+        #endregion
+
+        #region Intialization Methods
+
+        //Checks if the application is intialized, if not it throws an exception.
+        private static void CheckIfInitialized()
+        {
+            if (!_isIntialized)
+            {
+                throw new InvalidOperationException(APPLICATION_NOT_INITIALIZED_ERROR_MESSAGE);
+            }
+
+        }
+
+        /// <summary>
+        /// This method should be called during the intialization of TCO Application from the main thread and before any other 
+        /// threads are created, because the method is not therad safe
+        /// </summary>
+        /// <remarks>
+        /// When calling this method the application should handle any configuration reading errors or logger intialization errors.
+        /// The reason this method is used instead of a static constructor is that the static constructor is first executed when 
+        /// the class is accessed, and if any exception is thrown inside static constructor, the CLR swallows it and throws 
+        /// a TypeInitializationException exception instead.
+        /// </remarks>
+        public static void Initialize()
+        {
+            if (!_isIntialized)
+            {
+                _isIntialized = true;
+                _settings = Settings.GetInstance();
+                _logger = Logger.GetInstance();
+            }
+        }
+
+        #endregion
+    }
+}

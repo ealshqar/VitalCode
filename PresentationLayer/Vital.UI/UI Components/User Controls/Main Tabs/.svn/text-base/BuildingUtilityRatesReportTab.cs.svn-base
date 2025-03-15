@@ -1,0 +1,573 @@
+//////////////////////////////////////////////////////////////////////////////
+//  
+//  <sourcefile name="BuildingUtilityRatesReportTab.cs" creationdate="3/3/09" owner="anasa" >
+//
+//      <project>McKinstry TCO Application</project>
+//  
+//      <description>The tab page for Annual Cash Flow Report area in tool</description>
+//      
+//      <copyright year="2008" company="McKinstry">
+//          <notice>
+//              Copyright © 2008 McKinstry. All rights reserved
+//  
+//              Developed for McKinstry by
+//                  Equiom - MENA
+//                  www.equiom.com
+//          </notice>
+//  
+//  	<history date="3/3/09" modby="anasa">created</history>
+//  
+//////////////////////////////////////////////////////////////////////////////
+
+#region Library Calls
+
+//---------------------------------------------------------------------------------------------
+using System;
+using System.Data;
+using System.ComponentModel;
+using System.Linq;
+using System.Windows.Forms;
+using System.Xml;
+using DevExpress.XtraBars;
+using DevExpress.XtraEditors;
+using DevExpress.XtraEditors.Controls;
+using DevExpress.XtraEditors.DXErrorProvider;
+using DevExpress.XtraPrinting;
+using DevExpress.XtraPrinting.Native;
+using Equiom.Tco.BusinessLogicLayer;
+using Equiom.Tco.DataAccessLayer;
+using TCO.DesktopClientDevexpress.Properties;
+using Application=Equiom.Tco.Common.Application;
+
+//---------------------------------------------------------------------------------------------
+
+#endregion
+
+namespace TCO.DesktopClientDevexpress
+{
+    public partial class BuildingUtilityRatesReportTab : XtraTabPageEntity
+    {
+        #region Constants
+
+        //---------------------------------------------------------------------------------------------
+        private const string DB_ERROR = "Reports couldn't be generated, database contains corrupted data.";
+
+        private const string NO_PROJECT_SELECTED =
+            "No project is selected, please select a project to generate the report for.";
+        
+        private const string NO_ASSIGNED_UTILITY_RATES_INFO_WAS_FOUND = "No assigned utility rates were found for the selected project.";
+        private const string PROJECT_IS_NULL = "The project you selected is empty or corrupted.";
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Fields
+
+        //---------------------------------------------------------------------------------------------
+        private BuildingUtilityRatesReport fullScreenReport;
+
+        private bool generate = true;
+        private BuildingUtilityRatesReport rep;
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Properties
+
+        //---------------------------------------------------------------------------------------------
+        public Project SelectedProject
+        {
+            get
+            {
+                if (gridLookUpEditProject.EditValue != null)
+                {
+                    try
+                    {
+                        int projectId = Convert.ToInt32(gridLookUpEditProject.EditValue);
+                        Project foundProject =
+                            UIBLLInteraction.Instance.ProjectsCollection.FirstOrDefault(
+                                project => project.Id == projectId);
+                        if (foundProject != null)
+                        {
+                            foundProject.LazyLoadChildren();
+                        }
+                        return foundProject;
+                    }
+                    catch (FormatException)
+                    {
+                        return null;
+                    }
+                    catch (InvalidCastException)
+                    {
+                        return null;
+                    }
+                    catch (DataAccessException)
+                    {
+                        return null;
+                    }
+                }
+                return null;
+            }
+        }
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Constructors
+
+        //---------------------------------------------------------------------------------------------
+        public BuildingUtilityRatesReportTab()
+        {
+            InitializeComponent();
+        }
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Methods
+
+        #region Overriding Methods
+
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Initialize the binding for the controls in the tab
+        /// </summary>
+        public override void SetBinding()
+        {
+            try
+            {
+                EntityBarManager.Bars[1].Visible = false;
+                TabTypeImage = Resources.BuildingUtilityRates;
+                ParentTab.Image = MergeImages(false);
+                gridLookUpEditProject.Properties.DataSource = UIBLLInteraction.Instance.ProjectsCollection;
+                UIBLLInteraction.Instance.ProjectsCollection.RaiseListChangedEvents = true;
+                UIBLLInteraction.Instance.ProjectsCollection.ListChanged += ProjectsCollection_ListChanged;
+                LoadLastSelectionCriteria();
+            }
+            catch (DataAccessException dataAccessException)
+            {
+                Application.Logger.LogException(dataAccessException);
+                UIBLLInteraction.Instance.ShowException(dataAccessException);
+            }
+        }
+
+        private void ProjectsCollection_ListChanged(object sender, ListChangedEventArgs e)
+        {
+            if (e.ListChangedType == ListChangedType.ItemDeleted)
+            {
+                if (SelectedProject == null)
+                {
+                    gridLookUpEditProject.EditValue = null;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Enables or disables the controls in the tab
+        /// </summary>
+        /// <param name="isReadOnly"></param>
+        /// <param name="isChangedByUser"></param>
+        public override void SetEditMode(bool isReadOnly, bool isChangedByUser)
+        {
+            //gridControlVendors.EmbeddedNavigator.Buttons.Remove.Visible = !isReadOnly;
+            //gridControlVendors.EmbeddedNavigator.Buttons.Append.Visible = !isReadOnly;
+            //gridControlVendors.EmbeddedNavigator.Buttons.Edit.Visible = !isReadOnly;
+            //gridControlVendors.EmbeddedNavigator.Buttons.EndEdit.Visible = !isReadOnly;
+            //gridControlVendors.EmbeddedNavigator.Buttons.CancelEdit.Visible = !isReadOnly;
+
+            //gridViewVendors.OptionsBehavior.Editable = !isReadOnly;
+        }
+
+        /// <summary>
+        /// Adds the current tab info to the dictionary so user can't close project without closing it first
+        /// </summary>
+        public override void AddParentIDToEditDictionary()
+        {
+            try
+            {
+                if (!UIBLLInteraction.Instance.OtherTabsEditDictionary.ContainsKey(TabTypes.BuildingUtilityRatesReport))
+                {
+                    UIBLLInteraction.Instance.OtherTabsEditDictionary.Add(TabTypes.BuildingUtilityRatesReport, ParentTab);
+                }
+            }
+            catch (ArgumentException argumentException)
+            {
+                //UIBLLInteraction.Instance.ShowException(argumentException);
+                Application.Logger.LogException(argumentException);
+            }
+            catch (NullReferenceException nullReferenceException)
+            {
+                //UIBLLInteraction.Instance.ShowException(nullReferenceException);
+                Application.Logger.LogException(nullReferenceException);
+            }
+        }
+
+        /// <summary>
+        /// Clears all handler used in the tab
+        /// </summary>
+        public override void ClearHandlers()
+        {
+        }
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Selection Loading and update
+
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Loads the last selection criteria that the user selected when using the report last time
+        /// </summary>
+        public void LoadLastSelectionCriteria()
+        {
+            XmlDocument document = UIBLLInteraction.Instance.GetRecentsDocment();
+            try
+            {
+                XmlNode currentReportNode = document.SelectSingleNode("Root/BuildingUtilityRatesReport");
+                if (currentReportNode != null)
+                {
+                    string value = currentReportNode.Attributes["Project"].Value;
+                    if (value != "Null")
+                    {
+                        gridLookUpEditProject.EditValue = Convert.ToInt32(value);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show(UIBLLInteraction.RECENT_SELECTION_FILE_ERROR, UIBLLInteraction.ERROR_MESSAGE_TITLE,
+                                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (XmlException)
+            {
+                MessageBox.Show(UIBLLInteraction.RECENT_SELECTION_FILE_ERROR, UIBLLInteraction.ERROR_MESSAGE_TITLE,
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+                //Catch exceptions during using a null value iterator
+            catch (NullReferenceException nullReferenceException)
+            {
+                MessageBox.Show(UIBLLInteraction.RECENT_SELECTION_FILE_ERROR, UIBLLInteraction.ERROR_MESSAGE_TITLE,
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Application.Logger.LogException(nullReferenceException);
+            }
+        }
+
+        /// <summary>
+        /// Update the XML file containing the recent selection criteria with the current selection
+        /// </summary>
+        private void UpdateRecentSelection(Control control)
+        {
+            try
+            {
+                XmlDocument document = UIBLLInteraction.Instance.GetRecentsDocment();
+                if (control == gridLookUpEditProject)
+                {
+                    document.SelectSingleNode("Root/BuildingUtilityRatesReport").Attributes["Project"].Value =
+                        (gridLookUpEditProject.EditValue == null) ? "Null" : gridLookUpEditProject.EditValue.ToString();
+                }
+                document.Save(UIBLLInteraction.Instance.TCORECENTS_FILE_NAME);
+            }
+            catch (NullReferenceException)
+            {
+            }
+            catch (XmlException)
+            {
+                MessageBox.Show(UIBLLInteraction.RECENT_SELECTION_FILE_ERROR, UIBLLInteraction.ERROR_MESSAGE_TITLE,
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Update After Selection
+
+        //---------------------------------------------------------------------------------------------
+        private void UpdateProjectChildren()
+        {
+            //if (gridLookUpEditProject.EditValue != null)
+            //{
+            //    try
+            //    {
+            //        if (SelectedProject != null)
+            //        {
+            //            try
+            //            {
+            //            }
+            //            catch (NullReferenceException)
+            //            {
+            //            }
+            //            catch (DataAccessException)
+            //            {
+            //                MessageBox.Show(PROJECT_IS_NULL, UIBLLInteraction.ERROR_MESSAGE_TITLE, MessageBoxButtons.OK,
+            //                                MessageBoxIcon.Error);
+            //            }
+            //        }
+            //    }
+            //    catch (NullReferenceException)
+            //    {
+            //    }
+            //    catch (InvalidCastException)
+            //    {
+            //    }
+            //}
+        }
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Report Generation
+
+        #region Checking
+
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Checks the selection and if the report can be generated
+        /// </summary>
+        private void PerformPreGenerationCheck()
+        {
+            generate = true;
+            if (gridLookUpEditProject.EditValue != null && SelectedProject != null)
+            {
+            }
+            else
+            {
+                generate = false;
+                MessageBox.Show(NO_PROJECT_SELECTED, UIBLLInteraction.ERROR_MESSAGE_TITLE, MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+            }
+            GenerateReport();
+        }
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Report Generate
+
+        //---------------------------------------------------------------------------------------------
+        private void GenerateReport()
+        {
+            if (generate)
+            {
+                try
+                {
+                    var reflectorBar = new ReflectorBar(progressBarControl1);
+                   
+                    if (SelectedProject != null)
+                    {
+                        Project loadedProject = null;
+                        try
+                        {
+                            loadedProject = Project.GetById(SelectedProject.Id.Value);
+                        }
+                        catch (DataAccessException dataAccessException)
+                        {
+                            UIBLLInteraction.ShowError(PROJECT_IS_NULL);
+                            return;
+                        }
+                        DataTable reportData = loadedProject.GetAssignedUtilityRatesTable();
+
+                        if (reportData.Rows.Count > 0)
+                        {
+                            barButtonItemFullScreen.Enabled = true;
+                            rep = new BuildingUtilityRatesReport();
+                            rep.DataSource = reportData;
+                            rep.ProjectName.Value = loadedProject.Name;
+                            rep.GenerationDate.Value = DateTime.Now;
+                            rep.GenerateColumns(reportData);
+
+                            ProgressReflector.RegisterReflector(reflectorBar);
+                            printBarManagerMain.PrintControl.PrintingSystem = rep.PrintingSystem;
+                            try
+                            {
+                                rep.PrintingSystem.ProgressReflector = reflectorBar;
+                                rep.CreateDocument();
+                            }
+                            finally
+                            {
+                                rep.PrintingSystem.ResetProgressReflector();
+                            }
+                            fullScreenReport = rep;
+                        }
+                        else
+                        {
+                            MessageBox.Show(NO_ASSIGNED_UTILITY_RATES_INFO_WAS_FOUND, UIBLLInteraction.ERROR_MESSAGE_TITLE,
+                                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show(PROJECT_IS_NULL, UIBLLInteraction.ERROR_MESSAGE_TITLE, MessageBoxButtons.OK,
+                                        MessageBoxIcon.Error);
+                    }
+                    progressBarControl1.Position = 0;
+                }
+                catch (DataAccessException)
+                {
+                    generate = false;
+                    MessageBox.Show(DB_ERROR, UIBLLInteraction.ERROR_MESSAGE_TITLE, MessageBoxButtons.OK,
+                                    MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        //---------------------------------------------------------------------------------------------
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region View
+
+        //---------------------------------------------------------------------------------------------
+        private void ShowFullScreen()
+        {
+            if (fullScreenReport != null)
+            {
+                fullScreenReport.ShowPreview();
+            }
+        }
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        //---------------------------------------------------------------------------------------------
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Handlers
+
+        #region Report Related
+
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Generates the report
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void simpleButtonGenerate_Click(object sender, EventArgs e)
+        {
+            PerformPreGenerationCheck();
+        }
+
+        /// <summary>
+        /// Shows the report in a report viewer
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void barButtonItemShowFullScreen_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            ShowFullScreen();
+        }
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Selection Related
+
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Clear the selected value in a drop down.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void GridLookUp_ButtonClick(object sender, ButtonPressedEventArgs e)
+        {
+            if (e.Button.Kind == ButtonPredefines.Delete)
+            {
+                ((GridLookUpEdit) sender).EditValue = null;
+                UIBLLInteraction.Instance.mainErrorProvider.SetError(sender as Control, string.Empty, ErrorType.None);
+            }
+        }
+
+        /// <summary>
+        /// Clears component 1 if scenario 1 is changed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void gridLookUpEditScenario1_EditValueChanged(object sender, EventArgs e)
+        {
+            UpdateRecentSelection(sender as Control);
+        }
+
+        /// <summary>
+        /// Clears the filter after opening
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DropDown_QueryPopUp(object sender, CancelEventArgs e)
+        {
+            ((GridLookUpEdit) sender).Properties.View.ActiveFilterCriteria = string.Empty;
+            ((GridLookUpEdit) sender).Properties.View.ActiveFilterString = string.Empty;
+        }
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Refresh
+
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Changes the lists of scenarios and component accroding to the selected project
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void gridLookUpEditProject_EditValueChanged(object sender, EventArgs e)
+        {
+            UpdateProjectChildren();
+            UpdateRecentSelection(sender as Control);
+        }
+
+        private void printControlMain_Load(object sender, EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Shows warning on drop down if not saved item was selected
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void gridLookUpEdit_Closed(object sender, ClosedEventArgs e)
+        {
+            if (e.CloseMode != PopupCloseMode.CloseUpKey &&
+                e.CloseMode != PopupCloseMode.Cancel &&
+                e.CloseMode != PopupCloseMode.Immediate)
+            {
+                if (((GridLookUpEdit) sender).EditValue == null)
+                {
+                    UIBLLInteraction.Instance.mainErrorProvider.SetError(sender as Control, ITEM_IS_NOT_SAVED,
+                                                                         ErrorType.Warning);
+                }
+                else
+                {
+                    UIBLLInteraction.Instance.mainErrorProvider.SetError(sender as Control, string.Empty, ErrorType.None);
+                }
+            }
+        }
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        //---------------------------------------------------------------------------------------------
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+    }
+}

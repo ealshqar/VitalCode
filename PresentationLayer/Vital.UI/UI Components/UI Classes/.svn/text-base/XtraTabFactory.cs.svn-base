@@ -1,0 +1,95 @@
+//////////////////////////////////////////////////////////////////////////////
+//  
+//  <sourcefile name="XtraTabFactory.cs" creationdate="12/4/08" owner="anasa" >
+//
+//      <project>McKinstry TCO Application</project>
+//  
+//      <description>Creates specific tab pages depending the passed business object </description>
+//      
+//      <copyright year="2008" company="McKinstry">
+//          <notice>
+//              Copyright © 2008 McKinstry. All rights reserved
+//  
+//              Developed for McKinstry by
+//                  Equiom - MENA
+//                  www.equiom.com
+//          </notice>
+//  
+//  	<history date="12/4/08" modby="anasa">created</history>
+//  
+//////////////////////////////////////////////////////////////////////////////
+
+#region Library Calls
+
+//---------------------------------------------------------------------------------------------
+using Equiom.Tco.BusinessLogicLayer;
+
+//---------------------------------------------------------------------------------------------
+
+#endregion
+
+namespace TCO.DesktopClientDevexpress
+{
+    public static class XtraTabFactory
+    {
+        #region Fields
+
+        //---------------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Methods
+
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Gets a business object and return a correct type tab
+        /// </summary>
+        /// <returns></returns>
+        public static XtraTabPageEntity GetTab(EntityBusinessObject businessObject)
+        {
+            if (businessObject is Project)
+            {
+                var project = new XtraTabPageProject {TabType = TabTypes.Project};
+                return project;
+            }
+            if (businessObject is Component)
+            {
+                var component = new XtraTabPageComponent {TabType = TabTypes.Component};
+                return component;
+            }
+            if (businessObject is Building)
+            {
+                var building = new XtraTabPageBuilding {TabType = TabTypes.Building};
+                return building;
+            }
+            return new XtraTabPageEntity();
+        }
+
+        /// <summary>
+        /// Gets an entity type and return a correct type tab
+        /// </summary>
+        /// <returns></returns>
+        public static XtraTabPageEntity GetTab(EntityType entityType)
+        {
+            switch (entityType)
+            {
+                case EntityType.Projects:
+                    var project = new XtraTabPageProject {TabType = TabTypes.Project};
+                    return project;
+                case EntityType.Components:
+                    var component = new XtraTabPageComponent {TabType = TabTypes.Component};
+                    return component;
+                case EntityType.Buildings:
+                    var building = new XtraTabPageBuilding {TabType = TabTypes.Building};
+                    return building;
+                default:
+                    return new XtraTabPageEntity();
+            }
+        }
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+    }
+}

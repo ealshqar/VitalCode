@@ -1,0 +1,32 @@
+﻿//////////////////////////////////////////////////////////////////////////////
+//  
+//  <sourcefile name="ControlsLayoutActions.cs" creationdate="8/4/08" owner="anasa" >
+//
+//      <project>McKinstry TCO Application</project>
+//  
+//      <description>Doing actions related to layout of control and initialization of them</description>
+//      
+//      <copyright year="2008" company="McKinstry">
+//          <notice>
+//              Copyright © 2008 McKinstry. All rights reserved
+//  
+//              Developed for McKinstry by
+//                  Equiom - MENA
+//                  www.equiom.com
+//          </notice>
+//  
+//  	<history date="8/4/08" modby="anasa">created</history>
+//  
+//////////////////////////////////////////////////////////////////////////////
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace TCO.DesktopClientDevexpress
+{
+    class ControlsLayoutActions
+    {
+        
+    }
+}

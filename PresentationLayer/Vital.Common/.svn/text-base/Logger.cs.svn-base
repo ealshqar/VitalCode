@@ -1,0 +1,194 @@
+﻿using System;
+using System.Diagnostics;
+
+namespace Equiom.Tco.Common
+{
+    /// <summary>
+    /// Utility Class used for logging
+    /// </summary>
+    /// <remarks>
+    /// .Net provides built in support for logging using the Trace class. One problem with that class is that all Listeners called through
+    /// Trace class accept only a string as the logged message and don't diffrenciate between message categories like errors, warnings, 
+    /// information or verbose messages.
+    /// Supporting the extra message category is easy for all built in Listeners except for the EventLogListener since EventLog has a different
+    /// Interface for writing event log entries. 
+    /// 
+    /// This is why this class is used instead of directly using the .Net Trace class.
+    /// </remarks>
+    public class Logger
+    {
+        #region Constants
+        const string LOG_SWITCH_NAME    = "LogSwitch";
+        
+        const string EVENTLOG_SOURCE    = "TCO Application";
+        const string EVENTLOG_LOG_NAME  = "Application";
+
+        const string LOG_MESSAGE_PREFIX_EXCEPTION   = "Exception: ";
+        const string LOG_MESSAGE_PREFIX_ERROR       = "Error: ";
+        const string LOG_MESSAGE_PREFIX_WARNING     = "Warning: ";
+        const string LOG_MESSAGE_PREFIX_INFORMATION = "Information: ";
+        const string LOG_MESSAGE_PREFIX_VERBOSE     = "Verbose: ";
+
+        #endregion
+
+        #region Fields
+
+        //Trace switch used to determine the level of logging
+        private TraceSwitch _logSwitch = new TraceSwitch(LOG_SWITCH_NAME, "");
+
+        private EventLog _eventLog = null;
+
+        //If true, then log to event log, otherwise don't
+        private bool _logToEventLog = false;
+
+        private static Logger _instance = null;
+
+        #endregion
+
+        #region Constructors
+
+        /// <summary>
+        /// Initializes the logger class
+        /// </summary>
+        private Logger()
+        {
+            _logToEventLog = Application.Settings.LogToEventLog;
+
+            if (_logToEventLog)
+            {
+                //TODO: Creating the event log should be done during setup, also a seprate log name should be created TCO instaed of using Application
+                // Create the source, if it does not already exist.
+                // uncomment this code to create the source, note that you need to restart the application to take effect.
+                //if (!EventLog.SourceExists(EVENTLOG_SOURCE))
+                //{
+                //    EventLog.CreateEventSource(EVENTLOG_SOURCE, EVENTLOG_LOG_NAME);
+                //}
+
+                //Initialize the EventLog object, this may throw ArgumentException but the application should handle this during its
+                //Intialization and provide a message to the User explaining the error before shutting down.
+                _eventLog = new EventLog(EVENTLOG_LOG_NAME);
+                _eventLog.Source = EVENTLOG_SOURCE;
+            }
+        }
+
+        /// <summary>
+        /// Ensures only one instance of the class is created
+        /// </summary>
+        internal static Logger GetInstance()
+        {
+            if (_instance == null)
+            {
+                _instance = new Logger();
+            }
+
+            return _instance;
+        }
+
+        #endregion
+
+        #region Logging Methods
+
+        /// <summary>
+        /// Logs an exception to the log destinations
+        /// </summary>
+        /// <param name="exception">Exception to log</param>
+        public void LogException(Exception exception)
+        {
+             //Only log the message if the log level permits logging errors
+            if (_logSwitch.Level >= TraceLevel.Error)
+            {
+                Trace.WriteLine(LOG_MESSAGE_PREFIX_EXCEPTION + exception.ToString());
+
+                //check if the error should be logged to event log
+                if (_logToEventLog)
+                {
+                    //log to event log
+                    _eventLog.WriteEntry(exception.ToString(), EventLogEntryType.Error);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Logs an error message to the log destinations
+        /// </summary>
+        /// <param name="message">Error message</param>
+        public void LogError(string message)
+        {
+            //Only log the message if the log level permits logging errors
+            if (_logSwitch.Level >= TraceLevel.Error)
+            {
+                Trace.WriteLine(LOG_MESSAGE_PREFIX_ERROR + message);
+
+                //check if the error should be logged to event log
+                if (_logToEventLog)
+                {
+                    //log to event log
+                    _eventLog.WriteEntry(message, EventLogEntryType.Error);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Logs a warning message to the log destinations
+        /// </summary>
+        /// <param name="message">Warning message</param>
+        public void LogWarning(string message)
+        {
+            //Only log the message if the log level permits logging warnings
+            if (_logSwitch.Level >= TraceLevel.Warning)
+            {
+                Trace.WriteLine(LOG_MESSAGE_PREFIX_WARNING + message);
+
+                //check if the warning should be logged to event log
+                if (_logToEventLog)
+                {
+                    //log to event log
+                    _eventLog.WriteEntry(message, EventLogEntryType.Warning);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Logs a information message to the log destinations
+        /// </summary>
+        /// <param name="message">Information message</param>
+        public void LogInformation(string message)
+        {
+            //Only log the message if the log level permits logging information messages
+            if (_logSwitch.Level >= TraceLevel.Info)
+            {
+                Trace.WriteLine(LOG_MESSAGE_PREFIX_INFORMATION + message);
+
+                //check if the information should be logged to event log
+                if (_logToEventLog)
+                {
+                    //log to event log
+                    _eventLog.WriteEntry(message, EventLogEntryType.Information);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Logs a verbose message to the log destinations
+        /// </summary>
+        /// <param name="message">Verbose message</param>
+        public void LogVerbose(string message)
+        {
+            //Only log the message if the log level permits logging verbose messages
+            if (_logSwitch.Level >= TraceLevel.Verbose)
+            {
+                Trace.WriteLine(LOG_MESSAGE_PREFIX_VERBOSE + message);
+
+                //check if the verbose should be logged to event log
+                if (_logToEventLog)
+                {
+                    //log to event log
+                    _eventLog.WriteEntry(message, EventLogEntryType.Information);
+                }
+            }
+        }
+
+        #endregion
+
+    }
+}

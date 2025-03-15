@@ -1,0 +1,1485 @@
+//////////////////////////////////////////////////////////////////////////////
+//  
+//  <sourcefile name="XtraTabPageComponent.cs" creationdate="8/8/08" owner="anasa" >
+//
+//      <project>McKinstry TCO Application</project>
+//  
+//      <description>The tab page of the component entity</description>
+//      
+//      <copyright year="2008" company="McKinstry">
+//          <notice>
+//              Copyright © 2008 McKinstry. All rights reserved
+//  
+//              Developed for McKinstry by
+//                  Equiom - MENA
+//                  www.equiom.com
+//          </notice>
+//  
+//  	<history date="8/8/08" modby="anasa">created</history>
+//  
+//////////////////////////////////////////////////////////////////////////////
+
+#region Library Calls
+
+//---------------------------------------------------------------------------------------------
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Windows.Forms;
+using DevExpress.XtraEditors;
+using DevExpress.XtraEditors.Controls;
+using DevExpress.XtraGrid;
+using DevExpress.XtraGrid.Columns;
+using DevExpress.XtraGrid.Views.Grid;
+using DevExpress.XtraLayout.Utils;
+using DevExpress.XtraTab;
+using Equiom.Tco.BusinessLogicLayer;
+using Equiom.Tco.DataAccessLayer;
+using TCO.DesktopClientDevexpress.Properties;
+using Application=Equiom.Tco.Common.Application;
+using Component=Equiom.Tco.BusinessLogicLayer.Component;
+
+//---------------------------------------------------------------------------------------------
+
+#endregion
+
+namespace TCO.DesktopClientDevexpress
+{
+    public partial class XtraTabPageComponent : XtraTabPageEntity
+    {
+        #region Constants
+
+        //---------------------------------------------------------------------------------------------
+        private const string CREATE_NEW_COMPONENT = "New Component";
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Fields
+
+        //---------------------------------------------------------------------------------------------
+        private readonly FilterControl closestMatchFilter = new FilterControl();
+        private bool assetImpactsBinded;
+        private bool capexBinded;
+        private bool cfcBinded;
+        private bool cuiIsBinded;
+        private bool maintenanceAndOperationsBinded;
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Properties
+
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Return a cast of the tab object into a component object
+        /// </summary>
+        public Component TabComponent
+        {
+            get { return TabObject as Component; }
+        }
+
+        public Project ParentProject { get; set; }
+
+        public Building ParentBuilding { get; set; }
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Constructors
+
+        //---------------------------------------------------------------------------------------------
+        public XtraTabPageComponent()
+        {
+            InitializeComponent();
+        }
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Methods
+
+        #region Overriding Methods
+
+        #region Initialization & Binding
+
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Initialize the building object of the tab if it is new tab and initialize some properties
+        /// </summary>
+        /// <param name="isNew">Determine if the tab is new or opened tab</param>
+        /// <param name="parentObject"></param>
+        public override void PerformSpecificIntializationSteps(bool isNew, EntityBusinessObject parentObject)
+        {
+            TabTypeImage = Resources.Component;
+            TabObject = TabObject ?? new Component();
+            if (isNew)
+            {
+                //TabComponent.Name = CREATE_NEW_COMPONENT;
+                SetParentID(parentObject);
+                textEditComponentName.Focus();
+            }
+            else
+            {
+                spinEditComponentNumber.Properties.ReadOnly = true;
+            }
+        }
+
+        /// <summary>
+        /// Bind the controls of the building tab
+        /// </summary>
+        public override void SetBinding()
+        {
+            FillLookUps();
+
+            spinEditComponentNumber.Properties.MinValue = 0;
+            spinEditComponentNumber.Properties.MaxValue = int.MaxValue;
+
+            spinEditAge.Properties.MinValue = 0;
+            spinEditAge.Properties.MaxValue = int.MaxValue;
+
+            spinEditMeasureLife.Properties.MinValue = 1;
+            spinEditMeasureLife.Properties.MaxValue = 100;
+
+            spinEditUtilityGurantee.Properties.MinValue = 0;
+            spinEditUtilityGurantee.Properties.MaxValue = 1;
+
+            spinEditComponentNumber.EditValueChanging += UIBLLInteraction.Instance.spinEdit_EditValueChanging;
+            spinEditUtilityGurantee.EditValueChanging += UIBLLInteraction.Instance.spinEdit_EditValueChanging;
+            spinEditMeasureLife.EditValueChanging += UIBLLInteraction.Instance.spinEdit_EditValueChanging;
+            spinEditAge.EditValueChanging += UIBLLInteraction.Instance.spinEdit_EditValueChanging;
+
+            BindControl(ParentTab, TEXT_PROPERTYNAME, TabObject, Component.NAME_PROPERTY_NAME);
+            BindControl(textEditComponentName, EDITVALUE_PROPERTYNAME, TabObject, Component.NAME_PROPERTY_NAME);
+            BindControl(spinEditComponentNumber, EDITVALUE_PROPERTYNAME, TabObject, Component.NUMBER_PROPERTY_NAME);
+            BindControl(textEditDateLastModified, EDITVALUE_PROPERTYNAME, TabObject,
+                        EntityBusinessObject.LAST_MODIFIED_DATE_TIME);
+            BindControl(textEditDateCreated, EDITVALUE_PROPERTYNAME, TabObject, EntityBusinessObject.CREATED_DATE_TIME);
+            BindControl(spinEditUtilityGurantee, EDITVALUE_PROPERTYNAME, TabObject,
+                        Component.UTILITY_GUARANTEE_PROPERTY_NAME);
+            BindControl(spinEditMeasureLife, EDITVALUE_PROPERTYNAME, TabObject, Component.MEASURE_LIFE_PROPERTY_NAME);
+            BindControl(gridLookUpEditStartingCondition, EDITVALUE_PROPERTYNAME, TabObject,
+                        Component.STARTING_CONDITION_ID_PROPERTY_NAME);
+            BindControl(spinEditAge, EDITVALUE_PROPERTYNAME, TabObject, Component.AGE_PROPERTY_NAME);
+            BindControl(memoEditComponentGeneralRecommendation, EDITVALUE_PROPERTYNAME, TabObject,
+                        Component.GENERAL_RECOMMENDATION_PROPERTY_NAME);
+            BindControl(memoEditComponentProposedDescription, EDITVALUE_PROPERTYNAME, TabObject,
+                        Component.PROPOSED_DESCRIPTION_PROPERTY_NAME);
+            BindControl(gridLookUpEditClosestMatch, EDITVALUE_PROPERTYNAME, TabObject,
+                        Component.CLOSEST_MATCH_CATEGORY_ID_PROPERTY_NAME);
+            BindControl(gridControlOtherClosestMatches, DATASOURCE_PROPERTYNAME, TabObject,
+                        Component.CLOSEST_MATCH_CATEGORIES_PROPERTY_NAME);
+            BindControl(gridLookUpEditBaseComponent, EDITVALUE_PROPERTYNAME, TabObject,
+                        Component.BASE_COMPONENT_ID_PROPERTY_NAME);
+
+            BindParentProject();
+            BindParentBuilding();
+            if (TabComponent.State == BusinessObjectState.New)
+            {
+                layoutControlItemAge.Visibility = LayoutVisibility.Never;
+            }
+            else
+            {
+                ShowHideAge();
+            }
+
+            BindCUI();
+            BindAssetImpacts();
+            BindMaintenanceAndOperations();
+            BindCAPEX();
+            BindCFC();
+            AddChildernChangesListeners();
+        }
+
+        /// <summary>
+        /// Sets the edit mode of the building tab
+        /// </summary>
+        /// <param name="isReadOnly">if true then the tab will be in ready only mode</param>
+        /// <param name="isChangedByUser"></param>
+        public override void SetEditMode(bool isReadOnly, bool isChangedByUser)
+        {
+            spinEditComponentNumber.Properties.ReadOnly = TabObject.State != BusinessObjectState.New;
+            textEditComponentName.Properties.ReadOnly = isReadOnly;
+
+            spinEditAge.Properties.ReadOnly = isReadOnly;
+            spinEditMeasureLife.Properties.ReadOnly = isReadOnly;
+            spinEditUtilityGurantee.Properties.ReadOnly = isReadOnly;
+
+            memoEditComponentGeneralRecommendation.Properties.ReadOnly = isReadOnly;
+            memoEditComponentProposedDescription.Properties.ReadOnly = isReadOnly;
+
+            gridLookUpEditClosestMatch.Properties.ReadOnly = isReadOnly;
+            gridLookUpEditClosestMatch.Properties.Buttons[1].Visible = !isReadOnly;
+            gridLookUpEditBaseComponent.Properties.ReadOnly = isReadOnly;
+            gridLookUpEditBaseComponent.Properties.Buttons[2].Enabled = !isReadOnly;
+
+            popupContainerEditOtherCloseMatches.Properties.ReadOnly = isReadOnly;
+            gridLookUpEditStartingCondition.Properties.ReadOnly = isReadOnly;
+
+            gridControlOtherClosestMatches.EmbeddedNavigator.Buttons.Remove.Visible = !isReadOnly;
+            componentUtilityInfoModuleInstance.SetEditMode(isReadOnly);
+            assetImpactsModuleInstance.SetEditMode(isReadOnly);
+            maintenanceAndOperationsModuleInstance.SetEditMode(isReadOnly);
+            capexModuleInstance.SetEditMode(isReadOnly);
+            componentFirstCostModule1.SetEditMode(isReadOnly);
+        }
+
+        /// <summary>
+        /// Fill the lookup controls with the collections of objects from the cache
+        /// </summary>
+        private void FillLookUps()
+        {
+            try
+            {
+                gridLookUpEditStartingCondition.Properties.DataSource =
+                    BusinessLayerCache.Instance.GetAllStartingConditions();
+
+                repositoryItemLookUpEditClosestMatch.DataSource =
+                    BusinessLayerCache.Instance.GetAllComponentCagegories();
+                repositoryItemLookUpEditParentOther.DataSource = BusinessLayerCache.Instance.GetAllComponentCagegories();
+                repositoryItemLookUpEditParentCategory.DataSource =
+                    BusinessLayerCache.Instance.GetAllComponentCagegories();
+
+                closestMatchFilter.SourceControl = gridControlClosestMatch;
+
+                gridLookUpEditClosestMatch.Properties.DataSource =
+                    BusinessLayerCache.Instance.GetAllComponentCagegories();
+                gridControlOtherClosestMatchesSelection.DataSource =
+                    BusinessLayerCache.Instance.GetAllComponentCagegories();
+                gridControlClosestMatch.DataSource = BusinessLayerCache.Instance.GetAllComponentCagegories();
+            }
+            catch (DataAccessException dataAccessException)
+            {
+                Application.Logger.LogException(dataAccessException);
+                UIBLLInteraction.Instance.ShowException(dataAccessException);
+            }
+        }
+
+        /// <summary>
+        /// Add handlers to child collections to allow the parent building to know that a child change and so to
+        /// update the tab status and enable the apply button for instance
+        /// </summary>
+        private void AddChildernChangesListeners()
+        {
+            if (TabComponent != null)
+            {
+                TabComponent.PropertyChanged += XtraTabPageComponent_PropertyChanged;
+                TabComponent.ClosestMatchCategories.RaiseListChangedEvents = true;
+                TabComponent.ClosestMatchCategories.ListChanged += ClosestMatchCategories_ListChanged;
+                TabComponent.ParentBuilding.Components.ListChanged += Components_ListChanged;
+            }
+        }
+
+        private void Components_ListChanged(object sender, ListChangedEventArgs e)
+        {
+            if (e.ListChangedType == ListChangedType.ItemAdded | e.ListChangedType == ListChangedType.ItemDeleted)
+            {
+                if (TabComponent.BaseComponentId.HasValue)
+                {
+                    bool baseStillExists =
+                        TabComponent.ParentBuilding.Components.Any(
+                            component => component.Id.Value == TabComponent.BaseComponentId.Value);
+                    if (!baseStillExists)
+                    {
+                        TabComponent.BaseComponentId = null;
+                    }
+                }
+            }
+        }
+
+        public override void ClearHandlers()
+        {
+            spinEditComponentNumber.EditValueChanging -= UIBLLInteraction.Instance.spinEdit_EditValueChanging;
+            spinEditUtilityGurantee.EditValueChanging -= UIBLLInteraction.Instance.spinEdit_EditValueChanging;
+            spinEditMeasureLife.EditValueChanging -= UIBLLInteraction.Instance.spinEdit_EditValueChanging;
+            spinEditAge.EditValueChanging -= UIBLLInteraction.Instance.spinEdit_EditValueChanging;
+
+            componentUtilityInfoModuleInstance.ClearHandlers();
+            assetImpactsModuleInstance.ClearHandlers();
+            maintenanceAndOperationsModuleInstance.ClearHandlers();
+            capexModuleInstance.ClearHandlers();
+            componentFirstCostModule1.ClearHandlers();
+
+            try
+            {
+                TabComponent.PropertyChanged -= XtraTabPageComponent_PropertyChanged;
+                TabComponent.ClosestMatchCategories.ListChanged -= ClosestMatchCategories_ListChanged;
+                TabComponent.ParentBuilding.Components.ListChanged -= Components_ListChanged;
+            }
+            catch (NullReferenceException)
+            {
+            }
+
+            try
+            {
+                ParentProject.Buildings.ListChanged -= Buildings_ListChanged;
+                ParentProject.PropertyChanged -= ParentProject_PropertyChanged;
+            }
+            catch (NullReferenceException)
+            {
+            }
+        }
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Parent related actions
+
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Add the ID of the current building object into the dictionary if it was enabled for editing
+        /// </summary>
+        public override void AddParentIDToEditDictionary()
+        {
+            UIBLLInteraction.Instance.LockProject(GetParentProjectID(),
+                                                  UIBLLInteraction.Instance.ProjectsNav.GetObjectByID<Project>(
+                                                      GetParentProjectID()));
+        }
+
+        /// <summary>
+        /// Add the current building object into the collection of the parent project if it was new building
+        /// </summary>
+        public override void AddBusinessObjectToCollection()
+        {
+            var parentProject =
+                UIBLLInteraction.Instance.ProjectsNav.GetObjectByID<Project>(GetParentProjectID()) as Project;
+
+            var buildingsDictionary = new Dictionary<int, Building>();
+
+            try
+            {
+                if (parentProject != null)
+                {
+                    foreach (Building building in parentProject.Buildings)
+                    {
+                        buildingsDictionary.Add(building.Id.Value, building);
+                    }
+                }
+                Building parentBuilding;
+                buildingsDictionary.TryGetValue(TabComponent.BuildingId.Value, out parentBuilding);
+                if (parentBuilding != null)
+                {
+                    try
+                    {
+                        parentBuilding.Components.AddSavedObject(TabComponent);
+                    }
+                    catch (ArgumentException argumentException)
+                    {
+                        Application.Logger.LogException(argumentException);
+                        //UIBLLInteraction.Instance.ShowException(argumentException);
+                    }
+                }
+            }
+            catch (NullReferenceException nullReferenceException)
+            {
+                Application.Logger.LogException(nullReferenceException);
+                //UIBLLInteraction.Instance.ShowException(nullReferenceException);
+            }
+        }
+
+        /// <summary>
+        /// Get the parent ID for the current building
+        /// </summary>
+        /// <returns></returns>
+        public override int GetParentProjectID()
+        {
+            int Id = 0;
+            try
+            {
+                Id = TabComponent.ProjectId.Value;
+            }
+            catch (NullReferenceException nullReferenceException)
+            {
+                Application.Logger.LogException(nullReferenceException);
+                //UIBLLInteraction.Instance.ShowException(nullReferenceException);
+            }
+            return Id;
+        }
+
+        /// <summary>
+        /// Set the parent ID for the current building object
+        /// </summary>
+        /// <param name="parentObject"></param>
+        public override void SetParentID(EntityBusinessObject parentObject)
+        {
+            //Set the Project before the building so the buildings dropdown won't be empty because it gets filled after
+            //selecting a project
+            if (TabComponent != null && parentObject != null)
+            {
+                TabComponent.BuildingId = parentObject.Id.Value;
+                TabComponent.ProjectId = ((Building) parentObject).ProjectId.Value;
+
+                if (TabComponent.ProjectId != null && TabComponent.BuildingId != null)
+                {
+                    ParentProject = (TabComponent.ProjectId == null)
+                                        ? null
+                                        :
+                                            UIBLLInteraction.Instance.ProjectsNav.GetObjectByID<Project>(
+                                                TabComponent.ProjectId.Value) as Project;
+
+                    if (ParentProject != null)
+                    {
+                        var projectBuildingsDictionary = new Dictionary<int, Building>();
+                        foreach (Building building in ParentProject.Buildings)
+                        {
+                            projectBuildingsDictionary.Add(building.Id.Value, building);
+                        }
+                        Building tempBuilding;
+                        projectBuildingsDictionary.TryGetValue(TabComponent.BuildingId.Value, out tempBuilding);
+                        ParentBuilding = tempBuilding;
+                        TabComponent.ParentBuilding = ParentBuilding;
+                    }
+
+                    if (!cuiIsBinded && ParentBuilding != null)
+                    {
+                        cuiIsBinded = true;
+                        componentUtilityInfoModuleInstance.SetBinding(TabComponent, ParentBuilding);
+                    }
+                    if (!assetImpactsBinded && ParentBuilding != null)
+                    {
+                        assetImpactsBinded = true;
+                        assetImpactsModuleInstance.SetBinding(TabComponent);
+                    }
+                }
+            }
+        }
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Save related actions
+
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Posts the values in the controls that are not yet comitted to the datasource because the user
+        /// clicked save or cancel without leaving the editor to another editor first.
+        /// </summary>
+        public override void PostValues()
+        {
+            componentUtilityInfoModuleInstance.PostValues();
+            assetImpactsModuleInstance.PostValues();
+            maintenanceAndOperationsModuleInstance.PostValues();
+            capexModuleInstance.PostValues();
+            componentFirstCostModule1.PostValues();
+
+            spinEditAge.DoValidate();
+            spinEditComponentNumber.DoValidate();
+            spinEditMeasureLife.DoValidate();
+            spinEditUtilityGurantee.DoValidate();
+            textEditComponentName.DoValidate();
+            memoEditComponentGeneralRecommendation.DoValidate();
+            memoEditComponentProposedDescription.DoValidate();
+            gridLookUpEditBuilding.DoValidate();
+            gridLookUpEditClosestMatch.DoValidate();
+            gridLookUpEditProject.DoValidate();
+            gridLookUpEditStartingCondition.DoValidate();
+            gridLookUpEditBaseComponent.DoValidate();
+        }
+
+        /// <summary>
+        /// Apply project's specific actions after saving a project
+        /// </summary>
+        public override void AfterSaveActions()
+        {
+            UIBLLInteraction.Instance.RefreshComponentsView();
+        }
+
+        /// <summary>
+        /// Apply project's specific actions that should be done before doing the save
+        /// </summary>
+        public override void BeforeSaveActions()
+        {
+        }
+
+        /// <summary>
+        /// Cancel the changes in the current object and restore the object to its original state
+        /// </summary>
+        public override void RestoreBusinessObjectValue()
+        {
+            //Get the original object from DB and send it with the current object to a method that will do the 
+            //the replacement and other necessary actions
+            try
+            {
+                Component dbComponent = Component.GetById(TabObject.Id.Value);
+                if (TabObject != null)
+                {
+                    if (TabObject.Id != null)
+                    {
+                        var uiComponent =
+                            UIBLLInteraction.Instance.ComponentsNav.GetObjectByID<Component>(TabObject.Id.Value) as
+                            Component;
+                        if (dbComponent != null && uiComponent != null)
+                        {
+                            //UIBLLInteraction.Instance.ComponentsNav.RestoreObjectAfterCancel(dbComponent, uiComponent);
+                        }
+                    }
+                }
+            }
+            catch (DataAccessException dataAccessException)
+            {
+                UIBLLInteraction.Instance.ShowException(dataAccessException);
+            }
+        }
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Validation
+
+        //---------------------------------------------------------------------------------------------
+        public override bool ShouldPropertyNotifyTab(string propertyName)
+        {
+            if (propertyName == Component.NUMBER_PROPERTY_NAME)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public override void ShowHideErrorIcons()
+        {
+            bool areCUIsInvalid = IsPropertyInvalid(Component.COMPONENT_UTILITY_INFOS_FRIENDLY_PROPERTY_NAME);
+            bool areAssetImpactsValid = IsPropertyInvalid(Component.ASSET_IMPACTS_FRIENDLY_PROPERTY_NAME);
+            bool areMaintAndOpsValid = IsPropertyInvalid(Component.MAINTENANCE_AND_OPERATIONS_FRIENDLY_PROPERTY_NAME);
+            bool areCapexValid = IsPropertyInvalid(Component.CAPEX_ITEMS_FRIENDLY_PROPERTY_NAME);
+            bool arecfcValid = IsPropertyInvalid(Component.FIRST_COST_SECTIONS_FRIENDLY_PROPERTY_NAME);
+
+            xtraTabPageCUI.Image = (areCUIsInvalid) ? Resources.Error : null;
+            xtraTabPageCUI.Tooltip = (areCUIsInvalid)
+                                         ? GetErrorText(Component.COMPONENT_UTILITY_INFOS_FRIENDLY_PROPERTY_NAME)
+                                         : string.Empty;
+
+            xtraTabPageAssetImpacts.Image = (areAssetImpactsValid) ? Resources.Error : null;
+            xtraTabPageAssetImpacts.Tooltip = (areAssetImpactsValid)
+                                                  ? GetErrorText(Component.ASSET_IMPACTS_FRIENDLY_PROPERTY_NAME)
+                                                  : string.Empty;
+
+            xtraTabPageMaintenanceAndOps.Image = (areMaintAndOpsValid) ? Resources.Error : null;
+            xtraTabPageMaintenanceAndOps.Tooltip = (areMaintAndOpsValid)
+                                                       ? GetErrorText(
+                                                             Component.MAINTENANCE_AND_OPERATIONS_FRIENDLY_PROPERTY_NAME)
+                                                       : string.Empty;
+
+            xtraTabPageCAPEX.Image = (areCapexValid) ? Resources.Error : null;
+            xtraTabPageCAPEX.Tooltip = (areCapexValid)
+                                           ? GetErrorText(Component.CAPEX_ITEMS_FRIENDLY_PROPERTY_NAME)
+                                           : string.Empty;
+
+            xtraTabPageComponentFirstCost.Image = (arecfcValid) ? Resources.Error : null;
+            xtraTabPageComponentFirstCost.Tooltip = (arecfcValid)
+                                                        ? GetErrorText(
+                                                              Component.FIRST_COST_SECTIONS_FRIENDLY_PROPERTY_NAME)
+                                                        : string.Empty;
+
+            if (areCUIsInvalid || areAssetImpactsValid || areMaintAndOpsValid || areCapexValid || arecfcValid)
+            {
+                xtraTabPageDetails.Image = Resources.Error;
+                xtraTabPageDetails.Tooltip = "Some controls are invalid";
+            }
+            else
+            {
+                xtraTabPageDetails.Image = null;
+                xtraTabPageDetails.Tooltip = string.Empty;
+            }
+
+            bool isNameInvalid = IsPropertyInvalid(Component.NAME_PROPERTY_NAME);
+            bool isNumberInvalid = IsPropertyInvalid(Component.NUMBER_PROPERTY_NAME);
+            bool isClosestMatchInvalid = IsPropertyInvalid(Component.CLOSEST_MATCH_CATEGORY_FRIENDLY_PROPERTY_NAME);
+            bool isProjectInvalid = IsPropertyInvalid(Component.PROJECT_ID_PROPERTY_NAME);
+            bool isBuildingInvalid = IsPropertyInvalid(Component.BUILDING_ID_PROPERTY_NAME);
+            bool isUtilityGuranteeInvalid = IsPropertyInvalid(Component.UTILITY_GUARANTEE_PROPERTY_NAME);
+            bool isMeasureLifeInvalid = IsPropertyInvalid(Component.MEASURE_LIFE_FRIENDLY_PROPERTY_NAME);
+            bool isStartingConditionInvalid = IsPropertyInvalid(Component.STARTING_CONDITION_FRIENDLY_PROPERTY_NAME);
+            bool isAgeInvalid = IsPropertyInvalid(Component.AGE_PROPERTY_NAME);
+            bool isBaseComponentInvalid = IsPropertyInvalid(Component.BASE_COMPONENT_ID_FRIENDLY_PROPERTY_NAME);
+
+            if (isNameInvalid ||
+                isNumberInvalid ||
+                areAssetImpactsValid ||
+                isClosestMatchInvalid ||
+                isProjectInvalid ||
+                isBuildingInvalid ||
+                isUtilityGuranteeInvalid ||
+                isMeasureLifeInvalid ||
+                isStartingConditionInvalid ||
+                isAgeInvalid ||
+                isBaseComponentInvalid)
+            {
+                xtraTabPageGeneralInformation.Image = Resources.Error;
+                xtraTabPageGeneralInformation.Tooltip = "Some controls are invalid";
+            }
+            else
+            {
+                xtraTabPageGeneralInformation.Image = null;
+                xtraTabPageGeneralInformation.Tooltip = string.Empty;
+            }
+        }
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        //---------------------------------------------------------------------------------------------
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Binding Methods
+
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Bind the lookup with the id of the parent project
+        /// </summary>
+        private void BindParentProject()
+        {
+            try
+            {
+                ParentProject = (TabComponent.ProjectId == null)
+                                    ? null
+                                    :
+                                        UIBLLInteraction.Instance.ProjectsNav.GetObjectByID<Project>(
+                                            TabComponent.ProjectId.Value)
+                                        as Project;
+                gridLookUpEditProject.Properties.DataSource = UIBLLInteraction.Instance.ProjectsCollection;
+
+                try
+                {
+                    if (gridLookUpEditProject.DataBindings.Count == 0)
+                    {
+                        gridLookUpEditProject.DataBindings.Add(EDITVALUE_PROPERTYNAME, TabObject,
+                                                               Component.PROJECT_ID_PROPERTY_NAME, true);
+                    }
+                }
+                catch (ArgumentException argumentException)
+                {
+                    Application.Logger.LogException(argumentException);
+                    //UIBLLInteraction.Instance.ShowException(argumentException);
+                }
+                gridLookUpEditProject.DataBindings[0].DataSourceUpdateMode = DataSourceUpdateMode.OnPropertyChanged;
+                gridLookUpEditProject.DataBindings[0].ControlUpdateMode = ControlUpdateMode.OnPropertyChanged;
+                if (ParentProject != null)
+                {
+                    ParentProject.PropertyChanged += ParentProject_PropertyChanged;
+                }
+            }
+            catch (NullReferenceException nullReferenceException)
+            {
+                Application.Logger.LogException(nullReferenceException);
+                //UIBLLInteraction.Instance.ShowException(nullReferenceException);
+            }
+        }
+
+        /// <summary>
+        /// Bind the lookup with the id of the parent building
+        /// </summary>
+        private void BindParentBuilding()
+        {
+            if (ParentProject != null)
+            {
+                var projectBuildingsDictionary = new Dictionary<int, Building>();
+                try
+                {
+                    foreach (Building building in ParentProject.Buildings)
+                    {
+                        try
+                        {
+                            projectBuildingsDictionary.Add(building.Id.Value, building);
+                        }
+                        catch (ArgumentException argumentException)
+                        {
+                            Application.Logger.LogException(argumentException);
+                            //UIBLLInteraction.Instance.ShowException(argumentException);
+                        }
+                    }
+                    Building tempBuilding;
+                    projectBuildingsDictionary.TryGetValue(TabComponent.BuildingId.Value, out tempBuilding);
+                    ParentBuilding = tempBuilding;
+
+                    ParentProject.Buildings.RaiseListChangedEvents = true;
+                    ParentProject.Buildings.ListChanged += Buildings_ListChanged;
+                    gridLookUpEditBuilding.Properties.DataSource = ParentProject.Buildings;
+                    if (ParentBuilding != null)
+                    {
+                        gridLookUpEditBaseComponent.Properties.DataSource = ParentBuilding.Components;
+                    }
+
+                    try
+                    {
+                        if (gridLookUpEditBuilding.DataBindings.Count == 0)
+                        {
+                            gridLookUpEditBuilding.DataBindings.Add(EDITVALUE_PROPERTYNAME, TabObject,
+                                                                    Component.BUILDING_ID_PROPERTY_NAME, true);
+                        }
+                    }
+                    catch (ArgumentException argumentException)
+                    {
+                        Application.Logger.LogException(argumentException);
+                        //UIBLLInteraction.Instance.ShowException(argumentException);
+                    }
+                    gridLookUpEditBuilding.DataBindings[0].DataSourceUpdateMode = DataSourceUpdateMode.OnPropertyChanged;
+                    gridLookUpEditBuilding.DataBindings[0].ControlUpdateMode = ControlUpdateMode.OnPropertyChanged;
+                }
+                catch (NullReferenceException nullReferenceException)
+                {
+                    Application.Logger.LogException(nullReferenceException);
+                    //UIBLLInteraction.Instance.ShowException(nullReferenceException);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Bind the collection of CUI in the component
+        /// </summary>
+        private void BindCUI()
+        {
+            //Bind CUI only if project ID and building ID for the component are filled
+            if (TabComponent.ProjectId != null && TabComponent.BuildingId != null)
+            {
+                //This flag prevents CUI module from being binded multiple times
+                if (!cuiIsBinded)
+                {
+                    cuiIsBinded = true;
+                    componentUtilityInfoModuleInstance.SetBinding(
+                        TabObject as Component,
+                        UIBLLInteraction.Instance.BuildingsNav.GetObjectByID<Building>(TabComponent.BuildingId.Value)
+                        as Building);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Bind the collection of Asset Impacts in the component
+        /// </summary>
+        private void BindAssetImpacts()
+        {
+            //Bind Asset Impacts only if project ID and building ID for the component are filled
+            if (TabComponent.ProjectId != null && TabComponent.BuildingId != null)
+            {
+                //This flag prevents CUI module from being binded multiple times
+                if (!assetImpactsBinded)
+                {
+                    assetImpactsBinded = true;
+                    assetImpactsModuleInstance.SetBinding(TabComponent);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Bind the collection of Maintenance and Operations in the component
+        /// </summary>
+        private void BindMaintenanceAndOperations()
+        {
+            //Bind Maintenance and Operations only if project ID and building ID for the component are filled
+            if (TabComponent.ProjectId != null && TabComponent.BuildingId != null)
+            {
+                if (!maintenanceAndOperationsBinded)
+                {
+                    maintenanceAndOperationsBinded = true;
+                    maintenanceAndOperationsModuleInstance.SetBinding(TabComponent);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Bind the collection of CAPEX in the component
+        /// </summary>
+        private void BindCAPEX()
+        {
+            //Bind capex only if project ID and building ID for the component are filled
+            if (TabComponent.ProjectId != null && TabComponent.BuildingId != null)
+            {
+                if (!capexBinded)
+                {
+                    capexBinded = true;
+                    capexModuleInstance.SetBinding(TabComponent);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Bind the collection of component first cost
+        /// </summary>
+        private void BindCFC()
+        {
+            //Bind cfc only if project ID and building ID for the component are filled
+            if (TabComponent.ProjectId != null && TabComponent.BuildingId != null)
+            {
+                if (!cfcBinded)
+                {
+                    cfcBinded = true;
+                    componentFirstCostModule1.SetBinding(TabComponent);
+                }
+            }
+        }
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Building & Modules Specific logic
+
+        #region Categories
+
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Create a filter string according to the text that the user enters and assign the filter to a
+        /// certain grid control
+        /// </summary>
+        private static void Filter(GridControl filteredGrid, string text)
+        {
+            //Splits the text string into parts for filtering
+            string[] words = text.Split(new[] {' '});
+            string filter = string.Empty;
+            //for each part in the string, add the part in the filter to get any rows containing it.
+            foreach (string part in words)
+            {
+                //if this is the first loop, then no Or should be set in the begining
+                if (filter == string.Empty)
+                {
+                    //Like here means contains
+                    filter += "[Name] Like '%" + part + "%' Or " +
+                              "[KeyWord] Like '%" + part + "%'";
+                    //          "[ParentCategoryName] Like '%" + part + "%'";
+                    //filter += "[Name] Like '%" + part + "%'";
+                }
+                else
+                {
+                    //if this is not the first loop, then we need to use Or in the begining to connect this filter with
+                    //the one from before.
+                    filter += " Or [Name] Like '%" + part + "%' Or " +
+                              "[KeyWord] Like '%" + part + "%'";
+                    //          "[ParentCategoryName] Like '%" + part + "%'";
+                    //filter += " Or [Name] Like '%" + part + "%'";
+                }
+            }
+            //Use the pop control to determine which grid to filter
+            ((GridView) filteredGrid.MainView).Columns["Name"].FilterInfo = new ColumnFilterInfo(
+                ColumnFilterType.Custom, null, filter);
+            ((GridView) filteredGrid.MainView).ExpandAllGroups();
+
+            //if (isFilteringSingleSelection)
+            //{
+            //    this.gridViewClosestMatch.Columns["Name"].FilterInfo =
+            //        new ColumnFilterInfo(ColumnFilterType.Custom, null, filter);
+            //    this.gridViewClosestMatch.ExpandAllGroups();
+            //}
+            //else
+            //{
+            //    this.gridViewClosestMatchesSelection.Columns["Name"].FilterInfo
+            //        = new ColumnFilterInfo(ColumnFilterType.Custom, null, filter);
+            //    this.gridViewClosestMatchesSelection.ExpandAllGroups();
+            //}
+        }
+
+        /// <summary>
+        /// Add the selected close matches into the other close matches grid
+        /// </summary>
+        private void AddSelectedOtherCloseMatches()
+        {
+            //Gets the handles of the current selected categories
+            int[] selectedCategories = gridViewClosestMatchesSelection.GetSelectedRows();
+            var otherCloseMatchesDictionary =
+                new Dictionary<int, ComponentComponentCategory>();
+
+            //Fill the components current categories in a dictionary to make it easy to search
+            //through them for duplicates
+            try
+            {
+                foreach (ComponentComponentCategory category in TabComponent.ClosestMatchCategories)
+                {
+                    otherCloseMatchesDictionary.Add(category.ComponentCategoryId, category);
+                }
+
+                //For each handle, un select the row, and then if it is not added already, add it
+                foreach (int handle in selectedCategories)
+                {
+                    gridViewClosestMatchesSelection.UnselectRow(handle);
+                    if (handle >= 0)
+                    {
+                        try
+                        {
+                            var categoryTemp = gridViewClosestMatchesSelection.GetRow(handle) as ComponentCategory;
+
+                            if (categoryTemp != null)
+                            {
+                                ComponentComponentCategory categoryToAdd;
+                                otherCloseMatchesDictionary.TryGetValue(categoryTemp.Id.Value, out categoryToAdd);
+                                if (categoryToAdd == null)
+                                {
+                                    categoryToAdd = new ComponentComponentCategory(categoryTemp);
+                                    TabComponent.ClosestMatchCategories.Add(categoryToAdd);
+                                }
+                            }
+                        }
+                        catch (NullReferenceException nullReferenceException)
+                        {
+                            Application.Logger.LogException(nullReferenceException);
+                            //UIBLLInteraction.Instance.ShowException(nullReferenceException);
+                        }
+                        catch (ArgumentException argumentException)
+                        {
+                            Application.Logger.LogException(argumentException);
+                            //UIBLLInteraction.Instance.ShowException(argumentException);
+                        }
+                    }
+                }
+            }
+            catch (NullReferenceException nullReferenceException)
+            {
+                Application.Logger.LogException(nullReferenceException);
+                //UIBLLInteraction.Instance.ShowException(nullReferenceException);
+            }
+            //Close the pop up
+            popupContainerControlOtherClosestMatches.OwnerEdit.ClosePopup();
+        }
+
+        /// <summary>
+        /// Set the selected match from the grid as the edit value for the closest match pop up edit
+        /// </summary>
+        private void SelectClosestMatch()
+        {
+            //get the focused row and from the row, get the name and ID
+            if (gridViewClosestMatch.FocusedRowHandle >= 0)
+            {
+                var selectedCategory = gridViewClosestMatch.GetFocusedRow() as ComponentCategory;
+                try
+                {
+                    if (selectedCategory != null) TabComponent.ClosestMatchCategoryId = selectedCategory.Id.Value;
+                }
+                catch (NullReferenceException nullReferenceException)
+                {
+                    Application.Logger.LogException(nullReferenceException);
+                }
+                try
+                {
+                    if (TabComponent.Name == null)
+                    {
+                        if (selectedCategory != null) TabComponent.Name = selectedCategory.Name;
+                    }
+                    else if (TabComponent.Name.Trim().Contains(CREATE_NEW_COMPONENT) ||
+                             string.IsNullOrEmpty(TabComponent.Name.Trim()))
+                    {
+                        if (selectedCategory != null) TabComponent.Name = selectedCategory.Name;
+                    }
+                }
+                catch (NullReferenceException nullReferenceException)
+                {
+                    Application.Logger.LogException(nullReferenceException);
+                    //UIBLLInteraction.Instance.ShowException(nullReferenceException);
+                }
+                popupContainerControlClosestMatch.Hide();
+            }
+        }
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        //---------------------------------------------------------------------------------------------
+
+        /// <summary>
+        /// Show or hide the age field depending on the value of the starting condition field
+        /// </summary>
+        private void ShowHideAge()
+        {
+            try
+            {
+                if (TabComponent != null)
+                {
+                    Int16 value = -1;
+
+                    if (gridLookUpEditStartingCondition.EditValue != null)
+                    {
+                        try
+                        {
+                            value = Convert.ToInt16(gridLookUpEditStartingCondition.EditValue.ToString());
+                        }
+                        catch (OverflowException OverflowException)
+                        {
+                            Application.Logger.LogException(OverflowException);
+                        }
+                        catch (InvalidCastException invalidCastException)
+                        {
+                            Application.Logger.LogException(invalidCastException);
+                        }
+                        catch (FormatException formatException)
+                        {
+                            Application.Logger.LogException(formatException);
+                        }
+                    }
+                    if (value == 3)
+                    {
+                        TabComponent.StartingConditionId = value;
+                        layoutControlItemAge.Visibility = LayoutVisibility.Always;
+                    }
+                    else
+                    {
+                        TabComponent.StartingConditionId = value;
+                        layoutControlItemAge.Visibility = LayoutVisibility.Never;
+                        if (gridLookUpEditStartingCondition.Focused)
+                        {
+                            TabComponent.Age = null;
+                        }
+                    }
+                }
+            }
+            catch (NullReferenceException nullReferenceException)
+            {
+                Application.Logger.LogException(nullReferenceException);
+                //UIBLLInteraction.Instance.ShowException(nullReferenceException);
+            }
+        }
+
+        public void ChangeCFCTabVisibility()
+        {
+            if (xtraTabControlMain.SelectedTabPage == xtraTabPageDetails)
+            {
+                xtraTabPageComponentFirstCost.PageVisible = !xtraTabPageComponentFirstCost.PageVisible;
+            }
+        }
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        //---------------------------------------------------------------------------------------------
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Handlers
+
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// This is custome code to set the status of the component as modified when changing the
+        /// component number value since this property shouldn't rais a property change to the object and
+        /// changing it shouldn't change the state of the object to modified because it will make the component
+        /// number get back to zero after saving a new component since the state of the object will be modified.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void spinEditComponentNumber_EditValueChanged(object sender, EventArgs e)
+        {
+            //TabState = BusinessObjectState.Modified;
+        }
+
+        /// <summary>
+        /// Clears the filter after opening
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DropDown_QueryPopUp(object sender, CancelEventArgs e)
+        {
+            ((GridLookUpEdit) sender).Properties.View.ActiveFilterCriteria = string.Empty;
+            ((GridLookUpEdit) sender).Properties.View.ActiveFilterString = string.Empty;
+        }
+
+        #region Categories
+
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Calls a method to add all selected other close matches
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void simpleButtonAddCheckedSubCategories_Click(object sender, EventArgs e)
+        {
+            AddSelectedOtherCloseMatches();
+        }
+
+        /// <summary>
+        /// Filters the grid control contaning the categories to select as a closest match
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void textEditClosestMatchFilter_TextChanged(object sender, EventArgs e)
+        {
+            Filter(gridControlClosestMatch, textEditClosestMatchFilter.Text);
+        }
+
+        /// <summary>
+        /// Calls a method to show or hide the pop up of the control depending on the text inside it
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void PopUp_EditValueChanging(object sender, ChangingEventArgs e)
+        {
+            //FilterGrid(sender);
+            if (((PopupContainerEdit) sender).Text != string.Empty)
+            {
+                ((PopupContainerEdit) sender).ShowPopup();
+                ((PopupContainerEdit) sender).Focus();
+            }
+            Filter(gridControlOtherClosestMatchesSelection, popupContainerEditOtherCloseMatches.Text);
+        }
+
+        /// <summary>
+        /// If enter key is pressed, then select a value and close the popup
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void GridControl_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                SelectClosestMatch();
+                popupContainerControlClosestMatch.Hide();
+            }
+        }
+
+        /// <summary>
+        /// Calls a method to select the clicked closest match from the grid
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void GridView_Click(object sender, EventArgs e)
+        {
+            SelectClosestMatch();
+        }
+
+        /// <summary>
+        /// Shows the drop down for selecting the closest match value
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void gridLookUpEditClosestMatch_ButtonClick(object sender, ButtonPressedEventArgs e)
+        {
+            if (e.Button.Kind == ButtonPredefines.Ellipsis)
+            {
+                //Make sure the pop up appears with the same width and below the pop up edit so it
+                //will look like a drop down
+                popupContainerControlClosestMatch.Width = gridLookUpEditClosestMatch.Width*2;
+                popupContainerControlClosestMatch.Left = gridLookUpEditClosestMatch.Left;
+                popupContainerControlClosestMatch.Top = gridLookUpEditClosestMatch.Top +
+                                                        gridLookUpEditClosestMatch.Height;
+                popupContainerControlClosestMatch.Show();
+                popupContainerControlClosestMatch.BringToFront();
+                textEditClosestMatchFilter.Focus();
+            }
+        }
+
+        /// <summary>
+        /// Hide the pop up when the popup edit or related controls lose the focus
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void gridLookUpEditClosestMatch_Leave(object sender, EventArgs e)
+        {
+            if (!gridLookUpEditClosestMatch.Focused &&
+                !textEditClosestMatchFilter.Focused &&
+                !gridControlClosestMatch.Focused &&
+                !popupContainerControlClosestMatch.Focused &&
+                !layoutControlComponent.Focused)
+            {
+                popupContainerControlClosestMatch.Hide();
+            }
+        }
+
+        /// <summary>
+        /// Calls a method to remove the select close matches
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void gridControlOtherClosestMatches_EmbeddedNavigator_ButtonClick(object sender,
+                                                                                  NavigatorButtonClickEventArgs e)
+        {
+            switch (e.Button.ButtonType)
+            {
+                case NavigatorButtonType.Remove:
+                    e.Handled = true;
+                    DeleteSelectedGridViewObjects(gridViewOtherClosestMatches, TabComponent.ClosestMatchCategories);
+                    break;
+                case NavigatorButtonType.Custom:
+                    e.Handled = true;
+                    if (e.Button.Hint == "ShowHideFilter")
+                    {
+                        gridViewOtherClosestMatches.OptionsView.ShowAutoFilterRow =
+                            !gridViewOtherClosestMatches.OptionsView.ShowAutoFilterRow;
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Set the width of the other close matches pop up when opened
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void popupContainerEditOtherCloseMatches_QueryPopUp(object sender, CancelEventArgs e)
+        {
+            popupContainerControlOtherClosestMatches.Width = popupContainerEditOtherCloseMatches.Width;
+        }
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Binding complete and property changed events
+
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// If the selected project changed, refill the buildings lookupedit and enable it or disable it depending on the 
+        /// count of the buildings in the project
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void XtraTabPageComponent_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == Component.PROJECT_ID_PROPERTY_NAME)
+            {
+                Project parentProject;
+                if (TabComponent != null)
+                {
+                    if (TabComponent.ProjectId != null)
+                    {
+                        int? Id = TabComponent.ProjectId.Value;
+                        if (Id == null)
+                        {
+                            parentProject = null;
+                        }
+                        else
+                        {
+                            int intId = -1;
+                            try
+                            {
+                                intId = Convert.ToInt32(Id);
+                            }
+                            catch (OverflowException OverflowException)
+                            {
+                                Application.Logger.LogException(OverflowException);
+                            }
+                            catch (InvalidCastException invalidCastException)
+                            {
+                                Application.Logger.LogException(invalidCastException);
+                            }
+                            catch (FormatException formatException)
+                            {
+                                Application.Logger.LogException(formatException);
+                            }
+                            parentProject =
+                                UIBLLInteraction.Instance.ProjectsNav.GetObjectByID<Project>(intId) as Project;
+                        }
+                        if (parentProject != null)
+                        {
+                            gridLookUpEditBuilding.Properties.DataSource = parentProject.Buildings;
+                        }
+                        if (parentProject != null)
+                        {
+                            if (parentProject.Buildings != null)
+                            {
+                                parentProject.Buildings.ListChanged += Buildings_ListChanged;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Calls a method to update the fields of WFC if its value changed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ClosestMatchCategories_ListChanged(object sender, ListChangedEventArgs e)
+        {
+            if (TabComponent != null && TabState != EntityTabState.Unchanged)
+            {
+                TabComponent.NotifyPropertyChanged(Component.CLOSEST_MATCH_CATEGORIES_PROPERTY_NAME);
+            }
+        }
+
+        /// <summary>
+        /// Calls a method to update the fields of WFC if its value changed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Buildings_ListChanged(object sender, ListChangedEventArgs e)
+        {
+            switch (e.ListChangedType)
+            {
+                case ListChangedType.ItemDeleted:
+                    if (ParentProject != null)
+                    {
+                        gridLookUpEditBuilding.Properties.DataSource = ParentProject.Buildings;
+                        var projectBuildingsDictionary =
+                            new Dictionary<int, Building>();
+                        if (ParentProject.Buildings != null)
+                        {
+                            foreach (Building building in ParentProject.Buildings)
+                            {
+                                if (!projectBuildingsDictionary.ContainsKey(building.Id.Value))
+                                {
+                                    projectBuildingsDictionary.Add(building.Id.Value, building);
+                                }
+                            }
+                        }
+                        if (TabComponent.BuildingId != null)
+                        {
+                            Building tempBuilding;
+                            projectBuildingsDictionary.TryGetValue(TabComponent.BuildingId.Value, out tempBuilding);
+                            if (tempBuilding == null)
+                            {
+                                TabComponent.BuildingId = null;
+                                if (ParentProject.Buildings != null)
+                                {
+                                    if (ParentProject.Buildings.Count != 0)
+                                    {
+                                        gridLookUpEditBuilding.Properties.ReadOnly = false;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    break;
+                case ListChangedType.ItemAdded:
+                    if (ParentProject != null)
+                    {
+                        gridLookUpEditBuilding.Properties.DataSource = ParentProject.Buildings;
+                        if (TabComponent.BuildingId == null)
+                        {
+                            gridLookUpEditBuilding.Properties.ReadOnly = false;
+                        }
+                    }
+                    break;
+                case ListChangedType.ItemChanged:
+                    if (ParentProject != null)
+                    {
+                        gridLookUpEditBuilding.Properties.DataSource = ParentProject.Buildings;
+                    }
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Changes the state of the current tab when its parent is locked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ParentProject_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (ParentProject != null)
+            {
+                if (e.PropertyName == Project.STATUS_ID_PROPERTY_NAME)
+                {
+                    SetEditMode(true, false);
+                    UpdateActionButtons();
+                }
+            }
+        }
+
+        private void gridLookUpEditStartingCondition_EditValueChanged(object sender, EventArgs e)
+        {
+            ShowHideAge();
+        }
+
+        private void xtraTabControlComponentModules_SelectedPageChanged(object sender, TabPageChangedEventArgs e)
+        {
+            UIBLLInteraction.Instance.MainForm.spellChecker1.SetCanCheckText(memoEditComponentGeneralRecommendation,
+                                                                             false);
+            UIBLLInteraction.Instance.MainForm.spellChecker1.SetCanCheckText(memoEditComponentProposedDescription, false);
+            if (e.Page.Text == "General Recommendation")
+            {
+                UIBLLInteraction.Instance.MainForm.spellChecker1.SetCanCheckText(
+                    memoEditComponentGeneralRecommendation, true);
+            }
+            else if (e.Page.Text == "Proposed Description")
+            {
+                UIBLLInteraction.Instance.MainForm.spellChecker1.SetCanCheckText(memoEditComponentProposedDescription,
+                                                                                 true);
+            }
+        }
+
+        private void gridLookUpEditClosestMatch_QueryPopUp(object sender, CancelEventArgs e)
+        {
+            gridViewClosestMatch.ActiveFilterCriteria = string.Empty;
+            gridViewClosestMatch.ActiveFilterString = string.Empty;
+        }
+
+        private void popupContainerEditOtherCloseMatches_QueryCloseUp(object sender, CancelEventArgs e)
+        {
+            gridViewClosestMatchesSelection.ActiveFilterCriteria = string.Empty;
+            gridViewClosestMatchesSelection.ActiveFilterString = string.Empty;
+        }
+
+        private void gridLookUpEditBaseComponent_Properties_ButtonPressed(object sender, ButtonPressedEventArgs e)
+        {
+            if (e.Button.Kind == ButtonPredefines.Delete)
+            {
+                if (TabComponent != null)
+                {
+                    TabComponent.BaseComponentId = null;
+                }
+            }
+            if (e.Button.Kind == ButtonPredefines.Ellipsis)
+            {
+                if (TabComponent != null)
+                {
+                    if (TabComponent.BaseComponentId.HasValue)
+                    {
+                        Component componentToOpen =
+                            TabComponent.ParentBuilding.Components.FirstOrDefault(
+                                component =>
+                                component.Id.HasValue && component.Id.Value == TabComponent.BaseComponentId.Value);
+                        if (componentToOpen != null)
+                        {
+                            var entityToOpen = (EntityBusinessObject) componentToOpen;
+                            UIBLLInteraction.Instance.Open(ref entityToOpen);
+                        }
+                        else
+                        {
+                            MessageBox.Show(
+                                "The component you selected is corrupted and can't be opened.",
+                                UIBLLInteraction.ERROR_MESSAGE_TITLE,
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show(
+                            "Please select a component from the drop down.",
+                            UIBLLInteraction.ERROR_MESSAGE_TITLE,
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+        }
+
+        private void gridLookUpEditBaseComponent_EditValueChanging(object sender, ChangingEventArgs e)
+        {
+            if (TabComponent != null)
+            {
+                if (TabComponent.Id.HasValue)
+                {
+                    if (e.NewValue != null)
+                    {
+                        if (Convert.ToInt32(e.NewValue) == TabComponent.Id.Value)
+                        {
+                            e.Cancel = true;
+                            gridLookUpEditBaseComponent.EditValue = e.OldValue;
+                            MessageBox.Show("A component can't be a base for itself", "Circular Reference Error",
+                                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                }
+            }
+        }
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+    }
+}

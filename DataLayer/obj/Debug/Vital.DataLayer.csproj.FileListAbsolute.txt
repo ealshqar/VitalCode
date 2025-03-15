@@ -1,0 +1,15 @@
+D:\vitalCode\Vital Code - Bayan\Vital Handover\Source\Code Project\1- Dev\VitalExpertCode\Code\Vital\DataLayer\DatabaseGeneric\bin\Debug\Vital.DataLayer.dll
+D:\vitalCode\Vital Code - Bayan\Vital Handover\Source\Code Project\1- Dev\VitalExpertCode\Code\Vital\DataLayer\DatabaseGeneric\bin\Debug\Vital.DataLayer.pdb
+D:\vitalCode\Vital Code - Bayan\Vital Handover\Source\Code Project\1- Dev\VitalExpertCode\Code\Vital\DataLayer\DatabaseGeneric\bin\Debug\SD.LLBLGen.Pro.LinqSupportClasses.NET35.dll
+D:\vitalCode\Vital Code - Bayan\Vital Handover\Source\Code Project\1- Dev\VitalExpertCode\Code\Vital\DataLayer\DatabaseGeneric\bin\Debug\SD.LLBLGen.Pro.ORMSupportClasses.NET20.dll
+D:\vitalCode\Vital Code - Bayan\Vital Handover\Source\Code Project\1- Dev\VitalExpertCode\Code\Vital\DataLayer\DatabaseGeneric\bin\Debug\SD.LLBLGen.Pro.QuerySpec.dll
+D:\vitalCode\Vital Code - Bayan\Vital Handover\Source\Code Project\1- Dev\VitalExpertCode\Code\Vital\DataLayer\obj\Debug\Vital.DataLayer.dll
+D:\vitalCode\Vital Code - Bayan\Vital Handover\Source\Code Project\1- Dev\VitalExpertCode\Code\Vital\DataLayer\obj\Debug\Vital.DataLayer.pdb
+F:\vitalCode\Vital Code - Bayan\Vital Handover\Source\Code Project\1- Dev\VitalExpertCode\Code\Vital\DataLayer\DatabaseGeneric\bin\Debug\Vital.DataLayer.dll
+F:\vitalCode\Vital Code - Bayan\Vital Handover\Source\Code Project\1- Dev\VitalExpertCode\Code\Vital\DataLayer\DatabaseGeneric\bin\Debug\Vital.DataLayer.pdb
+F:\vitalCode\Vital Code - Bayan\Vital Handover\Source\Code Project\1- Dev\VitalExpertCode\Code\Vital\DataLayer\DatabaseGeneric\bin\Debug\SD.LLBLGen.Pro.LinqSupportClasses.NET35.dll
+F:\vitalCode\Vital Code - Bayan\Vital Handover\Source\Code Project\1- Dev\VitalExpertCode\Code\Vital\DataLayer\DatabaseGeneric\bin\Debug\SD.LLBLGen.Pro.ORMSupportClasses.NET20.dll
+F:\vitalCode\Vital Code - Bayan\Vital Handover\Source\Code Project\1- Dev\VitalExpertCode\Code\Vital\DataLayer\DatabaseGeneric\bin\Debug\SD.LLBLGen.Pro.QuerySpec.dll
+F:\vitalCode\Vital Code - Bayan\Vital Handover\Source\Code Project\1- Dev\VitalExpertCode\Code\Vital\DataLayer\obj\Debug\Vital.DataLayer.csprojResolveAssemblyReference.cache
+F:\vitalCode\Vital Code - Bayan\Vital Handover\Source\Code Project\1- Dev\VitalExpertCode\Code\Vital\DataLayer\obj\Debug\Vital.DataLayer.dll
+F:\vitalCode\Vital Code - Bayan\Vital Handover\Source\Code Project\1- Dev\VitalExpertCode\Code\Vital\DataLayer\obj\Debug\Vital.DataLayer.pdb

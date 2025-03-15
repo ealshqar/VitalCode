@@ -1,0 +1,100 @@
+8
+
+dir
+2545
+https://src.equiom.com/svn/tco/branches/dev%20refactored/DesktopClientDevexpress
+https://src.equiom.com/svn/tco
+
+
+
+2009-08-11T12:20:33.886000Z
+2545
+anas
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+e6d67c12-07b9-4b48-9183-a2505ee29b62
+
+DesktopClientDevexpress.csproj
+file
+
+
+
+
+2009-08-13T11:26:09.075200Z
+a9edcf32855066b87f8754be8b1ea4ea
+2009-08-11T12:20:33.886000Z
+2545
+anas
+
+UI Components
+dir
+
+App.config
+file
+
+
+
+
+2009-06-21T14:35:20.591200Z
+590e3dfbdbb3d7b6bf824551682089c6
+2009-06-22T06:50:00.681625Z
+2432
+maha
+
+PrintRibbonControllerResources.resx
+file
+
+
+
+
+2009-03-03T10:07:06.000000Z
+0501802dee33d0bb92464fffe8807b5e
+2008-12-02T06:40:00.989000Z
+1432
+anas
+
+Resources
+dir
+
+PrintRibbonControllerResources.Designer.cs
+file
+
+
+
+
+2009-03-03T10:07:06.000000Z
+2cf1310b448e129cf0f3a4b26f40bef2
+2008-12-02T06:40:00.989000Z
+1432
+anas
+
+Logic Classes
+dir
+
+Properties
+dir
+
+DesktopClientDevexpress.csproj.user
+file
+
+
+
+
+2009-03-13T14:29:30.000000Z
+345f80862c5332a50ca13fa5a811896a
+2009-03-13T14:55:46.199875Z
+1890
+anas
+

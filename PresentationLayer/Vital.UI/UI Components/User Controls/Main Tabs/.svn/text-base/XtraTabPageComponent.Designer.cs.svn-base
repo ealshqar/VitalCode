@@ -1,0 +1,1811 @@
+namespace TCO.DesktopClientDevexpress
+{
+    partial class XtraTabPageComponent
+    {
+        //Create a rule for validating the control against duplicated names
+        DevExpress.XtraEditors.DXErrorProvider.ConditionValidationRule notNullComponentNumber = new DevExpress.XtraEditors.DXErrorProvider.ConditionValidationRule();
+        DevExpress.XtraEditors.DXErrorProvider.ConditionValidationRule notDuplicatedComponentNumber = new DevExpress.XtraEditors.DXErrorProvider.ConditionValidationRule();
+        DevExpress.XtraEditors.DXErrorProvider.ConditionValidationRule notNullComponentName = new DevExpress.XtraEditors.DXErrorProvider.ConditionValidationRule();
+        DevExpress.XtraEditors.DXErrorProvider.ConditionValidationRule notDuplicatedComponentName = new DevExpress.XtraEditors.DXErrorProvider.ConditionValidationRule();
+
+        /// <summary> 
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary> 
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Component Designer generated code
+
+        /// <summary> 
+        /// Required method for Designer support - do not modify 
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(XtraTabPageComponent));
+            this.popupContainerControlCopyLineItems = new DevExpress.XtraEditors.PopupContainerControl();
+            this.layoutControlCopyLineItems = new DevExpress.XtraLayout.LayoutControl();
+            this.simpleButtonCopyLineItems = new DevExpress.XtraEditors.SimpleButton();
+            this.checkedListBoxControlCategoryList = new DevExpress.XtraEditors.CheckedListBoxControl();
+            this.layoutControlGroup6 = new DevExpress.XtraLayout.LayoutControlGroup();
+            this.layoutControlItemCategoryList = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlItem7 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.emptySpaceItem6 = new DevExpress.XtraLayout.EmptySpaceItem();
+            this.popupContainerControlClosestMatch = new DevExpress.XtraEditors.PopupContainerControl();
+            this.layoutControlClosestMatch = new DevExpress.XtraLayout.LayoutControl();
+            this.textEditClosestMatchFilter = new DevExpress.XtraEditors.TextEdit();
+            this.gridControlClosestMatch = new DevExpress.XtraGrid.GridControl();
+            this.gridViewClosestMatch = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.gridColumnClosestMatchParentCategoryName = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.repositoryItemLookUpEditClosestMatch = new DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit();
+            this.gridColumnClosestMatchSubCategoryName = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumnSubCategoryKeyWord = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.layoutControlGroup2 = new DevExpress.XtraLayout.LayoutControlGroup();
+            this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlItemFilterClosestMatchSelection = new DevExpress.XtraLayout.LayoutControlItem();
+            this.popupContainerControlOtherClosestMatches = new DevExpress.XtraEditors.PopupContainerControl();
+            this.layoutControlOtherClosestMatches = new DevExpress.XtraLayout.LayoutControl();
+            this.simpleButtonAddCheckedSubCategories = new DevExpress.XtraEditors.SimpleButton();
+            this.gridControlOtherClosestMatchesSelection = new DevExpress.XtraGrid.GridControl();
+            this.gridViewClosestMatchesSelection = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.gridColumnParentCategoryNameSelect = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.repositoryItemLookUpEditParentCategory = new DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit();
+            this.gridColumnSubCategoryNameSelect = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumnKeyword = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
+            this.layoutControlItemOtherClosestMatchesSelectionGrid = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.emptySpaceItem2 = new DevExpress.XtraLayout.EmptySpaceItem();
+            this.componentUtilityInfoModuleInstance = new TCO.DesktopClientDevexpress.UI_Components.User_Controls.Modules.ComponentUtilityInfoModule();
+            this.layoutControlComponent = new DevExpress.XtraLayout.LayoutControl();
+            this.gridLookUpEditBaseComponent = new DevExpress.XtraEditors.GridLookUpEdit();
+            this.gridViewBaseComponents = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.gridColumn7 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumn6 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.spinEditMeasureLife = new DevExpress.XtraEditors.SpinEdit();
+            this.spinEditAge = new DevExpress.XtraEditors.SpinEdit();
+            this.gridLookUpEditStartingCondition = new DevExpress.XtraEditors.GridLookUpEdit();
+            this.gridView3 = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.gridColumnStartingCondition = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.spinEditComponentNumber = new DevExpress.XtraEditors.SpinEdit();
+            this.gridLookUpEditClosestMatch = new DevExpress.XtraEditors.GridLookUpEdit();
+            this.gridView2 = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.gridColumn5 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridLookUpEditBuilding = new DevExpress.XtraEditors.GridLookUpEdit();
+            this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.gridColumn2 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumn4 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridLookUpEditProject = new DevExpress.XtraEditors.GridLookUpEdit();
+            this.gridLookUpEdit1View = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.gridColumn1 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumn3 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.textEditDateLastModified = new DevExpress.XtraEditors.TextEdit();
+            this.spinEditUtilityGurantee = new DevExpress.XtraEditors.SpinEdit();
+            this.gridControlOtherClosestMatches = new DevExpress.XtraGrid.GridControl();
+            this.gridViewOtherClosestMatches = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.gridColumnSubCategoryIDOther = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumnSubCategoryNameOther = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumnParentCategoryIDOther = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.repositoryItemLookUpEditParentOther = new DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit();
+            this.textEditDateCreated = new DevExpress.XtraEditors.TextEdit();
+            this.popupContainerEditOtherCloseMatches = new DevExpress.XtraEditors.PopupContainerEdit();
+            this.textEditComponentName = new DevExpress.XtraEditors.TextEdit();
+            this.layoutControlGroupDetails = new DevExpress.XtraLayout.LayoutControlGroup();
+            this.layoutControlGroupComponent = new DevExpress.XtraLayout.LayoutControlGroup();
+            this.layoutControlGroupGeneralInformation = new DevExpress.XtraLayout.LayoutControlGroup();
+            this.layoutControlItemOtherClosestMatchesGrid = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlItemDateCreated = new DevExpress.XtraLayout.LayoutControlItem();
+            this.emptySpaceItem3 = new DevExpress.XtraLayout.EmptySpaceItem();
+            this.layoutControlItemComponentName = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlItemDateLastModified = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlItemComponentNumber = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlItem5 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlItemOtherClosestMatchesCombo = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlItemUtilityGurantee = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlItemProject = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlItemStartingCondition = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlItemAge = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlItemMeasureLife = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlItemBaseComponent = new DevExpress.XtraLayout.LayoutControlItem();
+            this.xtraTabControlComponentModules = new DevExpress.XtraTab.XtraTabControl();
+            this.xtraTabPageComponentGeneralRecommendation = new DevExpress.XtraTab.XtraTabPage();
+            this.memoEditComponentGeneralRecommendation = new DevExpress.XtraEditors.MemoEdit();
+            this.xtraTabPageComponentProposedDescription = new DevExpress.XtraTab.XtraTabPage();
+            this.memoEditComponentProposedDescription = new DevExpress.XtraEditors.MemoEdit();
+            this.xtraTabPageCUI = new DevExpress.XtraTab.XtraTabPage();
+            this.xtraTabPageAssetImpacts = new DevExpress.XtraTab.XtraTabPage();
+            this.assetImpactsModuleInstance = new TCO.DesktopClientDevexpress.UI_Components.User_Controls.Modules.AssetImpactsModule();
+            this.xtraTabPageMaintenanceAndOps = new DevExpress.XtraTab.XtraTabPage();
+            this.maintenanceAndOperationsModuleInstance = new TCO.DesktopClientDevexpress.UI_Components.User_Controls.Modules.Component_Modules.MaintenanceAndOperationsModule();
+            this.xtraTabPageCAPEX = new DevExpress.XtraTab.XtraTabPage();
+            this.capexModuleInstance = new TCO.DesktopClientDevexpress.UI_Components.User_Controls.Modules.Component_Modules.CAPEXModule();
+            this.xtraTabPageComponentFirstCost = new DevExpress.XtraTab.XtraTabPage();
+            this.componentFirstCostModule1 = new TCO.DesktopClientDevexpress.UI_Components.User_Controls.Modules.Component_Modules.ComponentFirstCostModule();
+            this.xtraTabControlMain = new DevExpress.XtraTab.XtraTabControl();
+            this.xtraTabPageGeneralInformation = new DevExpress.XtraTab.XtraTabPage();
+            this.xtraTabPageDetails = new DevExpress.XtraTab.XtraTabPage();
+            this.gridColumnClosestMatchSubCategoryID = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumnClosetMatchParentCategoryName = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumnParentCategoryIDSelect = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumnSubCategoryIDSelect = new DevExpress.XtraGrid.Columns.GridColumn();
+            ((System.ComponentModel.ISupportInitialize)(this.dxErrorProviderMain)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.popupContainerControlCopyLineItems)).BeginInit();
+            this.popupContainerControlCopyLineItems.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlCopyLineItems)).BeginInit();
+            this.layoutControlCopyLineItems.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.checkedListBoxControlCategoryList)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItemCategoryList)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem7)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.popupContainerControlClosestMatch)).BeginInit();
+            this.popupContainerControlClosestMatch.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlClosestMatch)).BeginInit();
+            this.layoutControlClosestMatch.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.textEditClosestMatchFilter.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridControlClosestMatch)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridViewClosestMatch)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemLookUpEditClosestMatch)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItemFilterClosestMatchSelection)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.popupContainerControlOtherClosestMatches)).BeginInit();
+            this.popupContainerControlOtherClosestMatches.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlOtherClosestMatches)).BeginInit();
+            this.layoutControlOtherClosestMatches.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridControlOtherClosestMatchesSelection)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridViewClosestMatchesSelection)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemLookUpEditParentCategory)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItemOtherClosestMatchesSelectionGrid)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlComponent)).BeginInit();
+            this.layoutControlComponent.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridLookUpEditBaseComponent.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridViewBaseComponents)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.spinEditMeasureLife.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.spinEditAge.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridLookUpEditStartingCondition.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridView3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.spinEditComponentNumber.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridLookUpEditClosestMatch.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridView2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridLookUpEditBuilding.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridLookUpEditProject.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridLookUpEdit1View)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.textEditDateLastModified.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.spinEditUtilityGurantee.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridControlOtherClosestMatches)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridViewOtherClosestMatches)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemLookUpEditParentOther)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.textEditDateCreated.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.popupContainerEditOtherCloseMatches.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.textEditComponentName.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroupDetails)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroupComponent)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroupGeneralInformation)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItemOtherClosestMatchesGrid)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItemDateCreated)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItemComponentName)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItemDateLastModified)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItemComponentNumber)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItemOtherClosestMatchesCombo)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItemUtilityGurantee)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItemProject)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItemStartingCondition)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItemAge)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItemMeasureLife)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItemBaseComponent)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.xtraTabControlComponentModules)).BeginInit();
+            this.xtraTabControlComponentModules.SuspendLayout();
+            this.xtraTabPageComponentGeneralRecommendation.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.memoEditComponentGeneralRecommendation.Properties)).BeginInit();
+            this.xtraTabPageComponentProposedDescription.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.memoEditComponentProposedDescription.Properties)).BeginInit();
+            this.xtraTabPageCUI.SuspendLayout();
+            this.xtraTabPageAssetImpacts.SuspendLayout();
+            this.xtraTabPageMaintenanceAndOps.SuspendLayout();
+            this.xtraTabPageCAPEX.SuspendLayout();
+            this.xtraTabPageComponentFirstCost.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.xtraTabControlMain)).BeginInit();
+            this.xtraTabControlMain.SuspendLayout();
+            this.xtraTabPageGeneralInformation.SuspendLayout();
+            this.xtraTabPageDetails.SuspendLayout();
+            this.SuspendLayout();
+            // 
+            // errorImageList
+            // 
+            this.errorImageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("errorImageList.ImageStream")));
+            this.errorImageList.Images.SetKeyName(0, "messageboxerror.ico");
+            // 
+            // popupContainerControlCopyLineItems
+            // 
+            this.popupContainerControlCopyLineItems.Controls.Add(this.layoutControlCopyLineItems);
+            this.popupContainerControlCopyLineItems.Location = new System.Drawing.Point(431, 113);
+            this.popupContainerControlCopyLineItems.Name = "popupContainerControlCopyLineItems";
+            this.popupContainerControlCopyLineItems.Size = new System.Drawing.Size(203, 274);
+            this.popupContainerControlCopyLineItems.TabIndex = 8;
+            // 
+            // layoutControlCopyLineItems
+            // 
+            this.layoutControlCopyLineItems.AllowCustomizationMenu = false;
+            this.layoutControlCopyLineItems.Appearance.DisabledLayoutGroupCaption.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.layoutControlCopyLineItems.Appearance.DisabledLayoutGroupCaption.Options.UseForeColor = true;
+            this.layoutControlCopyLineItems.Appearance.DisabledLayoutItem.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.layoutControlCopyLineItems.Appearance.DisabledLayoutItem.Options.UseForeColor = true;
+            this.layoutControlCopyLineItems.Controls.Add(this.simpleButtonCopyLineItems);
+            this.layoutControlCopyLineItems.Controls.Add(this.checkedListBoxControlCategoryList);
+            this.layoutControlCopyLineItems.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.layoutControlCopyLineItems.Location = new System.Drawing.Point(0, 0);
+            this.layoutControlCopyLineItems.Name = "layoutControlCopyLineItems";
+            this.layoutControlCopyLineItems.Root = this.layoutControlGroup6;
+            this.layoutControlCopyLineItems.Size = new System.Drawing.Size(203, 274);
+            this.layoutControlCopyLineItems.TabIndex = 1;
+            this.layoutControlCopyLineItems.Text = "layoutControl1";
+            // 
+            // simpleButtonCopyLineItems
+            // 
+            this.simpleButtonCopyLineItems.Location = new System.Drawing.Point(147, 246);
+            this.simpleButtonCopyLineItems.Name = "simpleButtonCopyLineItems";
+            this.simpleButtonCopyLineItems.Size = new System.Drawing.Size(50, 22);
+            this.simpleButtonCopyLineItems.StyleController = this.layoutControlCopyLineItems;
+            this.simpleButtonCopyLineItems.TabIndex = 4;
+            this.simpleButtonCopyLineItems.Text = "Copy";
+            // 
+            // checkedListBoxControlCategoryList
+            // 
+            this.checkedListBoxControlCategoryList.Location = new System.Drawing.Point(5, 5);
+            this.checkedListBoxControlCategoryList.Name = "checkedListBoxControlCategoryList";
+            this.checkedListBoxControlCategoryList.Size = new System.Drawing.Size(194, 232);
+            this.checkedListBoxControlCategoryList.StyleController = this.layoutControlCopyLineItems;
+            this.checkedListBoxControlCategoryList.TabIndex = 0;
+            // 
+            // layoutControlGroup6
+            // 
+            this.layoutControlGroup6.CustomizationFormText = "Root";
+            this.layoutControlGroup6.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
+            this.layoutControlItemCategoryList,
+            this.layoutControlItem7,
+            this.emptySpaceItem6});
+            this.layoutControlGroup6.Location = new System.Drawing.Point(0, 0);
+            this.layoutControlGroup6.Name = "Root";
+            this.layoutControlGroup6.Size = new System.Drawing.Size(203, 274);
+            this.layoutControlGroup6.Spacing = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
+            this.layoutControlGroup6.Text = "Root";
+            this.layoutControlGroup6.TextVisible = false;
+            // 
+            // layoutControlItemCategoryList
+            // 
+            this.layoutControlItemCategoryList.Control = this.checkedListBoxControlCategoryList;
+            this.layoutControlItemCategoryList.CustomizationFormText = "layoutControlItemCategoryList";
+            this.layoutControlItemCategoryList.Location = new System.Drawing.Point(0, 0);
+            this.layoutControlItemCategoryList.Name = "layoutControlItemCategoryList";
+            this.layoutControlItemCategoryList.Padding = new DevExpress.XtraLayout.Utils.Padding(3, 3, 3, 3);
+            this.layoutControlItemCategoryList.Size = new System.Drawing.Size(201, 239);
+            this.layoutControlItemCategoryList.Text = "layoutControlItemCategoryList";
+            this.layoutControlItemCategoryList.TextLocation = DevExpress.Utils.Locations.Left;
+            this.layoutControlItemCategoryList.TextSize = new System.Drawing.Size(0, 0);
+            this.layoutControlItemCategoryList.TextToControlDistance = 0;
+            this.layoutControlItemCategoryList.TextVisible = false;
+            // 
+            // layoutControlItem7
+            // 
+            this.layoutControlItem7.Control = this.simpleButtonCopyLineItems;
+            this.layoutControlItem7.CustomizationFormText = "layoutControlItem7";
+            this.layoutControlItem7.Location = new System.Drawing.Point(140, 239);
+            this.layoutControlItem7.Name = "layoutControlItem7";
+            this.layoutControlItem7.Size = new System.Drawing.Size(61, 33);
+            this.layoutControlItem7.Text = "layoutControlItem7";
+            this.layoutControlItem7.TextLocation = DevExpress.Utils.Locations.Left;
+            this.layoutControlItem7.TextSize = new System.Drawing.Size(0, 0);
+            this.layoutControlItem7.TextToControlDistance = 0;
+            this.layoutControlItem7.TextVisible = false;
+            // 
+            // emptySpaceItem6
+            // 
+            this.emptySpaceItem6.CustomizationFormText = "emptySpaceItem6";
+            this.emptySpaceItem6.Location = new System.Drawing.Point(0, 239);
+            this.emptySpaceItem6.Name = "emptySpaceItem6";
+            this.emptySpaceItem6.Size = new System.Drawing.Size(140, 33);
+            this.emptySpaceItem6.Text = "emptySpaceItem6";
+            this.emptySpaceItem6.TextSize = new System.Drawing.Size(0, 0);
+            // 
+            // popupContainerControlClosestMatch
+            // 
+            this.popupContainerControlClosestMatch.Controls.Add(this.layoutControlClosestMatch);
+            this.popupContainerControlClosestMatch.Location = new System.Drawing.Point(539, 335);
+            this.popupContainerControlClosestMatch.Name = "popupContainerControlClosestMatch";
+            this.popupContainerControlClosestMatch.Size = new System.Drawing.Size(448, 382);
+            this.popupContainerControlClosestMatch.TabIndex = 21;
+            this.popupContainerControlClosestMatch.Leave += new System.EventHandler(this.gridLookUpEditClosestMatch_Leave);
+            // 
+            // layoutControlClosestMatch
+            // 
+            this.layoutControlClosestMatch.AllowCustomizationMenu = false;
+            this.layoutControlClosestMatch.Appearance.DisabledLayoutGroupCaption.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.layoutControlClosestMatch.Appearance.DisabledLayoutGroupCaption.Options.UseForeColor = true;
+            this.layoutControlClosestMatch.Appearance.DisabledLayoutItem.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.layoutControlClosestMatch.Appearance.DisabledLayoutItem.Options.UseForeColor = true;
+            this.layoutControlClosestMatch.Controls.Add(this.textEditClosestMatchFilter);
+            this.layoutControlClosestMatch.Controls.Add(this.gridControlClosestMatch);
+            this.layoutControlClosestMatch.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.layoutControlClosestMatch.Location = new System.Drawing.Point(0, 0);
+            this.layoutControlClosestMatch.Name = "layoutControlClosestMatch";
+            this.layoutControlClosestMatch.Root = this.layoutControlGroup2;
+            this.layoutControlClosestMatch.Size = new System.Drawing.Size(448, 382);
+            this.layoutControlClosestMatch.TabIndex = 0;
+            this.layoutControlClosestMatch.Text = "layoutControl1";
+            this.layoutControlClosestMatch.ToolTipController = this.toolTipControllerMain;
+            this.layoutControlClosestMatch.Leave += new System.EventHandler(this.gridLookUpEditClosestMatch_Leave);
+            // 
+            // textEditClosestMatchFilter
+            // 
+            this.textEditClosestMatchFilter.Location = new System.Drawing.Point(5, 5);
+            this.textEditClosestMatchFilter.Name = "textEditClosestMatchFilter";
+            this.textEditClosestMatchFilter.Properties.Appearance.Font = new System.Drawing.Font("Arial", 8F);
+            this.textEditClosestMatchFilter.Properties.Appearance.Options.UseFont = true;
+            this.textEditClosestMatchFilter.Size = new System.Drawing.Size(439, 20);
+            this.textEditClosestMatchFilter.StyleController = this.layoutControlClosestMatch;
+            this.textEditClosestMatchFilter.TabIndex = 5;
+            this.textEditClosestMatchFilter.ToolTipController = this.toolTipControllerMain;
+            this.textEditClosestMatchFilter.Leave += new System.EventHandler(this.gridLookUpEditClosestMatch_Leave);
+            this.textEditClosestMatchFilter.TextChanged += new System.EventHandler(this.textEditClosestMatchFilter_TextChanged);
+            // 
+            // gridControlClosestMatch
+            // 
+            this.gridControlClosestMatch.Location = new System.Drawing.Point(5, 32);
+            this.gridControlClosestMatch.MainView = this.gridViewClosestMatch;
+            this.gridControlClosestMatch.Name = "gridControlClosestMatch";
+            this.gridControlClosestMatch.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
+            this.repositoryItemLookUpEditClosestMatch});
+            this.gridControlClosestMatch.Size = new System.Drawing.Size(439, 346);
+            this.gridControlClosestMatch.TabIndex = 4;
+            this.gridControlClosestMatch.ToolTipController = this.toolTipControllerMain;
+            this.gridControlClosestMatch.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
+            this.gridViewClosestMatch});
+            this.gridControlClosestMatch.Leave += new System.EventHandler(this.gridLookUpEditClosestMatch_Leave);
+            this.gridControlClosestMatch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.GridControl_KeyDown);
+            this.gridControlClosestMatch.Click += new System.EventHandler(this.GridView_Click);
+            // 
+            // gridViewClosestMatch
+            // 
+            this.gridViewClosestMatch.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+            this.gridColumnClosestMatchParentCategoryName,
+            this.gridColumnClosestMatchSubCategoryName,
+            this.gridColumnSubCategoryKeyWord});
+            this.gridViewClosestMatch.GridControl = this.gridControlClosestMatch;
+            this.gridViewClosestMatch.GroupCount = 1;
+            this.gridViewClosestMatch.GroupFormat = "[#image]{1}";
+            this.gridViewClosestMatch.Name = "gridViewClosestMatch";
+            this.gridViewClosestMatch.OptionsBehavior.AutoExpandAllGroups = true;
+            this.gridViewClosestMatch.OptionsCustomization.AllowColumnMoving = false;
+            this.gridViewClosestMatch.OptionsCustomization.AllowFilter = false;
+            this.gridViewClosestMatch.OptionsCustomization.AllowGroup = false;
+            this.gridViewClosestMatch.OptionsCustomization.AllowQuickHideColumns = false;
+            this.gridViewClosestMatch.OptionsMenu.EnableColumnMenu = false;
+            this.gridViewClosestMatch.OptionsNavigation.EnterMoveNextColumn = true;
+            this.gridViewClosestMatch.OptionsSelection.EnableAppearanceFocusedRow = false;
+            this.gridViewClosestMatch.OptionsView.ShowFilterPanelMode = DevExpress.XtraGrid.Views.Base.ShowFilterPanelMode.Never;
+            this.gridViewClosestMatch.OptionsView.ShowGroupPanel = false;
+            this.gridViewClosestMatch.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
+            new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.gridColumnClosestMatchParentCategoryName, DevExpress.Data.ColumnSortOrder.Ascending)});
+            // 
+            // gridColumnClosestMatchParentCategoryName
+            // 
+            this.gridColumnClosestMatchParentCategoryName.Caption = "Category";
+            this.gridColumnClosestMatchParentCategoryName.ColumnEdit = this.repositoryItemLookUpEditClosestMatch;
+            this.gridColumnClosestMatchParentCategoryName.FieldName = "ParentId";
+            this.gridColumnClosestMatchParentCategoryName.Name = "gridColumnClosestMatchParentCategoryName";
+            this.gridColumnClosestMatchParentCategoryName.Visible = true;
+            this.gridColumnClosestMatchParentCategoryName.VisibleIndex = 0;
+            // 
+            // repositoryItemLookUpEditClosestMatch
+            // 
+            this.repositoryItemLookUpEditClosestMatch.AutoHeight = false;
+            this.repositoryItemLookUpEditClosestMatch.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.repositoryItemLookUpEditClosestMatch.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] {
+            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("Name", "Category"),
+            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("Id", "Id", 20, DevExpress.Utils.FormatType.None, "", false, DevExpress.Utils.HorzAlignment.Default)});
+            this.repositoryItemLookUpEditClosestMatch.DisplayMember = "Name";
+            this.repositoryItemLookUpEditClosestMatch.Name = "repositoryItemLookUpEditClosestMatch";
+            this.repositoryItemLookUpEditClosestMatch.NullText = "";
+            this.repositoryItemLookUpEditClosestMatch.ValueMember = "Id";
+            // 
+            // gridColumnClosestMatchSubCategoryName
+            // 
+            this.gridColumnClosestMatchSubCategoryName.Caption = "Sub Category";
+            this.gridColumnClosestMatchSubCategoryName.FieldName = "Name";
+            this.gridColumnClosestMatchSubCategoryName.Name = "gridColumnClosestMatchSubCategoryName";
+            this.gridColumnClosestMatchSubCategoryName.OptionsColumn.AllowEdit = false;
+            this.gridColumnClosestMatchSubCategoryName.Visible = true;
+            this.gridColumnClosestMatchSubCategoryName.VisibleIndex = 0;
+            this.gridColumnClosestMatchSubCategoryName.Width = 217;
+            // 
+            // gridColumnSubCategoryKeyWord
+            // 
+            this.gridColumnSubCategoryKeyWord.Caption = "Word";
+            this.gridColumnSubCategoryKeyWord.FieldName = "KeyWord";
+            this.gridColumnSubCategoryKeyWord.Name = "gridColumnSubCategoryKeyWord";
+            this.gridColumnSubCategoryKeyWord.OptionsColumn.AllowEdit = false;
+            this.gridColumnSubCategoryKeyWord.Visible = true;
+            this.gridColumnSubCategoryKeyWord.VisibleIndex = 1;
+            this.gridColumnSubCategoryKeyWord.Width = 201;
+            // 
+            // layoutControlGroup2
+            // 
+            this.layoutControlGroup2.CustomizationFormText = "Root";
+            this.layoutControlGroup2.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
+            this.layoutControlItem2,
+            this.layoutControlItemFilterClosestMatchSelection});
+            this.layoutControlGroup2.Location = new System.Drawing.Point(0, 0);
+            this.layoutControlGroup2.Name = "Root";
+            this.layoutControlGroup2.Size = new System.Drawing.Size(448, 382);
+            this.layoutControlGroup2.Spacing = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
+            this.layoutControlGroup2.Text = "Root";
+            this.layoutControlGroup2.TextVisible = false;
+            // 
+            // layoutControlItem2
+            // 
+            this.layoutControlItem2.Control = this.gridControlClosestMatch;
+            this.layoutControlItem2.CustomizationFormText = "layoutControlItemOtherClosestMatchesSelectionGrid";
+            this.layoutControlItem2.Location = new System.Drawing.Point(0, 27);
+            this.layoutControlItem2.Name = "layoutControlItemOtherClosestMatchesSelectionGrid";
+            this.layoutControlItem2.Padding = new DevExpress.XtraLayout.Utils.Padding(3, 3, 3, 3);
+            this.layoutControlItem2.Size = new System.Drawing.Size(446, 353);
+            this.layoutControlItem2.Text = "layoutControlItemOtherClosestMatchesSelectionGrid";
+            this.layoutControlItem2.TextLocation = DevExpress.Utils.Locations.Top;
+            this.layoutControlItem2.TextSize = new System.Drawing.Size(0, 0);
+            this.layoutControlItem2.TextToControlDistance = 0;
+            this.layoutControlItem2.TextVisible = false;
+            // 
+            // layoutControlItemFilterClosestMatchSelection
+            // 
+            this.layoutControlItemFilterClosestMatchSelection.Control = this.textEditClosestMatchFilter;
+            this.layoutControlItemFilterClosestMatchSelection.CustomizationFormText = "layoutControlItemFilterClosestMatchSelection";
+            this.layoutControlItemFilterClosestMatchSelection.Location = new System.Drawing.Point(0, 0);
+            this.layoutControlItemFilterClosestMatchSelection.Name = "layoutControlItemFilterClosestMatchSelection";
+            this.layoutControlItemFilterClosestMatchSelection.Padding = new DevExpress.XtraLayout.Utils.Padding(3, 3, 3, 3);
+            this.layoutControlItemFilterClosestMatchSelection.Size = new System.Drawing.Size(446, 27);
+            this.layoutControlItemFilterClosestMatchSelection.Text = "layoutControlItemFilterClosestMatchSelection";
+            this.layoutControlItemFilterClosestMatchSelection.TextLocation = DevExpress.Utils.Locations.Left;
+            this.layoutControlItemFilterClosestMatchSelection.TextSize = new System.Drawing.Size(0, 0);
+            this.layoutControlItemFilterClosestMatchSelection.TextToControlDistance = 0;
+            this.layoutControlItemFilterClosestMatchSelection.TextVisible = false;
+            // 
+            // popupContainerControlOtherClosestMatches
+            // 
+            this.popupContainerControlOtherClosestMatches.Controls.Add(this.layoutControlOtherClosestMatches);
+            this.popupContainerControlOtherClosestMatches.Location = new System.Drawing.Point(175, 351);
+            this.popupContainerControlOtherClosestMatches.Name = "popupContainerControlOtherClosestMatches";
+            this.popupContainerControlOtherClosestMatches.Size = new System.Drawing.Size(732, 311);
+            this.popupContainerControlOtherClosestMatches.TabIndex = 20;
+            // 
+            // layoutControlOtherClosestMatches
+            // 
+            this.layoutControlOtherClosestMatches.AllowCustomizationMenu = false;
+            this.layoutControlOtherClosestMatches.Appearance.DisabledLayoutGroupCaption.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.layoutControlOtherClosestMatches.Appearance.DisabledLayoutGroupCaption.Options.UseForeColor = true;
+            this.layoutControlOtherClosestMatches.Appearance.DisabledLayoutItem.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.layoutControlOtherClosestMatches.Appearance.DisabledLayoutItem.Options.UseForeColor = true;
+            this.layoutControlOtherClosestMatches.Controls.Add(this.simpleButtonAddCheckedSubCategories);
+            this.layoutControlOtherClosestMatches.Controls.Add(this.gridControlOtherClosestMatchesSelection);
+            this.layoutControlOtherClosestMatches.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.layoutControlOtherClosestMatches.Location = new System.Drawing.Point(0, 0);
+            this.layoutControlOtherClosestMatches.Name = "layoutControlOtherClosestMatches";
+            this.layoutControlOtherClosestMatches.Root = this.layoutControlGroup1;
+            this.layoutControlOtherClosestMatches.Size = new System.Drawing.Size(732, 311);
+            this.layoutControlOtherClosestMatches.TabIndex = 0;
+            this.layoutControlOtherClosestMatches.Text = "layoutControl1";
+            this.layoutControlOtherClosestMatches.ToolTipController = this.toolTipControllerMain;
+            // 
+            // simpleButtonAddCheckedSubCategories
+            // 
+            this.simpleButtonAddCheckedSubCategories.Location = new System.Drawing.Point(659, 283);
+            this.simpleButtonAddCheckedSubCategories.Name = "simpleButtonAddCheckedSubCategories";
+            this.simpleButtonAddCheckedSubCategories.Size = new System.Drawing.Size(67, 22);
+            this.simpleButtonAddCheckedSubCategories.StyleController = this.layoutControlOtherClosestMatches;
+            this.simpleButtonAddCheckedSubCategories.TabIndex = 5;
+            this.simpleButtonAddCheckedSubCategories.Text = "Add";
+            this.simpleButtonAddCheckedSubCategories.Click += new System.EventHandler(this.simpleButtonAddCheckedSubCategories_Click);
+            // 
+            // gridControlOtherClosestMatchesSelection
+            // 
+            this.gridControlOtherClosestMatchesSelection.Location = new System.Drawing.Point(7, 7);
+            this.gridControlOtherClosestMatchesSelection.MainView = this.gridViewClosestMatchesSelection;
+            this.gridControlOtherClosestMatchesSelection.Name = "gridControlOtherClosestMatchesSelection";
+            this.gridControlOtherClosestMatchesSelection.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
+            this.repositoryItemLookUpEditParentCategory});
+            this.gridControlOtherClosestMatchesSelection.Size = new System.Drawing.Size(719, 265);
+            this.gridControlOtherClosestMatchesSelection.TabIndex = 4;
+            this.gridControlOtherClosestMatchesSelection.ToolTipController = this.toolTipControllerMain;
+            this.gridControlOtherClosestMatchesSelection.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
+            this.gridViewClosestMatchesSelection});
+            // 
+            // gridViewClosestMatchesSelection
+            // 
+            this.gridViewClosestMatchesSelection.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+            this.gridColumnParentCategoryNameSelect,
+            this.gridColumnSubCategoryNameSelect,
+            this.gridColumnKeyword});
+            this.gridViewClosestMatchesSelection.GridControl = this.gridControlOtherClosestMatchesSelection;
+            this.gridViewClosestMatchesSelection.GroupCount = 1;
+            this.gridViewClosestMatchesSelection.GroupFormat = "[#image]{1}";
+            this.gridViewClosestMatchesSelection.Name = "gridViewClosestMatchesSelection";
+            this.gridViewClosestMatchesSelection.OptionsBehavior.AutoExpandAllGroups = true;
+            this.gridViewClosestMatchesSelection.OptionsCustomization.AllowColumnMoving = false;
+            this.gridViewClosestMatchesSelection.OptionsCustomization.AllowFilter = false;
+            this.gridViewClosestMatchesSelection.OptionsCustomization.AllowGroup = false;
+            this.gridViewClosestMatchesSelection.OptionsCustomization.AllowQuickHideColumns = false;
+            this.gridViewClosestMatchesSelection.OptionsMenu.EnableColumnMenu = false;
+            this.gridViewClosestMatchesSelection.OptionsNavigation.EnterMoveNextColumn = true;
+            this.gridViewClosestMatchesSelection.OptionsSelection.EnableAppearanceFocusedRow = false;
+            this.gridViewClosestMatchesSelection.OptionsSelection.MultiSelect = true;
+            this.gridViewClosestMatchesSelection.OptionsView.ShowFilterPanelMode = DevExpress.XtraGrid.Views.Base.ShowFilterPanelMode.Never;
+            this.gridViewClosestMatchesSelection.OptionsView.ShowGroupPanel = false;
+            this.gridViewClosestMatchesSelection.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
+            new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.gridColumnParentCategoryNameSelect, DevExpress.Data.ColumnSortOrder.Ascending)});
+            // 
+            // gridColumnParentCategoryNameSelect
+            // 
+            this.gridColumnParentCategoryNameSelect.Caption = "Category";
+            this.gridColumnParentCategoryNameSelect.ColumnEdit = this.repositoryItemLookUpEditParentCategory;
+            this.gridColumnParentCategoryNameSelect.FieldName = "ParentId";
+            this.gridColumnParentCategoryNameSelect.Name = "gridColumnParentCategoryNameSelect";
+            this.gridColumnParentCategoryNameSelect.OptionsColumn.AllowEdit = false;
+            this.gridColumnParentCategoryNameSelect.Visible = true;
+            this.gridColumnParentCategoryNameSelect.VisibleIndex = 0;
+            // 
+            // repositoryItemLookUpEditParentCategory
+            // 
+            this.repositoryItemLookUpEditParentCategory.AutoHeight = false;
+            this.repositoryItemLookUpEditParentCategory.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.repositoryItemLookUpEditParentCategory.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] {
+            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("Name", "Category")});
+            this.repositoryItemLookUpEditParentCategory.DisplayMember = "Name";
+            this.repositoryItemLookUpEditParentCategory.Name = "repositoryItemLookUpEditParentCategory";
+            this.repositoryItemLookUpEditParentCategory.NullText = "";
+            this.repositoryItemLookUpEditParentCategory.ValueMember = "Id";
+            // 
+            // gridColumnSubCategoryNameSelect
+            // 
+            this.gridColumnSubCategoryNameSelect.Caption = "Sub Category";
+            this.gridColumnSubCategoryNameSelect.FieldName = "Name";
+            this.gridColumnSubCategoryNameSelect.Name = "gridColumnSubCategoryNameSelect";
+            this.gridColumnSubCategoryNameSelect.OptionsColumn.AllowEdit = false;
+            this.gridColumnSubCategoryNameSelect.Visible = true;
+            this.gridColumnSubCategoryNameSelect.VisibleIndex = 0;
+            this.gridColumnSubCategoryNameSelect.Width = 384;
+            // 
+            // gridColumnKeyword
+            // 
+            this.gridColumnKeyword.Caption = "Word";
+            this.gridColumnKeyword.FieldName = "KeyWord";
+            this.gridColumnKeyword.Name = "gridColumnKeyword";
+            this.gridColumnKeyword.OptionsColumn.AllowEdit = false;
+            this.gridColumnKeyword.Visible = true;
+            this.gridColumnKeyword.VisibleIndex = 1;
+            this.gridColumnKeyword.Width = 351;
+            // 
+            // layoutControlGroup1
+            // 
+            this.layoutControlGroup1.CustomizationFormText = "Root";
+            this.layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
+            this.layoutControlItemOtherClosestMatchesSelectionGrid,
+            this.layoutControlItem1,
+            this.emptySpaceItem2});
+            this.layoutControlGroup1.Location = new System.Drawing.Point(0, 0);
+            this.layoutControlGroup1.Name = "Root";
+            this.layoutControlGroup1.Size = new System.Drawing.Size(732, 311);
+            this.layoutControlGroup1.Spacing = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
+            this.layoutControlGroup1.Text = "Root";
+            this.layoutControlGroup1.TextVisible = false;
+            // 
+            // layoutControlItemOtherClosestMatchesSelectionGrid
+            // 
+            this.layoutControlItemOtherClosestMatchesSelectionGrid.Control = this.gridControlOtherClosestMatchesSelection;
+            this.layoutControlItemOtherClosestMatchesSelectionGrid.CustomizationFormText = "layoutControlItemOtherClosestMatchesSelectionGrid";
+            this.layoutControlItemOtherClosestMatchesSelectionGrid.Location = new System.Drawing.Point(0, 0);
+            this.layoutControlItemOtherClosestMatchesSelectionGrid.Name = "layoutControlItemOtherClosestMatchesSelectionGrid";
+            this.layoutControlItemOtherClosestMatchesSelectionGrid.Size = new System.Drawing.Size(730, 276);
+            this.layoutControlItemOtherClosestMatchesSelectionGrid.Text = "layoutControlItemOtherClosestMatchesSelectionGrid";
+            this.layoutControlItemOtherClosestMatchesSelectionGrid.TextLocation = DevExpress.Utils.Locations.Top;
+            this.layoutControlItemOtherClosestMatchesSelectionGrid.TextSize = new System.Drawing.Size(0, 0);
+            this.layoutControlItemOtherClosestMatchesSelectionGrid.TextToControlDistance = 0;
+            this.layoutControlItemOtherClosestMatchesSelectionGrid.TextVisible = false;
+            // 
+            // layoutControlItem1
+            // 
+            this.layoutControlItem1.Control = this.simpleButtonAddCheckedSubCategories;
+            this.layoutControlItem1.CustomizationFormText = "layoutControlItem1";
+            this.layoutControlItem1.Location = new System.Drawing.Point(652, 276);
+            this.layoutControlItem1.Name = "layoutControlItem1";
+            this.layoutControlItem1.Size = new System.Drawing.Size(78, 33);
+            this.layoutControlItem1.Text = "layoutControlItem1";
+            this.layoutControlItem1.TextLocation = DevExpress.Utils.Locations.Left;
+            this.layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
+            this.layoutControlItem1.TextToControlDistance = 0;
+            this.layoutControlItem1.TextVisible = false;
+            // 
+            // emptySpaceItem2
+            // 
+            this.emptySpaceItem2.CustomizationFormText = "emptySpaceItem2";
+            this.emptySpaceItem2.Location = new System.Drawing.Point(0, 276);
+            this.emptySpaceItem2.Name = "emptySpaceItem2";
+            this.emptySpaceItem2.Size = new System.Drawing.Size(652, 33);
+            this.emptySpaceItem2.Text = "emptySpaceItem2";
+            this.emptySpaceItem2.TextSize = new System.Drawing.Size(0, 0);
+            // 
+            // componentUtilityInfoModuleInstance
+            // 
+            this.componentUtilityInfoModuleInstance.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.componentUtilityInfoModuleInstance.Location = new System.Drawing.Point(0, 0);
+            this.componentUtilityInfoModuleInstance.Name = "componentUtilityInfoModuleInstance";
+            this.componentUtilityInfoModuleInstance.ParentBuilding = null;
+            this.componentUtilityInfoModuleInstance.ParentComponent = null;
+            this.componentUtilityInfoModuleInstance.Size = new System.Drawing.Size(681, 478);
+            this.componentUtilityInfoModuleInstance.TabIndex = 9;
+            // 
+            // layoutControlComponent
+            // 
+            this.layoutControlComponent.AllowCustomizationMenu = false;
+            this.layoutControlComponent.Appearance.DisabledLayoutGroupCaption.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.layoutControlComponent.Appearance.DisabledLayoutGroupCaption.Options.UseForeColor = true;
+            this.layoutControlComponent.Appearance.DisabledLayoutItem.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.layoutControlComponent.Appearance.DisabledLayoutItem.Options.UseForeColor = true;
+            this.layoutControlComponent.Controls.Add(this.gridLookUpEditBaseComponent);
+            this.layoutControlComponent.Controls.Add(this.spinEditMeasureLife);
+            this.layoutControlComponent.Controls.Add(this.spinEditAge);
+            this.layoutControlComponent.Controls.Add(this.gridLookUpEditStartingCondition);
+            this.layoutControlComponent.Controls.Add(this.popupContainerControlClosestMatch);
+            this.layoutControlComponent.Controls.Add(this.spinEditComponentNumber);
+            this.layoutControlComponent.Controls.Add(this.gridLookUpEditClosestMatch);
+            this.layoutControlComponent.Controls.Add(this.gridLookUpEditBuilding);
+            this.layoutControlComponent.Controls.Add(this.gridLookUpEditProject);
+            this.layoutControlComponent.Controls.Add(this.popupContainerControlOtherClosestMatches);
+            this.layoutControlComponent.Controls.Add(this.textEditDateLastModified);
+            this.layoutControlComponent.Controls.Add(this.spinEditUtilityGurantee);
+            this.layoutControlComponent.Controls.Add(this.gridControlOtherClosestMatches);
+            this.layoutControlComponent.Controls.Add(this.textEditDateCreated);
+            this.layoutControlComponent.Controls.Add(this.popupContainerEditOtherCloseMatches);
+            this.layoutControlComponent.Controls.Add(this.textEditComponentName);
+            this.layoutControlComponent.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.layoutControlComponent.HiddenItems.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
+            this.layoutControlGroupDetails});
+            this.layoutControlComponent.Location = new System.Drawing.Point(0, 0);
+            this.layoutControlComponent.Name = "layoutControlComponent";
+            this.layoutControlComponent.Root = this.layoutControlGroupComponent;
+            this.layoutControlComponent.Size = new System.Drawing.Size(837, 487);
+            this.layoutControlComponent.TabIndex = 0;
+            this.layoutControlComponent.Text = "layoutControl1";
+            this.layoutControlComponent.ToolTipController = this.toolTipControllerMain;
+            // 
+            // gridLookUpEditBaseComponent
+            // 
+            this.gridLookUpEditBaseComponent.Location = new System.Drawing.Point(506, 157);
+            this.gridLookUpEditBaseComponent.Name = "gridLookUpEditBaseComponent";
+            this.gridLookUpEditBaseComponent.Properties.Appearance.Font = new System.Drawing.Font("Arial", 8F);
+            this.gridLookUpEditBaseComponent.Properties.Appearance.Options.UseFont = true;
+            this.gridLookUpEditBaseComponent.Properties.AutoComplete = false;
+            this.gridLookUpEditBaseComponent.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo),
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Ellipsis, "Open", -1, true, true, true, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null),
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Delete, "Clear", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null)});
+            this.gridLookUpEditBaseComponent.Properties.DisplayMember = "Name";
+            this.gridLookUpEditBaseComponent.Properties.NullText = "";
+            this.gridLookUpEditBaseComponent.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.Standard;
+            this.gridLookUpEditBaseComponent.Properties.ValueMember = "Id";
+            this.gridLookUpEditBaseComponent.Properties.View = this.gridViewBaseComponents;
+            this.gridLookUpEditBaseComponent.Properties.ButtonPressed += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.gridLookUpEditBaseComponent_Properties_ButtonPressed);
+            this.gridLookUpEditBaseComponent.Size = new System.Drawing.Size(328, 20);
+            this.gridLookUpEditBaseComponent.StyleController = this.layoutControlComponent;
+            this.gridLookUpEditBaseComponent.TabIndex = 26;
+            this.gridLookUpEditBaseComponent.TabStop = false;
+            this.gridLookUpEditBaseComponent.ToolTipController = this.toolTipControllerMain;
+            this.gridLookUpEditBaseComponent.EditValueChanging += new DevExpress.XtraEditors.Controls.ChangingEventHandler(this.gridLookUpEditBaseComponent_EditValueChanging);
+            this.gridLookUpEditBaseComponent.QueryPopUp += new System.ComponentModel.CancelEventHandler(this.DropDown_QueryPopUp);
+            // 
+            // gridViewBaseComponents
+            // 
+            this.gridViewBaseComponents.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+            this.gridColumn7,
+            this.gridColumn6});
+            this.gridViewBaseComponents.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
+            this.gridViewBaseComponents.Name = "gridViewBaseComponents";
+            this.gridViewBaseComponents.OptionsSelection.EnableAppearanceFocusedCell = false;
+            this.gridViewBaseComponents.OptionsView.ShowAutoFilterRow = true;
+            this.gridViewBaseComponents.OptionsView.ShowGroupPanel = false;
+            // 
+            // gridColumn7
+            // 
+            this.gridColumn7.AppearanceCell.Options.UseTextOptions = true;
+            this.gridColumn7.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
+            this.gridColumn7.Caption = "Number";
+            this.gridColumn7.FieldName = "Number";
+            this.gridColumn7.Name = "gridColumn7";
+            this.gridColumn7.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
+            this.gridColumn7.Visible = true;
+            this.gridColumn7.VisibleIndex = 0;
+            // 
+            // gridColumn6
+            // 
+            this.gridColumn6.AppearanceCell.Options.UseTextOptions = true;
+            this.gridColumn6.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
+            this.gridColumn6.Caption = "Base Component";
+            this.gridColumn6.FieldName = "Name";
+            this.gridColumn6.Name = "gridColumn6";
+            this.gridColumn6.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
+            this.gridColumn6.Visible = true;
+            this.gridColumn6.VisibleIndex = 1;
+            this.gridColumn6.Width = 150;
+            // 
+            // spinEditMeasureLife
+            // 
+            this.spinEditMeasureLife.EditValue = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.spinEditMeasureLife.Location = new System.Drawing.Point(674, 202);
+            this.spinEditMeasureLife.Name = "spinEditMeasureLife";
+            this.spinEditMeasureLife.Properties.Appearance.Font = new System.Drawing.Font("Arial", 8F);
+            this.spinEditMeasureLife.Properties.Appearance.Options.UseFont = true;
+            this.spinEditMeasureLife.Properties.Appearance.Options.UseTextOptions = true;
+            this.spinEditMeasureLife.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
+            this.spinEditMeasureLife.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton()});
+            this.spinEditMeasureLife.Properties.Mask.EditMask = "n";
+            this.spinEditMeasureLife.Properties.Mask.UseMaskAsDisplayFormat = true;
+            this.spinEditMeasureLife.Size = new System.Drawing.Size(160, 20);
+            this.spinEditMeasureLife.StyleController = this.layoutControlComponent;
+            this.spinEditMeasureLife.TabIndex = 27;
+            this.spinEditMeasureLife.ToolTipController = this.toolTipControllerMain;
+            // 
+            // spinEditAge
+            // 
+            this.spinEditAge.EditValue = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.spinEditAge.Location = new System.Drawing.Point(674, 247);
+            this.spinEditAge.Name = "spinEditAge";
+            this.spinEditAge.Properties.Appearance.Font = new System.Drawing.Font("Arial", 8F);
+            this.spinEditAge.Properties.Appearance.Options.UseFont = true;
+            this.spinEditAge.Properties.Appearance.Options.UseTextOptions = true;
+            this.spinEditAge.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
+            this.spinEditAge.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton()});
+            this.spinEditAge.Properties.Mask.EditMask = "n0";
+            this.spinEditAge.Properties.Mask.UseMaskAsDisplayFormat = true;
+            this.spinEditAge.Size = new System.Drawing.Size(160, 20);
+            this.spinEditAge.StyleController = this.layoutControlComponent;
+            this.spinEditAge.TabIndex = 26;
+            this.spinEditAge.ToolTipController = this.toolTipControllerMain;
+            // 
+            // gridLookUpEditStartingCondition
+            // 
+            this.gridLookUpEditStartingCondition.EditValue = "";
+            this.gridLookUpEditStartingCondition.Location = new System.Drawing.Point(506, 247);
+            this.gridLookUpEditStartingCondition.Name = "gridLookUpEditStartingCondition";
+            this.gridLookUpEditStartingCondition.Properties.Appearance.Font = new System.Drawing.Font("Arial", 8F);
+            this.gridLookUpEditStartingCondition.Properties.Appearance.Options.UseFont = true;
+            this.gridLookUpEditStartingCondition.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.gridLookUpEditStartingCondition.Properties.DisplayMember = "Name";
+            this.gridLookUpEditStartingCondition.Properties.NullText = "";
+            this.gridLookUpEditStartingCondition.Properties.ValueMember = "Id";
+            this.gridLookUpEditStartingCondition.Properties.View = this.gridView3;
+            this.gridLookUpEditStartingCondition.Size = new System.Drawing.Size(161, 20);
+            this.gridLookUpEditStartingCondition.StyleController = this.layoutControlComponent;
+            this.gridLookUpEditStartingCondition.TabIndex = 25;
+            this.gridLookUpEditStartingCondition.ToolTipController = this.toolTipControllerMain;
+            this.gridLookUpEditStartingCondition.EditValueChanged += new System.EventHandler(this.gridLookUpEditStartingCondition_EditValueChanged);
+            this.gridLookUpEditStartingCondition.QueryPopUp += new System.ComponentModel.CancelEventHandler(this.DropDown_QueryPopUp);
+            // 
+            // gridView3
+            // 
+            this.gridView3.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+            this.gridColumnStartingCondition});
+            this.gridView3.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
+            this.gridView3.Name = "gridView3";
+            this.gridView3.OptionsSelection.EnableAppearanceFocusedCell = false;
+            this.gridView3.OptionsView.ShowAutoFilterRow = true;
+            this.gridView3.OptionsView.ShowGroupPanel = false;
+            // 
+            // gridColumnStartingCondition
+            // 
+            this.gridColumnStartingCondition.Caption = "Starting Condition";
+            this.gridColumnStartingCondition.FieldName = "Name";
+            this.gridColumnStartingCondition.Name = "gridColumnStartingCondition";
+            this.gridColumnStartingCondition.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
+            this.gridColumnStartingCondition.Visible = true;
+            this.gridColumnStartingCondition.VisibleIndex = 0;
+            // 
+            // spinEditComponentNumber
+            // 
+            this.spinEditComponentNumber.EditValue = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.spinEditComponentNumber.Location = new System.Drawing.Point(4, 22);
+            this.spinEditComponentNumber.Name = "spinEditComponentNumber";
+            this.spinEditComponentNumber.Properties.Appearance.Font = new System.Drawing.Font("Arial", 8F);
+            this.spinEditComponentNumber.Properties.Appearance.Options.UseFont = true;
+            this.spinEditComponentNumber.Properties.Appearance.Options.UseTextOptions = true;
+            this.spinEditComponentNumber.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
+            this.spinEditComponentNumber.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton()});
+            this.spinEditComponentNumber.Properties.Mask.EditMask = "d";
+            this.spinEditComponentNumber.Size = new System.Drawing.Size(160, 20);
+            this.spinEditComponentNumber.StyleController = this.layoutControlComponent;
+            this.spinEditComponentNumber.TabIndex = 0;
+            this.spinEditComponentNumber.ToolTipController = this.toolTipControllerMain;
+            this.spinEditComponentNumber.EditValueChanged += new System.EventHandler(this.spinEditComponentNumber_EditValueChanged);
+            // 
+            // gridLookUpEditClosestMatch
+            // 
+            this.gridLookUpEditClosestMatch.Location = new System.Drawing.Point(171, 22);
+            this.gridLookUpEditClosestMatch.Name = "gridLookUpEditClosestMatch";
+            this.gridLookUpEditClosestMatch.Properties.Appearance.Font = new System.Drawing.Font("Arial", 8F);
+            this.gridLookUpEditClosestMatch.Properties.Appearance.Options.UseFont = true;
+            this.gridLookUpEditClosestMatch.Properties.AutoComplete = false;
+            this.gridLookUpEditClosestMatch.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo, "", -1, true, false, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null),
+            new DevExpress.XtraEditors.Controls.EditorButton()});
+            this.gridLookUpEditClosestMatch.Properties.CloseUpKey = new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None);
+            this.gridLookUpEditClosestMatch.Properties.DisplayMember = "Name";
+            this.gridLookUpEditClosestMatch.Properties.NullText = "";
+            this.gridLookUpEditClosestMatch.Properties.ShowDropDown = DevExpress.XtraEditors.Controls.ShowDropDown.Never;
+            this.gridLookUpEditClosestMatch.Properties.ValueMember = "Id";
+            this.gridLookUpEditClosestMatch.Properties.View = this.gridView2;
+            this.gridLookUpEditClosestMatch.Properties.ButtonClick += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.gridLookUpEditClosestMatch_ButtonClick);
+            this.gridLookUpEditClosestMatch.Size = new System.Drawing.Size(161, 20);
+            this.gridLookUpEditClosestMatch.StyleController = this.layoutControlComponent;
+            this.gridLookUpEditClosestMatch.TabIndex = 1;
+            this.gridLookUpEditClosestMatch.ToolTipController = this.toolTipControllerMain;
+            this.gridLookUpEditClosestMatch.Leave += new System.EventHandler(this.gridLookUpEditClosestMatch_Leave);
+            this.gridLookUpEditClosestMatch.QueryPopUp += new System.ComponentModel.CancelEventHandler(this.gridLookUpEditClosestMatch_QueryPopUp);
+            // 
+            // gridView2
+            // 
+            this.gridView2.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+            this.gridColumn5});
+            this.gridView2.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
+            this.gridView2.Name = "gridView2";
+            this.gridView2.OptionsSelection.EnableAppearanceFocusedCell = false;
+            this.gridView2.OptionsView.ShowGroupPanel = false;
+            // 
+            // gridColumn5
+            // 
+            this.gridColumn5.Caption = "Category";
+            this.gridColumn5.FieldName = "Name";
+            this.gridColumn5.Name = "gridColumn5";
+            this.gridColumn5.Visible = true;
+            this.gridColumn5.VisibleIndex = 0;
+            // 
+            // gridLookUpEditBuilding
+            // 
+            this.gridLookUpEditBuilding.Location = new System.Drawing.Point(506, 112);
+            this.gridLookUpEditBuilding.Name = "gridLookUpEditBuilding";
+            this.gridLookUpEditBuilding.Properties.Appearance.Font = new System.Drawing.Font("Arial", 8F);
+            this.gridLookUpEditBuilding.Properties.Appearance.Options.UseFont = true;
+            this.gridLookUpEditBuilding.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.gridLookUpEditBuilding.Properties.DisplayMember = "Name";
+            this.gridLookUpEditBuilding.Properties.NullText = "";
+            this.gridLookUpEditBuilding.Properties.ReadOnly = true;
+            this.gridLookUpEditBuilding.Properties.ValueMember = "Id";
+            this.gridLookUpEditBuilding.Properties.View = this.gridView1;
+            this.gridLookUpEditBuilding.Size = new System.Drawing.Size(328, 20);
+            this.gridLookUpEditBuilding.StyleController = this.layoutControlComponent;
+            this.gridLookUpEditBuilding.TabIndex = 24;
+            this.gridLookUpEditBuilding.TabStop = false;
+            this.gridLookUpEditBuilding.ToolTipController = this.toolTipControllerMain;
+            this.gridLookUpEditBuilding.QueryPopUp += new System.ComponentModel.CancelEventHandler(this.DropDown_QueryPopUp);
+            // 
+            // gridView1
+            // 
+            this.gridView1.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+            this.gridColumn2,
+            this.gridColumn4});
+            this.gridView1.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
+            this.gridView1.Name = "gridView1";
+            this.gridView1.OptionsSelection.EnableAppearanceFocusedCell = false;
+            this.gridView1.OptionsView.ShowAutoFilterRow = true;
+            this.gridView1.OptionsView.ShowGroupPanel = false;
+            // 
+            // gridColumn2
+            // 
+            this.gridColumn2.Caption = "Name";
+            this.gridColumn2.FieldName = "Name";
+            this.gridColumn2.Name = "gridColumn2";
+            this.gridColumn2.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
+            this.gridColumn2.Visible = true;
+            this.gridColumn2.VisibleIndex = 0;
+            // 
+            // gridColumn4
+            // 
+            this.gridColumn4.Caption = "ID";
+            this.gridColumn4.FieldName = "Id";
+            this.gridColumn4.Name = "gridColumn4";
+            this.gridColumn4.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
+            this.gridColumn4.Visible = true;
+            this.gridColumn4.VisibleIndex = 1;
+            // 
+            // gridLookUpEditProject
+            // 
+            this.gridLookUpEditProject.EditValue = "";
+            this.gridLookUpEditProject.Location = new System.Drawing.Point(506, 67);
+            this.gridLookUpEditProject.Name = "gridLookUpEditProject";
+            this.gridLookUpEditProject.Properties.Appearance.Font = new System.Drawing.Font("Arial", 8F);
+            this.gridLookUpEditProject.Properties.Appearance.Options.UseFont = true;
+            this.gridLookUpEditProject.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.gridLookUpEditProject.Properties.DisplayMember = "Name";
+            this.gridLookUpEditProject.Properties.NullText = "";
+            this.gridLookUpEditProject.Properties.ReadOnly = true;
+            this.gridLookUpEditProject.Properties.ValueMember = "Id";
+            this.gridLookUpEditProject.Properties.View = this.gridLookUpEdit1View;
+            this.gridLookUpEditProject.Size = new System.Drawing.Size(328, 20);
+            this.gridLookUpEditProject.StyleController = this.layoutControlComponent;
+            this.gridLookUpEditProject.TabIndex = 4;
+            this.gridLookUpEditProject.TabStop = false;
+            this.gridLookUpEditProject.ToolTipController = this.toolTipControllerMain;
+            // 
+            // gridLookUpEdit1View
+            // 
+            this.gridLookUpEdit1View.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+            this.gridColumn1,
+            this.gridColumn3});
+            this.gridLookUpEdit1View.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
+            this.gridLookUpEdit1View.Name = "gridLookUpEdit1View";
+            this.gridLookUpEdit1View.OptionsSelection.EnableAppearanceFocusedCell = false;
+            this.gridLookUpEdit1View.OptionsView.ShowAutoFilterRow = true;
+            this.gridLookUpEdit1View.OptionsView.ShowGroupPanel = false;
+            // 
+            // gridColumn1
+            // 
+            this.gridColumn1.Caption = "Name";
+            this.gridColumn1.FieldName = "Name";
+            this.gridColumn1.Name = "gridColumn1";
+            this.gridColumn1.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
+            this.gridColumn1.Visible = true;
+            this.gridColumn1.VisibleIndex = 0;
+            // 
+            // gridColumn3
+            // 
+            this.gridColumn3.Caption = "Description";
+            this.gridColumn3.FieldName = "Description";
+            this.gridColumn3.Name = "gridColumn3";
+            this.gridColumn3.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
+            this.gridColumn3.Visible = true;
+            this.gridColumn3.VisibleIndex = 1;
+            // 
+            // textEditDateLastModified
+            // 
+            this.textEditDateLastModified.Location = new System.Drawing.Point(674, 22);
+            this.textEditDateLastModified.Name = "textEditDateLastModified";
+            this.textEditDateLastModified.Properties.Appearance.Font = new System.Drawing.Font("Arial", 8F);
+            this.textEditDateLastModified.Properties.Appearance.Options.UseFont = true;
+            this.textEditDateLastModified.Properties.DisplayFormat.FormatString = "d";
+            this.textEditDateLastModified.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
+            this.textEditDateLastModified.Properties.Mask.EditMask = "d";
+            this.textEditDateLastModified.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.DateTime;
+            this.textEditDateLastModified.Properties.ReadOnly = true;
+            this.textEditDateLastModified.Size = new System.Drawing.Size(160, 20);
+            this.textEditDateLastModified.StyleController = this.layoutControlComponent;
+            this.textEditDateLastModified.TabIndex = 21;
+            this.textEditDateLastModified.TabStop = false;
+            this.textEditDateLastModified.ToolTipController = this.toolTipControllerMain;
+            // 
+            // spinEditUtilityGurantee
+            // 
+            this.spinEditUtilityGurantee.EditValue = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.spinEditUtilityGurantee.Location = new System.Drawing.Point(506, 202);
+            this.spinEditUtilityGurantee.Name = "spinEditUtilityGurantee";
+            this.spinEditUtilityGurantee.Properties.Appearance.Font = new System.Drawing.Font("Arial", 8F);
+            this.spinEditUtilityGurantee.Properties.Appearance.Options.UseFont = true;
+            this.spinEditUtilityGurantee.Properties.Appearance.Options.UseTextOptions = true;
+            this.spinEditUtilityGurantee.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
+            this.spinEditUtilityGurantee.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton()});
+            this.spinEditUtilityGurantee.Properties.DisplayFormat.FormatString = "p0";
+            this.spinEditUtilityGurantee.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            this.spinEditUtilityGurantee.Properties.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
+            this.spinEditUtilityGurantee.Properties.Mask.EditMask = "p0";
+            this.spinEditUtilityGurantee.Properties.Mask.UseMaskAsDisplayFormat = true;
+            this.spinEditUtilityGurantee.Properties.MaxValue = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.spinEditUtilityGurantee.Size = new System.Drawing.Size(161, 20);
+            this.spinEditUtilityGurantee.StyleController = this.layoutControlComponent;
+            this.spinEditUtilityGurantee.TabIndex = 4;
+            this.spinEditUtilityGurantee.ToolTipController = this.toolTipControllerMain;
+            // 
+            // gridControlOtherClosestMatches
+            // 
+            this.gridControlOtherClosestMatches.EmbeddedNavigator.Buttons.Append.Visible = false;
+            this.gridControlOtherClosestMatches.EmbeddedNavigator.Buttons.CancelEdit.Visible = false;
+            this.gridControlOtherClosestMatches.EmbeddedNavigator.Buttons.Edit.Visible = false;
+            this.gridControlOtherClosestMatches.EmbeddedNavigator.Buttons.EndEdit.Visible = false;
+            this.gridControlOtherClosestMatches.EmbeddedNavigator.CustomButtons.AddRange(new DevExpress.XtraEditors.NavigatorCustomButton[] {
+            new DevExpress.XtraEditors.NavigatorCustomButton(0, 12, "ShowHideFilter")});
+            this.gridControlOtherClosestMatches.EmbeddedNavigator.ButtonClick += new DevExpress.XtraEditors.NavigatorButtonClickEventHandler(this.gridControlOtherClosestMatches_EmbeddedNavigator_ButtonClick);
+            this.gridControlOtherClosestMatches.Location = new System.Drawing.Point(4, 112);
+            this.gridControlOtherClosestMatches.MainView = this.gridViewOtherClosestMatches;
+            this.gridControlOtherClosestMatches.Name = "gridControlOtherClosestMatches";
+            this.gridControlOtherClosestMatches.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
+            this.repositoryItemLookUpEditParentOther});
+            this.gridControlOtherClosestMatches.Size = new System.Drawing.Size(495, 372);
+            this.gridControlOtherClosestMatches.TabIndex = 19;
+            this.gridControlOtherClosestMatches.TabStop = false;
+            this.gridControlOtherClosestMatches.ToolTipController = this.toolTipControllerMain;
+            this.gridControlOtherClosestMatches.UseEmbeddedNavigator = true;
+            this.gridControlOtherClosestMatches.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
+            this.gridViewOtherClosestMatches});
+            // 
+            // gridViewOtherClosestMatches
+            // 
+            this.gridViewOtherClosestMatches.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+            this.gridColumnSubCategoryIDOther,
+            this.gridColumnSubCategoryNameOther,
+            this.gridColumnParentCategoryIDOther});
+            this.gridViewOtherClosestMatches.GridControl = this.gridControlOtherClosestMatches;
+            this.gridViewOtherClosestMatches.GroupCount = 1;
+            this.gridViewOtherClosestMatches.GroupFormat = "[#image]{1}";
+            this.gridViewOtherClosestMatches.Name = "gridViewOtherClosestMatches";
+            this.gridViewOtherClosestMatches.OptionsBehavior.AutoExpandAllGroups = true;
+            this.gridViewOtherClosestMatches.OptionsCustomization.AllowColumnMoving = false;
+            this.gridViewOtherClosestMatches.OptionsCustomization.AllowGroup = false;
+            this.gridViewOtherClosestMatches.OptionsCustomization.AllowQuickHideColumns = false;
+            this.gridViewOtherClosestMatches.OptionsFilter.AllowColumnMRUFilterList = false;
+            this.gridViewOtherClosestMatches.OptionsFilter.AllowMRUFilterList = false;
+            this.gridViewOtherClosestMatches.OptionsMenu.EnableColumnMenu = false;
+            this.gridViewOtherClosestMatches.OptionsNavigation.EnterMoveNextColumn = true;
+            this.gridViewOtherClosestMatches.OptionsSelection.EnableAppearanceFocusedRow = false;
+            this.gridViewOtherClosestMatches.OptionsSelection.MultiSelect = true;
+            this.gridViewOtherClosestMatches.OptionsView.ShowFilterPanelMode = DevExpress.XtraGrid.Views.Base.ShowFilterPanelMode.Never;
+            this.gridViewOtherClosestMatches.OptionsView.ShowGroupPanel = false;
+            this.gridViewOtherClosestMatches.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
+            new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.gridColumnParentCategoryIDOther, DevExpress.Data.ColumnSortOrder.Ascending)});
+            // 
+            // gridColumnSubCategoryIDOther
+            // 
+            this.gridColumnSubCategoryIDOther.Caption = "SubCategoryID";
+            this.gridColumnSubCategoryIDOther.FieldName = "Id";
+            this.gridColumnSubCategoryIDOther.Name = "gridColumnSubCategoryIDOther";
+            this.gridColumnSubCategoryIDOther.OptionsColumn.AllowEdit = false;
+            this.gridColumnSubCategoryIDOther.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
+            // 
+            // gridColumnSubCategoryNameOther
+            // 
+            this.gridColumnSubCategoryNameOther.Caption = "Sub Category";
+            this.gridColumnSubCategoryNameOther.FieldName = "Name";
+            this.gridColumnSubCategoryNameOther.Name = "gridColumnSubCategoryNameOther";
+            this.gridColumnSubCategoryNameOther.OptionsColumn.AllowEdit = false;
+            this.gridColumnSubCategoryNameOther.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
+            this.gridColumnSubCategoryNameOther.Visible = true;
+            this.gridColumnSubCategoryNameOther.VisibleIndex = 0;
+            this.gridColumnSubCategoryNameOther.Width = 142;
+            // 
+            // gridColumnParentCategoryIDOther
+            // 
+            this.gridColumnParentCategoryIDOther.Caption = "Catgeory";
+            this.gridColumnParentCategoryIDOther.ColumnEdit = this.repositoryItemLookUpEditParentOther;
+            this.gridColumnParentCategoryIDOther.FieldName = "ParentId";
+            this.gridColumnParentCategoryIDOther.Name = "gridColumnParentCategoryIDOther";
+            this.gridColumnParentCategoryIDOther.OptionsColumn.AllowEdit = false;
+            this.gridColumnParentCategoryIDOther.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
+            // 
+            // repositoryItemLookUpEditParentOther
+            // 
+            this.repositoryItemLookUpEditParentOther.AutoHeight = false;
+            this.repositoryItemLookUpEditParentOther.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.repositoryItemLookUpEditParentOther.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] {
+            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("Name", "Category")});
+            this.repositoryItemLookUpEditParentOther.DisplayMember = "Name";
+            this.repositoryItemLookUpEditParentOther.Name = "repositoryItemLookUpEditParentOther";
+            this.repositoryItemLookUpEditParentOther.NullText = "";
+            this.repositoryItemLookUpEditParentOther.ValueMember = "Id";
+            // 
+            // textEditDateCreated
+            // 
+            this.textEditDateCreated.Location = new System.Drawing.Point(506, 22);
+            this.textEditDateCreated.Name = "textEditDateCreated";
+            this.textEditDateCreated.Properties.Appearance.Font = new System.Drawing.Font("Arial", 8F);
+            this.textEditDateCreated.Properties.Appearance.Options.UseFont = true;
+            this.textEditDateCreated.Properties.DisplayFormat.FormatString = "d";
+            this.textEditDateCreated.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
+            this.textEditDateCreated.Properties.Mask.BeepOnError = true;
+            this.textEditDateCreated.Properties.Mask.EditMask = "d";
+            this.textEditDateCreated.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.DateTime;
+            this.textEditDateCreated.Properties.ReadOnly = true;
+            this.textEditDateCreated.Size = new System.Drawing.Size(161, 20);
+            this.textEditDateCreated.StyleController = this.layoutControlComponent;
+            this.textEditDateCreated.TabIndex = 16;
+            this.textEditDateCreated.TabStop = false;
+            this.textEditDateCreated.ToolTipController = this.toolTipControllerMain;
+            // 
+            // popupContainerEditOtherCloseMatches
+            // 
+            this.popupContainerEditOtherCloseMatches.EditValue = "Enter your filteration criteria here";
+            this.popupContainerEditOtherCloseMatches.Location = new System.Drawing.Point(4, 67);
+            this.popupContainerEditOtherCloseMatches.Name = "popupContainerEditOtherCloseMatches";
+            this.popupContainerEditOtherCloseMatches.Properties.Appearance.Font = new System.Drawing.Font("Arial", 8F);
+            this.popupContainerEditOtherCloseMatches.Properties.Appearance.Options.UseFont = true;
+            this.popupContainerEditOtherCloseMatches.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.popupContainerEditOtherCloseMatches.Properties.NullText = "Enter your filteration cirteria here";
+            this.popupContainerEditOtherCloseMatches.Properties.PopupControl = this.popupContainerControlOtherClosestMatches;
+            this.popupContainerEditOtherCloseMatches.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.Standard;
+            this.popupContainerEditOtherCloseMatches.Size = new System.Drawing.Size(495, 20);
+            this.popupContainerEditOtherCloseMatches.StyleController = this.layoutControlComponent;
+            this.popupContainerEditOtherCloseMatches.TabIndex = 3;
+            this.popupContainerEditOtherCloseMatches.ToolTipController = this.toolTipControllerMain;
+            this.popupContainerEditOtherCloseMatches.EditValueChanging += new DevExpress.XtraEditors.Controls.ChangingEventHandler(this.PopUp_EditValueChanging);
+            this.popupContainerEditOtherCloseMatches.QueryPopUp += new System.ComponentModel.CancelEventHandler(this.popupContainerEditOtherCloseMatches_QueryPopUp);
+            this.popupContainerEditOtherCloseMatches.QueryCloseUp += new System.ComponentModel.CancelEventHandler(this.popupContainerEditOtherCloseMatches_QueryCloseUp);
+            // 
+            // textEditComponentName
+            // 
+            this.textEditComponentName.Location = new System.Drawing.Point(339, 22);
+            this.textEditComponentName.Name = "textEditComponentName";
+            this.textEditComponentName.Properties.Appearance.Font = new System.Drawing.Font("Arial", 8F);
+            this.textEditComponentName.Properties.Appearance.Options.UseFont = true;
+            this.textEditComponentName.Properties.MaxLength = 100;
+            this.textEditComponentName.Size = new System.Drawing.Size(160, 20);
+            this.textEditComponentName.StyleController = this.layoutControlComponent;
+            this.textEditComponentName.TabIndex = 2;
+            this.textEditComponentName.ToolTipController = this.toolTipControllerMain;
+            // 
+            // layoutControlGroupDetails
+            // 
+            this.layoutControlGroupDetails.CustomizationFormText = "Details";
+            this.layoutControlGroupDetails.ExpandButtonLocation = DevExpress.Utils.GroupElementLocation.AfterText;
+            this.layoutControlGroupDetails.ExpandButtonVisible = true;
+            this.layoutControlGroupDetails.ExpandOnDoubleClick = true;
+            this.layoutControlGroupDetails.Location = new System.Drawing.Point(0, 316);
+            this.layoutControlGroupDetails.Name = "layoutControlGroupDetails";
+            this.layoutControlGroupDetails.Size = new System.Drawing.Size(712, 71);
+            this.layoutControlGroupDetails.Text = "Details";
+            // 
+            // layoutControlGroupComponent
+            // 
+            this.layoutControlGroupComponent.CustomizationFormText = "Root";
+            this.layoutControlGroupComponent.GroupBordersVisible = false;
+            this.layoutControlGroupComponent.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
+            this.layoutControlGroupGeneralInformation});
+            this.layoutControlGroupComponent.Location = new System.Drawing.Point(0, 0);
+            this.layoutControlGroupComponent.Name = "Root";
+            this.layoutControlGroupComponent.Size = new System.Drawing.Size(837, 487);
+            this.layoutControlGroupComponent.Spacing = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
+            this.layoutControlGroupComponent.Text = "Root";
+            this.layoutControlGroupComponent.TextVisible = false;
+            // 
+            // layoutControlGroupGeneralInformation
+            // 
+            this.layoutControlGroupGeneralInformation.CustomizationFormText = "GeneralInformation";
+            this.layoutControlGroupGeneralInformation.ExpandButtonLocation = DevExpress.Utils.GroupElementLocation.AfterText;
+            this.layoutControlGroupGeneralInformation.ExpandButtonVisible = true;
+            this.layoutControlGroupGeneralInformation.ExpandOnDoubleClick = true;
+            this.layoutControlGroupGeneralInformation.GroupBordersVisible = false;
+            this.layoutControlGroupGeneralInformation.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
+            this.layoutControlItemOtherClosestMatchesGrid,
+            this.layoutControlItemDateCreated,
+            this.emptySpaceItem3,
+            this.layoutControlItemComponentName,
+            this.layoutControlItemDateLastModified,
+            this.layoutControlItemComponentNumber,
+            this.layoutControlItem5,
+            this.layoutControlItemOtherClosestMatchesCombo,
+            this.layoutControlItemUtilityGurantee,
+            this.layoutControlItemProject,
+            this.layoutControlItem4,
+            this.layoutControlItemStartingCondition,
+            this.layoutControlItemAge,
+            this.layoutControlItemMeasureLife,
+            this.layoutControlItemBaseComponent});
+            this.layoutControlGroupGeneralInformation.Location = new System.Drawing.Point(0, 0);
+            this.layoutControlGroupGeneralInformation.Name = "layoutControlGroupGeneralInformation";
+            this.layoutControlGroupGeneralInformation.Size = new System.Drawing.Size(837, 487);
+            this.layoutControlGroupGeneralInformation.Spacing = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
+            this.layoutControlGroupGeneralInformation.Text = "GeneralInformation";
+            // 
+            // layoutControlItemOtherClosestMatchesGrid
+            // 
+            this.layoutControlItemOtherClosestMatchesGrid.Control = this.gridControlOtherClosestMatches;
+            this.layoutControlItemOtherClosestMatchesGrid.CustomizationFormText = "Other Close Matches";
+            this.layoutControlItemOtherClosestMatchesGrid.Location = new System.Drawing.Point(0, 90);
+            this.layoutControlItemOtherClosestMatchesGrid.Name = "layoutControlItemOtherClosestMatchesGrid";
+            this.layoutControlItemOtherClosestMatchesGrid.Padding = new DevExpress.XtraLayout.Utils.Padding(3, 3, 3, 3);
+            this.layoutControlItemOtherClosestMatchesGrid.Size = new System.Drawing.Size(502, 397);
+            this.layoutControlItemOtherClosestMatchesGrid.Text = "Other Close Matches";
+            this.layoutControlItemOtherClosestMatchesGrid.TextLocation = DevExpress.Utils.Locations.Top;
+            this.layoutControlItemOtherClosestMatchesGrid.TextSize = new System.Drawing.Size(100, 13);
+            // 
+            // layoutControlItemDateCreated
+            // 
+            this.layoutControlItemDateCreated.Control = this.textEditDateCreated;
+            this.layoutControlItemDateCreated.CustomizationFormText = "Date Created";
+            this.layoutControlItemDateCreated.Location = new System.Drawing.Point(502, 0);
+            this.layoutControlItemDateCreated.Name = "layoutControlItemDateCreated";
+            this.layoutControlItemDateCreated.Padding = new DevExpress.XtraLayout.Utils.Padding(3, 3, 3, 3);
+            this.layoutControlItemDateCreated.Size = new System.Drawing.Size(168, 45);
+            this.layoutControlItemDateCreated.Text = "Date Created";
+            this.layoutControlItemDateCreated.TextLocation = DevExpress.Utils.Locations.Top;
+            this.layoutControlItemDateCreated.TextSize = new System.Drawing.Size(100, 13);
+            // 
+            // emptySpaceItem3
+            // 
+            this.emptySpaceItem3.CustomizationFormText = "emptySpaceItem3";
+            this.emptySpaceItem3.Location = new System.Drawing.Point(502, 270);
+            this.emptySpaceItem3.Name = "emptySpaceItem3";
+            this.emptySpaceItem3.Size = new System.Drawing.Size(335, 217);
+            this.emptySpaceItem3.Text = "emptySpaceItem3";
+            this.emptySpaceItem3.TextSize = new System.Drawing.Size(0, 0);
+            // 
+            // layoutControlItemComponentName
+            // 
+            this.layoutControlItemComponentName.Control = this.textEditComponentName;
+            this.layoutControlItemComponentName.CustomizationFormText = "Name";
+            this.layoutControlItemComponentName.Location = new System.Drawing.Point(335, 0);
+            this.layoutControlItemComponentName.Name = "layoutControlItemComponentName";
+            this.layoutControlItemComponentName.Padding = new DevExpress.XtraLayout.Utils.Padding(3, 3, 3, 3);
+            this.layoutControlItemComponentName.Size = new System.Drawing.Size(167, 45);
+            this.layoutControlItemComponentName.Text = "Name *";
+            this.layoutControlItemComponentName.TextLocation = DevExpress.Utils.Locations.Top;
+            this.layoutControlItemComponentName.TextSize = new System.Drawing.Size(100, 13);
+            // 
+            // layoutControlItemDateLastModified
+            // 
+            this.layoutControlItemDateLastModified.Control = this.textEditDateLastModified;
+            this.layoutControlItemDateLastModified.CustomizationFormText = "Date Last Modified";
+            this.layoutControlItemDateLastModified.Location = new System.Drawing.Point(670, 0);
+            this.layoutControlItemDateLastModified.Name = "layoutControlItemDateLastModified";
+            this.layoutControlItemDateLastModified.Padding = new DevExpress.XtraLayout.Utils.Padding(3, 3, 3, 3);
+            this.layoutControlItemDateLastModified.Size = new System.Drawing.Size(167, 45);
+            this.layoutControlItemDateLastModified.Text = "Date Last Modified";
+            this.layoutControlItemDateLastModified.TextLocation = DevExpress.Utils.Locations.Top;
+            this.layoutControlItemDateLastModified.TextSize = new System.Drawing.Size(100, 13);
+            // 
+            // layoutControlItemComponentNumber
+            // 
+            this.layoutControlItemComponentNumber.Control = this.spinEditComponentNumber;
+            this.layoutControlItemComponentNumber.CustomizationFormText = "Number";
+            this.layoutControlItemComponentNumber.Location = new System.Drawing.Point(0, 0);
+            this.layoutControlItemComponentNumber.Name = "layoutControlItemComponentNumber";
+            this.layoutControlItemComponentNumber.Padding = new DevExpress.XtraLayout.Utils.Padding(3, 3, 3, 3);
+            this.layoutControlItemComponentNumber.Size = new System.Drawing.Size(167, 45);
+            this.layoutControlItemComponentNumber.Text = "Number";
+            this.layoutControlItemComponentNumber.TextLocation = DevExpress.Utils.Locations.Top;
+            this.layoutControlItemComponentNumber.TextSize = new System.Drawing.Size(100, 13);
+            // 
+            // layoutControlItem5
+            // 
+            this.layoutControlItem5.Control = this.gridLookUpEditClosestMatch;
+            this.layoutControlItem5.CustomizationFormText = "Closest Match";
+            this.layoutControlItem5.Location = new System.Drawing.Point(167, 0);
+            this.layoutControlItem5.Name = "layoutControlItem5";
+            this.layoutControlItem5.Padding = new DevExpress.XtraLayout.Utils.Padding(3, 3, 3, 3);
+            this.layoutControlItem5.Size = new System.Drawing.Size(168, 45);
+            this.layoutControlItem5.Text = "Closest Match *";
+            this.layoutControlItem5.TextLocation = DevExpress.Utils.Locations.Top;
+            this.layoutControlItem5.TextSize = new System.Drawing.Size(100, 13);
+            // 
+            // layoutControlItemOtherClosestMatchesCombo
+            // 
+            this.layoutControlItemOtherClosestMatchesCombo.Control = this.popupContainerEditOtherCloseMatches;
+            this.layoutControlItemOtherClosestMatchesCombo.CustomizationFormText = "Other Close Matches";
+            this.layoutControlItemOtherClosestMatchesCombo.Location = new System.Drawing.Point(0, 45);
+            this.layoutControlItemOtherClosestMatchesCombo.Name = "layoutControlItemOtherClosestMatchesCombo";
+            this.layoutControlItemOtherClosestMatchesCombo.Padding = new DevExpress.XtraLayout.Utils.Padding(3, 3, 3, 3);
+            this.layoutControlItemOtherClosestMatchesCombo.Size = new System.Drawing.Size(502, 45);
+            this.layoutControlItemOtherClosestMatchesCombo.Text = "Other Close Matches";
+            this.layoutControlItemOtherClosestMatchesCombo.TextLocation = DevExpress.Utils.Locations.Top;
+            this.layoutControlItemOtherClosestMatchesCombo.TextSize = new System.Drawing.Size(100, 13);
+            // 
+            // layoutControlItemUtilityGurantee
+            // 
+            this.layoutControlItemUtilityGurantee.Control = this.spinEditUtilityGurantee;
+            this.layoutControlItemUtilityGurantee.CustomizationFormText = "Utility Guarantee";
+            this.layoutControlItemUtilityGurantee.FillControlToClientArea = false;
+            this.layoutControlItemUtilityGurantee.Location = new System.Drawing.Point(502, 180);
+            this.layoutControlItemUtilityGurantee.Name = "layoutControlItemUtilityGurantee";
+            this.layoutControlItemUtilityGurantee.Padding = new DevExpress.XtraLayout.Utils.Padding(3, 3, 3, 3);
+            this.layoutControlItemUtilityGurantee.Size = new System.Drawing.Size(168, 45);
+            this.layoutControlItemUtilityGurantee.Text = "Utility Guarantee *";
+            this.layoutControlItemUtilityGurantee.TextLocation = DevExpress.Utils.Locations.Top;
+            this.layoutControlItemUtilityGurantee.TextSize = new System.Drawing.Size(100, 13);
+            // 
+            // layoutControlItemProject
+            // 
+            this.layoutControlItemProject.Control = this.gridLookUpEditProject;
+            this.layoutControlItemProject.CustomizationFormText = "Project";
+            this.layoutControlItemProject.Location = new System.Drawing.Point(502, 45);
+            this.layoutControlItemProject.Name = "layoutControlItemProject";
+            this.layoutControlItemProject.Padding = new DevExpress.XtraLayout.Utils.Padding(3, 3, 3, 3);
+            this.layoutControlItemProject.Size = new System.Drawing.Size(335, 45);
+            this.layoutControlItemProject.Text = "Project *";
+            this.layoutControlItemProject.TextLocation = DevExpress.Utils.Locations.Top;
+            this.layoutControlItemProject.TextSize = new System.Drawing.Size(100, 13);
+            // 
+            // layoutControlItem4
+            // 
+            this.layoutControlItem4.Control = this.gridLookUpEditBuilding;
+            this.layoutControlItem4.CustomizationFormText = "Building";
+            this.layoutControlItem4.Location = new System.Drawing.Point(502, 90);
+            this.layoutControlItem4.Name = "layoutControlItem4";
+            this.layoutControlItem4.Padding = new DevExpress.XtraLayout.Utils.Padding(3, 3, 3, 3);
+            this.layoutControlItem4.Size = new System.Drawing.Size(335, 45);
+            this.layoutControlItem4.Text = "Building *";
+            this.layoutControlItem4.TextLocation = DevExpress.Utils.Locations.Top;
+            this.layoutControlItem4.TextSize = new System.Drawing.Size(100, 13);
+            // 
+            // layoutControlItemStartingCondition
+            // 
+            this.layoutControlItemStartingCondition.AllowHide = false;
+            this.layoutControlItemStartingCondition.Control = this.gridLookUpEditStartingCondition;
+            this.layoutControlItemStartingCondition.CustomizationFormText = "Starting Condition";
+            this.layoutControlItemStartingCondition.Location = new System.Drawing.Point(502, 225);
+            this.layoutControlItemStartingCondition.Name = "layoutControlItemStartingCondition";
+            this.layoutControlItemStartingCondition.Padding = new DevExpress.XtraLayout.Utils.Padding(3, 3, 3, 3);
+            this.layoutControlItemStartingCondition.Size = new System.Drawing.Size(168, 45);
+            this.layoutControlItemStartingCondition.Text = "Starting Condition";
+            this.layoutControlItemStartingCondition.TextLocation = DevExpress.Utils.Locations.Top;
+            this.layoutControlItemStartingCondition.TextSize = new System.Drawing.Size(100, 13);
+            // 
+            // layoutControlItemAge
+            // 
+            this.layoutControlItemAge.Control = this.spinEditAge;
+            this.layoutControlItemAge.CustomizationFormText = "Age";
+            this.layoutControlItemAge.Location = new System.Drawing.Point(670, 225);
+            this.layoutControlItemAge.Name = "layoutControlItemAge";
+            this.layoutControlItemAge.Padding = new DevExpress.XtraLayout.Utils.Padding(3, 3, 3, 3);
+            this.layoutControlItemAge.Size = new System.Drawing.Size(167, 45);
+            this.layoutControlItemAge.Text = "Age *";
+            this.layoutControlItemAge.TextLocation = DevExpress.Utils.Locations.Top;
+            this.layoutControlItemAge.TextSize = new System.Drawing.Size(100, 13);
+            // 
+            // layoutControlItemMeasureLife
+            // 
+            this.layoutControlItemMeasureLife.Control = this.spinEditMeasureLife;
+            this.layoutControlItemMeasureLife.CustomizationFormText = "Measure Life";
+            this.layoutControlItemMeasureLife.Location = new System.Drawing.Point(670, 180);
+            this.layoutControlItemMeasureLife.Name = "layoutControlItemMeasureLife";
+            this.layoutControlItemMeasureLife.Padding = new DevExpress.XtraLayout.Utils.Padding(3, 3, 3, 3);
+            this.layoutControlItemMeasureLife.Size = new System.Drawing.Size(167, 45);
+            this.layoutControlItemMeasureLife.Text = "Measure Life";
+            this.layoutControlItemMeasureLife.TextLocation = DevExpress.Utils.Locations.Top;
+            this.layoutControlItemMeasureLife.TextSize = new System.Drawing.Size(100, 13);
+            // 
+            // layoutControlItemBaseComponent
+            // 
+            this.layoutControlItemBaseComponent.Control = this.gridLookUpEditBaseComponent;
+            this.layoutControlItemBaseComponent.CustomizationFormText = "Base Component";
+            this.layoutControlItemBaseComponent.Location = new System.Drawing.Point(502, 135);
+            this.layoutControlItemBaseComponent.Name = "layoutControlItemBaseComponent";
+            this.layoutControlItemBaseComponent.Padding = new DevExpress.XtraLayout.Utils.Padding(3, 3, 3, 3);
+            this.layoutControlItemBaseComponent.Size = new System.Drawing.Size(335, 45);
+            this.layoutControlItemBaseComponent.Text = "Base Component";
+            this.layoutControlItemBaseComponent.TextLocation = DevExpress.Utils.Locations.Top;
+            this.layoutControlItemBaseComponent.TextSize = new System.Drawing.Size(100, 13);
+            // 
+            // xtraTabControlComponentModules
+            // 
+            this.xtraTabControlComponentModules.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.xtraTabControlComponentModules.HeaderLocation = DevExpress.XtraTab.TabHeaderLocation.Left;
+            this.xtraTabControlComponentModules.HeaderOrientation = DevExpress.XtraTab.TabOrientation.Horizontal;
+            this.xtraTabControlComponentModules.Location = new System.Drawing.Point(0, 0);
+            this.xtraTabControlComponentModules.Name = "xtraTabControlComponentModules";
+            this.xtraTabControlComponentModules.SelectedTabPage = this.xtraTabPageComponentGeneralRecommendation;
+            this.xtraTabControlComponentModules.Size = new System.Drawing.Size(837, 487);
+            this.xtraTabControlComponentModules.TabIndex = 4;
+            this.xtraTabControlComponentModules.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] {
+            this.xtraTabPageComponentGeneralRecommendation,
+            this.xtraTabPageComponentProposedDescription,
+            this.xtraTabPageCUI,
+            this.xtraTabPageAssetImpacts,
+            this.xtraTabPageMaintenanceAndOps,
+            this.xtraTabPageCAPEX,
+            this.xtraTabPageComponentFirstCost});
+            this.xtraTabControlComponentModules.ToolTipController = this.toolTipControllerMain;
+            this.xtraTabControlComponentModules.SelectedPageChanged += new DevExpress.XtraTab.TabPageChangedEventHandler(this.xtraTabControlComponentModules_SelectedPageChanged);
+            // 
+            // xtraTabPageComponentGeneralRecommendation
+            // 
+            this.xtraTabPageComponentGeneralRecommendation.Controls.Add(this.memoEditComponentGeneralRecommendation);
+            this.xtraTabPageComponentGeneralRecommendation.Name = "xtraTabPageComponentGeneralRecommendation";
+            this.xtraTabPageComponentGeneralRecommendation.Size = new System.Drawing.Size(681, 478);
+            this.xtraTabPageComponentGeneralRecommendation.Text = "General Recommendation";
+            // 
+            // memoEditComponentGeneralRecommendation
+            // 
+            this.memoEditComponentGeneralRecommendation.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.memoEditComponentGeneralRecommendation.Location = new System.Drawing.Point(0, 0);
+            this.memoEditComponentGeneralRecommendation.Name = "memoEditComponentGeneralRecommendation";
+            this.memoEditComponentGeneralRecommendation.Size = new System.Drawing.Size(681, 478);
+            this.memoEditComponentGeneralRecommendation.TabIndex = 21;
+            this.memoEditComponentGeneralRecommendation.ToolTipController = this.toolTipControllerMain;
+            // 
+            // xtraTabPageComponentProposedDescription
+            // 
+            this.xtraTabPageComponentProposedDescription.Controls.Add(this.memoEditComponentProposedDescription);
+            this.xtraTabPageComponentProposedDescription.Name = "xtraTabPageComponentProposedDescription";
+            this.xtraTabPageComponentProposedDescription.Size = new System.Drawing.Size(681, 478);
+            this.xtraTabPageComponentProposedDescription.Text = "Proposed Description";
+            // 
+            // memoEditComponentProposedDescription
+            // 
+            this.memoEditComponentProposedDescription.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.memoEditComponentProposedDescription.Location = new System.Drawing.Point(0, 0);
+            this.memoEditComponentProposedDescription.Name = "memoEditComponentProposedDescription";
+            this.memoEditComponentProposedDescription.Size = new System.Drawing.Size(681, 478);
+            this.memoEditComponentProposedDescription.TabIndex = 0;
+            this.memoEditComponentProposedDescription.ToolTipController = this.toolTipControllerMain;
+            // 
+            // xtraTabPageCUI
+            // 
+            this.xtraTabPageCUI.Controls.Add(this.componentUtilityInfoModuleInstance);
+            this.xtraTabPageCUI.Controls.Add(this.popupContainerControlCopyLineItems);
+            this.xtraTabPageCUI.Name = "xtraTabPageCUI";
+            this.xtraTabPageCUI.Size = new System.Drawing.Size(681, 478);
+            this.xtraTabPageCUI.Text = "Component Utility Info";
+            // 
+            // xtraTabPageAssetImpacts
+            // 
+            this.xtraTabPageAssetImpacts.Controls.Add(this.assetImpactsModuleInstance);
+            this.xtraTabPageAssetImpacts.Name = "xtraTabPageAssetImpacts";
+            this.xtraTabPageAssetImpacts.Size = new System.Drawing.Size(681, 478);
+            this.xtraTabPageAssetImpacts.Text = "Asset Impacts";
+            // 
+            // assetImpactsModuleInstance
+            // 
+            this.assetImpactsModuleInstance.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.assetImpactsModuleInstance.Location = new System.Drawing.Point(0, 0);
+            this.assetImpactsModuleInstance.Name = "assetImpactsModuleInstance";
+            this.assetImpactsModuleInstance.ParentComponent = null;
+            this.assetImpactsModuleInstance.Size = new System.Drawing.Size(681, 478);
+            this.assetImpactsModuleInstance.TabIndex = 0;
+            // 
+            // xtraTabPageMaintenanceAndOps
+            // 
+            this.xtraTabPageMaintenanceAndOps.Controls.Add(this.maintenanceAndOperationsModuleInstance);
+            this.xtraTabPageMaintenanceAndOps.Name = "xtraTabPageMaintenanceAndOps";
+            this.xtraTabPageMaintenanceAndOps.Size = new System.Drawing.Size(681, 478);
+            this.xtraTabPageMaintenanceAndOps.Text = "Maintenance and Operations";
+            // 
+            // maintenanceAndOperationsModuleInstance
+            // 
+            this.maintenanceAndOperationsModuleInstance.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.maintenanceAndOperationsModuleInstance.Location = new System.Drawing.Point(0, 0);
+            this.maintenanceAndOperationsModuleInstance.Name = "maintenanceAndOperationsModuleInstance";
+            this.maintenanceAndOperationsModuleInstance.ParentComponent = null;
+            this.maintenanceAndOperationsModuleInstance.Size = new System.Drawing.Size(681, 478);
+            this.maintenanceAndOperationsModuleInstance.TabIndex = 0;
+            // 
+            // xtraTabPageCAPEX
+            // 
+            this.xtraTabPageCAPEX.Controls.Add(this.capexModuleInstance);
+            this.xtraTabPageCAPEX.Name = "xtraTabPageCAPEX";
+            this.xtraTabPageCAPEX.Size = new System.Drawing.Size(681, 478);
+            this.xtraTabPageCAPEX.Text = "Capital Expenses";
+            // 
+            // capexModuleInstance
+            // 
+            this.capexModuleInstance.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.capexModuleInstance.Location = new System.Drawing.Point(0, 0);
+            this.capexModuleInstance.Name = "capexModuleInstance";
+            this.capexModuleInstance.ParentComponent = null;
+            this.capexModuleInstance.Size = new System.Drawing.Size(681, 478);
+            this.capexModuleInstance.TabIndex = 0;
+            // 
+            // xtraTabPageComponentFirstCost
+            // 
+            this.xtraTabPageComponentFirstCost.Controls.Add(this.componentFirstCostModule1);
+            this.xtraTabPageComponentFirstCost.Name = "xtraTabPageComponentFirstCost";
+            this.xtraTabPageComponentFirstCost.PageVisible = false;
+            this.xtraTabPageComponentFirstCost.Size = new System.Drawing.Size(681, 478);
+            this.xtraTabPageComponentFirstCost.Text = "First Cost";
+            // 
+            // componentFirstCostModule1
+            // 
+            this.componentFirstCostModule1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.componentFirstCostModule1.Location = new System.Drawing.Point(0, 0);
+            this.componentFirstCostModule1.Name = "componentFirstCostModule1";
+            this.componentFirstCostModule1.ParentComponent = null;
+            this.componentFirstCostModule1.Size = new System.Drawing.Size(681, 478);
+            this.componentFirstCostModule1.TabIndex = 0;
+            // 
+            // xtraTabControlMain
+            // 
+            this.xtraTabControlMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.xtraTabControlMain.Location = new System.Drawing.Point(0, 0);
+            this.xtraTabControlMain.Name = "xtraTabControlMain";
+            this.xtraTabControlMain.SelectedTabPage = this.xtraTabPageGeneralInformation;
+            this.xtraTabControlMain.Size = new System.Drawing.Size(846, 518);
+            this.xtraTabControlMain.TabIndex = 5;
+            this.xtraTabControlMain.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] {
+            this.xtraTabPageGeneralInformation,
+            this.xtraTabPageDetails});
+            this.xtraTabControlMain.ToolTipController = this.toolTipControllerMain;
+            // 
+            // xtraTabPageGeneralInformation
+            // 
+            this.xtraTabPageGeneralInformation.Controls.Add(this.layoutControlComponent);
+            this.xtraTabPageGeneralInformation.Name = "xtraTabPageGeneralInformation";
+            this.xtraTabPageGeneralInformation.Size = new System.Drawing.Size(837, 487);
+            this.xtraTabPageGeneralInformation.Text = "General Information";
+            // 
+            // xtraTabPageDetails
+            // 
+            this.xtraTabPageDetails.Controls.Add(this.xtraTabControlComponentModules);
+            this.xtraTabPageDetails.Name = "xtraTabPageDetails";
+            this.xtraTabPageDetails.Size = new System.Drawing.Size(837, 487);
+            this.xtraTabPageDetails.Text = "Details";
+            // 
+            // gridColumnClosestMatchSubCategoryID
+            // 
+            this.gridColumnClosestMatchSubCategoryID.Caption = "SubCategoryID";
+            this.gridColumnClosestMatchSubCategoryID.FieldName = "Id";
+            this.gridColumnClosestMatchSubCategoryID.Name = "gridColumnClosestMatchSubCategoryID";
+            // 
+            // gridColumnClosetMatchParentCategoryName
+            // 
+            this.gridColumnClosetMatchParentCategoryName.Caption = "Category";
+            this.gridColumnClosetMatchParentCategoryName.FieldName = "ParentId";
+            this.gridColumnClosetMatchParentCategoryName.Name = "gridColumnClosetMatchParentCategoryName";
+            this.gridColumnClosetMatchParentCategoryName.OptionsColumn.AllowEdit = false;
+            // 
+            // gridColumnParentCategoryIDSelect
+            // 
+            this.gridColumnParentCategoryIDSelect.Caption = "ParentCategoryID";
+            this.gridColumnParentCategoryIDSelect.FieldName = "ParentCategoryID";
+            this.gridColumnParentCategoryIDSelect.Name = "gridColumnParentCategoryIDSelect";
+            this.gridColumnParentCategoryIDSelect.OptionsColumn.AllowEdit = false;
+            // 
+            // gridColumnSubCategoryIDSelect
+            // 
+            this.gridColumnSubCategoryIDSelect.Caption = "SubCategoryID";
+            this.gridColumnSubCategoryIDSelect.FieldName = "Id";
+            this.gridColumnSubCategoryIDSelect.Name = "gridColumnSubCategoryIDSelect";
+            this.gridColumnSubCategoryIDSelect.OptionsColumn.AllowEdit = false;
+            // 
+            // XtraTabPageComponent
+            // 
+            this.Controls.Add(this.xtraTabControlMain);
+            this.Name = "XtraTabPageComponent";
+            this.Controls.SetChildIndex(this.xtraTabControlMain, 0);
+            ((System.ComponentModel.ISupportInitialize)(this.dxErrorProviderMain)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.popupContainerControlCopyLineItems)).EndInit();
+            this.popupContainerControlCopyLineItems.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlCopyLineItems)).EndInit();
+            this.layoutControlCopyLineItems.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.checkedListBoxControlCategoryList)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItemCategoryList)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem7)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.popupContainerControlClosestMatch)).EndInit();
+            this.popupContainerControlClosestMatch.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlClosestMatch)).EndInit();
+            this.layoutControlClosestMatch.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.textEditClosestMatchFilter.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridControlClosestMatch)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridViewClosestMatch)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemLookUpEditClosestMatch)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItemFilterClosestMatchSelection)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.popupContainerControlOtherClosestMatches)).EndInit();
+            this.popupContainerControlOtherClosestMatches.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlOtherClosestMatches)).EndInit();
+            this.layoutControlOtherClosestMatches.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.gridControlOtherClosestMatchesSelection)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridViewClosestMatchesSelection)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemLookUpEditParentCategory)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItemOtherClosestMatchesSelectionGrid)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlComponent)).EndInit();
+            this.layoutControlComponent.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.gridLookUpEditBaseComponent.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridViewBaseComponents)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.spinEditMeasureLife.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.spinEditAge.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridLookUpEditStartingCondition.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridView3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.spinEditComponentNumber.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridLookUpEditClosestMatch.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridView2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridLookUpEditBuilding.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridLookUpEditProject.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridLookUpEdit1View)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.textEditDateLastModified.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.spinEditUtilityGurantee.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridControlOtherClosestMatches)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridViewOtherClosestMatches)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemLookUpEditParentOther)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.textEditDateCreated.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.popupContainerEditOtherCloseMatches.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.textEditComponentName.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroupDetails)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroupComponent)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroupGeneralInformation)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItemOtherClosestMatchesGrid)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItemDateCreated)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItemComponentName)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItemDateLastModified)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItemComponentNumber)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItemOtherClosestMatchesCombo)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItemUtilityGurantee)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItemProject)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItemStartingCondition)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItemAge)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItemMeasureLife)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItemBaseComponent)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.xtraTabControlComponentModules)).EndInit();
+            this.xtraTabControlComponentModules.ResumeLayout(false);
+            this.xtraTabPageComponentGeneralRecommendation.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.memoEditComponentGeneralRecommendation.Properties)).EndInit();
+            this.xtraTabPageComponentProposedDescription.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.memoEditComponentProposedDescription.Properties)).EndInit();
+            this.xtraTabPageCUI.ResumeLayout(false);
+            this.xtraTabPageAssetImpacts.ResumeLayout(false);
+            this.xtraTabPageMaintenanceAndOps.ResumeLayout(false);
+            this.xtraTabPageCAPEX.ResumeLayout(false);
+            this.xtraTabPageComponentFirstCost.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.xtraTabControlMain)).EndInit();
+            this.xtraTabControlMain.ResumeLayout(false);
+            this.xtraTabPageGeneralInformation.ResumeLayout(false);
+            this.xtraTabPageDetails.ResumeLayout(false);
+            this.ResumeLayout(false);
+
+        }
+
+        #endregion
+
+        private DevExpress.XtraLayout.LayoutControl layoutControlComponent;
+        private DevExpress.XtraLayout.LayoutControlGroup layoutControlGroupComponent;
+        private DevExpress.XtraTab.XtraTabControl xtraTabControlComponentModules;
+        private DevExpress.XtraTab.XtraTabPage xtraTabPageComponentGeneralRecommendation;
+        private DevExpress.XtraEditors.TextEdit textEditComponentName;
+        private DevExpress.XtraEditors.TextEdit textEditDateCreated;
+        private DevExpress.XtraTab.XtraTabPage xtraTabPageComponentProposedDescription;
+        private DevExpress.XtraEditors.PopupContainerEdit popupContainerEditOtherCloseMatches;
+        private DevExpress.XtraGrid.GridControl gridControlOtherClosestMatches;
+        private DevExpress.XtraGrid.Views.Grid.GridView gridViewOtherClosestMatches;
+        private DevExpress.XtraEditors.PopupContainerControl popupContainerControlOtherClosestMatches;
+        private DevExpress.XtraLayout.LayoutControl layoutControlOtherClosestMatches;
+        private DevExpress.XtraEditors.SimpleButton simpleButtonAddCheckedSubCategories;
+        private DevExpress.XtraGrid.GridControl gridControlOtherClosestMatchesSelection;
+        private DevExpress.XtraGrid.Views.Grid.GridView gridViewClosestMatchesSelection;
+        private DevExpress.XtraLayout.LayoutControlGroup layoutControlGroup1;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItemOtherClosestMatchesSelectionGrid;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem1;
+        private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem2;
+        private DevExpress.XtraEditors.SpinEdit spinEditUtilityGurantee;
+        private DevExpress.XtraEditors.TextEdit textEditDateLastModified;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumnParentCategoryNameSelect;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumnSubCategoryNameSelect;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumnSubCategoryIDOther;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumnSubCategoryNameOther;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumnParentCategoryIDOther;
+        private DevExpress.XtraEditors.PopupContainerControl popupContainerControlClosestMatch;
+        private DevExpress.XtraLayout.LayoutControl layoutControlClosestMatch;
+        private DevExpress.XtraGrid.GridControl gridControlClosestMatch;
+        private DevExpress.XtraGrid.Views.Grid.GridView gridViewClosestMatch;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumnClosestMatchSubCategoryName;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumnSubCategoryKeyWord;
+        private DevExpress.XtraLayout.LayoutControlGroup layoutControlGroup2;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem2;
+        private DevExpress.XtraTab.XtraTabPage xtraTabPageCUI;
+        private DevExpress.XtraEditors.PopupContainerControl popupContainerControlCopyLineItems;
+        private DevExpress.XtraLayout.LayoutControl layoutControlCopyLineItems;
+        private DevExpress.XtraEditors.SimpleButton simpleButtonCopyLineItems;
+        private DevExpress.XtraEditors.CheckedListBoxControl checkedListBoxControlCategoryList;
+        private DevExpress.XtraLayout.LayoutControlGroup layoutControlGroup6;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItemCategoryList;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem7;
+        private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem6;
+        private DevExpress.XtraEditors.MemoEdit memoEditComponentGeneralRecommendation;
+        private DevExpress.XtraEditors.MemoEdit memoEditComponentProposedDescription;
+        private DevExpress.XtraEditors.GridLookUpEdit gridLookUpEditProject;
+        private DevExpress.XtraGrid.Views.Grid.GridView gridLookUpEdit1View;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn1;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn3;
+        private DevExpress.XtraEditors.GridLookUpEdit gridLookUpEditBuilding;
+        private DevExpress.XtraGrid.Views.Grid.GridView gridView1;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn2;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn4;
+        private DevExpress.XtraEditors.GridLookUpEdit gridLookUpEditClosestMatch;
+        private DevExpress.XtraGrid.Views.Grid.GridView gridView2;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn5;
+        private DevExpress.XtraEditors.TextEdit textEditClosestMatchFilter;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItemFilterClosestMatchSelection;
+        private DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit repositoryItemLookUpEditClosestMatch;
+        private DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit repositoryItemLookUpEditParentOther;
+        private DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit repositoryItemLookUpEditParentCategory;
+        private TCO.DesktopClientDevexpress.UI_Components.User_Controls.Modules.ComponentUtilityInfoModule componentUtilityInfoModuleInstance;
+        private DevExpress.XtraEditors.SpinEdit spinEditComponentNumber;
+        private DevExpress.XtraLayout.LayoutControlGroup layoutControlGroupGeneralInformation;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItemOtherClosestMatchesCombo;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItemOtherClosestMatchesGrid;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItemDateCreated;
+        private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem3;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItemComponentName;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItemUtilityGurantee;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItemDateLastModified;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItemProject;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem4;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem5;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItemComponentNumber;
+        private DevExpress.XtraLayout.LayoutControlGroup layoutControlGroupDetails;
+        private DevExpress.XtraTab.XtraTabControl xtraTabControlMain;
+        private DevExpress.XtraTab.XtraTabPage xtraTabPageGeneralInformation;
+        public DevExpress.XtraTab.XtraTabPage xtraTabPageDetails;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumnKeyword;
+        private DevExpress.XtraTab.XtraTabPage xtraTabPageAssetImpacts;
+        private TCO.DesktopClientDevexpress.UI_Components.User_Controls.Modules.AssetImpactsModule assetImpactsModuleInstance;
+        private DevExpress.XtraEditors.GridLookUpEdit gridLookUpEditStartingCondition;
+        private DevExpress.XtraGrid.Views.Grid.GridView gridView3;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumnStartingCondition;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItemStartingCondition;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumnClosestMatchParentCategoryName;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumnClosestMatchSubCategoryID;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumnClosetMatchParentCategoryName;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumnParentCategoryIDSelect;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumnSubCategoryIDSelect;
+        private DevExpress.XtraTab.XtraTabPage xtraTabPageMaintenanceAndOps;
+        private TCO.DesktopClientDevexpress.UI_Components.User_Controls.Modules.Component_Modules.MaintenanceAndOperationsModule maintenanceAndOperationsModuleInstance;
+        private DevExpress.XtraEditors.SpinEdit spinEditAge;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItemAge;
+        private DevExpress.XtraEditors.SpinEdit spinEditMeasureLife;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItemMeasureLife;
+        private DevExpress.XtraTab.XtraTabPage xtraTabPageCAPEX;
+        private TCO.DesktopClientDevexpress.UI_Components.User_Controls.Modules.Component_Modules.CAPEXModule capexModuleInstance;
+        private DevExpress.XtraEditors.GridLookUpEdit gridLookUpEditBaseComponent;
+        private DevExpress.XtraGrid.Views.Grid.GridView gridViewBaseComponents;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn6;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItemBaseComponent;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn7;
+        private DevExpress.XtraTab.XtraTabPage xtraTabPageComponentFirstCost;
+        private TCO.DesktopClientDevexpress.UI_Components.User_Controls.Modules.Component_Modules.ComponentFirstCostModule componentFirstCostModule1;
+    }
+}

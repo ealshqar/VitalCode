@@ -1,0 +1,16 @@
+D:\vitalCode\Vital Code - Bayan\Vital Handover\Source\Code Project\1- Dev\VitalExpertCode\Code\Vital\DataLayer\DatabaseSpecific\bin\Debug\Vital.DataLayerDBSpecific.dll.config
+D:\vitalCode\Vital Code - Bayan\Vital Handover\Source\Code Project\1- Dev\VitalExpertCode\Code\Vital\DataLayer\DatabaseSpecific\bin\Debug\Vital.DataLayerDBSpecific.dll
+D:\vitalCode\Vital Code - Bayan\Vital Handover\Source\Code Project\1- Dev\VitalExpertCode\Code\Vital\DataLayer\DatabaseSpecific\bin\Debug\Vital.DataLayerDBSpecific.pdb
+D:\vitalCode\Vital Code - Bayan\Vital Handover\Source\Code Project\1- Dev\VitalExpertCode\Code\Vital\DataLayer\DatabaseSpecific\bin\Debug\SD.LLBLGen.Pro.DQE.SqlServer.NET20.dll
+D:\vitalCode\Vital Code - Bayan\Vital Handover\Source\Code Project\1- Dev\VitalExpertCode\Code\Vital\DataLayer\DatabaseSpecific\bin\Debug\SD.LLBLGen.Pro.ORMSupportClasses.NET20.dll
+D:\vitalCode\Vital Code - Bayan\Vital Handover\Source\Code Project\1- Dev\VitalExpertCode\Code\Vital\DataLayer\obj\Debug\Vital.DataLayerDBSpecific.csprojResolveAssemblyReference.cache
+D:\vitalCode\Vital Code - Bayan\Vital Handover\Source\Code Project\1- Dev\VitalExpertCode\Code\Vital\DataLayer\obj\Debug\Vital.DataLayerDBSpecific.dll
+D:\vitalCode\Vital Code - Bayan\Vital Handover\Source\Code Project\1- Dev\VitalExpertCode\Code\Vital\DataLayer\obj\Debug\Vital.DataLayerDBSpecific.pdb
+F:\vitalCode\Vital Code - Bayan\Vital Handover\Source\Code Project\1- Dev\VitalExpertCode\Code\Vital\DataLayer\DatabaseSpecific\bin\Debug\Vital.DataLayerDBSpecific.dll.config
+F:\vitalCode\Vital Code - Bayan\Vital Handover\Source\Code Project\1- Dev\VitalExpertCode\Code\Vital\DataLayer\DatabaseSpecific\bin\Debug\Vital.DataLayerDBSpecific.dll
+F:\vitalCode\Vital Code - Bayan\Vital Handover\Source\Code Project\1- Dev\VitalExpertCode\Code\Vital\DataLayer\DatabaseSpecific\bin\Debug\Vital.DataLayerDBSpecific.pdb
+F:\vitalCode\Vital Code - Bayan\Vital Handover\Source\Code Project\1- Dev\VitalExpertCode\Code\Vital\DataLayer\DatabaseSpecific\bin\Debug\SD.LLBLGen.Pro.DQE.SqlServer.NET20.dll
+F:\vitalCode\Vital Code - Bayan\Vital Handover\Source\Code Project\1- Dev\VitalExpertCode\Code\Vital\DataLayer\DatabaseSpecific\bin\Debug\SD.LLBLGen.Pro.ORMSupportClasses.NET20.dll
+F:\vitalCode\Vital Code - Bayan\Vital Handover\Source\Code Project\1- Dev\VitalExpertCode\Code\Vital\DataLayer\obj\Debug\Vital.DataLayerDBSpecific.csprojResolveAssemblyReference.cache
+F:\vitalCode\Vital Code - Bayan\Vital Handover\Source\Code Project\1- Dev\VitalExpertCode\Code\Vital\DataLayer\obj\Debug\Vital.DataLayerDBSpecific.dll
+F:\vitalCode\Vital Code - Bayan\Vital Handover\Source\Code Project\1- Dev\VitalExpertCode\Code\Vital\DataLayer\obj\Debug\Vital.DataLayerDBSpecific.pdb

@@ -1,0 +1,11 @@
+USE [master]
+
+ALTER DATABASE VitalExpert SET SINGLE_USER WITH ROLLBACK IMMEDIATE 
+
+RESTORE DATABASE VitalExpert 
+FROM DISK = N'@PATH' 
+WITH MOVE 'VitalExpert' TO '@DATAPATH@VitalExpert.mdf', 
+	 MOVE 'VitalExpert_log' TO '@DATAPATH@VitalExpert.ldf', 
+	 NOUNLOAD, 
+	 REPLACE
+ALTER DATABASE VitalExpert SET MULTI_USER

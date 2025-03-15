@@ -1,0 +1,1048 @@
+namespace TCO.DesktopClientDevexpress
+{
+    partial class ribbonFrmMain
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ribbonFrmMain));
+            DevExpress.Utils.SuperToolTip superToolTip1 = new DevExpress.Utils.SuperToolTip();
+            DevExpress.Utils.ToolTipTitleItem toolTipTitleItem1 = new DevExpress.Utils.ToolTipTitleItem();
+            DevExpress.Utils.ToolTipItem toolTipItem1 = new DevExpress.Utils.ToolTipItem();
+            DevExpress.Utils.SuperToolTip superToolTip2 = new DevExpress.Utils.SuperToolTip();
+            DevExpress.Utils.ToolTipTitleItem toolTipTitleItem2 = new DevExpress.Utils.ToolTipTitleItem();
+            DevExpress.Utils.ToolTipItem toolTipItem2 = new DevExpress.Utils.ToolTipItem();
+            DevExpress.Utils.SuperToolTip superToolTip3 = new DevExpress.Utils.SuperToolTip();
+            DevExpress.Utils.ToolTipTitleItem toolTipTitleItem3 = new DevExpress.Utils.ToolTipTitleItem();
+            DevExpress.Utils.ToolTipItem toolTipItem3 = new DevExpress.Utils.ToolTipItem();
+            DevExpress.Utils.SuperToolTip superToolTip4 = new DevExpress.Utils.SuperToolTip();
+            DevExpress.Utils.ToolTipTitleItem toolTipTitleItem4 = new DevExpress.Utils.ToolTipTitleItem();
+            DevExpress.Utils.ToolTipItem toolTipItem4 = new DevExpress.Utils.ToolTipItem();
+            DevExpress.Utils.ToolTipSeparatorItem toolTipSeparatorItem1 = new DevExpress.Utils.ToolTipSeparatorItem();
+            DevExpress.Utils.ToolTipTitleItem toolTipTitleItem5 = new DevExpress.Utils.ToolTipTitleItem();
+            DevExpress.Utils.SuperToolTip superToolTip5 = new DevExpress.Utils.SuperToolTip();
+            DevExpress.Utils.ToolTipTitleItem toolTipTitleItem6 = new DevExpress.Utils.ToolTipTitleItem();
+            DevExpress.Utils.ToolTipItem toolTipItem5 = new DevExpress.Utils.ToolTipItem();
+            DevExpress.Utils.SuperToolTip superToolTip6 = new DevExpress.Utils.SuperToolTip();
+            DevExpress.Utils.ToolTipTitleItem toolTipTitleItem7 = new DevExpress.Utils.ToolTipTitleItem();
+            DevExpress.Utils.ToolTipItem toolTipItem6 = new DevExpress.Utils.ToolTipItem();
+            DevExpress.Utils.SuperToolTip superToolTip7 = new DevExpress.Utils.SuperToolTip();
+            DevExpress.Utils.ToolTipTitleItem toolTipTitleItem8 = new DevExpress.Utils.ToolTipTitleItem();
+            DevExpress.Utils.ToolTipItem toolTipItem7 = new DevExpress.Utils.ToolTipItem();
+            DevExpress.Utils.SuperToolTip superToolTip8 = new DevExpress.Utils.SuperToolTip();
+            DevExpress.Utils.ToolTipTitleItem toolTipTitleItem9 = new DevExpress.Utils.ToolTipTitleItem();
+            DevExpress.Utils.ToolTipItem toolTipItem8 = new DevExpress.Utils.ToolTipItem();
+            DevExpress.Utils.SuperToolTip superToolTip9 = new DevExpress.Utils.SuperToolTip();
+            DevExpress.Utils.ToolTipTitleItem toolTipTitleItem10 = new DevExpress.Utils.ToolTipTitleItem();
+            DevExpress.Utils.ToolTipItem toolTipItem9 = new DevExpress.Utils.ToolTipItem();
+            DevExpress.Utils.SuperToolTip superToolTip10 = new DevExpress.Utils.SuperToolTip();
+            DevExpress.Utils.ToolTipTitleItem toolTipTitleItem11 = new DevExpress.Utils.ToolTipTitleItem();
+            DevExpress.Utils.ToolTipItem toolTipItem10 = new DevExpress.Utils.ToolTipItem();
+            DevExpress.Utils.SuperToolTip superToolTip11 = new DevExpress.Utils.SuperToolTip();
+            DevExpress.Utils.ToolTipTitleItem toolTipTitleItem12 = new DevExpress.Utils.ToolTipTitleItem();
+            DevExpress.Utils.ToolTipItem toolTipItem11 = new DevExpress.Utils.ToolTipItem();
+            DevExpress.Utils.SuperToolTip superToolTip12 = new DevExpress.Utils.SuperToolTip();
+            DevExpress.Utils.ToolTipTitleItem toolTipTitleItem13 = new DevExpress.Utils.ToolTipTitleItem();
+            DevExpress.Utils.ToolTipItem toolTipItem12 = new DevExpress.Utils.ToolTipItem();
+            DevExpress.XtraSpellChecker.SpellCheckerCustomDictionary spellCheckerCustomDictionary1 = new DevExpress.XtraSpellChecker.SpellCheckerCustomDictionary();
+            DevExpress.XtraSpellChecker.SpellCheckerISpellDictionary spellCheckerISpellDictionary1 = new DevExpress.XtraSpellChecker.SpellCheckerISpellDictionary();
+            this.ribbon = new DevExpress.XtraBars.Ribbon.RibbonControl();
+            this.InternetStatusImageList = new System.Windows.Forms.ImageList(this.components);
+            this.barStaticItemInternetStatus = new DevExpress.XtraBars.BarStaticItem();
+            this.barButtonItemSave = new DevExpress.XtraBars.BarButtonItem();
+            this.barButtonItemSaveClose = new DevExpress.XtraBars.BarButtonItem();
+            this.barButtonItemCancel = new DevExpress.XtraBars.BarButtonItem();
+            this.barButtonItemEdit = new DevExpress.XtraBars.BarButtonItem();
+            this.barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
+            this.barButtonItem2 = new DevExpress.XtraBars.BarButtonItem();
+            this.barButtonItem3 = new DevExpress.XtraBars.BarButtonItem();
+            this.barButtonItemProjects = new DevExpress.XtraBars.BarButtonItem();
+            this.barButtonItemBuildings = new DevExpress.XtraBars.BarButtonItem();
+            this.barButtonItemComponents = new DevExpress.XtraBars.BarButtonItem();
+            this.barButtonItemAdmin = new DevExpress.XtraBars.BarButtonItem();
+            this.barButtonItemAnnualCashFlow = new DevExpress.XtraBars.BarButtonItem();
+            this.ribbonPageHome = new DevExpress.XtraBars.Ribbon.RibbonPage();
+            this.ribbonPageGroupGeneralActions = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            this.ribbonPageGroupLists = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            this.ribbonPageGroupAdminArea = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            this.ribbonPageGroupReports = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            this.repositoryItemComboBox1 = new DevExpress.XtraEditors.Repository.RepositoryItemComboBox();
+            this.ribbonStatusBar = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
+            this.clientPanel = new DevExpress.XtraEditors.PanelControl();
+            this.xtraTabControlDetailsArea = new DevExpress.XtraTab.XtraTabControl();
+            this.toolTipControllerMain = new DevExpress.Utils.ToolTipController(this.components);
+            this.controlContainer1 = new DevExpress.XtraBars.Docking.ControlContainer();
+            this.dockPanelScenarioComparison_Container = new DevExpress.XtraBars.Docking.ControlContainer();
+            this.navPanelxtraTabControl = new DevExpress.XtraTab.XtraTabControl();
+            this.searchXtraTabPage = new DevExpress.XtraTab.XtraTabPage();
+            this.layoutControlNavigationPanel = new DevExpress.XtraLayout.LayoutControl();
+            this.ComponentsNav = new TCO.DesktopClientDevexpress.NavigationGridControl();
+            this.ScenariosNav = new TCO.DesktopClientDevexpress.NavigationGridControl();
+            this.BuildingsNav = new TCO.DesktopClientDevexpress.NavigationGridControl();
+            this.ProjectsNav = new TCO.DesktopClientDevexpress.NavigationGridControl();
+            this.navigationPanelLayoutControlGroupRoot = new DevExpress.XtraLayout.LayoutControlGroup();
+            this.layoutControlGroupProjects = new DevExpress.XtraLayout.LayoutControlGroup();
+            this.layoutControlItemProjects = new DevExpress.XtraLayout.LayoutControlItem();
+            this.emptySpaceItemProjectLoading = new DevExpress.XtraLayout.EmptySpaceItem();
+            this.layoutControlGroupBuildings = new DevExpress.XtraLayout.LayoutControlGroup();
+            this.layoutControlItemBuildings = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlGroupScenarios = new DevExpress.XtraLayout.LayoutControlGroup();
+            this.layoutControlItemScenarios = new DevExpress.XtraLayout.LayoutControlItem();
+            this.splitterItem1 = new DevExpress.XtraLayout.SplitterItem();
+            this.layoutControlGroupComponents = new DevExpress.XtraLayout.LayoutControlGroup();
+            this.layoutControlItemComponents = new DevExpress.XtraLayout.LayoutControlItem();
+            this.splitterItem2 = new DevExpress.XtraLayout.SplitterItem();
+            this.splitterItem3 = new DevExpress.XtraLayout.SplitterItem();
+            this.exploreXtraTabPage = new DevExpress.XtraTab.XtraTabPage();
+            this.favoriteXtraTabPage = new DevExpress.XtraTab.XtraTabPage();
+            this.dockPanel1_Container = new DevExpress.XtraBars.Docking.ControlContainer();
+            this.labelControlLoading = new DevExpress.XtraEditors.LabelControl();
+            this.dockManagerNavigationPanel = new DevExpress.XtraBars.Docking.DockManager(this.components);
+            this.dockPanelMessagingBar = new DevExpress.XtraBars.Docking.DockPanel();
+            this.dockPanelLoading = new DevExpress.XtraBars.Docking.DockPanel();
+            this.dockPanelNavigationPanel = new DevExpress.XtraBars.Docking.DockPanel();
+            this.defaultLookAndFeel1 = new DevExpress.LookAndFeel.DefaultLookAndFeel(this.components);
+            this.dxErrorProvider1 = new DevExpress.XtraEditors.DXErrorProvider.DXErrorProvider(this.components);
+            this.spellChecker1 = new DevExpress.XtraSpellChecker.SpellChecker();
+            this.barButtonItemUtilitesReport = new DevExpress.XtraBars.BarButtonItem();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemComboBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.clientPanel)).BeginInit();
+            this.clientPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.xtraTabControlDetailsArea)).BeginInit();
+            this.dockPanelScenarioComparison_Container.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.navPanelxtraTabControl)).BeginInit();
+            this.navPanelxtraTabControl.SuspendLayout();
+            this.searchXtraTabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlNavigationPanel)).BeginInit();
+            this.layoutControlNavigationPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.navigationPanelLayoutControlGroupRoot)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroupProjects)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItemProjects)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItemProjectLoading)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroupBuildings)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItemBuildings)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroupScenarios)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItemScenarios)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.splitterItem1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroupComponents)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItemComponents)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.splitterItem2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.splitterItem3)).BeginInit();
+            this.dockPanel1_Container.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dockManagerNavigationPanel)).BeginInit();
+            this.dockPanelMessagingBar.SuspendLayout();
+            this.dockPanelLoading.SuspendLayout();
+            this.dockPanelNavigationPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dxErrorProvider1)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // ribbon
+            // 
+            this.ribbon.ApplicationIcon = global::TCO.DesktopClientDevexpress.Properties.Resources.TCO;
+            this.ribbon.Images = this.InternetStatusImageList;
+            this.ribbon.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
+            this.barStaticItemInternetStatus,
+            this.barButtonItemSave,
+            this.barButtonItemSaveClose,
+            this.barButtonItemCancel,
+            this.barButtonItemEdit,
+            this.barButtonItem1,
+            this.barButtonItem2,
+            this.barButtonItem3,
+            this.barButtonItemProjects,
+            this.barButtonItemBuildings,
+            this.barButtonItemComponents,
+            this.barButtonItemAdmin,
+            this.barButtonItemAnnualCashFlow,
+            this.barButtonItemUtilitesReport});
+            this.ribbon.Location = new System.Drawing.Point(0, 0);
+            this.ribbon.MaximumSize = new System.Drawing.Size(0, 1020);
+            this.ribbon.MaxItemId = 34;
+            this.ribbon.Name = "ribbon";
+            this.ribbon.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
+            this.ribbonPageHome});
+            this.ribbon.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
+            this.repositoryItemComboBox1});
+            this.ribbon.SelectedPage = this.ribbonPageHome;
+            this.ribbon.Size = new System.Drawing.Size(1173, 146);
+            this.ribbon.StatusBar = this.ribbonStatusBar;
+            this.ribbon.ToolbarLocation = DevExpress.XtraBars.Ribbon.RibbonQuickAccessToolbarLocation.Above;
+            this.ribbon.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.ribbon_ItemClick);
+            // 
+            // InternetStatusImageList
+            // 
+            this.InternetStatusImageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("InternetStatusImageList.ImageStream")));
+            this.InternetStatusImageList.TransparentColor = System.Drawing.Color.White;
+            this.InternetStatusImageList.Images.SetKeyName(0, "Online.png");
+            this.InternetStatusImageList.Images.SetKeyName(1, "Offline.png");
+            // 
+            // barStaticItemInternetStatus
+            // 
+            this.barStaticItemInternetStatus.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
+            this.barStaticItemInternetStatus.Id = 1;
+            this.barStaticItemInternetStatus.Name = "barStaticItemInternetStatus";
+            this.barStaticItemInternetStatus.TextAlignment = System.Drawing.StringAlignment.Near;
+            // 
+            // barButtonItemSave
+            // 
+            this.barButtonItemSave.Caption = "Save";
+            this.barButtonItemSave.Enabled = false;
+            this.barButtonItemSave.Id = 17;
+            this.barButtonItemSave.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("barButtonItemSave.LargeGlyph")));
+            this.barButtonItemSave.Name = "barButtonItemSave";
+            toolTipTitleItem1.Text = "Save";
+            toolTipItem1.Appearance.Image = global::TCO.DesktopClientDevexpress.Properties.Resources.Help;
+            toolTipItem1.Appearance.Options.UseImage = true;
+            toolTipItem1.Image = global::TCO.DesktopClientDevexpress.Properties.Resources.Help;
+            toolTipItem1.LeftIndent = 6;
+            toolTipItem1.Text = "This button saves the changes made to the current focused tab without closing it," +
+                " but it will disable the tab\'s fields after saving.";
+            superToolTip1.Items.Add(toolTipTitleItem1);
+            superToolTip1.Items.Add(toolTipItem1);
+            this.barButtonItemSave.SuperTip = superToolTip1;
+            // 
+            // barButtonItemSaveClose
+            // 
+            this.barButtonItemSaveClose.Caption = "Save and Close";
+            this.barButtonItemSaveClose.Enabled = false;
+            this.barButtonItemSaveClose.Glyph = ((System.Drawing.Image)(resources.GetObject("barButtonItemSaveClose.Glyph")));
+            this.barButtonItemSaveClose.Id = 18;
+            this.barButtonItemSaveClose.Name = "barButtonItemSaveClose";
+            toolTipTitleItem2.Text = "Save and Close";
+            toolTipItem2.Appearance.Image = global::TCO.DesktopClientDevexpress.Properties.Resources.Help;
+            toolTipItem2.Appearance.Options.UseImage = true;
+            toolTipItem2.Image = global::TCO.DesktopClientDevexpress.Properties.Resources.Help;
+            toolTipItem2.LeftIndent = 6;
+            toolTipItem2.Text = "This button will save the changes made to the current focused tab and it will clo" +
+                "se it in addition.";
+            superToolTip2.Items.Add(toolTipTitleItem2);
+            superToolTip2.Items.Add(toolTipItem2);
+            this.barButtonItemSaveClose.SuperTip = superToolTip2;
+            // 
+            // barButtonItemCancel
+            // 
+            this.barButtonItemCancel.Caption = "Cancel";
+            this.barButtonItemCancel.Enabled = false;
+            this.barButtonItemCancel.Glyph = ((System.Drawing.Image)(resources.GetObject("barButtonItemCancel.Glyph")));
+            this.barButtonItemCancel.Id = 19;
+            this.barButtonItemCancel.Name = "barButtonItemCancel";
+            toolTipTitleItem3.Text = "Cancel";
+            toolTipItem3.Appearance.Image = global::TCO.DesktopClientDevexpress.Properties.Resources.Help;
+            toolTipItem3.Appearance.Options.UseImage = true;
+            toolTipItem3.Image = global::TCO.DesktopClientDevexpress.Properties.Resources.Help;
+            toolTipItem3.LeftIndent = 6;
+            toolTipItem3.Text = "This button will cancel the changes made to the current focused tab without closi" +
+                "ng it.";
+            superToolTip3.Items.Add(toolTipTitleItem3);
+            superToolTip3.Items.Add(toolTipItem3);
+            this.barButtonItemCancel.SuperTip = superToolTip3;
+            // 
+            // barButtonItemEdit
+            // 
+            this.barButtonItemEdit.Caption = "Edit";
+            this.barButtonItemEdit.Enabled = false;
+            this.barButtonItemEdit.Id = 20;
+            this.barButtonItemEdit.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("barButtonItemEdit.LargeGlyph")));
+            this.barButtonItemEdit.Name = "barButtonItemEdit";
+            toolTipTitleItem4.Text = "Edit";
+            toolTipItem4.Appearance.Image = global::TCO.DesktopClientDevexpress.Properties.Resources.Help;
+            toolTipItem4.Appearance.Options.UseImage = true;
+            toolTipItem4.Image = global::TCO.DesktopClientDevexpress.Properties.Resources.Help;
+            toolTipItem4.LeftIndent = 6;
+            toolTipItem4.Text = "This button will enable the current focused tab for editing if no other related t" +
+                "ab is still being edited.";
+            toolTipTitleItem5.LeftIndent = 6;
+            toolTipTitleItem5.Text = "For example, if you opened a project tab and clicked the Edit button, this button" +
+                " will be disabled when moving focus to a building tab that belongs to the edited" +
+                " project.";
+            superToolTip4.Items.Add(toolTipTitleItem4);
+            superToolTip4.Items.Add(toolTipItem4);
+            superToolTip4.Items.Add(toolTipSeparatorItem1);
+            superToolTip4.Items.Add(toolTipTitleItem5);
+            this.barButtonItemEdit.SuperTip = superToolTip4;
+            // 
+            // barButtonItem1
+            // 
+            this.barButtonItem1.Caption = "barButtonItem1";
+            this.barButtonItem1.Id = 24;
+            this.barButtonItem1.Name = "barButtonItem1";
+            // 
+            // barButtonItem2
+            // 
+            this.barButtonItem2.Caption = "barButtonItem2";
+            this.barButtonItem2.Id = 25;
+            this.barButtonItem2.Name = "barButtonItem2";
+            // 
+            // barButtonItem3
+            // 
+            this.barButtonItem3.Caption = "barButtonItem3";
+            this.barButtonItem3.Id = 26;
+            this.barButtonItem3.Name = "barButtonItem3";
+            // 
+            // barButtonItemProjects
+            // 
+            this.barButtonItemProjects.Caption = "Projects";
+            this.barButtonItemProjects.Id = 28;
+            this.barButtonItemProjects.LargeGlyph = global::TCO.DesktopClientDevexpress.Properties.Resources.Project;
+            this.barButtonItemProjects.Name = "barButtonItemProjects";
+            toolTipTitleItem6.Text = "Projects";
+            toolTipItem5.Appearance.Image = global::TCO.DesktopClientDevexpress.Properties.Resources.Help;
+            toolTipItem5.Appearance.Options.UseImage = true;
+            toolTipItem5.Image = global::TCO.DesktopClientDevexpress.Properties.Resources.Help;
+            toolTipItem5.LeftIndent = 6;
+            toolTipItem5.Text = "This button will open a tab containing a list of all projects in the TCO tool.";
+            superToolTip5.Items.Add(toolTipTitleItem6);
+            superToolTip5.Items.Add(toolTipItem5);
+            this.barButtonItemProjects.SuperTip = superToolTip5;
+            // 
+            // barButtonItemBuildings
+            // 
+            this.barButtonItemBuildings.Caption = "Buildings";
+            this.barButtonItemBuildings.Id = 29;
+            this.barButtonItemBuildings.LargeGlyph = global::TCO.DesktopClientDevexpress.Properties.Resources.Building;
+            this.barButtonItemBuildings.Name = "barButtonItemBuildings";
+            toolTipTitleItem7.Text = "Buildings";
+            toolTipItem6.Appearance.Image = global::TCO.DesktopClientDevexpress.Properties.Resources.Help;
+            toolTipItem6.Appearance.Options.UseImage = true;
+            toolTipItem6.Image = global::TCO.DesktopClientDevexpress.Properties.Resources.Help;
+            toolTipItem6.LeftIndent = 6;
+            toolTipItem6.Text = "This button will open a tab containing a list of all buildings in the TCO tool.";
+            superToolTip6.Items.Add(toolTipTitleItem7);
+            superToolTip6.Items.Add(toolTipItem6);
+            this.barButtonItemBuildings.SuperTip = superToolTip6;
+            // 
+            // barButtonItemComponents
+            // 
+            this.barButtonItemComponents.Caption = "Components";
+            this.barButtonItemComponents.Id = 30;
+            this.barButtonItemComponents.LargeGlyph = global::TCO.DesktopClientDevexpress.Properties.Resources.Component;
+            this.barButtonItemComponents.Name = "barButtonItemComponents";
+            toolTipTitleItem8.Text = "Components";
+            toolTipItem7.Appearance.Image = global::TCO.DesktopClientDevexpress.Properties.Resources.Help;
+            toolTipItem7.Appearance.Options.UseImage = true;
+            toolTipItem7.Image = global::TCO.DesktopClientDevexpress.Properties.Resources.Help;
+            toolTipItem7.LeftIndent = 6;
+            toolTipItem7.Text = "This button will open a tab containing a list of all components in the TCO tool.";
+            superToolTip7.Items.Add(toolTipTitleItem8);
+            superToolTip7.Items.Add(toolTipItem7);
+            this.barButtonItemComponents.SuperTip = superToolTip7;
+            // 
+            // barButtonItemAdmin
+            // 
+            this.barButtonItemAdmin.Caption = "Admin Area";
+            this.barButtonItemAdmin.Id = 31;
+            this.barButtonItemAdmin.LargeGlyph = global::TCO.DesktopClientDevexpress.Properties.Resources.Administrator;
+            this.barButtonItemAdmin.LargeWidth = 80;
+            this.barButtonItemAdmin.Name = "barButtonItemAdmin";
+            toolTipTitleItem9.Text = "Admin Area";
+            toolTipItem8.Appearance.Image = global::TCO.DesktopClientDevexpress.Properties.Resources.Help;
+            toolTipItem8.Appearance.Options.UseImage = true;
+            toolTipItem8.Image = global::TCO.DesktopClientDevexpress.Properties.Resources.Help;
+            toolTipItem8.LeftIndent = 6;
+            toolTipItem8.Text = "This button will open a tab containing all admin related functionalities that aff" +
+                "ect the tool in general.";
+            superToolTip8.Items.Add(toolTipTitleItem9);
+            superToolTip8.Items.Add(toolTipItem8);
+            this.barButtonItemAdmin.SuperTip = superToolTip8;
+            // 
+            // barButtonItemAnnualCashFlow
+            // 
+            this.barButtonItemAnnualCashFlow.Caption = " Annual Cash Flow";
+            this.barButtonItemAnnualCashFlow.Id = 32;
+            this.barButtonItemAnnualCashFlow.LargeGlyph = global::TCO.DesktopClientDevexpress.Properties.Resources.AnnualCashFlow;
+            this.barButtonItemAnnualCashFlow.LargeWidth = 100;
+            this.barButtonItemAnnualCashFlow.Name = "barButtonItemAnnualCashFlow";
+            toolTipTitleItem10.Text = "Annual Cash Flow";
+            toolTipItem9.Appearance.Image = global::TCO.DesktopClientDevexpress.Properties.Resources.Help;
+            toolTipItem9.Appearance.Options.UseImage = true;
+            toolTipItem9.Image = global::TCO.DesktopClientDevexpress.Properties.Resources.Help;
+            toolTipItem9.LeftIndent = 6;
+            toolTipItem9.Text = "This button will open the annual cash flow report in a seperate tab.";
+            superToolTip9.Items.Add(toolTipTitleItem10);
+            superToolTip9.Items.Add(toolTipItem9);
+            this.barButtonItemAnnualCashFlow.SuperTip = superToolTip9;
+            // 
+            // ribbonPageHome
+            // 
+            this.ribbonPageHome.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
+            this.ribbonPageGroupGeneralActions,
+            this.ribbonPageGroupLists,
+            this.ribbonPageGroupAdminArea,
+            this.ribbonPageGroupReports});
+            this.ribbonPageHome.Name = "ribbonPageHome";
+            this.ribbonPageHome.Text = "Home";
+            // 
+            // ribbonPageGroupGeneralActions
+            // 
+            this.ribbonPageGroupGeneralActions.ItemLinks.Add(this.barButtonItemSave);
+            this.ribbonPageGroupGeneralActions.ItemLinks.Add(this.barButtonItemSaveClose);
+            this.ribbonPageGroupGeneralActions.ItemLinks.Add(this.barButtonItemCancel);
+            this.ribbonPageGroupGeneralActions.ItemLinks.Add(this.barButtonItemEdit);
+            this.ribbonPageGroupGeneralActions.Name = "ribbonPageGroupGeneralActions";
+            toolTipTitleItem11.Text = "General Actions";
+            toolTipItem10.Appearance.Image = global::TCO.DesktopClientDevexpress.Properties.Resources.Help;
+            toolTipItem10.Appearance.Options.UseImage = true;
+            toolTipItem10.Image = global::TCO.DesktopClientDevexpress.Properties.Resources.Help;
+            toolTipItem10.LeftIndent = 6;
+            toolTipItem10.Text = "This group contains buttons that allow you to interact with the current focused t" +
+                "ab in the tabs area below.";
+            superToolTip10.Items.Add(toolTipTitleItem11);
+            superToolTip10.Items.Add(toolTipItem10);
+            this.ribbonPageGroupGeneralActions.SuperTip = superToolTip10;
+            this.ribbonPageGroupGeneralActions.Text = "General Actions";
+            // 
+            // ribbonPageGroupLists
+            // 
+            this.ribbonPageGroupLists.ItemLinks.Add(this.barButtonItemProjects);
+            this.ribbonPageGroupLists.ItemLinks.Add(this.barButtonItemBuildings);
+            this.ribbonPageGroupLists.ItemLinks.Add(this.barButtonItemComponents);
+            this.ribbonPageGroupLists.Name = "ribbonPageGroupLists";
+            toolTipTitleItem12.Text = "TCO Lists";
+            toolTipItem11.Appearance.Image = global::TCO.DesktopClientDevexpress.Properties.Resources.Help;
+            toolTipItem11.Appearance.Options.UseImage = true;
+            toolTipItem11.Image = global::TCO.DesktopClientDevexpress.Properties.Resources.Help;
+            toolTipItem11.LeftIndent = 6;
+            toolTipItem11.Text = "This group contains lists of all Projects, Buildings and Components in the TCO to" +
+                "ol and clicking a any button will open its list in a seperate tab.";
+            superToolTip11.Items.Add(toolTipTitleItem12);
+            superToolTip11.Items.Add(toolTipItem11);
+            this.ribbonPageGroupLists.SuperTip = superToolTip11;
+            this.ribbonPageGroupLists.Text = "Lists";
+            // 
+            // ribbonPageGroupAdminArea
+            // 
+            this.ribbonPageGroupAdminArea.ItemLinks.Add(this.barButtonItemAdmin, true);
+            this.ribbonPageGroupAdminArea.Name = "ribbonPageGroupAdminArea";
+            this.ribbonPageGroupAdminArea.Text = "Admin Area";
+            // 
+            // ribbonPageGroupReports
+            // 
+            this.ribbonPageGroupReports.ItemLinks.Add(this.barButtonItemAnnualCashFlow);
+            this.ribbonPageGroupReports.ItemLinks.Add(this.barButtonItemUtilitesReport);
+            this.ribbonPageGroupReports.Name = "ribbonPageGroupReports";
+            toolTipTitleItem13.Text = "Reports";
+            toolTipItem12.Appearance.Image = global::TCO.DesktopClientDevexpress.Properties.Resources.Help;
+            toolTipItem12.Appearance.Options.UseImage = true;
+            toolTipItem12.Image = global::TCO.DesktopClientDevexpress.Properties.Resources.Help;
+            toolTipItem12.LeftIndent = 6;
+            toolTipItem12.Text = "This group contains lists of all reports in the TCO tool and clicking a any butto" +
+                "n will open its report in a seperate tab.";
+            superToolTip12.Items.Add(toolTipTitleItem13);
+            superToolTip12.Items.Add(toolTipItem12);
+            this.ribbonPageGroupReports.SuperTip = superToolTip12;
+            this.ribbonPageGroupReports.Text = "Reports";
+            // 
+            // repositoryItemComboBox1
+            // 
+            this.repositoryItemComboBox1.AutoHeight = false;
+            this.repositoryItemComboBox1.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.repositoryItemComboBox1.Name = "repositoryItemComboBox1";
+            // 
+            // ribbonStatusBar
+            // 
+            this.ribbonStatusBar.ItemLinks.Add(this.barStaticItemInternetStatus);
+            this.ribbonStatusBar.Location = new System.Drawing.Point(0, 691);
+            this.ribbonStatusBar.Name = "ribbonStatusBar";
+            this.ribbonStatusBar.Ribbon = this.ribbon;
+            this.ribbonStatusBar.Size = new System.Drawing.Size(1173, 23);
+            // 
+            // clientPanel
+            // 
+            this.clientPanel.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
+            this.clientPanel.Controls.Add(this.xtraTabControlDetailsArea);
+            this.clientPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.clientPanel.Location = new System.Drawing.Point(220, 146);
+            this.clientPanel.Name = "clientPanel";
+            this.clientPanel.Size = new System.Drawing.Size(953, 545);
+            this.clientPanel.TabIndex = 2;
+            // 
+            // xtraTabControlDetailsArea
+            // 
+            this.xtraTabControlDetailsArea.AllowDrop = true;
+            this.xtraTabControlDetailsArea.ClosePageButtonShowMode = DevExpress.XtraTab.ClosePageButtonShowMode.InAllTabPagesAndTabControlHeader;
+            this.xtraTabControlDetailsArea.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.xtraTabControlDetailsArea.Location = new System.Drawing.Point(0, 0);
+            this.xtraTabControlDetailsArea.LookAndFeel.SkinName = "Glass Oceans";
+            this.xtraTabControlDetailsArea.Name = "xtraTabControlDetailsArea";
+            this.xtraTabControlDetailsArea.Size = new System.Drawing.Size(953, 545);
+            this.xtraTabControlDetailsArea.TabIndex = 1;
+            this.xtraTabControlDetailsArea.ToolTipController = this.toolTipControllerMain;
+            this.xtraTabControlDetailsArea.SelectedPageChanged += new DevExpress.XtraTab.TabPageChangedEventHandler(this.xtraTabControlDetailsArea_SelectedPageChanged);
+            this.xtraTabControlDetailsArea.MouseDown += new System.Windows.Forms.MouseEventHandler(this.xtraTabControlDetailsArea_MouseDown);
+            this.xtraTabControlDetailsArea.CloseButtonClick += new System.EventHandler(this.xtraTabControlDetailsArea_CloseButtonClick);
+            // 
+            // toolTipControllerMain
+            // 
+            this.toolTipControllerMain.Rounded = true;
+            this.toolTipControllerMain.ToolTipType = DevExpress.Utils.ToolTipType.SuperTip;
+            // 
+            // controlContainer1
+            // 
+            this.controlContainer1.Location = new System.Drawing.Point(3, 24);
+            this.controlContainer1.Name = "controlContainer1";
+            this.controlContainer1.Size = new System.Drawing.Size(1167, 36);
+            this.controlContainer1.TabIndex = 0;
+            // 
+            // dockPanelScenarioComparison_Container
+            // 
+            this.dockPanelScenarioComparison_Container.Controls.Add(this.navPanelxtraTabControl);
+            this.dockPanelScenarioComparison_Container.Location = new System.Drawing.Point(3, 24);
+            this.dockPanelScenarioComparison_Container.Name = "dockPanelScenarioComparison_Container";
+            this.dockPanelScenarioComparison_Container.Size = new System.Drawing.Size(214, 518);
+            this.dockPanelScenarioComparison_Container.TabIndex = 0;
+            // 
+            // navPanelxtraTabControl
+            // 
+            this.navPanelxtraTabControl.Appearance.BorderColor = System.Drawing.Color.Transparent;
+            this.navPanelxtraTabControl.Appearance.Options.UseBorderColor = true;
+            this.navPanelxtraTabControl.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
+            this.navPanelxtraTabControl.BorderStylePage = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
+            this.navPanelxtraTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.navPanelxtraTabControl.HeaderAutoFill = DevExpress.Utils.DefaultBoolean.True;
+            this.navPanelxtraTabControl.HeaderLocation = DevExpress.XtraTab.TabHeaderLocation.Bottom;
+            this.navPanelxtraTabControl.Location = new System.Drawing.Point(0, 0);
+            this.navPanelxtraTabControl.Name = "navPanelxtraTabControl";
+            this.navPanelxtraTabControl.SelectedTabPage = this.searchXtraTabPage;
+            this.navPanelxtraTabControl.Size = new System.Drawing.Size(214, 518);
+            this.navPanelxtraTabControl.TabIndex = 0;
+            this.navPanelxtraTabControl.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] {
+            this.searchXtraTabPage,
+            this.exploreXtraTabPage,
+            this.favoriteXtraTabPage});
+            // 
+            // searchXtraTabPage
+            // 
+            this.searchXtraTabPage.Controls.Add(this.layoutControlNavigationPanel);
+            this.searchXtraTabPage.Name = "searchXtraTabPage";
+            this.searchXtraTabPage.Size = new System.Drawing.Size(205, 488);
+            this.searchXtraTabPage.Text = "Home";
+            // 
+            // layoutControlNavigationPanel
+            // 
+            this.layoutControlNavigationPanel.AllowCustomizationMenu = false;
+            this.layoutControlNavigationPanel.Appearance.DisabledLayoutGroupCaption.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.layoutControlNavigationPanel.Appearance.DisabledLayoutGroupCaption.Options.UseForeColor = true;
+            this.layoutControlNavigationPanel.Appearance.DisabledLayoutItem.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.layoutControlNavigationPanel.Appearance.DisabledLayoutItem.Options.UseForeColor = true;
+            this.layoutControlNavigationPanel.Controls.Add(this.ComponentsNav);
+            this.layoutControlNavigationPanel.Controls.Add(this.ScenariosNav);
+            this.layoutControlNavigationPanel.Controls.Add(this.BuildingsNav);
+            this.layoutControlNavigationPanel.Controls.Add(this.ProjectsNav);
+            this.layoutControlNavigationPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.layoutControlNavigationPanel.Location = new System.Drawing.Point(0, 0);
+            this.layoutControlNavigationPanel.Name = "layoutControlNavigationPanel";
+            this.layoutControlNavigationPanel.OptionsView.ItemBorderColor = System.Drawing.Color.Transparent;
+            this.layoutControlNavigationPanel.Root = this.navigationPanelLayoutControlGroupRoot;
+            this.layoutControlNavigationPanel.Size = new System.Drawing.Size(205, 488);
+            this.layoutControlNavigationPanel.TabIndex = 0;
+            this.layoutControlNavigationPanel.Text = "layoutControl1";
+            // 
+            // ComponentsNav
+            // 
+            this.ComponentsNav.DataSource = null;
+            this.ComponentsNav.GroupType = EntityType.Components;
+            this.ComponentsNav.Location = new System.Drawing.Point(1, 463);
+            this.ComponentsNav.MinimumSize = new System.Drawing.Size(0, 100);
+            this.ComponentsNav.Name = "ComponentsNav";
+            this.ComponentsNav.Size = new System.Drawing.Size(198, 374);
+            this.ComponentsNav.TabIndex = 6;
+            // 
+            // ScenariosNav
+            // 
+            this.ScenariosNav.DataSource = null;
+            this.ScenariosNav.GroupType = EntityType.Scenarios;
+            this.ScenariosNav.Location = new System.Drawing.Point(1, 433);
+            this.ScenariosNav.MinimumSize = new System.Drawing.Size(0, 100);
+            this.ScenariosNav.Name = "ScenariosNav";
+            this.ScenariosNav.Size = new System.Drawing.Size(198, 374);
+            this.ScenariosNav.TabIndex = 6;
+            // 
+            // BuildingsNav
+            // 
+            this.BuildingsNav.DataSource = null;
+            this.BuildingsNav.GroupType = EntityType.Buildings;
+            this.BuildingsNav.Location = new System.Drawing.Point(1, 403);
+            this.BuildingsNav.MinimumSize = new System.Drawing.Size(0, 100);
+            this.BuildingsNav.Name = "BuildingsNav";
+            this.BuildingsNav.Size = new System.Drawing.Size(198, 374);
+            this.BuildingsNav.TabIndex = 6;
+            // 
+            // ProjectsNav
+            // 
+            this.ProjectsNav.DataSource = null;
+            this.ProjectsNav.GroupType = EntityType.Projects;
+            this.ProjectsNav.Location = new System.Drawing.Point(4, 21);
+            this.ProjectsNav.MinimumSize = new System.Drawing.Size(0, 100);
+            this.ProjectsNav.Name = "ProjectsNav";
+            this.ProjectsNav.Size = new System.Drawing.Size(198, 345);
+            this.ProjectsNav.TabIndex = 4;
+            // 
+            // navigationPanelLayoutControlGroupRoot
+            // 
+            this.navigationPanelLayoutControlGroupRoot.AppearanceGroup.BorderColor = System.Drawing.Color.Transparent;
+            this.navigationPanelLayoutControlGroupRoot.AppearanceGroup.Options.UseBorderColor = true;
+            this.navigationPanelLayoutControlGroupRoot.CustomizationFormText = "Root";
+            this.navigationPanelLayoutControlGroupRoot.GroupBordersVisible = false;
+            this.navigationPanelLayoutControlGroupRoot.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
+            this.layoutControlGroupProjects,
+            this.layoutControlGroupBuildings,
+            this.layoutControlGroupScenarios,
+            this.splitterItem1,
+            this.layoutControlGroupComponents,
+            this.splitterItem2,
+            this.splitterItem3});
+            this.navigationPanelLayoutControlGroupRoot.Location = new System.Drawing.Point(0, 0);
+            this.navigationPanelLayoutControlGroupRoot.Name = "Root";
+            this.navigationPanelLayoutControlGroupRoot.Size = new System.Drawing.Size(205, 488);
+            this.navigationPanelLayoutControlGroupRoot.Spacing = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
+            this.navigationPanelLayoutControlGroupRoot.Text = "Root";
+            this.navigationPanelLayoutControlGroupRoot.TextVisible = false;
+            // 
+            // layoutControlGroupProjects
+            // 
+            this.layoutControlGroupProjects.CustomizationFormText = "Projects";
+            this.layoutControlGroupProjects.ExpandButtonLocation = DevExpress.Utils.GroupElementLocation.AfterText;
+            this.layoutControlGroupProjects.ExpandButtonVisible = true;
+            this.layoutControlGroupProjects.ExpandOnDoubleClick = true;
+            this.layoutControlGroupProjects.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
+            this.layoutControlItemProjects,
+            this.emptySpaceItemProjectLoading});
+            this.layoutControlGroupProjects.Location = new System.Drawing.Point(0, 0);
+            this.layoutControlGroupProjects.Name = "layoutControlGroupProjects";
+            this.layoutControlGroupProjects.Size = new System.Drawing.Size(205, 398);
+            this.layoutControlGroupProjects.Tag = "Projects";
+            this.layoutControlGroupProjects.Text = "Projects";
+            this.layoutControlGroupProjects.MouseDown += new System.Windows.Forms.MouseEventHandler(this.LayoutControlGroup_MouseDown);
+            // 
+            // layoutControlItemProjects
+            // 
+            this.layoutControlItemProjects.Control = this.ProjectsNav;
+            this.layoutControlItemProjects.CustomizationFormText = "layoutControlItemProjects";
+            this.layoutControlItemProjects.Location = new System.Drawing.Point(0, 0);
+            this.layoutControlItemProjects.Name = "layoutControlItemProjects";
+            this.layoutControlItemProjects.Padding = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
+            this.layoutControlItemProjects.Size = new System.Drawing.Size(199, 346);
+            this.layoutControlItemProjects.Text = "layoutControlItemProjects";
+            this.layoutControlItemProjects.TextLocation = DevExpress.Utils.Locations.Left;
+            this.layoutControlItemProjects.TextSize = new System.Drawing.Size(0, 0);
+            this.layoutControlItemProjects.TextToControlDistance = 0;
+            this.layoutControlItemProjects.TextVisible = false;
+            // 
+            // emptySpaceItemProjectLoading
+            // 
+            this.emptySpaceItemProjectLoading.CustomizationFormText = "Project is loading, please wait ...";
+            this.emptySpaceItemProjectLoading.Image = global::TCO.DesktopClientDevexpress.Properties.Resources.Loading;
+            this.emptySpaceItemProjectLoading.ImageToTextDistance = 1;
+            this.emptySpaceItemProjectLoading.Location = new System.Drawing.Point(0, 346);
+            this.emptySpaceItemProjectLoading.MaxSize = new System.Drawing.Size(199, 29);
+            this.emptySpaceItemProjectLoading.MinSize = new System.Drawing.Size(199, 29);
+            this.emptySpaceItemProjectLoading.Name = "emptySpaceItemProjectLoading";
+            this.emptySpaceItemProjectLoading.Size = new System.Drawing.Size(199, 29);
+            this.emptySpaceItemProjectLoading.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+            this.emptySpaceItemProjectLoading.Text = "Project is loading, please wait ...";
+            this.emptySpaceItemProjectLoading.TextSize = new System.Drawing.Size(0, 0);
+            this.emptySpaceItemProjectLoading.TextVisible = true;
+            this.emptySpaceItemProjectLoading.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
+            // 
+            // layoutControlGroupBuildings
+            // 
+            this.layoutControlGroupBuildings.CustomizationFormText = "Buildings";
+            this.layoutControlGroupBuildings.ExpandButtonLocation = DevExpress.Utils.GroupElementLocation.AfterText;
+            this.layoutControlGroupBuildings.ExpandButtonVisible = true;
+            this.layoutControlGroupBuildings.Expanded = false;
+            this.layoutControlGroupBuildings.ExpandOnDoubleClick = true;
+            this.layoutControlGroupBuildings.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
+            this.layoutControlItemBuildings});
+            this.layoutControlGroupBuildings.Location = new System.Drawing.Point(0, 402);
+            this.layoutControlGroupBuildings.Name = "layoutControlGroupBuildings";
+            this.layoutControlGroupBuildings.Size = new System.Drawing.Size(205, 26);
+            this.layoutControlGroupBuildings.Tag = "Buildings";
+            this.layoutControlGroupBuildings.Text = "Buildings";
+            this.layoutControlGroupBuildings.MouseDown += new System.Windows.Forms.MouseEventHandler(this.LayoutControlGroup_MouseDown);
+            // 
+            // layoutControlItemBuildings
+            // 
+            this.layoutControlItemBuildings.Control = this.BuildingsNav;
+            this.layoutControlItemBuildings.CustomizationFormText = "Buildings";
+            this.layoutControlItemBuildings.Location = new System.Drawing.Point(0, 0);
+            this.layoutControlItemBuildings.Name = "layoutControlItemBuildings";
+            this.layoutControlItemBuildings.Padding = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
+            this.layoutControlItemBuildings.Size = new System.Drawing.Size(199, 375);
+            this.layoutControlItemBuildings.Text = "Buildings";
+            this.layoutControlItemBuildings.TextLocation = DevExpress.Utils.Locations.Left;
+            this.layoutControlItemBuildings.TextSize = new System.Drawing.Size(0, 0);
+            this.layoutControlItemBuildings.TextToControlDistance = 0;
+            this.layoutControlItemBuildings.TextVisible = false;
+            // 
+            // layoutControlGroupScenarios
+            // 
+            this.layoutControlGroupScenarios.CustomizationFormText = "Scenarios";
+            this.layoutControlGroupScenarios.ExpandButtonLocation = DevExpress.Utils.GroupElementLocation.AfterText;
+            this.layoutControlGroupScenarios.ExpandButtonVisible = true;
+            this.layoutControlGroupScenarios.Expanded = false;
+            this.layoutControlGroupScenarios.ExpandOnDoubleClick = true;
+            this.layoutControlGroupScenarios.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
+            this.layoutControlItemScenarios});
+            this.layoutControlGroupScenarios.Location = new System.Drawing.Point(0, 432);
+            this.layoutControlGroupScenarios.Name = "layoutControlGroupScenarios";
+            this.layoutControlGroupScenarios.Size = new System.Drawing.Size(205, 26);
+            this.layoutControlGroupScenarios.Tag = "Scenarios";
+            this.layoutControlGroupScenarios.Text = "Scenarios";
+            this.layoutControlGroupScenarios.MouseDown += new System.Windows.Forms.MouseEventHandler(this.LayoutControlGroup_MouseDown);
+            // 
+            // layoutControlItemScenarios
+            // 
+            this.layoutControlItemScenarios.Control = this.ScenariosNav;
+            this.layoutControlItemScenarios.CustomizationFormText = "Scenarios";
+            this.layoutControlItemScenarios.Location = new System.Drawing.Point(0, 0);
+            this.layoutControlItemScenarios.Name = "layoutControlItemScenarios";
+            this.layoutControlItemScenarios.Padding = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
+            this.layoutControlItemScenarios.Size = new System.Drawing.Size(199, 375);
+            this.layoutControlItemScenarios.Text = "Scenarios";
+            this.layoutControlItemScenarios.TextLocation = DevExpress.Utils.Locations.Left;
+            this.layoutControlItemScenarios.TextSize = new System.Drawing.Size(0, 0);
+            this.layoutControlItemScenarios.TextToControlDistance = 0;
+            this.layoutControlItemScenarios.TextVisible = false;
+            // 
+            // splitterItem1
+            // 
+            this.splitterItem1.CustomizationFormText = "splitterItem1";
+            this.splitterItem1.Location = new System.Drawing.Point(0, 398);
+            this.splitterItem1.Name = "splitterItem1";
+            this.splitterItem1.Size = new System.Drawing.Size(205, 4);
+            // 
+            // layoutControlGroupComponents
+            // 
+            this.layoutControlGroupComponents.CustomizationFormText = "Components";
+            this.layoutControlGroupComponents.ExpandButtonLocation = DevExpress.Utils.GroupElementLocation.AfterText;
+            this.layoutControlGroupComponents.ExpandButtonVisible = true;
+            this.layoutControlGroupComponents.Expanded = false;
+            this.layoutControlGroupComponents.ExpandOnDoubleClick = true;
+            this.layoutControlGroupComponents.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
+            this.layoutControlItemComponents});
+            this.layoutControlGroupComponents.Location = new System.Drawing.Point(0, 462);
+            this.layoutControlGroupComponents.Name = "layoutControlGroupComponents";
+            this.layoutControlGroupComponents.Size = new System.Drawing.Size(205, 26);
+            this.layoutControlGroupComponents.Tag = "Components";
+            this.layoutControlGroupComponents.Text = "Components";
+            this.layoutControlGroupComponents.MouseDown += new System.Windows.Forms.MouseEventHandler(this.LayoutControlGroup_MouseDown);
+            // 
+            // layoutControlItemComponents
+            // 
+            this.layoutControlItemComponents.Control = this.ComponentsNav;
+            this.layoutControlItemComponents.CustomizationFormText = "Components";
+            this.layoutControlItemComponents.Location = new System.Drawing.Point(0, 0);
+            this.layoutControlItemComponents.Name = "layoutControlItemComponents";
+            this.layoutControlItemComponents.Padding = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
+            this.layoutControlItemComponents.Size = new System.Drawing.Size(199, 375);
+            this.layoutControlItemComponents.Text = "Components";
+            this.layoutControlItemComponents.TextLocation = DevExpress.Utils.Locations.Left;
+            this.layoutControlItemComponents.TextSize = new System.Drawing.Size(0, 0);
+            this.layoutControlItemComponents.TextToControlDistance = 0;
+            this.layoutControlItemComponents.TextVisible = false;
+            // 
+            // splitterItem2
+            // 
+            this.splitterItem2.CustomizationFormText = "splitterItem2";
+            this.splitterItem2.Location = new System.Drawing.Point(0, 458);
+            this.splitterItem2.Name = "splitterItem2";
+            this.splitterItem2.Size = new System.Drawing.Size(205, 4);
+            // 
+            // splitterItem3
+            // 
+            this.splitterItem3.CustomizationFormText = "splitterItem3";
+            this.splitterItem3.Location = new System.Drawing.Point(0, 428);
+            this.splitterItem3.Name = "splitterItem3";
+            this.splitterItem3.Size = new System.Drawing.Size(205, 4);
+            // 
+            // exploreXtraTabPage
+            // 
+            this.exploreXtraTabPage.Name = "exploreXtraTabPage";
+            this.exploreXtraTabPage.PageVisible = false;
+            this.exploreXtraTabPage.Size = new System.Drawing.Size(205, 488);
+            this.exploreXtraTabPage.Text = "Explore";
+            // 
+            // favoriteXtraTabPage
+            // 
+            this.favoriteXtraTabPage.Name = "favoriteXtraTabPage";
+            this.favoriteXtraTabPage.PageVisible = false;
+            this.favoriteXtraTabPage.Size = new System.Drawing.Size(205, 488);
+            this.favoriteXtraTabPage.Text = "Favorite";
+            // 
+            // dockPanel1_Container
+            // 
+            this.dockPanel1_Container.Controls.Add(this.labelControlLoading);
+            this.dockPanel1_Container.Location = new System.Drawing.Point(2, 24);
+            this.dockPanel1_Container.Name = "dockPanel1_Container";
+            this.dockPanel1_Container.Size = new System.Drawing.Size(225, 54);
+            this.dockPanel1_Container.TabIndex = 0;
+            // 
+            // labelControlLoading
+            // 
+            this.labelControlLoading.Location = new System.Drawing.Point(9, 12);
+            this.labelControlLoading.Name = "labelControlLoading";
+            this.labelControlLoading.Size = new System.Drawing.Size(175, 13);
+            this.labelControlLoading.TabIndex = 0;
+            this.labelControlLoading.Text = "The TCO tool is loading, please wait.";
+            // 
+            // dockManagerNavigationPanel
+            // 
+            this.dockManagerNavigationPanel.DockingOptions.CloseActiveTabOnly = false;
+            this.dockManagerNavigationPanel.DockingOptions.FloatOnDblClick = false;
+            this.dockManagerNavigationPanel.DockingOptions.HideImmediatelyOnAutoHide = true;
+            this.dockManagerNavigationPanel.DockingOptions.ShowMaximizeButton = false;
+            this.dockManagerNavigationPanel.Form = this;
+            this.dockManagerNavigationPanel.HiddenPanels.AddRange(new DevExpress.XtraBars.Docking.DockPanel[] {
+            this.dockPanelMessagingBar});
+            this.dockManagerNavigationPanel.RootPanels.AddRange(new DevExpress.XtraBars.Docking.DockPanel[] {
+            this.dockPanelLoading,
+            this.dockPanelNavigationPanel});
+            this.dockManagerNavigationPanel.TopZIndexControls.AddRange(new string[] {
+            "DevExpress.XtraBars.BarDockControl",
+            "System.Windows.Forms.StatusBar",
+            "DevExpress.XtraBars.Ribbon.RibbonStatusBar",
+            "DevExpress.XtraBars.Ribbon.RibbonControl"});
+            // 
+            // dockPanelMessagingBar
+            // 
+            this.dockPanelMessagingBar.Controls.Add(this.controlContainer1);
+            this.dockPanelMessagingBar.Dock = DevExpress.XtraBars.Docking.DockingStyle.Top;
+            this.dockPanelMessagingBar.ID = new System.Guid("01786d4a-9919-4363-9703-b902eb5bfed3");
+            this.dockPanelMessagingBar.Location = new System.Drawing.Point(0, 80);
+            this.dockPanelMessagingBar.Name = "dockPanelMessagingBar";
+            this.dockPanelMessagingBar.Options.AllowDockBottom = false;
+            this.dockPanelMessagingBar.Options.AllowDockFill = false;
+            this.dockPanelMessagingBar.Options.AllowDockLeft = false;
+            this.dockPanelMessagingBar.Options.AllowDockRight = false;
+            this.dockPanelMessagingBar.Options.AllowFloating = false;
+            this.dockPanelMessagingBar.Options.FloatOnDblClick = false;
+            this.dockPanelMessagingBar.Options.ShowAutoHideButton = false;
+            this.dockPanelMessagingBar.Options.ShowCloseButton = false;
+            this.dockPanelMessagingBar.Options.ShowMaximizeButton = false;
+            this.dockPanelMessagingBar.SavedDock = DevExpress.XtraBars.Docking.DockingStyle.Top;
+            this.dockPanelMessagingBar.SavedIndex = 0;
+            this.dockPanelMessagingBar.Size = new System.Drawing.Size(1173, 63);
+            this.dockPanelMessagingBar.Tag = "";
+            this.dockPanelMessagingBar.Text = "Message";
+            this.dockPanelMessagingBar.Visibility = DevExpress.XtraBars.Docking.DockVisibility.Hidden;
+            // 
+            // dockPanelLoading
+            // 
+            this.dockPanelLoading.Controls.Add(this.dockPanel1_Container);
+            this.dockPanelLoading.Dock = DevExpress.XtraBars.Docking.DockingStyle.Float;
+            this.dockPanelLoading.FloatLocation = new System.Drawing.Point(590, 436);
+            this.dockPanelLoading.FloatSize = new System.Drawing.Size(229, 80);
+            this.dockPanelLoading.ID = new System.Guid("01054a79-d2f1-4033-80e6-93fb0d5a0fc4");
+            this.dockPanelLoading.Location = new System.Drawing.Point(0, 0);
+            this.dockPanelLoading.Name = "dockPanelLoading";
+            this.dockPanelLoading.Options.AllowDockBottom = false;
+            this.dockPanelLoading.Options.AllowDockLeft = false;
+            this.dockPanelLoading.Options.AllowDockRight = false;
+            this.dockPanelLoading.Options.AllowDockTop = false;
+            this.dockPanelLoading.Options.FloatOnDblClick = false;
+            this.dockPanelLoading.Options.ShowAutoHideButton = false;
+            this.dockPanelLoading.Options.ShowCloseButton = false;
+            this.dockPanelLoading.Options.ShowMaximizeButton = false;
+            this.dockPanelLoading.SavedDock = DevExpress.XtraBars.Docking.DockingStyle.Right;
+            this.dockPanelLoading.SavedIndex = 0;
+            this.dockPanelLoading.Size = new System.Drawing.Size(229, 80);
+            this.dockPanelLoading.Text = "TCO Loading ...";
+            // 
+            // dockPanelNavigationPanel
+            // 
+            this.dockPanelNavigationPanel.Controls.Add(this.dockPanelScenarioComparison_Container);
+            this.dockPanelNavigationPanel.Dock = DevExpress.XtraBars.Docking.DockingStyle.Left;
+            this.dockPanelNavigationPanel.ID = new System.Guid("687d9264-6a0a-4e42-b105-f84e94610202");
+            this.dockPanelNavigationPanel.Location = new System.Drawing.Point(0, 146);
+            this.dockPanelNavigationPanel.Margin = new System.Windows.Forms.Padding(0);
+            this.dockPanelNavigationPanel.Name = "dockPanelNavigationPanel";
+            this.dockPanelNavigationPanel.Options.AllowDockBottom = false;
+            this.dockPanelNavigationPanel.Options.AllowDockFill = false;
+            this.dockPanelNavigationPanel.Options.AllowDockRight = false;
+            this.dockPanelNavigationPanel.Options.AllowDockTop = false;
+            this.dockPanelNavigationPanel.Options.AllowFloating = false;
+            this.dockPanelNavigationPanel.Options.FloatOnDblClick = false;
+            this.dockPanelNavigationPanel.Options.ShowCloseButton = false;
+            this.dockPanelNavigationPanel.Options.ShowMaximizeButton = false;
+            this.dockPanelNavigationPanel.Size = new System.Drawing.Size(220, 545);
+            this.dockPanelNavigationPanel.Text = "Navigation Panel";
+            // 
+            // defaultLookAndFeel1
+            // 
+            this.defaultLookAndFeel1.LookAndFeel.SkinName = "Office 2007 Blue";
+            // 
+            // dxErrorProvider1
+            // 
+            this.dxErrorProvider1.ContainerControl = this;
+            // 
+            // spellChecker1
+            // 
+            this.spellChecker1.CheckAsYouTypeOptions.CheckControlsInParentContainer = true;
+            this.spellChecker1.Culture = new System.Globalization.CultureInfo("en-US");
+            spellCheckerCustomDictionary1.AlphabetPath = "";
+            spellCheckerCustomDictionary1.CacheKey = null;
+            spellCheckerCustomDictionary1.Culture = new System.Globalization.CultureInfo("en-US");
+            spellCheckerCustomDictionary1.DictionaryPath = "";
+            spellCheckerCustomDictionary1.Encoding = ((System.Text.Encoding)(resources.GetObject("spellCheckerCustomDictionary1.Encoding")));
+            spellCheckerISpellDictionary1.AlphabetPath = "";
+            spellCheckerISpellDictionary1.CacheKey = null;
+            spellCheckerISpellDictionary1.Culture = new System.Globalization.CultureInfo("en-US");
+            spellCheckerISpellDictionary1.DictionaryPath = "";
+            spellCheckerISpellDictionary1.Encoding = ((System.Text.Encoding)(resources.GetObject("spellCheckerISpellDictionary1.Encoding")));
+            spellCheckerISpellDictionary1.GrammarPath = "";
+            this.spellChecker1.Dictionaries.Add(spellCheckerCustomDictionary1);
+            this.spellChecker1.Dictionaries.Add(spellCheckerISpellDictionary1);
+            this.spellChecker1.ParentContainer = null;
+            this.spellChecker1.SpellCheckMode = DevExpress.XtraSpellChecker.SpellCheckMode.AsYouType;
+            this.spellChecker1.BeforeCheckWord += new DevExpress.XtraSpellChecker.BeforeCheckWordEventHandler(this.spellChecker1_BeforeCheckWord);
+            // 
+            // barButtonItemUtilitesReport
+            // 
+            this.barButtonItemUtilitesReport.Caption = "Utilities";
+            this.barButtonItemUtilitesReport.Id = 33;
+            this.barButtonItemUtilitesReport.LargeGlyph = global::TCO.DesktopClientDevexpress.Properties.Resources.Utilites;
+            this.barButtonItemUtilitesReport.LargeWidth = 70;
+            this.barButtonItemUtilitesReport.Name = "barButtonItemUtilitesReport";
+            // 
+            // ribbonFrmMain
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(1173, 714);
+            this.Controls.Add(this.clientPanel);
+            this.Controls.Add(this.dockPanelNavigationPanel);
+            this.Controls.Add(this.ribbonStatusBar);
+            this.Controls.Add(this.ribbon);
+            this.KeyPreview = true;
+            this.Name = "ribbonFrmMain";
+            this.Ribbon = this.ribbon;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.StatusBar = this.ribbonStatusBar;
+            this.Text = "TCO";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.Load += new System.EventHandler(this.ribbonFrmMain_Load);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ribbonFrmMain_FormClosing);
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemComboBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.clientPanel)).EndInit();
+            this.clientPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.xtraTabControlDetailsArea)).EndInit();
+            this.dockPanelScenarioComparison_Container.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.navPanelxtraTabControl)).EndInit();
+            this.navPanelxtraTabControl.ResumeLayout(false);
+            this.searchXtraTabPage.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlNavigationPanel)).EndInit();
+            this.layoutControlNavigationPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.navigationPanelLayoutControlGroupRoot)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroupProjects)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItemProjects)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItemProjectLoading)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroupBuildings)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItemBuildings)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroupScenarios)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItemScenarios)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.splitterItem1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroupComponents)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItemComponents)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.splitterItem2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.splitterItem3)).EndInit();
+            this.dockPanel1_Container.ResumeLayout(false);
+            this.dockPanel1_Container.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dockManagerNavigationPanel)).EndInit();
+            this.dockPanelMessagingBar.ResumeLayout(false);
+            this.dockPanelLoading.ResumeLayout(false);
+            this.dockPanelNavigationPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dxErrorProvider1)).EndInit();
+            this.ResumeLayout(false);
+
+        }
+
+        #endregion
+
+        private DevExpress.XtraBars.Ribbon.RibbonControl ribbon;
+        private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPageHome;
+        private DevExpress.XtraBars.Ribbon.RibbonStatusBar ribbonStatusBar;
+        private DevExpress.XtraEditors.PanelControl clientPanel;
+        private DevExpress.XtraBars.Docking.DockManager dockManagerNavigationPanel;
+        public DevExpress.XtraTab.XtraTabControl xtraTabControlDetailsArea;
+        private DevExpress.XtraBars.Docking.DockPanel dockPanelNavigationPanel;
+        private DevExpress.XtraBars.Docking.ControlContainer dockPanelScenarioComparison_Container;
+        private DevExpress.XtraLayout.LayoutControl layoutControlNavigationPanel;
+        private DevExpress.XtraLayout.LayoutControlGroup navigationPanelLayoutControlGroupRoot;
+        private DevExpress.XtraTab.XtraTabControl navPanelxtraTabControl;
+        private DevExpress.XtraTab.XtraTabPage searchXtraTabPage;
+        private DevExpress.XtraTab.XtraTabPage exploreXtraTabPage;
+        private DevExpress.XtraTab.XtraTabPage favoriteXtraTabPage;
+        public System.Windows.Forms.ImageList InternetStatusImageList;
+        public DevExpress.XtraBars.BarStaticItem barStaticItemInternetStatus;
+        private DevExpress.XtraEditors.Repository.RepositoryItemComboBox repositoryItemComboBox1;
+        private DevExpress.XtraBars.Docking.ControlContainer controlContainer1;
+        public DevExpress.XtraBars.Docking.DockPanel dockPanelMessagingBar;
+        public DevExpress.LookAndFeel.DefaultLookAndFeel defaultLookAndFeel1;
+        private DevExpress.XtraEditors.DXErrorProvider.DXErrorProvider dxErrorProvider1;
+        private DevExpress.Utils.ToolTipController toolTipControllerMain;
+        private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroupGeneralActions;
+        private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroupLists;
+        private DevExpress.XtraBars.BarButtonItem barButtonItem1;
+        private DevExpress.XtraBars.BarButtonItem barButtonItem2;
+        private DevExpress.XtraBars.BarButtonItem barButtonItem3;
+        public DevExpress.XtraBars.BarButtonItem barButtonItemSave;
+        public DevExpress.XtraBars.BarButtonItem barButtonItemSaveClose;
+        public DevExpress.XtraBars.BarButtonItem barButtonItemCancel;
+        public DevExpress.XtraBars.BarButtonItem barButtonItemEdit;
+        public DevExpress.XtraBars.BarButtonItem barButtonItemProjects;
+        public DevExpress.XtraBars.BarButtonItem barButtonItemBuildings;
+        public DevExpress.XtraBars.BarButtonItem barButtonItemComponents;
+        private DevExpress.XtraBars.BarButtonItem barButtonItemAdmin;
+        private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroupAdminArea;
+        public DevExpress.XtraSpellChecker.SpellChecker spellChecker1;
+        private DevExpress.XtraBars.Docking.DockPanel dockPanelLoading;
+        private DevExpress.XtraBars.Docking.ControlContainer dockPanel1_Container;
+        private DevExpress.XtraEditors.LabelControl labelControlLoading;
+        private DevExpress.XtraBars.BarButtonItem barButtonItemAnnualCashFlow;
+        private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroupReports;
+        private DevExpress.XtraLayout.LayoutControlGroup layoutControlGroupProjects;
+        private DevExpress.XtraLayout.LayoutControlGroup layoutControlGroupBuildings;
+        private DevExpress.XtraLayout.LayoutControlGroup layoutControlGroupScenarios;
+        private DevExpress.XtraLayout.LayoutControlGroup layoutControlGroupComponents;
+        private DevExpress.XtraLayout.SplitterItem splitterItem1;
+        private DevExpress.XtraLayout.SplitterItem splitterItem2;
+        private DevExpress.XtraLayout.SplitterItem splitterItem3;
+        private TCO.DesktopClientDevexpress.NavigationGridControl ProjectsNav;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItemProjects;
+        private TCO.DesktopClientDevexpress.NavigationGridControl ComponentsNav;
+        private TCO.DesktopClientDevexpress.NavigationGridControl ScenariosNav;
+        private TCO.DesktopClientDevexpress.NavigationGridControl BuildingsNav;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItemBuildings;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItemScenarios;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItemComponents;
+        private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItemProjectLoading;
+        private DevExpress.XtraBars.BarButtonItem barButtonItemUtilitesReport;
+
+       
+    }
+}

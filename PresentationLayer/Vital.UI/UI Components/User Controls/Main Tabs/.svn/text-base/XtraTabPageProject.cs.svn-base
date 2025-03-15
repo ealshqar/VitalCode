@@ -1,0 +1,2956 @@
+//////////////////////////////////////////////////////////////////////////////
+//  
+//  <sourcefile name="XtraTabPageProject.cs" creationdate="8/10/08" owner="anasa" >
+//
+//      <project>McKinstry TCO Application</project>
+//  
+//      <description>The tab page of the project entity</description>
+//      
+//      <copyright year="2008" company="McKinstry">
+//          <notice>
+//              Copyright © 2008 McKinstry. All rights reserved
+//  
+//              Developed for McKinstry by
+//                  Equiom - MENA
+//                  www.equiom.com
+//          </notice>
+//  
+//  	<history date="8/10/08" modby="anasa">created</history>
+//  
+//////////////////////////////////////////////////////////////////////////////
+
+#region Library Calls
+
+//---------------------------------------------------------------------------------------------
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.IO;
+using System.Windows.Forms;
+using System.Xml;
+using DevExpress.Utils;
+using DevExpress.XtraEditors;
+using DevExpress.XtraEditors.DXErrorProvider;
+using DevExpress.XtraGrid.Columns;
+using DevExpress.XtraGrid.Views.Base;
+using DevExpress.XtraGrid.Views.Grid;
+using DevExpress.XtraGrid.Views.Grid.ViewInfo;
+using DevExpress.XtraLayout.Utils;
+using Equiom.Tco.BusinessLogicLayer;
+using Equiom.Tco.DataAccessLayer;
+using TCO.DesktopClientDevexpress.Properties;
+using Application=Equiom.Tco.Common.Application;
+using Component=Equiom.Tco.BusinessLogicLayer.Component;
+
+//---------------------------------------------------------------------------------------------
+
+#endregion
+
+namespace TCO.DesktopClientDevexpress
+{
+    public partial class XtraTabPageProject : XtraTabPageEntity
+    {
+        #region Constants
+
+        //---------------------------------------------------------------------------------------------
+        public const string BUILDINGS_ADD_ERROR = "You are not allowed to add buildings to the project before saving it";
+
+        public const string CLOSE_OPENED_COMPONENTS_ERROR =
+            "Not all selected buildings were deleted, please close opened buildings and their components to delete them.";
+
+        public const string COMPLETION_DATE_ERROR = "Project completion date can't be before the statring date";
+
+        public const string DUPLICATED_PROJECT_NAME_ERROR =
+            "The project name you entered is used by another project, you will not be able to save the project using this name";
+
+        public const string ENERGY_ERROR = "You can't select this status while the Energy Guarantee Risk is zero.";
+
+        public const string NOT_ALL_RATES_ARE_UNASSIGNED_ERROR =
+            "Not all rates where unassigned since some if them were used in component utility info records in one of the buildings.";
+
+        public const string NOT_ALL_RATES_REMOVED_ERROR =
+            "Not all selected utility rates were removed because some of them are assigned to buildings, please unassign them first, save and then you can delete them.";
+
+        public const string PROJECT_TAB_IS_LOCKED_ERROR =
+            "The project tab is locked because another related tab is currently being edited.";
+
+        public const string START_DATE_ERROR = "Project start date can't be after the completion date";
+
+        public const string STATUS_SELECT_ERROR =
+            "You can't select this status unless a scenario with the type Final Proposed exists";
+
+        public const string THE_CURRENT_RATE_CANT_BE_UNASSIGNED_ERROR =
+            "The current rate can't be unassigned from the specified building since some components in that building are using this rate in their component utility infos.";
+
+        public const string UN_ASSIGN_COMPONENTS_ERROR =
+            "Not all selected buildings were deleted, some buildings contains components that are assigned to scenarios and so they can't be deleted, please unassign those components first.";
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Fields
+
+        //---------------------------------------------------------------------------------------------
+        private DataTable buildingUtilityRatesTable;
+        private bool isDeletingBuildings;
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Properties
+
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Hold the data about the assigned utility rates to the buildings of the project
+        /// </summary>
+        public DataTable BuildingUtilityRatesTable
+        {
+            get { return buildingUtilityRatesTable; }
+            set { buildingUtilityRatesTable = value; }
+        }
+
+        /// <summary>
+        /// A property that gives a direct casting of the tab object into a project object
+        /// </summary>
+        public Project TabProject
+        {
+            get { return TabObject as Project; }
+        }
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Constructors
+
+        //---------------------------------------------------------------------------------------------
+        public XtraTabPageProject()
+        {
+            isDeletingBuildings = false;
+            InitializeComponent();
+        }
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Methods
+
+        #region Overriding Methods
+
+        #region Initialization & Binding
+
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Initialize the project object of the tab if it is new tab and initialize some properties
+        /// </summary>
+        /// <param name="isNew">Determine if the tab is new or opened tab</param>
+        /// <param name="parentObject">The parent object of the current entity</param>
+        public override void PerformSpecificIntializationSteps(bool isNew, EntityBusinessObject parentObject)
+        {
+            TabTypeImage = Resources.Project;
+            TabObject = TabObject ?? new Project();
+            if (isNew)
+            {
+                TabProject.ProjectedDate = DateTime.Now;
+                TabProject.ActualDate = DateTime.Now;
+                textEditProjectName.Focus();
+            }
+        }
+
+        /// <summary>
+        /// Bind the controls of the project tab
+        /// </summary>
+        public override void SetBinding()
+        {
+            FillLookUps();
+
+            repositoryItemSpinEditDollarPerUnit.MaxValue = decimal.MaxValue;
+            repositoryItemSpinEditDollarPerUnit.MinValue = 0;
+
+            spinEditEnergyGuaranteerisk.Properties.MaxValue = int.MaxValue;
+            spinEditEnergyGuaranteerisk.Properties.MinValue = 0;
+
+            spinEditEnergyGuaranteerisk.EditValueChanging += UIBLLInteraction.Instance.spinEdit_EditValueChanging;
+            repositoryItemSpinEditDollarPerUnit.EditValueChanging +=
+                UIBLLInteraction.Instance.spinEdit_EditValueChanging;
+
+            BindControl(ParentTab, TEXT_PROPERTYNAME, TabObject, Project.NAME_PROPERTY_NAME);
+            BindControl(textEditProjectName, EDITVALUE_PROPERTYNAME, TabObject, Project.NAME_PROPERTY_NAME);
+            BindControl(textEditProjectNumber, EDITVALUE_PROPERTYNAME, TabObject, Project.NUMBER_PROPERTY_NAME);
+            BindControl(textEditDateCreated, EDITVALUE_PROPERTYNAME, TabObject, EntityBusinessObject.CREATED_DATE_TIME);
+            BindControl(memoEditProjectDescription, EDITVALUE_PROPERTYNAME, TabObject, Project.DESCRIPTION_PROPERTY_NAME);
+            BindControl(memoEditProjectGoals, EDITVALUE_PROPERTYNAME, TabObject, Project.GOALS_PROPERTY_NAME);
+            BindControl(memoEditFinancialCriteria, EDITVALUE_PROPERTYNAME, TabObject,
+                        Project.FINANCIAL_CRITERIA_PROPERTY_NAME);
+            BindControl(dateEditStartDate, EDITVALUE_PROPERTYNAME, TabObject, Project.START_DATE_PROPERTY_NAME);
+            BindControl(dateEditCompletionDate, EDITVALUE_PROPERTYNAME, TabObject, Project.COMPLETION_DATE_PROPERTY_NAME);
+            BindControl(gridLookUpEditMilestone, EDITVALUE_PROPERTYNAME, TabObject, Project.MILESTONE_ID_PROPERTY_NAME);
+            BindControl(gridLookUpEditStatus, EDITVALUE_PROPERTYNAME, TabObject, Project.STATUS_ID_PROPERTY_NAME);
+            BindControl(gridLookUpEditPrimaryContact, EDITVALUE_PROPERTYNAME, TabObject,
+                        Project.PRIMARY_CONTACT_ID_PROPERTY_NAME);
+            BindControl(gridLookUpEditTechnicalContact, EDITVALUE_PROPERTYNAME, TabObject,
+                        Project.TECHNICAL_CONTACT_ID_PROPERTY_NAME);
+
+            BindControl(gridControlContacts, DATASOURCE_PROPERTYNAME, TabObject, Project.CONTACTS_PROPERTY_NAME);
+            BindControl(gridControlBuildingsAdded, DATASOURCE_PROPERTYNAME, TabObject, Project.BUILDINGS_PROPERTY_NAME);
+            BindControl(gridControlComponents, DATASOURCE_PROPERTYNAME, TabObject, Project.COMPONENTS_PROPERTY_NAME);
+            BindControl(gridControlEnterUtilityRates, DATASOURCE_PROPERTYNAME, TabObject,
+                        Project.UTILITY_RATES_PROPERTY_NAME);
+            BindControl(gridLookUpEditWFC, EDITVALUE_PROPERTYNAME, TabObject, Project.WORK_FOR_CUSTOMER_ID_PROPERTY_NAME);
+            BindControl(gridLookUpEditBTC, EDITVALUE_PROPERTYNAME, TabObject, Project.BILL_TO_CUSTOMER_ID_PROPERTY_NAME);
+            BindControl(gridLookUpEditVerticalMarket, EDITVALUE_PROPERTYNAME, TabObject,
+                        Project.VERTICAL_MARKET_ID_PROPERTY_NAME);
+            BindControl(gridControlCGC, DATASOURCE_PROPERTYNAME, TabObject, Project.CGC_PROJECTS_PROPERTY_NAME);
+            BindControl(spinEditEnergyGuaranteerisk, EDITVALUE_PROPERTYNAME, TabObject,
+                        Project.ENERGY_GUARANTEE_RISK_PROPERTY_NAME);
+            BindControl(textEditComponentCaption, EDITVALUE_PROPERTYNAME, TabObject,
+                        Project.COMPONENT_CAPTION_PROPERTY_NAME);
+
+            Project projectObject = TabProject;
+            scenaiorsModule1.SetBinding(ref projectObject);
+            scenaiorsModule1.ParentProjectTab = this;
+            financialInformationModule1.SetBinding(ref projectObject);
+            scenarioFirstCost1.SetBinding(ref projectObject);
+
+            BindBuildingsUtilityRates();
+
+            AddChildernChangesListeners();
+
+            //Don't update the fields since the ID's for BTC and WFC are alreay null
+            if (TabObject.State != BusinessObjectState.New)
+            {
+                UpdateBTCFields();
+                UpdateWFCFields();
+            }
+        }
+
+        /// <summary>
+        /// Sets the edit mode of the project tab
+        /// </summary>
+        /// <param name="isReadOnly">if true then the tab will be in ready only mode</param>
+        /// <param name="isChangedByUser"></param>
+        public override void SetEditMode(bool isReadOnly, bool isChangedByUser)
+        {
+            bool areOtherControlsReadOnly = isReadOnly;
+            bool isStatusReadOnly = isReadOnly;
+            if (isChangedByUser)
+            {
+                if (TabProject.StatusId == 4 || TabProject.StatusId == 8)
+                {
+                    //Disable all except status
+                    areOtherControlsReadOnly = true;
+                    isStatusReadOnly = false;
+                }
+            }
+            gridLookUpEditStatus.Properties.ReadOnly = isStatusReadOnly;
+            gridLookUpEditMilestone.Properties.ReadOnly = areOtherControlsReadOnly;
+            textEditProjectName.Properties.ReadOnly = areOtherControlsReadOnly;
+            memoEditProjectGoals.Properties.ReadOnly = areOtherControlsReadOnly;
+            memoEditFinancialCriteria.Properties.ReadOnly = areOtherControlsReadOnly;
+            memoEditProjectDescription.Properties.ReadOnly = areOtherControlsReadOnly;
+            spinEditEnergyGuaranteerisk.Properties.ReadOnly = areOtherControlsReadOnly;
+            textEditComponentCaption.Properties.ReadOnly = areOtherControlsReadOnly;
+
+            gridLookUpEditTechnicalContact.Properties.ReadOnly = areOtherControlsReadOnly;
+            gridLookUpEditBTC.Properties.ReadOnly = areOtherControlsReadOnly;
+            gridLookUpEditWFC.Properties.ReadOnly = areOtherControlsReadOnly;
+            gridLookUpEditPrimaryContact.Properties.ReadOnly = areOtherControlsReadOnly;
+            gridLookUpEditVerticalMarket.Properties.ReadOnly = areOtherControlsReadOnly;
+
+            dateEditCompletionDate.Properties.ReadOnly = areOtherControlsReadOnly;
+            dateEditStartDate.Properties.ReadOnly = areOtherControlsReadOnly;
+
+            gridControlBuildingsAdded.EmbeddedNavigator.Buttons.Append.Visible = !areOtherControlsReadOnly;
+            gridControlBuildingsAdded.EmbeddedNavigator.Buttons.Remove.Visible = !areOtherControlsReadOnly;
+
+            gridViewCGC.OptionsBehavior.Editable = !areOtherControlsReadOnly;
+            gridControlCGC.EmbeddedNavigator.Buttons.Append.Visible = !areOtherControlsReadOnly;
+            gridControlCGC.EmbeddedNavigator.Buttons.Remove.Visible = !areOtherControlsReadOnly;
+            gridControlCGC.EmbeddedNavigator.Buttons.Edit.Visible = !areOtherControlsReadOnly;
+            gridControlCGC.EmbeddedNavigator.Buttons.CancelEdit.Visible = !areOtherControlsReadOnly;
+            gridControlCGC.EmbeddedNavigator.Buttons.EndEdit.Visible = !areOtherControlsReadOnly;
+
+            gridViewContacts.OptionsBehavior.Editable = !areOtherControlsReadOnly;
+            gridControlContacts.EmbeddedNavigator.Buttons.Append.Visible = !areOtherControlsReadOnly;
+            gridControlContacts.EmbeddedNavigator.Buttons.Remove.Visible = !areOtherControlsReadOnly;
+            gridControlContacts.EmbeddedNavigator.Buttons.Edit.Visible = !areOtherControlsReadOnly;
+            gridControlContacts.EmbeddedNavigator.Buttons.CancelEdit.Visible = !areOtherControlsReadOnly;
+            gridControlContacts.EmbeddedNavigator.Buttons.EndEdit.Visible = !areOtherControlsReadOnly;
+
+            gridControlEnterUtilityRates.EmbeddedNavigator.Buttons.Append.Visible = !areOtherControlsReadOnly;
+            gridControlEnterUtilityRates.EmbeddedNavigator.Buttons.Remove.Visible = !areOtherControlsReadOnly;
+            gridControlEnterUtilityRates.EmbeddedNavigator.Buttons.Edit.Visible = !areOtherControlsReadOnly;
+            gridControlEnterUtilityRates.EmbeddedNavigator.Buttons.CancelEdit.Visible = !areOtherControlsReadOnly;
+            gridControlEnterUtilityRates.EmbeddedNavigator.Buttons.EndEdit.Visible = !areOtherControlsReadOnly;
+
+            gridViewContacts.OptionsBehavior.Editable = !areOtherControlsReadOnly;
+            gridControlContacts.EmbeddedNavigator.Buttons.Append.Visible = !areOtherControlsReadOnly;
+            gridControlContacts.EmbeddedNavigator.Buttons.Remove.Visible = !areOtherControlsReadOnly;
+            gridControlEnterUtilityRates.EmbeddedNavigator.Buttons.Edit.Visible = !areOtherControlsReadOnly;
+            gridControlEnterUtilityRates.EmbeddedNavigator.Buttons.CancelEdit.Visible = !areOtherControlsReadOnly;
+            gridControlEnterUtilityRates.EmbeddedNavigator.Buttons.EndEdit.Visible = !areOtherControlsReadOnly;
+
+            scenaiorsModule1.SetEditMode(areOtherControlsReadOnly);
+            financialInformationModule1.SetEditMode(areOtherControlsReadOnly);
+            scenarioFirstCost1.SetEditMode(areOtherControlsReadOnly, isChangedByUser);
+
+            gridViewBuildingUtilityRates.OptionsBehavior.Editable = !areOtherControlsReadOnly;
+            gridViewCGC.OptionsBehavior.Editable = !areOtherControlsReadOnly;
+            gridViewEnterUtilityRates.OptionsBehavior.Editable = !areOtherControlsReadOnly;
+
+            simpleButtonImportFromBSG.Enabled = !areOtherControlsReadOnly;
+        }
+
+        /// <summary>
+        /// Fill the lookup controls with the collections of objects from the cache
+        /// </summary>
+        private void FillLookUps()
+        {
+            try
+            {
+                gridLookUpEditStatus.Properties.DataSource = BusinessLayerCache.Instance.GetAllProjectStatus();
+                gridLookUpEditMilestone.Properties.DataSource = BusinessLayerCache.Instance.GetAllMilestones();
+                repositoryItemGridLookUpEditProjectRoleId.DataSource = BusinessLayerCache.Instance.GetAllProjectRoles();
+                repositoryItemGridLookUpEditUserId.DataSource = BusinessLayerCache.Instance.GetAllUsers();
+                repositoryItemGridLookUpEditUtilityTypeId.DataSource = BusinessLayerCache.Instance.GetAllUtilityTypes();
+
+                gridLookUpEditPrimaryContact.Properties.DataSource = BusinessLayerCache.Instance.GetAllUsers();
+                gridLookUpEditTechnicalContact.Properties.DataSource = BusinessLayerCache.Instance.GetAllUsers();
+                repositoryItemGridLookUpEditUnit.DataSource = BusinessLayerCache.Instance.GetAllUnits();
+                repositoryItemGridLookUpEditUtility.DataSource = BusinessLayerCache.Instance.GetAllUtilityNames();
+                gridLookUpEditBTC.Properties.DataSource = BusinessLayerCache.Instance.GetAllCustomers();
+                gridLookUpEditWFC.Properties.DataSource = BusinessLayerCache.Instance.GetAllCustomers();
+                repositoryItemLookUpEditCompanyBTC.DataSource = BusinessLayerCache.Instance.GetAllCompanies();
+                repositoryItemLookUpEditCompanyWFC.DataSource = BusinessLayerCache.Instance.GetAllCompanies();
+                gridLookUpEditVerticalMarket.Properties.DataSource = BusinessLayerCache.Instance.GetAllVerticalMarket();
+
+                lookUpEdittBTCCompany.Properties.DataSource = BusinessLayerCache.Instance.GetAllCompanies();
+                lookUpEditWFCCompany.Properties.DataSource = BusinessLayerCache.Instance.GetAllCompanies();
+            }
+            catch (DataAccessException dataAccessException)
+            {
+                UIBLLInteraction.Instance.ShowException(dataAccessException);
+                Application.Logger.LogException(dataAccessException);
+            }
+        }
+
+        /// <summary>
+        /// Add handlers to child collections to allow the parent project to know that a child change and so to
+        /// update the tab status and enable the apply button for instance
+        /// </summary>
+        private void AddChildernChangesListeners()
+        {
+            try
+            {
+                TabProject.CgcProjects.RaiseListChangedEvents = true;
+                TabProject.CgcProjects.ListChanged += CgcProjects_ListChanged;
+
+                TabProject.Contacts.RaiseListChangedEvents = true;
+                TabProject.Contacts.ListChanged += Contacts_ListChanged;
+
+                TabProject.Buildings.RaiseListChangedEvents = true;
+                TabProject.Buildings.ListChanged += Buildings_ListChanged;
+
+                TabProject.Components.RaiseListChangedEvents = true;
+                TabProject.Components.ListChanged += Components_ListChanged;
+
+                TabProject.UtilityRates.RaiseListChangedEvents = true;
+                TabProject.UtilityRates.ListChanged += UtilityRates_ListChanged;
+
+                BusinessLayerCache.Instance.GetAllCustomers().RaiseListChangedEvents = true;
+                BusinessLayerCache.Instance.GetAllCustomers().ListChanged += Customers_ListChanged;
+            }
+            catch (NullReferenceException nullReferenceException)
+            {
+                //UIBLLInteraction.Instance.ShowException(nullReferenceException);
+                Application.Logger.LogException(nullReferenceException);
+            }
+        }
+
+        public override void ClearHandlers()
+        {
+            financialInformationModule1.ClearHandlers();
+            scenaiorsModule1.ClearHandlers();
+            scenarioFirstCost1.ClearHandlers();
+
+            try
+            {
+                TabProject.CgcProjects.ListChanged -= CgcProjects_ListChanged;
+                TabProject.Contacts.ListChanged -= Contacts_ListChanged;
+                TabProject.Buildings.ListChanged -= Buildings_ListChanged;
+                TabProject.Components.ListChanged -= Components_ListChanged;
+                TabProject.UtilityRates.ListChanged -= UtilityRates_ListChanged;
+            }
+            catch (NullReferenceException)
+            {
+            }
+
+            try
+            {
+                BusinessLayerCache.Instance.GetAllCustomers().ListChanged -= Customers_ListChanged;
+            }
+            catch (NullReferenceException)
+            {
+            }
+            catch (DataAccessException)
+            {
+            }
+        }
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Parent related actions
+
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Add the ID of the current project object into the dictionary if it was enabled for editing
+        /// </summary>
+        public override void AddParentIDToEditDictionary()
+        {
+            try
+            {
+                UIBLLInteraction.Instance.LockProject(TabProject.Id.Value, TabObject);
+            }
+            catch (NullReferenceException nullReferenceException)
+            {
+                //UIBLLInteraction.Instance.ShowException(nullReferenceException);
+                Application.Logger.LogException(nullReferenceException);
+            }
+        }
+
+        /// <summary>
+        /// Add the current project object into the collection of projects if it was new project
+        /// </summary>
+        public override void AddBusinessObjectToCollection()
+        {
+            try
+            {
+                //UIBLLInteraction.Instance.ProjectsGroup.RespondToEvent = true;
+                UIBLLInteraction.Instance.ProjectsCollection.AddSavedObject(TabProject);
+            }
+            catch (ArgumentException argumentException)
+            {
+                //UIBLLInteraction.Instance.ShowException(argumentException);
+                Application.Logger.LogException(argumentException);
+            }
+            catch (NullReferenceException nullReferenceException)
+            {
+                //UIBLLInteraction.Instance.ShowException(nullReferenceException);
+                Application.Logger.LogException(nullReferenceException);
+            }
+        }
+
+        /// <summary>
+        /// Get the parent ID for the current project, in the case of project object, the parent ID is the
+        /// same ID as the one for the project itself
+        /// </summary>
+        /// <returns></returns>
+        public override int GetParentProjectID()
+        {
+            int Id = 0;
+            try
+            {
+                if (TabObject.State == BusinessObjectState.New)
+                {
+                    return Id;
+                }
+                Id = TabProject.Id.Value;
+            }
+            catch (NullReferenceException nullReferenceException)
+            {
+                //UIBLLInteraction.Instance.ShowException(nullReferenceException);
+                Application.Logger.LogException(nullReferenceException);
+            }
+            catch (InvalidOperationException invalidOperationException)
+            {
+                Application.Logger.LogException(invalidOperationException);
+            }
+            return Id;
+        }
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Save related actions
+
+        //---------------------------------------------------------------------------------------------
+        public override bool ShouldPropertyNotifyTab(string propertyName)
+        {
+            if (propertyName == Project.BUILDINGS_PROPERTY_NAME)
+            {
+                if (isDeletingBuildings)
+                {
+                    return true;
+                }
+                return false;
+            }
+            switch (propertyName)
+            {
+                case Project.COMPONENTS_PROPERTY_NAME:
+                    return false;
+                default:
+                    return true;
+            }
+        }
+
+        /// <summary>
+        /// Posts the values in the controls that are not yet comitted to the datasource because the user
+        /// clicked save or cancel without leaving the editor to another editor first.
+        /// </summary>
+        public override void PostValues()
+        {
+            GridViewPostValues(gridViewCGC);
+            GridViewPostValues(gridViewContacts);
+            GridViewPostValues(gridViewEnterUtilityRates);
+            GridViewPostValues(gridViewBuildingUtilityRates);
+            scenaiorsModule1.PostValues();
+            financialInformationModule1.PostValues();
+
+            textEditProjectName.DoValidate();
+            memoEditFinancialCriteria.DoValidate();
+            memoEditProjectDescription.DoValidate();
+            memoEditProjectGoals.DoValidate();
+
+            gridLookUpEditBTC.DoValidate();
+            gridLookUpEditMilestone.DoValidate();
+            gridLookUpEditPrimaryContact.DoValidate();
+            gridLookUpEditStatus.DoValidate();
+            gridLookUpEditTechnicalContact.DoValidate();
+            gridLookUpEditVerticalMarket.DoValidate();
+            gridLookUpEditWFC.DoValidate();
+            dateEditCompletionDate.DoValidate();
+            dateEditStartDate.DoValidate();
+            spinEditEnergyGuaranteerisk.DoValidate();
+            textEditComponentCaption.DoValidate();
+        }
+
+        /// <summary>
+        /// Apply project's specific actions after saving a project
+        /// </summary>
+        public override void AfterSaveActions()
+        {
+            if (CurrentAction == CurrentTabAction.IsSaving)
+            {
+                //The actions to be performed are refreshing the building utility rates table and the project list view
+                BindBuildingsUtilityRates();
+                //UIBLLInteraction.Instance.ProjectsListTab.BindProjects();
+                UIBLLInteraction.Instance.RefreshProjectsView();
+                scenarioFirstCost1.PerformAfterSaveActions();
+            }
+        }
+
+        /// <summary>
+        /// Apply project's specific actions that should be done before doing the save
+        /// </summary>
+        public override void BeforeSaveActions()
+        {
+            if (CurrentAction == CurrentTabAction.IsSaving)
+            {
+                //Convert the changes in the building utility rates table into changes in the collection
+                //of assigned utility rates to each building in the project before saving the collections
+                ApplyBuildingUtilityRatesChanges();
+            }
+        }
+
+        /// <summary>
+        /// Cancel the changes in the current object and restore the object to its original state
+        /// </summary>
+        public override void RestoreBusinessObjectValue()
+        {
+            //Get the original object from DB and send it with the current object to a method that will do the 
+            //the replacement and other necessary actions
+
+            UIBLLInteraction.Instance.AllowComponentsFilteration = false;
+            TabProject.RevertChanges();
+            UIBLLInteraction.Instance.AllowComponentsFilteration = true;
+            UIBLLInteraction.Instance.FilterComponentsBySelection();
+            //Project dbProject;
+            //Project uiProject;
+            //try
+            //{
+            //    dbProject = Project.GetById(TabObject.Id.Value);
+            //    if (TabObject != null)
+            //    {
+            //        if (TabObject.Id != null)
+            //        {
+            //            uiProject = UIBLLInteraction.Instance.ProjectsGroup.GetObjectByID(TabObject.Id.Value) as Project;
+            //            UIBLLInteraction.Instance.ProjectsGroup.RestoreObjectAfterCancel(dbProject, uiProject);
+            //        }
+            //    }
+            //}
+            //catch (DataAccessException dataAccessException)
+            //{
+            //    UIBLLInteraction.Instance.ShowException(dataAccessException);
+            //}
+        }
+
+        public override void AfterCancelActions()
+        {
+            if (CurrentAction == CurrentTabAction.IsReverting)
+            {
+                BindBuildingsUtilityRates();
+                scenarioFirstCost1.PerformAfterCancelActions();
+            }
+        }
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Validation
+
+        //---------------------------------------------------------------------------------------------
+        public override void ShowHideErrorIcons()
+        {
+            bool areGoalsInvalid = IsPropertyInvalid(Project.GOALS_PROPERTY_NAME);
+            bool isFinancialCriteriaInvalid = IsPropertyInvalid(Project.FINANCIAL_CRITERIA_FRIENDLY_PROPERTY_NAME);
+            bool areScenariosInvalid = IsPropertyInvalid(Project.SCENARIOS_PROPERTY_NAME);
+            bool areUtilityRatesInvalid = IsPropertyInvalid(Project.UTILITY_RATES_FRIENDLY_PROPERTY_NAME);
+            bool areCustomersInvalid = IsPropertyInvalid(Project.WORK_FOR_CUSTOMER_FRIENDLY_PROPERTY_NAME);
+            bool areContactsInvalid = IsPropertyInvalid(Project.CONTACTS_PROPERTY_NAME);
+            bool areCGCInvalid = IsPropertyInvalid(Project.CGC_PROJECTS_FRIENDLY_PROPERTY_NAME);
+            bool isScenarioSFCInvalid = IsPropertyInvalid("First cost");
+
+            bool areEscalationRatesInvalid = IsPropertyInvalid(Project.UTILITY_ESCALATION_RATES_FRIENDLY_PROPERTY_NAME);
+            bool areExcludedReportItemsInvalid = IsPropertyInvalid(Project.EXCLUDED_REPORT_ITEMS_FRIENDLY_PROPERTY_NAME);
+            bool areLoansInvalid = IsPropertyInvalid(Project.LOANS_PROPERTY_NAME);
+            bool areFinancialFieldsInvalid =
+                IsPropertyInvalid(Project.INFLATION_RATE_FRIENDLY_PROPERTY_NAME) ||
+                IsPropertyInvalid(Project.DISCOUNT_RATE_FRIENDLY_PROPERTY_NAME) ||
+                IsPropertyInvalid(Project.NPV_FRIENDLY_PROPERTY_NAME) ||
+                IsPropertyInvalid(Project.CAPEX_MARKUP_FRIENDLY_PROPERTY_NAME) ||
+                IsPropertyInvalid(Project.CAPEX_SALES_TAX_FRIENDLY_PROPERTY_NAME);
+
+
+            string financialErrors = string.Empty;
+
+            if (areEscalationRatesInvalid)
+            {
+                financialErrors += GetErrorText(Project.UTILITY_ESCALATION_RATES_FRIENDLY_PROPERTY_NAME) + ".\n";
+            }
+
+            if (areExcludedReportItemsInvalid)
+            {
+                financialErrors += GetErrorText(Project.EXCLUDED_REPORT_ITEMS_FRIENDLY_PROPERTY_NAME) + ".\n";
+            }
+
+            if (areLoansInvalid)
+            {
+                financialErrors += GetErrorText(Project.LOANS_PROPERTY_NAME) + ".\n";
+            }
+
+            if (areFinancialFieldsInvalid)
+            {
+                string inflationError = GetErrorText(Project.INFLATION_RATE_FRIENDLY_PROPERTY_NAME);
+                string discountError = GetErrorText(Project.DISCOUNT_RATE_FRIENDLY_PROPERTY_NAME);
+                string npvError = GetErrorText(Project.NPV_FRIENDLY_PROPERTY_NAME);
+                string markupError = GetErrorText(Project.CAPEX_MARKUP_FRIENDLY_PROPERTY_NAME);
+                string salesError = GetErrorText(Project.CAPEX_SALES_TAX_FRIENDLY_PROPERTY_NAME);
+
+                financialErrors += (inflationError == null) ? string.Empty : inflationError + ".\n";
+                financialErrors += (discountError == null) ? string.Empty : discountError + ".\n";
+                financialErrors += (npvError == null) ? string.Empty : npvError + ".\n";
+                financialErrors += (markupError == null) ? string.Empty : markupError + ".\n";
+                financialErrors += (salesError == null) ? string.Empty : salesError + ".";
+            }
+            bool isFinancialInfoModuleInvalid = areEscalationRatesInvalid | areExcludedReportItemsInvalid |
+                                                areLoansInvalid | areFinancialFieldsInvalid;
+            xtraTabPageFinancialInformation.Image = (isFinancialInfoModuleInvalid) ? Resources.Error : null;
+            xtraTabPageFinancialInformation.Tooltip = (isFinancialInfoModuleInvalid) ? financialErrors : string.Empty;
+
+            xtraTabPageProjectGoals.Image = (areGoalsInvalid) ? Resources.Error : null;
+            xtraTabPageProjectGoals.Tooltip = (areGoalsInvalid)
+                                                  ? GetErrorText(Project.GOALS_PROPERTY_NAME)
+                                                  : string.Empty;
+
+            xtraTabPageFinancialCriteria.Image = (isFinancialCriteriaInvalid) ? Resources.Error : null;
+            xtraTabPageFinancialCriteria.Tooltip = (isFinancialCriteriaInvalid)
+                                                       ? GetErrorText(Project.FINANCIAL_CRITERIA_FRIENDLY_PROPERTY_NAME)
+                                                       : string.Empty;
+
+            xtraTabPageScenarios.Image = (areScenariosInvalid) ? Resources.Error : null;
+            xtraTabPageScenarios.Tooltip = (areScenariosInvalid)
+                                               ? GetErrorText(Project.SCENARIOS_PROPERTY_NAME)
+                                               : string.Empty;
+
+            xtraTabPageScenarioFirstCost.Image = (isScenarioSFCInvalid) ? Resources.Error : null;
+            xtraTabPageScenarioFirstCost.Tooltip = (isScenarioSFCInvalid) ? GetErrorText("First cost") : string.Empty;
+
+            xtraTabPageEnterUtilityRates.Image = (areUtilityRatesInvalid) ? Resources.Error : null;
+            xtraTabPageEnterUtilityRates.Tooltip = (areUtilityRatesInvalid)
+                                                       ? GetErrorText(Project.UTILITY_RATES_FRIENDLY_PROPERTY_NAME)
+                                                       : string.Empty;
+
+            xtraTabPageCustomers.Image = (areCustomersInvalid) ? Resources.Error : null;
+            xtraTabPageCustomers.Tooltip = (areCustomersInvalid) ? "A work for customer must be selected" : string.Empty;
+
+            if (areGoalsInvalid ||
+                isFinancialCriteriaInvalid ||
+                areScenariosInvalid ||
+                areUtilityRatesInvalid ||
+                areCustomersInvalid ||
+                isFinancialInfoModuleInvalid ||
+                isScenarioSFCInvalid)
+            {
+                xtraTabPageDetails.Image = Resources.Error;
+                xtraTabPageDetails.Tooltip = "Some controls are invalid";
+            }
+            else
+            {
+                xtraTabPageDetails.Image = null;
+                xtraTabPageDetails.Tooltip = string.Empty;
+            }
+
+            layoutControlGroupContacts.CaptionImage = (areContactsInvalid) ? Resources.Error : null;
+            layoutControlGroupContacts.OptionsToolTip.ToolTip = (areContactsInvalid)
+                                                                    ? GetErrorText(Project.CONTACTS_PROPERTY_NAME)
+                                                                    : string.Empty;
+
+            layoutControlGroupCGC.CaptionImage = (areCGCInvalid) ? Resources.Error : null;
+            layoutControlGroupCGC.OptionsToolTip.ToolTip = (areCGCInvalid)
+                                                               ? GetErrorText(
+                                                                     Project.CGC_PROJECTS_FRIENDLY_PROPERTY_NAME)
+                                                               : string.Empty;
+
+            bool isNameInvalid = IsPropertyInvalid(Project.NAME_PROPERTY_NAME);
+            bool isStatusInvalid = IsPropertyInvalid(Project.STATUS_ID_PROPERTY_NAME);
+            bool isMilestoneInvalid = IsPropertyInvalid(Project.MILESTONE_FRIENDLY_PROPERTY_NAME);
+            bool isStartDateInvalid = IsPropertyInvalid(Project.START_DATE_FRIENDLY_PROPERTY_NAME);
+            bool isCompletionDateInvalid = IsPropertyInvalid(Project.COMPLETION_DATE_FRIENDLY_PROPERTY_NAME);
+            bool isPrimaryContactInvalid = IsPropertyInvalid(Project.PRIMARY_CONTACT_FRIENDLY_PROPERTY_NAME);
+            bool isVerticalMarketInvalid = IsPropertyInvalid(Project.VERTICAL_MARKET_FRIENDLY_PROPERTY_NAME);
+            bool areCGCProjectsInvalid = IsPropertyInvalid(Project.CGC_PROJECTS_FRIENDLY_PROPERTY_NAME);
+
+            if (isNameInvalid ||
+                isStatusInvalid ||
+                isMilestoneInvalid ||
+                isStartDateInvalid ||
+                isCompletionDateInvalid ||
+                isPrimaryContactInvalid ||
+                isVerticalMarketInvalid ||
+                areCGCProjectsInvalid ||
+                areContactsInvalid)
+            {
+                xtraTabPageGeneralInformation.Image = Resources.Error;
+                xtraTabPageGeneralInformation.Tooltip = "Some controls are invalid";
+            }
+            else
+            {
+                xtraTabPageGeneralInformation.Image = null;
+                xtraTabPageGeneralInformation.Tooltip = string.Empty;
+            }
+        }
+
+        public override void PerformCustomValidation()
+        {
+            ValidateProjectNameDuplicates();
+        }
+
+        public override void PerformPostCustomValidation()
+        {
+            ValidateSelectedScenarioFirstCost();
+        }
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region UI
+
+        //---------------------------------------------------------------------------------------------
+        public override void PerfromAfterSelectionAction()
+        {
+            scenarioFirstCost1.RefreshFirstCostFields();
+        }
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        //---------------------------------------------------------------------------------------------
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Binding Methods
+
+        #region Buildings Utility Rates
+
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Bind the collection of buildings assigned utility rates
+        /// </summary>
+        private void BindBuildingsUtilityRates()
+        {
+            //Create the first two necessary columns in the table which is Building name & ID
+            InitializeBuildingUtilityRatesTable();
+
+            //Store the number of the columns in the grid, we will need it later
+            int columnCounter = 0;
+            //Clear anyrows in the gridview, this will be needed when rebinding and refresh
+            gridViewBuildingUtilityRates.Columns.Clear();
+
+            //For each utility rate in the project, create a column in the table and the grid view
+            try
+            {
+                foreach (UtilityRate utilityRate in TabProject.UtilityRates)
+                {
+                    columnCounter = CreateAssignUtilityRateColumn(columnCounter, utilityRate);
+                }
+            }
+            catch (NullReferenceException nullReferenceException)
+            {
+                //UIBLLInteraction.Instance.ShowException(nullReferenceException);
+                Application.Logger.LogException(nullReferenceException);
+            }
+            //For each building in the project, create a row
+            try
+            {
+                foreach (Building building in TabProject.Buildings)
+                {
+                    CreateAssignUtilityRateBuildingRow(building);
+                }
+            }
+            catch (NullReferenceException nullReferenceException)
+            {
+                //UIBLLInteraction.Instance.ShowException(nullReferenceException);
+                Application.Logger.LogException(nullReferenceException);
+            }
+            //Set the data source of the gridcontrol to the created table
+            gridControlBuildingsUtilityRates.DataSource = buildingUtilityRatesTable;
+
+            //Hide the unecessary columns if they are visible
+            HideBuildingUtilityRatesNameIDColumns();
+        }
+
+        /// <summary>
+        /// Hide columns that shouldn't be visible in the buildings assigned utility rates gridcontrol
+        /// </summary>
+        private void HideBuildingUtilityRatesNameIDColumns()
+        {
+            GridColumn buildingColumn = gridViewBuildingUtilityRates.Columns.ColumnByFieldName("Building");
+            GridColumn idColumn = gridViewBuildingUtilityRates.Columns.ColumnByFieldName("Id");
+            if (buildingColumn != null)
+            {
+                buildingColumn.Visible = false;
+            }
+            if (idColumn != null)
+            {
+                idColumn.Visible = false;
+            }
+        }
+
+        /// <summary>
+        /// Create a row for each building in the project for the building utility rates table
+        /// </summary>
+        /// <param name="building"></param>
+        private void CreateAssignUtilityRateBuildingRow(Building building)
+        {
+            if (building.Id.HasValue)
+            {
+                DataRow newRow = buildingUtilityRatesTable.NewRow();
+                newRow["Building"] = building.Name;
+                newRow["Id"] = building.Id;
+
+                var buildingAssignedUitilityRates =
+                    new Dictionary<int, BuildingUtilityRate>();
+                try
+                {
+                    foreach (BuildingUtilityRate buildingUtilityRate in building.AssignedUtilityRates)
+                    {
+                        try
+                        {
+                            buildingAssignedUitilityRates.Add(buildingUtilityRate.UtilityRateId, buildingUtilityRate);
+                        }
+                        catch (NullReferenceException nullReferenceException)
+                        {
+                            //UIBLLInteraction.Instance.ShowException(nullReferenceException);
+                            Application.Logger.LogException(nullReferenceException);
+                        }
+                        catch (ArgumentException argumentException)
+                        {
+                            //UIBLLInteraction.Instance.ShowException(argumentException);
+                            Application.Logger.LogException(argumentException);
+                        }
+                    }
+                }
+                catch (NullReferenceException nullReferenceException)
+                {
+                    //UIBLLInteraction.Instance.ShowException(nullReferenceException);
+                    Application.Logger.LogException(nullReferenceException);
+                }
+
+
+                for (int i = 2; i < buildingUtilityRatesTable.Columns.Count; i++)
+                {
+                    BuildingUtilityRate tempUtilityRate;
+                    buildingAssignedUitilityRates.TryGetValue(
+                        ((UtilityRate)buildingUtilityRatesTable.Columns[i].ExtendedProperties["UtilityRateObject"]).Id.
+                            Value, out tempUtilityRate);
+                    newRow[i] = tempUtilityRate != null;
+                }
+                buildingUtilityRatesTable.Rows.Add(newRow);
+            }
+        }
+
+        /// <summary>
+        /// For each utility rate in the project,create a utility rate column in the building
+        /// utility rates table
+        /// </summary>
+        /// <param name="columnCounter">The count of the columns</param>
+        /// <param name="utilityRate">The rate</param>
+        /// <returns></returns>
+        private int CreateAssignUtilityRateColumn(int columnCounter, UtilityRate utilityRate)
+        {
+            if (utilityRate.Id.HasValue)
+            {
+                try
+                {
+                    //Date table column
+                    var utilityRateColumn = new DataColumn
+                                                {
+                                                    Caption = utilityRate.RateName,
+                                                    DataType = typeof (Boolean),
+                                                    ColumnName = utilityRate.RateName
+                                                };
+                    utilityRateColumn.ExtendedProperties.Add("UtilityRateObject", utilityRate);
+
+                    try
+                    {
+                        buildingUtilityRatesTable.Columns.Add(utilityRateColumn);
+                        columnCounter++;
+                    }
+                    catch (ArgumentException argumentException)
+                    {
+                        //UIBLLInteraction.Instance.ShowException(argumentException);
+                        Application.Logger.LogException(argumentException);
+                    }
+                    catch (DuplicateNameException duplicateNameException)
+                    {
+                        //UIBLLInteraction.Instance.ShowException(duplicateNameException);
+                        Application.Logger.LogException(duplicateNameException);
+                    }
+                    //Grid column
+
+
+                    var column = new GridColumn
+                                     {
+                                         Caption = utilityRate.RateName,
+                                         ColumnEdit = repositoryItemUtilityRateCheckEdit,
+                                         FieldName = utilityRate.RateName,
+                                         Name = utilityRate.RateName,
+                                         Tag = utilityRate.Id.Value.ToString(),
+                                         MinWidth = 100,
+                                         Visible = true,
+                                         VisibleIndex = columnCounter
+                                     };
+                    //Assign a date edit control to the control
+                    //Specify the field name of the control as the name of the column in the table above
+                    //Save the ID and The Instance in the column to use them when updating values of utility rates
+                    //Add the create column to the grid control
+
+                    try
+                    {
+                        gridViewBuildingUtilityRates.Columns.AddRange(new[] {column});
+                    }
+                    catch (ArgumentException argumentException)
+                    {
+                        //UIBLLInteraction.Instance.ShowException(argumentException);
+                        Application.Logger.LogException(argumentException);
+                    }
+                }
+                catch (NullReferenceException nullReferenceException)
+                {
+                    //UIBLLInteraction.Instance.ShowException(nullReferenceException);
+                    Application.Logger.LogException(nullReferenceException);
+                }
+            }
+
+            return columnCounter;
+        }
+
+        /// <summary>
+        /// Create the initial columns in the building utility rates table
+        /// </summary>
+        private void InitializeBuildingUtilityRatesTable()
+        {
+            buildingUtilityRatesTable = new DataTable();
+            var columnbuildingName = new DataColumn("Building", typeof (String));
+            var columnbuildingId = new DataColumn("Id", typeof (Int32));
+
+            try
+            {
+                buildingUtilityRatesTable.Columns.Add(columnbuildingName);
+                buildingUtilityRatesTable.Columns.Add(columnbuildingId);
+            }
+            catch (ArgumentException argumentException)
+            {
+                //UIBLLInteraction.Instance.ShowException(argumentException);
+                Application.Logger.LogException(argumentException);
+            }
+        }
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        //---------------------------------------------------------------------------------------------
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Project & Modules Specific logic
+
+        #region Project
+
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Checks if the user is allowed to select a specific status value depending on the types of
+        /// added scenarios in the project
+        /// </summary>
+        private void CheckIfStatusValueAllowed()
+        {
+            int selectedValues = 0;
+            if (gridLookUpEditStatus.EditValue != null)
+            {
+                bool checkEnergy = false;
+                bool checkScenarios = true;
+                try
+                {
+                    int value = -1;
+                    try
+                    {
+                        value = Convert.ToInt32(gridLookUpEditStatus.EditValue);
+                    }
+                    catch (OverflowException OverflowException)
+                    {
+                        Application.Logger.LogException(OverflowException);
+                    }
+                    catch (InvalidCastException invalidCastException)
+                    {
+                        Application.Logger.LogException(invalidCastException);
+                    }
+                    catch (FormatException formatException)
+                    {
+                        Application.Logger.LogException(formatException);
+                    }
+                    if (value == 8 || value == 4)
+                    {
+                        try
+                        {
+                            if (layoutControlItemEnergyGuaranteerisk.Visibility == LayoutVisibility.Always)
+                            {
+                                checkEnergy = true;
+                            }
+                            if (checkEnergy)
+                            {
+                                if (TabProject.EnergyGuaranteeRisk == 0)
+                                {
+                                    checkScenarios = false;
+                                }
+                            }
+                            if (checkScenarios)
+                            {
+                                foreach (Scenario scenario in TabProject.Scenarios)
+                                {
+                                    if (scenario.TypeId == 4)// || scenario.TypeId == 3)
+                                    {
+                                        selectedValues++;
+                                    }
+                                }
+                            }
+                        }
+                        catch (NullReferenceException)
+                        {
+                            //Equiom.Tco.Common.Application.Logger.LogException(nullReferenceException);
+                            //UIBLLInteraction.Instance.ShowException(nullReferenceException);
+                        }
+                        if (checkScenarios)
+                        {
+                            if (selectedValues != 1)
+                            {
+                                MessageBox.Show(
+                                    STATUS_SELECT_ERROR,
+                                    UIBLLInteraction.INFORMATION_MESSAGE_TITLE,
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Information);
+                                gridLookUpEditStatus.EditValue = gridLookUpEditStatus.OldEditValue;
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show(
+                                ENERGY_ERROR,
+                                UIBLLInteraction.INFORMATION_MESSAGE_TITLE,
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Information);
+                            gridLookUpEditStatus.EditValue = gridLookUpEditStatus.OldEditValue;
+                        }
+                    }
+                }
+                catch (InvalidCastException)
+                {
+                    //Equiom.Tco.Common.Application.Logger.LogException(invalidCastException);
+                    gridLookUpEditStatus.EditValue = gridLookUpEditStatus.OldEditValue;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Checks if there duplicates in the project name and shows an error if there is one
+        /// </summary>
+        private void ValidateProjectNameDuplicates()
+        {
+            //Search through all the projects in the view and in the navigation panel and check if the 
+            //name of the current project was used before even if it was used in another project window that is
+            //opened and not saved yet.
+            //If the name is duplicated, it will show a warning message
+            if (TabProject != null)
+            {
+                if (TabProject.State == BusinessObjectState.New || TabProject.State == BusinessObjectState.Modified)
+                {
+                    bool isDuplicated = false;
+
+                    foreach (ProjectView projectView in ProjectView.GetAll())
+                    {
+                        int currnetProjectID = (TabProject.Id == null) ? 0 : TabProject.Id.Value;
+                        if (projectView.Id != currnetProjectID)
+                        {
+                            if (TabProject.Name != null && projectView.Name != null)
+                            {
+                                if (TabProject.Name.ToUpper().Trim() == projectView.Name.ToUpper().Trim())
+                                {
+                                    isDuplicated = true;
+                                }
+                            }
+                        }
+                    }
+
+                    if (isDuplicated)
+                    {
+                        try
+                        {
+                            TabProject.isProjectNameDuplicated = true;
+                        }
+                        catch (NullReferenceException nullReferenceException)
+                        {
+                            UIBLLInteraction.Instance.ShowException(nullReferenceException);
+                            Application.Logger.LogException(nullReferenceException);
+                        }
+                    }
+                    else
+                    {
+                        try
+                        {
+                            TabProject.isProjectNameDuplicated = false;
+                            //if (dxErrorProviderMain.GetError(textEditProjectName) == string.Empty ||
+                            //    dxErrorProviderMain.GetError(textEditProjectName) == "Project name is duplicated")
+                            //{
+                            //    dxErrorProviderMain.SetError(textEditProjectName, string.Empty, DevExpress.XtraEditors.DXErrorProvider.ErrorType.None);
+                            //}
+                        }
+                        catch (NullReferenceException nullReferenceException)
+                        {
+                            UIBLLInteraction.Instance.ShowException(nullReferenceException);
+                            Application.Logger.LogException(nullReferenceException);
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// This method will control the visibility or the Energy Guarantee Risk field
+        /// </summary>
+        public void ChangeEnergyGuaranteeRiskVisibility()
+        {
+            if (xtraTabControlMain.SelectedTabPage == xtraTabPageGeneralInformation)
+            {
+                if (layoutControlItemEnergyGuaranteerisk.Visibility == LayoutVisibility.Always)
+                {
+                    layoutControlItemEnergyGuaranteerisk.Visibility = LayoutVisibility.Never;
+                    toolTipControllerMain.HideHint();
+                }
+                else
+                {
+                    var args = new ToolTipControllerShowEventArgs
+                                   {
+                                       SuperTip = spinEditEnergyGuaranteerisk.SuperTip,
+                                       ToolTipType = ToolTipType.SuperTip
+                                   };
+                    toolTipControllerMain.ShowHint(args, spinEditEnergyGuaranteerisk);
+                    layoutControlItemEnergyGuaranteerisk.Visibility = LayoutVisibility.Always;
+                }
+            }
+        }
+
+        public void ChangeSFCTabVisibility()
+        {
+            if (xtraTabControlMain.SelectedTabPage == xtraTabPageDetails)
+            {
+                xtraTabPageScenarioFirstCost.PageVisible = !xtraTabPageScenarioFirstCost.PageVisible;
+            }
+        }
+
+        /// <summary>
+        /// Validates the currently selected scenario first cost
+        /// </summary>
+        private void ValidateSelectedScenarioFirstCost()
+        {
+            if (scenarioFirstCost1.SFCScenario != null)
+            {
+                if (scenarioFirstCost1.SFCScenario.FirstCost != null)
+                {
+                    if (!scenarioFirstCost1.SFCScenario.FirstCost.Validate())
+                    {
+                        TabProject.ErrorsSummary += "- " + "First cost contains invalid data" + ".\n";
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Performs the importing process and saves the last path used
+        /// </summary>
+        private void PerfromImportFromBSG()
+        {
+            if (TabProject.State != BusinessObjectState.New)
+            {
+                string lastPath = string.Empty;
+                string projectID = TabProject.Id.Value.ToString();
+                try
+                {
+                    XmlDocument document = UIBLLInteraction.Instance.GetRecentsDocment();
+                    XmlNode foundProjectNode =
+                        document.SelectSingleNode("Root/ProjectsImportPaths/Project[@ID='" + projectID + "']");
+                    if (foundProjectNode != null)
+                    {
+                        lastPath = foundProjectNode.Attributes["Path"].Value;
+                    }
+                    else
+                    {
+                        XmlNode newProjectElement = document.CreateElement("Project");
+                        XmlAttribute id = document.CreateAttribute("ID");
+                        XmlAttribute path = document.CreateAttribute("Path");
+                        id.Value = projectID;
+                        path.Value = string.Empty;
+                        newProjectElement.Attributes.Append(id);
+                        newProjectElement.Attributes.Append(path);
+
+                        XmlNode rootNode = document.SelectSingleNode("Root/ProjectsImportPaths");
+                        rootNode.AppendChild(newProjectElement);
+                        document.Save(UIBLLInteraction.Instance.TCORECENTS_FILE_NAME);
+                    }
+                }
+                catch (NullReferenceException)
+                {
+                }
+                catch (FileNotFoundException fileNotFoundException)
+                {
+                    MessageBox.Show(UIBLLInteraction.RECENT_SELECTION_FILE_ERROR, UIBLLInteraction.ERROR_MESSAGE_TITLE,
+                                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Application.Logger.LogException(fileNotFoundException);
+                }
+                catch (XmlException xmlException)
+                {
+                    MessageBox.Show(UIBLLInteraction.RECENT_SELECTION_FILE_ERROR, UIBLLInteraction.ERROR_MESSAGE_TITLE,
+                                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Application.Logger.LogException(xmlException);
+                }
+
+                var importDialog = new BSGImportingDialog();
+                importDialog.SetLastPathValue(lastPath);
+                importDialog.ImportingProject = TabProject;
+                importDialog.ShowDialog();
+                if (!string.IsNullOrEmpty(importDialog.newPath))
+                {
+                    try
+                    {
+                        XmlDocument document = UIBLLInteraction.Instance.GetRecentsDocment();
+                        XmlNode foundProjectNode =
+                            document.SelectSingleNode("Root/ProjectsImportPaths/Project[@ID='" + projectID + "']");
+                        if (foundProjectNode != null)
+                        {
+                            foundProjectNode.Attributes["Path"].Value = importDialog.newPath;
+                        }
+                        var sw = new StringWriter();
+                        var xw = new XmlTextWriter(sw);
+                        document.WriteTo(xw);
+                        sw.ToString();
+                        //System.IO.File.WriteAllText("D:\\Projects\\McKinstry TCO\\branches\\dev refactored\\DesktopClientDevexpress\\bin\\Debug\\TCORecents.xml", sw.ToString());
+                        document.Save(UIBLLInteraction.Instance.TCORECENTS_FILE_NAME);
+                    }
+                    catch (NullReferenceException)
+                    {
+                    }
+                    catch (FileNotFoundException fileNotFoundException)
+                    {
+                        MessageBox.Show(UIBLLInteraction.RECENT_SELECTION_FILE_ERROR,
+                                        UIBLLInteraction.ERROR_MESSAGE_TITLE, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        Application.Logger.LogException(fileNotFoundException);
+                    }
+                    catch (XmlException xmlException)
+                    {
+                        MessageBox.Show(UIBLLInteraction.RECENT_SELECTION_FILE_ERROR,
+                                        UIBLLInteraction.ERROR_MESSAGE_TITLE, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        Application.Logger.LogException(xmlException);
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Project is not saved yet.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Building Utility rates
+
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Changes the text in the indicators of the grid control to buildings names
+        /// </summary>
+        /// <param name="e"></param>
+        private void UpdateIndictors(RowIndicatorCustomDrawEventArgs e)
+        {
+            //Check whether the indicator cell belongs to a data row
+            if (e.Info.IsRowIndicator)
+            {
+                DataRow row = gridViewBuildingUtilityRates.GetDataRow(e.RowHandle);
+                try
+                {
+                    e.Info.DisplayText = row["Building"].ToString();
+                }
+                catch (NullReferenceException nullReferenceException)
+                {
+                    Application.Logger.LogException(nullReferenceException);
+                }
+            }
+            else
+            {
+                e.Info.DisplayText = "Buildings/Utility Rates";
+            }
+        }
+
+        /// <summary>
+        /// Apply the changes that were made to the table of building utility rates to the 
+        /// collection of building in the project before doing the save 
+        /// </summary>
+        public void ApplyBuildingUtilityRatesChanges()
+        {
+            var projectBuildings = new Dictionary<int, Building>();
+            var projectUtilityRates = new Dictionary<int, UtilityRate>();
+
+            FillProjectBuildingsDictionary(projectBuildings);
+
+            FillProjectUtilityRatesDictionary(projectUtilityRates);
+
+            bool notAllRatesWereUnassigned = false;
+
+            foreach (DataRow row in buildingUtilityRatesTable.Rows)
+            {
+                Building currentRowBuilding;
+                int id = -1;
+                try
+                {
+                    id = Convert.ToInt32(row["Id"].ToString());
+                }
+                catch (OverflowException OverflowException)
+                {
+                    Application.Logger.LogException(OverflowException);
+                }
+                catch (InvalidCastException invalidCastException)
+                {
+                    Application.Logger.LogException(invalidCastException);
+                }
+                catch (FormatException formatException)
+                {
+                    Application.Logger.LogException(formatException);
+                }
+                projectBuildings.TryGetValue(id, out currentRowBuilding);
+                if (currentRowBuilding != null)
+                {
+                    var buildingUtilityRates = new Dictionary<int, BuildingUtilityRate>();
+
+                    foreach (BuildingUtilityRate assignedUtilityRate in currentRowBuilding.AssignedUtilityRates)
+                    {
+                        if (!buildingUtilityRates.ContainsKey(assignedUtilityRate.UtilityRateId))
+                        {
+                            buildingUtilityRates.Add(assignedUtilityRate.UtilityRateId, assignedUtilityRate);
+                        }
+                    }
+                    for (int i = 2; i < buildingUtilityRatesTable.Columns.Count; i++)
+                    {
+                        BuildingUtilityRate tempUtilityRate;
+                        int Id =
+                            ((UtilityRate) buildingUtilityRatesTable.Columns[i].ExtendedProperties["UtilityRateObject"])
+                                .Id.Value;
+                        buildingUtilityRates.TryGetValue(Id, out tempUtilityRate);
+
+                        if (Convert.ToBoolean(row[i].ToString()))
+                        {
+                            if (tempUtilityRate == null)
+                            {
+                                UtilityRate projectUtilityRate;
+                                projectUtilityRates.TryGetValue(Id, out projectUtilityRate);
+
+                                if (projectUtilityRate != null)
+                                {
+                                    tempUtilityRate = new BuildingUtilityRate(projectUtilityRate, true);
+                                    if (!currentRowBuilding.AssignedUtilityRates.Contains(tempUtilityRate))
+                                    {
+                                        currentRowBuilding.AssignedUtilityRates.Add(tempUtilityRate);
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (tempUtilityRate != null)
+                            {
+                                bool keepChecked = false;
+                                foreach (Component component in currentRowBuilding.Components)
+                                {
+                                    foreach (ComponentUtilityInfo cui in component.ComponentUtilityInfos)
+                                    {
+                                        if (cui.UtilityRateId == Id)
+                                        {
+                                            keepChecked = true;
+                                            notAllRatesWereUnassigned = true;
+                                            break;
+                                        }
+                                    }
+                                }
+                                if (keepChecked)
+                                {
+                                    row[i] = true;
+                                }
+                                else if (currentRowBuilding.AssignedUtilityRates.Contains(tempUtilityRate))
+                                {
+                                    currentRowBuilding.AssignedUtilityRates.Remove(tempUtilityRate);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            if (notAllRatesWereUnassigned)
+            {
+                MessageBox.Show(
+                    NOT_ALL_RATES_ARE_UNASSIGNED_ERROR,
+                    UIBLLInteraction.ERROR_MESSAGE_TITLE,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
+        }
+
+        private void FillProjectUtilityRatesDictionary(Dictionary<int, UtilityRate> projectUtilityRates)
+        {
+            try
+            {
+                foreach (UtilityRate projectUtilityRate in TabProject.UtilityRates)
+                {
+                    try
+                    {
+                        if (projectUtilityRate.Id != null)
+                        {
+                            projectUtilityRates.Add(projectUtilityRate.Id.Value, projectUtilityRate);
+                        }
+                    }
+                    catch (ArgumentException argumentException)
+                    {
+                        //UIBLLInteraction.Instance.ShowException(argumentException);
+                        Application.Logger.LogException(argumentException);
+                    }
+                }
+            }
+            catch (NullReferenceException nullReferenceException)
+            {
+                Application.Logger.LogException(nullReferenceException);
+            }
+        }
+
+        private void FillProjectBuildingsDictionary(Dictionary<int, Building> projectBuildings)
+        {
+            try
+            {
+                foreach (Building building in TabProject.Buildings)
+                {
+                    try
+                    {
+                        projectBuildings.Add(building.Id.Value, building);
+                    }
+                    catch (ArgumentException argumentException)
+                    {
+                        //UIBLLInteraction.Instance.ShowException(argumentException);
+                        Application.Logger.LogException(argumentException);
+                    }
+                }
+            }
+            catch (NullReferenceException nullReferenceException)
+            {
+                Application.Logger.LogException(nullReferenceException);
+            }
+        }
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Work For Customer
+
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Fill the work for customer fields with the values of the seleted customer
+        /// </summary>
+        private void UpdateWFCFields()
+        {
+            try
+            {
+                var customersDictionary = new Dictionary<int, Customer>();
+                foreach (Customer customer in BusinessLayerCache.Instance.GetAllCustomers())
+                {
+                    try
+                    {
+                        customersDictionary.Add(customer.Id.Value, customer);
+                    }
+                    catch (ArgumentException argumentException)
+                    {
+                        Application.Logger.LogException(argumentException);
+                        //UIBLLInteraction.Instance.ShowException(argumentException);
+                    }
+                    catch (NullReferenceException nullReferenceException)
+                    {
+                        Application.Logger.LogException(nullReferenceException);
+                        //UIBLLInteraction.Instance.ShowException(nullReferenceException);
+                    }
+                }
+                Customer currentCustomer;
+                if (gridLookUpEditWFC.EditValue != null && gridLookUpEditWFC.Text != string.Empty)
+                {
+                    int? id = null;
+                    try
+                    {
+                        id = Convert.ToInt32(gridLookUpEditWFC.EditValue);
+                    }
+                    catch (OverflowException OverflowException)
+                    {
+                        Application.Logger.LogException(OverflowException);
+                    }
+                    catch (InvalidCastException invalidCastException)
+                    {
+                        Application.Logger.LogException(invalidCastException);
+                    }
+                    catch (FormatException formatException)
+                    {
+                        Application.Logger.LogException(formatException);
+                    }
+                    TabProject.WorkForCustomerID = id;
+                }
+                if (TabProject.WorkForCustomerID != null && gridLookUpEditWFC.Text != string.Empty)
+                {
+                    customersDictionary.TryGetValue(TabProject.WorkForCustomerID.Value
+                                                    , out currentCustomer);
+
+                    textEditWFCNumber.Text = currentCustomer.Id.Value.ToString();
+                    textEditWFCCity.Text = currentCustomer.AddressCity;
+                    textEditWFCEmail.Text = currentCustomer.Email;
+                    lookUpEditWFCCompany.EditValue = currentCustomer.CompanyId;
+                    textEditWFCCountry.Text = currentCustomer.AddressCountry;
+                    textEditWFCCrmId.Text = currentCustomer.CrmId;
+                    textEditWFCName.Text = currentCustomer.Name;
+                    textEditWFCState.Text = currentCustomer.AddressState;
+                    textEditWFCStreet.Text = currentCustomer.AddressStreet;
+                    textEditWFCZip.Text = currentCustomer.AddressZip;
+                    textEditWFCPhoneNumber.Text = currentCustomer.PhoneNumber;
+                }
+            }
+            catch (NullReferenceException)
+            {
+                //Null value is expected here, no handling code is required
+            }
+        }
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Bill To Customer
+
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Fill the bill to customer fields with the values of the seleted customer
+        /// </summary>
+        private void UpdateBTCFields()
+        {
+            try
+            {
+                var customersDictionary = new Dictionary<int?, Customer>();
+                foreach (Customer customer in BusinessLayerCache.Instance.GetAllCustomers())
+                {
+                    try
+                    {
+                        customersDictionary.Add(customer.Id.Value, customer);
+                    }
+                    catch (ArgumentException argumentException)
+                    {
+                        Application.Logger.LogException(argumentException);
+                        //UIBLLInteraction.Instance.ShowException(argumentException);
+                    }
+                    catch (NullReferenceException nullReferenceException)
+                    {
+                        Application.Logger.LogException(nullReferenceException);
+                        //UIBLLInteraction.Instance.ShowException(nullReferenceException);
+                    }
+                }
+                Customer currentCustomer;
+
+                if (gridLookUpEditBTC.EditValue != null && gridLookUpEditBTC.Text != string.Empty)
+                {
+                    int? id = null;
+                    try
+                    {
+                        id = Convert.ToInt32(gridLookUpEditBTC.EditValue);
+                    }
+                    catch (OverflowException OverflowException)
+                    {
+                        Application.Logger.LogException(OverflowException);
+                    }
+                    catch (InvalidCastException invalidCastException)
+                    {
+                        Application.Logger.LogException(invalidCastException);
+                    }
+                    catch (FormatException formatException)
+                    {
+                        Application.Logger.LogException(formatException);
+                    }
+                    TabProject.BillToCustomerID = id;
+                }
+                if (TabProject.BillToCustomerID != null && gridLookUpEditBTC.Text != string.Empty)
+                {
+                    customersDictionary.TryGetValue(TabProject.BillToCustomerID, out currentCustomer);
+
+                    textEditBTCNumber.Text = currentCustomer.Id.Value.ToString();
+                    textEditBTCCity.Text = currentCustomer.AddressCity;
+                    textEditBTCEmail.Text = currentCustomer.Email;
+                    lookUpEdittBTCCompany.EditValue = currentCustomer.CompanyId;
+                    textEditBTCCountry.Text = currentCustomer.AddressCountry;
+                    textEditBTCCrmId.Text = currentCustomer.CrmId;
+                    textEditBTCName.Text = currentCustomer.Name;
+                    textEditBTCState.Text = currentCustomer.AddressState;
+                    textEditBTCStreet.Text = currentCustomer.AddressStreet;
+                    textEditBTCZip.Text = currentCustomer.AddressZip;
+                    textEditBTCPhoneNumber.Text = currentCustomer.PhoneNumber;
+                }
+            }
+            catch (NullReferenceException)
+            {
+                //Null value is expected here, no handling code is required
+            }
+        }
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Buildings
+
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Opens a new tab page for creating a new building
+        /// </summary>
+        private void AddNewBuilding()
+        {
+            try
+            {
+                if (TabObject.State != BusinessObjectState.New)
+                {
+                    UIBLLInteraction.Instance.New(EntityType.Buildings, TabObject);
+                }
+                else
+                {
+                    MessageBox.Show(
+                        BUILDINGS_ADD_ERROR,
+                        UIBLLInteraction.ERROR_MESSAGE_TITLE,
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                }
+            }
+            catch (NullReferenceException nullReferenceException)
+            {
+                Application.Logger.LogException(nullReferenceException);
+                //UIBLLInteraction.Instance.ShowException(nullReferenceException);
+            }
+        }
+
+        /// <summary>
+        /// Opens a building copy version details page
+        /// </summary>
+        private void OpenBuilding()
+        {
+            var openedBuilding = gridViewBuildingsAdded.GetFocusedRow() as Building;
+
+            try
+            {
+                var openedObject = openedBuilding as EntityBusinessObject;
+                UIBLLInteraction.Instance.Open(ref openedObject);
+            }
+            catch (NullReferenceException nullReferenceException)
+            {
+                Application.Logger.LogException(nullReferenceException);
+                //UIBLLInteraction.Instance.ShowException(nullReferenceException);
+            }
+        }
+
+        /// <summary>
+        /// Get the selected buildings and validate each one of them to make sure it can be deleted, 
+        /// each buildings can't be deleted if it is opened or one of its components is opened or
+        /// one of its components is assigned to a scenario
+        /// </summary>
+        private void DeleteSelectedBuildings()
+        {
+            //Flag to determine if building is opened.
+            bool isBuildingOpened = false;
+            //Flag to determine if a components is assigned.
+            bool isComponentsAssigned = false;
+
+            int[] selectedBuildingss = gridViewBuildingsAdded.GetSelectedRows();
+            var indexes = new Hashtable();
+            foreach (int handle in selectedBuildingss)
+            {
+                indexes.Add(handle, gridViewBuildingsAdded.GetDataSourceRowIndex(handle));
+            }
+
+            foreach (int handle in indexes.Keys)
+            {
+                int index = -1;
+                try
+                {
+                    index = Convert.ToInt32(indexes[handle]);
+                }
+                catch (OverflowException OverflowException)
+                {
+                    Application.Logger.LogException(OverflowException);
+                }
+                catch (InvalidCastException invalidCastException)
+                {
+                    Application.Logger.LogException(invalidCastException);
+                }
+                catch (FormatException formatException)
+                {
+                    Application.Logger.LogException(formatException);
+                }
+                //Flag to determine if the building can be removed
+                bool removeBuilding = true;
+
+                try
+                {
+                    var buildingToDelete = TabProject.Buildings[index] as EntityBusinessObject;
+                    //If the building is opened then don't remove it
+                    if (UIBLLInteraction.Instance.CheckIfTabOpened(buildingToDelete, false, 0))
+                    {
+                        isBuildingOpened = true;
+                        removeBuilding = false;
+                    }
+                    if (removeBuilding)
+                    {
+                        Building building = TabProject.Buildings[index];
+                        foreach (Component component in building.Components)
+                        {
+                            //If any component in the building is opened then don't remove the building
+                            if (UIBLLInteraction.Instance.CheckIfTabOpened(component, false, 0))
+                            {
+                                removeBuilding = false;
+                                isBuildingOpened = true;
+                                break;
+                            }
+                            //If any component in the building is assigned to a scenario then don't remove
+                            //the building
+                            foreach (Scenario scenario in TabProject.Scenarios)
+                            {
+                                foreach (ScenarioComponent scenarioComponent in scenario.Components)
+                                {
+                                    if (scenarioComponent.Component == component)
+                                    {
+                                        removeBuilding = false;
+                                        isComponentsAssigned = true;
+                                    }
+                                    //if (scenarioComponents.Id == component.Id.Value)
+                                    //{
+                                    //    removeBuilding = false;
+                                    //    isComponentsAssigned = true;
+                                    //}
+                                }
+                            }
+                        }
+                    }
+                    if (removeBuilding)
+                    {
+                        try
+                        {
+                            TabProject.Buildings.RemoveAt(index);
+                        }
+                        catch (ArgumentException)
+                        {
+                            //UIBLLInteraction.Instance.ShowException(argumentException);
+                        }
+                    }
+                }
+                catch (DataAccessException dataAccessException)
+                {
+                    UIBLLInteraction.Instance.ShowException(dataAccessException);
+                }
+            }
+            if (isBuildingOpened)
+            {
+                MessageBox.Show(
+                    CLOSE_OPENED_COMPONENTS_ERROR,
+                    UIBLLInteraction.ERROR_MESSAGE_TITLE,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
+            if (isComponentsAssigned)
+            {
+                MessageBox.Show(
+                    UN_ASSIGN_COMPONENTS_ERROR,
+                    UIBLLInteraction.ERROR_MESSAGE_TITLE,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
+        }
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Components
+
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Open the tab of the clicked component
+        /// </summary>
+        private void OpenComponent()
+        {
+            var openedComponent = gridViewComponents.GetFocusedRow() as Component;
+            try
+            {
+                var openedObject = openedComponent as EntityBusinessObject;
+                UIBLLInteraction.Instance.Open(ref openedObject);
+            }
+            catch (NullReferenceException nullReferenceException)
+            {
+                Application.Logger.LogException(nullReferenceException);
+                //UIBLLInteraction.Instance.ShowException(nullReferenceException);
+            }
+        }
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Scenarios
+
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Give the focuse to the double clicked scenarion in the navigation panel
+        /// </summary>
+        /// <param name="focusedScenario">The object of the scenario to be focused</param>
+        public void FocusOnScenario(Scenario focusedScenario)
+        {
+            //Select the details tab
+            xtraTabControlMain.SelectedTabPage = xtraTabPageDetails;
+            //Select the scenarios tab
+            xtraTabControlModules.SelectedTabPage = xtraTabPageScenarios;
+            //Call the FocusOnScenario method from the scenarios module
+            scenaiorsModule1.FocusOnScenario(focusedScenario);
+        }
+
+        /// <summary>
+        /// Add a new scenario record in the scenarios module
+        /// </summary>
+        public void AddNewScenario()
+        {
+            bool isIDLocked = UIBLLInteraction.Instance.IsProjectLocked(TabProject.Id.Value);
+            if (!isIDLocked || TabState == EntityTabState.Unlocked)
+            {
+                //Unlock the project tab if it was locked
+                UnlockTab();
+                //Select the details tab
+                xtraTabControlMain.SelectedTabPage = xtraTabPageDetails;
+                //Select the scenarios tab
+                xtraTabControlModules.SelectedTabPage = xtraTabPageScenarios;
+                //Call the method AddNewScenario from the scenarios module to add new scenario record
+                scenaiorsModule1.AddNewScenario();
+                UpdateActionButtons();
+            }
+            else
+            {
+                MessageBox.Show(
+                    PROJECT_TAB_IS_LOCKED_ERROR,
+                    UIBLLInteraction.ERROR_MESSAGE_TITLE,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
+        }
+
+        #region Scenarios delayed Methods
+
+        //---------------------------------------------------------------------------------------------
+
+        /// <summary>
+        /// Handles the change of scenarios in the scenarios module to refresh the scenario comparison report
+        /// </summary>
+        /// <param name="sender">The scenario module</param>
+        /// <param name="e">The scenarios data change</param>
+        public void ScenariosChangeHandler(object sender, EventArgs e)
+        {
+            //Filter the collection to show only scenarios that are marked to be visible in the report
+            //Scenarios filteredScenarios = new Scenarios();
+            //Random random = new Random();
+            //foreach (Scenario shownScenario in scenaiorsModule1.Scenarios)
+            //{
+            //    if (shownScenario.ShowInReport)
+            //    {
+            //        filteredScenarios.Add(shownScenario);
+            //    }
+            //}
+            //System.ComponentModel.BindingList<int> objs = new System.ComponentModel.BindingList<int>();
+            //int count = 0;
+            //count = filteredScenarios.Count / 6;
+            //if (filteredScenarios.Count % 6 > 0)
+            //{
+            //    count++;
+            //}
+            //for (int i = 0; i < count; i++)
+            //{
+            //    objs.Add(i);
+            //}
+
+            //scenarioReport.DataSource = filteredScenarios;
+            //scenarioReportByModules.DataSource = filteredScenarios;
+            //scenarioReportByModules.SetModuleNamesSubReportDataSource(objs);
+            ////Sort the collection according to the order of the scenarios
+            //filteredScenarios.SortByOrder(System.ComponentModel.ListSortDirection.Ascending);
+            ////Refresh the report document
+            //RefreshScenarioComparisonChart();
+            //RefreshScenarioModuleCostsChart();
+            //scenarioReport.CreateDocument();
+            //scenarioReportByModules.CreateDocument();
+        }
+
+        /// <summary>
+        /// Create the bars in the scenario comparison chart according to the data
+        /// </summary>
+        public void RefreshScenarioComparisonChart()
+        {
+            ////Clear the old chart contents
+            //chartControlScenarioComparisonChart.Series.Clear();
+            ////For 15 components, create the series
+            //for (int i = 0; i < 15; i++)
+            //{
+            //    DevExpress.XtraCharts.Series compSeries = new DevExpress.XtraCharts.Series();
+            //    compSeries.PointOptions.ValueNumericOptions.Format = NumericFormat.Currency;
+            //    //Create the series for each scenario
+            //    foreach (Scenario scenario in scenaiorsModule1.Scenarios)
+            //    {
+            //        //Only if the scenario is visible in the report
+            //        if (scenario.ShowInReport)
+            //        {
+            //            //Get the value of the component in the scenario, this is because we create a series for all components
+            //            //but not all components exists in each scenario so for some scenarios the value is zero
+            //            double compNPV = 0;
+            //            foreach (ScenarioComponent component in scenario.ScenarioComponents)
+            //            {
+            //                if (component.ComponentName == "Component" + i.ToString() && component.IsAdded)
+            //                {
+            //                    compNPV = component.LengthOfNpv;
+            //                }
+            //            }
+            //            //Add the value of the series for the specified scenario
+            //            DevExpress.XtraCharts.SeriesPoint seriesPoint = new DevExpress.XtraCharts.SeriesPoint((scenario.ScenarioName == null) ? " " : scenario.ScenarioName, new object[] { ((object)(compNPV)) });
+            //            //Add the point value to the series
+            //            compSeries.Points.AddRange(new DevExpress.XtraCharts.SeriesPoint[] { seriesPoint });
+            //        }
+            //    }
+            //    //If the serieses added are more than zero, then show them in the chart
+
+            //    if (compSeries.Points.Count > 0)
+            //    {
+            //        compSeries.View = new DevExpress.XtraCharts.StackedBarSeriesView(); ;
+            //        compSeries.Name = "Component" + i.ToString();
+            //        chartControlScenarioComparisonChart.Series.Add(compSeries);
+            //    }
+            //}
+            ////Same steps as before but this one is done for once for the funding record
+            //if (scenaiorsModule1.Scenarios[0].IncludeFundingSources)
+            //{
+            //    DevExpress.XtraCharts.Series fundingSeries = new DevExpress.XtraCharts.Series();
+            //    fundingSeries.PointOptions.ValueNumericOptions.Format = NumericFormat.Currency;
+            //    foreach (Scenario scenario in scenaiorsModule1.Scenarios)
+            //    {
+            //        if (scenario.ShowInReport)
+            //        {
+            //            DevExpress.XtraCharts.SeriesPoint seriesPoint = new DevExpress.XtraCharts.SeriesPoint((scenario.ScenarioName == null) ? " " : scenario.ScenarioName, new object[] { ((object)(scenario.Funding)) });
+            //            fundingSeries.Points.AddRange(new DevExpress.XtraCharts.SeriesPoint[] { seriesPoint });
+            //        }
+            //    }
+            //    if (fundingSeries.Points.Count > 0)
+            //    {
+            //        fundingSeries.View = new DevExpress.XtraCharts.StackedBarSeriesView(); ;
+            //        fundingSeries.Name = "Funding";
+            //        chartControlScenarioComparisonChart.Series.Add(fundingSeries);
+            //    }
+            //}
+            ////Allow zooming and scrolling in the chart
+            //if (chartControlScenarioComparisonChart.Diagram != null)
+            //{
+            //    (chartControlScenarioComparisonChart.Diagram as DevExpress.XtraCharts.XYDiagram).EnableZooming = true;
+            //    (chartControlScenarioComparisonChart.Diagram as DevExpress.XtraCharts.XYDiagram).EnableScrolling = true;
+            //    (chartControlScenarioComparisonChart.Diagram as DevExpress.XtraCharts.XYDiagram).AxisY.NumericOptions.Format = DevExpress.XtraCharts.NumericFormat.Currency;
+            //}
+
+            ////Allow runtime selection of objects in the chart (this might work only for 2D views)
+            //chartControlScenarioComparisonChart.RuntimeSelection = true;
+            ////Assign datasource to the chart
+            //chartControlScenarioComparisonChart.DataSource = scenarios;
+        }
+
+        /// <summary>
+        /// Create the bars in the scenario modules comparison chart according to the data
+        /// </summary>
+        public void RefreshScenarioModuleCostsChart()
+        {
+            ////Clear the old chart contents
+            //chartControlScenarioModuleCosts.Series.Clear();
+
+            ////For 6 modules, create the series
+            //foreach (string module in moduleNames)
+            //{
+            //    DevExpress.XtraCharts.Series moduleSeries = new DevExpress.XtraCharts.Series();
+            //    moduleSeries.PointOptions.ValueNumericOptions.Format = NumericFormat.Currency;
+            //    //Create the series for each scenario
+            //    foreach (Scenario scenario in scenaiorsModule1.Scenarios)
+            //    {
+            //        //Only if the scenario is visible in the report
+            //        if (scenario.ShowInReport)
+            //        {
+            //            //Get the value of the module in the scenario
+            //            double moduleNPV = 0;
+            //            foreach (ScenarioModule scenarioModule in scenario.ScenarioModules)
+            //            {
+            //                if (scenarioModule.ModuleName == module)
+            //                {
+            //                    moduleNPV = scenarioModule.LengthOfNpv;
+            //                }
+            //            }
+            //            //Add the value of the series for the specified scenario
+            //            DevExpress.XtraCharts.SeriesPoint seriesPoint = new DevExpress.XtraCharts.SeriesPoint((scenario.ScenarioName == null) ? " " : scenario.ScenarioName, new object[] { ((object)(moduleNPV)) });
+            //            //Add the point value to the series
+            //            moduleSeries.Points.AddRange(new DevExpress.XtraCharts.SeriesPoint[] { seriesPoint });
+            //        }
+            //    }
+            //    //If the serieses added are more than zero, then show them in the chart
+
+            //    if (moduleSeries.Points.Count > 0)
+            //    {
+            //        moduleSeries.View = new DevExpress.XtraCharts.StackedBarSeriesView(); ;
+            //        moduleSeries.Name = module;
+            //        chartControlScenarioModuleCosts.Series.Add(moduleSeries);
+            //    }
+            //}
+
+            ////Allow zooming and scrolling in the chart
+            //if (chartControlScenarioModuleCosts.Diagram != null)
+            //{
+            //    (chartControlScenarioModuleCosts.Diagram as DevExpress.XtraCharts.XYDiagram).EnableZooming = true;
+            //    (chartControlScenarioModuleCosts.Diagram as DevExpress.XtraCharts.XYDiagram).EnableScrolling = true;
+            //    (chartControlScenarioModuleCosts.Diagram as DevExpress.XtraCharts.XYDiagram).AxisY.NumericOptions.Format = DevExpress.XtraCharts.NumericFormat.Currency;
+            //}
+
+            ////Allow runtime selection of objects in the chart (this might work only for 2D views)
+            //chartControlScenarioModuleCosts.RuntimeSelection = true;
+            ////Assign datasource to the chart
+            //chartControlScenarioModuleCosts.DataSource = scenarios;
+        }
+
+        /// <summary>
+        /// Refresh the component modules costs grid when a component is selected
+        /// </summary>
+        public void RefreshComponentModuleCostsGrid(int total)
+        {
+            //Clear the component modules collection before usage
+            //componentModules.Clear();
+            ////Use temporary total because it will be changed
+            //int tempTotal = total;
+            //Random random = new Random();
+            //foreach (string module in moduleNames)
+            //{
+            //    ScenarioModule componentMoudle = new ScenarioModule();
+            //    componentMoudle.ModuleName = module;
+            //    //Take random amount from the total and give it to the module
+            //    int randomAmount = random.Next(0, tempTotal);
+            //    componentMoudle.LengthOfNpv = randomAmount;
+            //    //Remove the amount given from the total
+            //    tempTotal -= randomAmount;
+            //    componentModules.Add(componentMoudle);
+            //}
+
+            ////If the total is not yet zero, then take its value which the remaining and give it
+            ////to the module with the least NPV value
+            //if (tempTotal > 0)
+            //{
+            //    ScenarioModule leastNPVModule = componentModules[0];
+            //    foreach (ScenarioModule addedModule in componentModules)
+            //    {
+            //        if (leastNPVModule.LengthOfNpv > addedModule.LengthOfNpv)
+            //        {
+            //            leastNPVModule = addedModule;
+            //        }
+            //    }
+            //    foreach (ScenarioModule module in componentModules)
+            //    {
+            //        if (module.ModuleName == leastNPVModule.ModuleName)
+            //        {
+            //            module.LengthOfNpv += tempTotal;
+            //        }
+            //    }
+            //}
+            ////Calcualate the percentage for each module
+            //foreach (ScenarioModule addedModule in componentModules)
+            //{
+            //    addedModule.PercentNPV = (total == 0) ? 0 : addedModule.LengthOfNpv / total;
+            //}
+            //gridControlComponentCosts.DataSource = componentModules;
+        }
+
+        /// <summary>
+        /// Refresh the component modules costs chart when a component is selected
+        /// </summary>
+        public void RefreshComponentModuleCostsChart(int total, string componentName)
+        {
+            //Clear the old chart contents
+            //chartControlComponentCosts.Series.Clear();
+
+            ////For 6 modules, create the series
+            //foreach (ScenarioModule module in componentModules)
+            //{
+            //    DevExpress.XtraCharts.Series moduleSeries = new DevExpress.XtraCharts.Series();
+            //    moduleSeries.PointOptions.ValueNumericOptions.Format = NumericFormat.Currency;
+            //    //Add the value of the series for the component
+            //    DevExpress.XtraCharts.SeriesPoint seriesPoint = new DevExpress.XtraCharts.SeriesPoint(componentName, new object[] { ((object)(module.LengthOfNpv)) });
+            //    //Add the point value to the series
+            //    moduleSeries.Points.AddRange(new DevExpress.XtraCharts.SeriesPoint[] { seriesPoint });
+            //    //If the serieses added are more than zero, then show them in the chart
+            //    if (moduleSeries.Points.Count > 0)
+            //    {
+            //        moduleSeries.View = new DevExpress.XtraCharts.StackedBarSeriesView(); ;
+            //        moduleSeries.Name = module.ModuleName;
+            //        chartControlComponentCosts.Series.Add(moduleSeries);
+            //    }
+            //}
+            ////Allow zooming and scrolling in the chart
+            //if (chartControlComponentCosts.Diagram != null)
+            //{
+            //    (chartControlComponentCosts.Diagram as DevExpress.XtraCharts.XYDiagram).EnableZooming = true;
+            //    (chartControlComponentCosts.Diagram as DevExpress.XtraCharts.XYDiagram).EnableScrolling = true;
+            //    (chartControlComponentCosts.Diagram as DevExpress.XtraCharts.XYDiagram).AxisY.NumericOptions.Format = DevExpress.XtraCharts.NumericFormat.Currency;
+            //}
+            ////Allow runtime selection of objects in the chart (this might work only for 2D views)
+            //chartControlComponentCosts.RuntimeSelection = true;
+            ////Assign datasource to the chart
+            //chartControlComponentCosts.DataSource = componentModules;
+        }
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        //---------------------------------------------------------------------------------------------
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        //---------------------------------------------------------------------------------------------
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Handlers
+
+        #region CGC
+
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Delete the seleected CGC projects
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void gridControlCGCNumberView_EmbeddedNavigator_ButtonClick(object sender,
+                                                                            NavigatorButtonClickEventArgs e)
+        {
+            switch (e.Button.ButtonType)
+            {
+                case NavigatorButtonType.Remove:
+                    e.Handled = true;
+                    DeleteSelectedGridViewObjects(gridViewCGC, TabProject.CgcProjects);
+                    break;
+                case NavigatorButtonType.Custom:
+                    e.Handled = true;
+                    if (e.Button.Hint == "ShowHideFilter")
+                    {
+                        gridViewCGC.OptionsView.ShowAutoFilterRow = !gridViewCGC.OptionsView.ShowAutoFilterRow;
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Set the value of the CGC number when changing to make it available when validating the record
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void gridViewCGC_CellValueChanging(object sender, CellValueChangedEventArgs e)
+        {
+            var newProject = gridViewCGC.GetRow(e.RowHandle) as CGCProject;
+            try
+            {
+                if (newProject != null) newProject.CgcNumber = gridViewCGC.ActiveEditor.Text;
+            }
+            catch (NullReferenceException)
+            {
+                //Null value is expected here, no handling code is required
+            }
+        }
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Buildings Utility Rates
+
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Calls a method to update the indicator text in each row to show the building in it
+        /// </summary>
+        /// <param name="sender">the sender of the even</param>
+        /// <param name="e">event args</param>
+        private void gridViewBuildingUtilityRates_CustomDraw(object sender, RowIndicatorCustomDrawEventArgs e)
+        {
+            UpdateIndictors(e);
+        }
+
+        /// <summary>
+        /// Calls a method to update the values in the building utility rates table and set the form status as changed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void gridViewBuildingUtilityRates_CellValueChanging(object sender, CellValueChangedEventArgs e)
+        {
+            //UpdateUtilityRatesChangesTable(e);
+
+            //buildingUtilityRatesTable.Rows[e.RowHandle][e.Column.Name] = false;
+            //gridViewBuildingUtilityRates.SetFocusedRowCellValue(e.Column, false);
+            //GridViewPostValues(gridViewBuildingUtilityRates);
+            //gridViewBuildingUtilityRates.RefreshData();
+
+            if (!Convert.ToBoolean(e.Value))
+            {
+                bool keepChecked = false;
+                var projectBuildings = new Dictionary<int, Building>();
+                var projectUtilityRates = new Dictionary<int, UtilityRate>();
+                FillProjectBuildingsDictionary(projectBuildings);
+                FillProjectUtilityRatesDictionary(projectUtilityRates);
+
+
+                Building currentRowBuilding;
+                int id = -1;
+                try
+                {
+                    id = Convert.ToInt32(buildingUtilityRatesTable.Rows[e.RowHandle]["Id"].ToString());
+                }
+                catch (OverflowException OverflowException)
+                {
+                    Application.Logger.LogException(OverflowException);
+                }
+                catch (InvalidCastException invalidCastException)
+                {
+                    Application.Logger.LogException(invalidCastException);
+                }
+                catch (FormatException formatException)
+                {
+                    Application.Logger.LogException(formatException);
+                }
+
+                projectBuildings.TryGetValue(id, out currentRowBuilding);
+
+                var buildingUtilityRates = new Dictionary<int, BuildingUtilityRate>();
+
+                foreach (BuildingUtilityRate assignedUtilityRate in currentRowBuilding.AssignedUtilityRates)
+                {
+                    if (!buildingUtilityRates.ContainsKey(assignedUtilityRate.UtilityRateId))
+                    {
+                        buildingUtilityRates.Add(assignedUtilityRate.UtilityRateId, assignedUtilityRate);
+                    }
+                }
+
+                int Id =
+                    ((UtilityRate)
+                     buildingUtilityRatesTable.Columns[e.Column.FieldName].ExtendedProperties["UtilityRateObject"]).Id.
+                        Value;
+                foreach (Component component in currentRowBuilding.Components)
+                {
+                    foreach (ComponentUtilityInfo cui in component.ComponentUtilityInfos)
+                    {
+                        if (cui.UtilityRateId == Id)
+                        {
+                            keepChecked = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (keepChecked)
+                {
+                    buildingUtilityRatesTable.Rows[e.RowHandle][e.Column.Name] = true;
+                    gridViewBuildingUtilityRates.SetFocusedRowCellValue(e.Column, true);
+                    MessageBox.Show(
+                        THE_CURRENT_RATE_CANT_BE_UNASSIGNED_ERROR,
+                        UIBLLInteraction.ERROR_MESSAGE_TITLE,
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                    buildingUtilityRatesTable.Rows[e.RowHandle][e.Column.Name] = true;
+                    gridViewBuildingUtilityRates.SetFocusedRowCellValue(e.Column, true);
+                    GridViewPostValues(gridViewBuildingUtilityRates);
+                    gridViewBuildingUtilityRates.RefreshData();
+                }
+                else
+                {
+                    buildingUtilityRatesTable.Rows[e.RowHandle][e.Column.Name] = e.Value;
+                    gridViewBuildingUtilityRates.SetFocusedRowCellValue(e.Column, e.Value);
+                    GridViewPostValues(gridViewBuildingUtilityRates);
+                    gridViewBuildingUtilityRates.RefreshData();
+
+                    try
+                    {
+                        TabProject.NotifyPropertyChanged(Project.NAME_PROPERTY_NAME);
+                    }
+                    catch (NullReferenceException nullReferenceException)
+                    {
+                        Application.Logger.LogException(nullReferenceException);
+                        //UIBLLInteraction.Instance.ShowException(nullReferenceException);
+                    }
+                }
+            }
+            else
+            {
+                buildingUtilityRatesTable.Rows[e.RowHandle][e.Column.Name] = e.Value;
+                gridViewBuildingUtilityRates.SetFocusedRowCellValue(e.Column, e.Value);
+                GridViewPostValues(gridViewBuildingUtilityRates);
+                gridViewBuildingUtilityRates.RefreshData();
+
+                try
+                {
+                    TabProject.NotifyPropertyChanged(Project.NAME_PROPERTY_NAME);
+                }
+                catch (NullReferenceException nullReferenceException)
+                {
+                    Application.Logger.LogException(nullReferenceException);
+                    //UIBLLInteraction.Instance.ShowException(nullReferenceException);
+                }
+            }
+        }
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Components
+
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Call a method to open the clicked component tab page
+        /// </summary>
+        /// <param name="sender">The sender of the event</param>
+        /// <param name="e">The event args</param>
+        private void Components_DoubleClick(object sender, EventArgs e)
+        {
+            GridHitInfo gridViewComponentsHitInfo =
+                gridViewComponents.CalcHitInfo(gridControlComponents.PointToClient(Cursor.Position));
+            if (gridViewComponentsHitInfo.InRow)
+            {
+                OpenComponent();
+            }
+        }
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Utility Rates
+
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Calls a method to delete the selected utility rates
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void gridControlEnterUtilityRates_EmbeddedNavigator_ButtonClick(object sender,
+                                                                                NavigatorButtonClickEventArgs e)
+        {
+            switch (e.Button.ButtonType)
+            {
+                case NavigatorButtonType.Remove:
+                    e.Handled = true;
+                    bool notAllRatesRemoved = false;
+                    try
+                    {
+                        int[] selectedUtilityRates = gridViewEnterUtilityRates.GetSelectedRows();
+                        //Move the entries to a hashtable so it won't make us a problem if the handles change
+                        //in the UI when removing items starts
+                        var indexes = new Hashtable();
+                        foreach (int handle in selectedUtilityRates)
+                        {
+                            indexes.Add(handle, gridViewEnterUtilityRates.GetDataSourceRowIndex(handle));
+                        }
+                        foreach (int handle in indexes.Keys)
+                        {
+                            try
+                            {
+                                bool toRemove = true;
+                                foreach (Building building in TabProject.Buildings)
+                                {
+                                    foreach (BuildingUtilityRate buildingUtilityRate in building.AssignedUtilityRates)
+                                    {
+                                        int index = -1;
+                                        try
+                                        {
+                                            index = Convert.ToInt32(indexes[handle]);
+                                        }
+                                        catch (OverflowException OverflowException)
+                                        {
+                                            Application.Logger.LogException(OverflowException);
+                                        }
+                                        catch (InvalidCastException invalidCastException)
+                                        {
+                                            Application.Logger.LogException(invalidCastException);
+                                        }
+                                        catch (FormatException formatException)
+                                        {
+                                            Application.Logger.LogException(formatException);
+                                        }
+                                        UtilityRate currentRateToRemove = TabProject.UtilityRates[index];
+                                        if (buildingUtilityRate.UtilityRate == currentRateToRemove)
+                                        {
+                                            toRemove = false;
+                                            notAllRatesRemoved = true;
+                                        }
+                                        //if (buildingUtilityRate.UtilityRateId == currentRateToRemove.Id)
+                                        //{
+                                        //    toRemove = false;
+                                        //    notAllRatesRemoved = true;
+                                        //}
+                                    }
+                                }
+                                if (toRemove)
+                                {
+                                    int index = -1;
+                                    try
+                                    {
+                                        index = Convert.ToInt32(indexes[handle]);
+                                    }
+                                    catch (OverflowException OverflowException)
+                                    {
+                                        Application.Logger.LogException(OverflowException);
+                                    }
+                                    catch (InvalidCastException invalidCastException)
+                                    {
+                                        Application.Logger.LogException(invalidCastException);
+                                    }
+                                    catch (FormatException formatException)
+                                    {
+                                        Application.Logger.LogException(formatException);
+                                    }
+                                    TabProject.UtilityRates.RemoveAt(index);
+                                }
+                            }
+                            catch (ArgumentException argumentException)
+                            {
+                                Application.Logger.LogException(argumentException);
+                            }
+                        }
+                    }
+                    catch (NullReferenceException nullReferenceException)
+                    {
+                        Application.Logger.LogException(nullReferenceException);
+                        //UIBLLInteraction.Instance.ShowException(nullReferenceException);
+                    }
+                    if (notAllRatesRemoved)
+                    {
+                        MessageBox.Show(
+                            NOT_ALL_RATES_REMOVED_ERROR,
+                            UIBLLInteraction.ERROR_MESSAGE_TITLE,
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
+                    }
+                    break;
+                case NavigatorButtonType.Custom:
+                    e.Handled = true;
+                    if (e.Button.Hint == "ShowHideFilter")
+                    {
+                        gridViewEnterUtilityRates.OptionsView.ShowAutoFilterRow =
+                            !gridViewEnterUtilityRates.OptionsView.ShowAutoFilterRow;
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Initialize the dates for the new utility rate
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void gridViewEnterUtilityRates_InitNewRow(object sender, InitNewRowEventArgs e)
+        {
+            var newUtilityRate = gridViewEnterUtilityRates.GetRow(e.RowHandle) as UtilityRate;
+            try
+            {
+                if (newUtilityRate != null)
+                {
+                    newUtilityRate.ParentProject = TabProject;
+                    newUtilityRate.ProjectID = TabProject.Id;
+                }
+            }
+            catch (NullReferenceException nullReferenceException)
+            {
+                Application.Logger.LogException(nullReferenceException);
+                //UIBLLInteraction.Instance.ShowException(nullReferenceException);
+            }
+        }
+
+        /// <summary>
+        /// This event will monitor changes in the utility and sets the default unit for the rate after selecting the 
+        /// utility
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void gridViewEnterUtilityRates_CellValueChanged(object sender, CellValueChangedEventArgs e)
+        {
+            if (e.Column.FieldName == UtilityRate.UTILITY_TYPE_ID_PROPERTY_NAME)
+            {
+                var currentRate = gridViewEnterUtilityRates.GetFocusedRow() as UtilityRate;
+                if (currentRate != null)
+                {
+                    try
+                    {
+                        var utilityTypesDictionary = new Dictionary<int, UtilityType>();
+                        try
+                        {
+                            foreach (UtilityType utilityType in BusinessLayerCache.Instance.GetAllUtilityTypes())
+                            {
+                                utilityTypesDictionary.Add(utilityType.Id.Value, utilityType);
+                            }
+                        }
+                        catch (DataAccessException dataAccessException)
+                        {
+                            Application.Logger.LogException(dataAccessException);
+                        }
+                        UtilityType currentUtilityType;
+                        utilityTypesDictionary.TryGetValue(currentRate.UtilityTypeId.Value, out currentUtilityType);
+                        if (currentUtilityType != null)
+                        {
+                            currentRate.UnitID = currentUtilityType.DefaultUnitId;
+                        }
+                    }
+                    catch (NullReferenceException nullReferenceException)
+                    {
+                        Application.Logger.LogException(nullReferenceException);
+                    }
+                    catch (InvalidOperationException invalidOperationException)
+                    {
+                        Application.Logger.LogException(invalidOperationException);
+                    }
+                }
+                gridViewEnterUtilityRates.RefreshRow(e.RowHandle);
+            }
+        }
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Buildings
+
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Calls a method to add new building or remove the selected buildings
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void gridControlBuildingsAdded_EmbeddedNavigator_ButtonClick(object sender,
+                                                                             NavigatorButtonClickEventArgs e)
+        {
+            switch (e.Button.ButtonType)
+            {
+                case NavigatorButtonType.Append:
+                    e.Handled = true;
+                    AddNewBuilding();
+                    break;
+                case NavigatorButtonType.Remove:
+                    isDeletingBuildings = true;
+                    e.Handled = true;
+                    //We use this to cancel responding the events and refill the group again after the 
+                    //removing is done
+                    //Bug-Fix 253: When remving buildings that contains components from a project while the
+                    //building in selected in the nav panel, some components remain the panel.
+                    //Fixed by allowing components events while deleting the buildings.
+                    //UIBLLInteraction.Instance.BuildingsGroup.RespondToEvent = false;
+                    //UIBLLInteraction.Instance.ComponentsGroup.RespondToEvent = false;
+                    //UIBLLInteraction.Instance.AllowComponentsFilteration = false;
+                    DeleteSelectedBuildings();
+                    if (UIBLLInteraction.Instance.GetNavSelectedProject() == TabProject)
+                    {
+                        //UIBLLInteraction.Instance.BuildingsGroup.FillGroup();
+                        //UIBLLInteraction.Instance.ComponentsGroup.FillGroup();
+                    }
+                    //UIBLLInteraction.Instance.BuildingsGroup.RespondToEvent = true;
+                    //UIBLLInteraction.Instance.ComponentsGroup.RespondToEvent = true;
+                    UIBLLInteraction.Instance.AllowComponentsFilteration = true;
+                    isDeletingBuildings = false;
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Open the double clicked building
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void gridViewBuildingsAdded_DoubleClick(object sender, EventArgs e)
+        {
+            GridHitInfo gridViewBuildingsAddedHitInfo =
+                gridViewBuildingsAdded.CalcHitInfo(gridControlBuildingsAdded.PointToClient(Cursor.Position));
+            if (gridViewBuildingsAddedHitInfo.InRow)
+            {
+                OpenBuilding();
+            }
+        }
+
+        /// <summary>
+        /// Open the double clicked component in the building gridview
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void gridViewBuildingComponents_DoubleClick(object sender, EventArgs e)
+        {
+            BaseView currentBaseView = gridViewBuildingsAdded.GetDetailView(gridViewBuildingsAdded.FocusedRowHandle, 0);
+            var currentGridView = currentBaseView as GridView;
+            if (currentGridView != null)
+            {
+                var openedObject = currentGridView.GetFocusedRow() as EntityBusinessObject;
+                try
+                {
+                    UIBLLInteraction.Instance.Open(ref openedObject);
+                }
+                catch (NullReferenceException nullReferenceException)
+                {
+                    Application.Logger.LogException(nullReferenceException);
+                    //UIBLLInteraction.Instance.ShowException(nullReferenceException);
+                }
+            }
+        }
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Project Controls
+
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Prevent selecting a specific status value unless to scenario types where added to the project
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void lookUpEditStatus_EditValueChanged(object sender, EventArgs e)
+        {
+            if (gridLookUpEditStatus.Focused)
+            {
+                CheckIfStatusValueAllowed();
+            }
+        }
+
+        /// <summary>
+        /// Calls a method to remove the selected contacts if the remove button was clicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void gridControlContacts_EmbeddedNavigator_ButtonClick(object sender, NavigatorButtonClickEventArgs e)
+        {
+            switch (e.Button.ButtonType)
+            {
+                case NavigatorButtonType.Remove:
+                    e.Handled = true;
+                    DeleteSelectedGridViewObjects(gridViewContacts, TabProject.Contacts);
+                    break;
+                case NavigatorButtonType.Custom:
+                    e.Handled = true;
+                    if (e.Button.Hint == "ShowHideFilter")
+                    {
+                        gridViewContacts.OptionsView.ShowAutoFilterRow = !gridViewContacts.OptionsView.ShowAutoFilterRow;
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Refreshes the fields of BTC when its values changes
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void gridLookUpEditBTC_EditValueChanged(object sender, EventArgs e)
+        {
+            UpdateBTCFields();
+        }
+
+        /// <summary>
+        /// Refreshes the fields of WFC when its values changes
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void gridLookUpEditWFC_EditValueChanged(object sender, EventArgs e)
+        {
+            UpdateWFCFields();
+        }
+
+        /// <summary>
+        /// Clears the filter after opening
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DropDown_QueryPopUp(object sender, CancelEventArgs e)
+        {
+            ((GridLookUpEdit) sender).Properties.View.ActiveFilterCriteria = string.Empty;
+            ((GridLookUpEdit) sender).Properties.View.ActiveFilterString = string.Empty;
+        }
+
+        private void dateEditStartDate_EditValueChanged(object sender, EventArgs e)
+        {
+            dxErrorProviderMain.SetError(dateEditStartDate, string.Empty, ErrorType.None);
+            dxErrorProviderMain.SetError(dateEditCompletionDate, string.Empty, ErrorType.None);
+            if (dateEditStartDate.EditValue != null)
+            {
+                if (dateEditCompletionDate.DateTime != DateTime.MinValue)
+                {
+                    if (dateEditStartDate.DateTime > dateEditCompletionDate.DateTime)
+                    {
+                        dxErrorProviderMain.SetError(dateEditStartDate, START_DATE_ERROR, ErrorType.Critical);
+                    }
+                }
+            }
+        }
+
+        private void dateEditCompletionDate_EditValueChanged(object sender, EventArgs e)
+        {
+            dxErrorProviderMain.SetError(dateEditStartDate, string.Empty, ErrorType.None);
+            dxErrorProviderMain.SetError(dateEditCompletionDate, string.Empty, ErrorType.None);
+            if (dateEditCompletionDate.EditValue != null)
+            {
+                if (dateEditStartDate.EditValue != null)
+                {
+                    if (dateEditStartDate.DateTime > dateEditCompletionDate.DateTime)
+                    {
+                        dxErrorProviderMain.SetError(dateEditCompletionDate, COMPLETION_DATE_ERROR, ErrorType.Critical);
+                    }
+                }
+            }
+        }
+
+        private void simpleButtonImportFromBSG_Click(object sender, EventArgs e)
+        {
+            PerfromImportFromBSG();
+        }
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Binding complete and property changed events
+
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Calls a method to notify the project when the specified collection changes
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Contacts_ListChanged(object sender, ListChangedEventArgs e)
+        {
+            if (TabProject != null && TabState != EntityTabState.Unchanged)
+            {
+                TabProject.NotifyPropertyChanged(Project.CONTACTS_PROPERTY_NAME);
+            }
+        }
+
+        /// <summary>
+        /// Calls a method to notify the project when the specified collection changes
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UtilityRates_ListChanged(object sender, ListChangedEventArgs e)
+        {
+            if (TabProject != null && TabState != EntityTabState.Unchanged)
+            {
+                TabProject.NotifyPropertyChanged(Project.UTILITY_RATES_PROPERTY_NAME);
+            }
+        }
+
+        /// <summary>
+        /// Calls a method to notify the project when the specified collection changes
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Buildings_ListChanged(object sender, ListChangedEventArgs e)
+        {
+            if (TabProject != null && e.ListChangedType == ListChangedType.ItemDeleted &&
+                TabState != EntityTabState.Unchanged)
+            {
+                TabProject.NotifyPropertyChanged(Project.BUILDINGS_PROPERTY_NAME);
+            }
+            if (e.ListChangedType == ListChangedType.ItemAdded |
+                e.ListChangedType == ListChangedType.ItemDeleted)
+            {
+                BeforeSaveActions();
+                BindBuildingsUtilityRates();
+            }
+        }
+
+        /// <summary>
+        /// Calls a method to notify the project when the specified collection changes
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Components_ListChanged(object sender, ListChangedEventArgs e)
+        {
+            if (TabProject != null && TabState != EntityTabState.Unchanged)
+            {
+                //TabProject.NotifyPropertyChanged(COMPONENTS_DATAMEMBER);
+            }
+        }
+
+        private void CgcProjects_ListChanged(object sender, ListChangedEventArgs e)
+        {
+            if (TabProject != null && TabState != EntityTabState.Unchanged)
+            {
+                TabProject.NotifyPropertyChanged(Project.CGC_PROJECTS_PROPERTY_NAME);
+            }
+        }
+
+        /// <summary>
+        /// Refreshes the customers textboxes when a change occurs
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Customers_ListChanged(object sender, ListChangedEventArgs e)
+        {
+            UpdateBTCFields();
+            UpdateWFCFields();
+        }
+
+        private void gridViewEnterUtilityRates_CellValueChanging(object sender, CellValueChangedEventArgs e)
+        {
+            //UtilityRate currentRate = gridViewEnterUtilityRates.GetRow(e.RowHandle) as UtilityRate;
+
+            //try
+            //{
+            //    if (e.Column.FieldName == UtilityRate.RATE_NAME_PROPERTY_NAME)
+            //    {
+            //        currentRate.RateName = gridViewEnterUtilityRates.ActiveEditor.Text;
+            //    }
+            //    currentRate.Validate();
+            //}
+            //catch (NullReferenceException nullReferenceException)
+            //{
+            //}
+        }
+
+        private void gridControlMilestones_EmbeddedNavigator_ButtonClick(object sender, NavigatorButtonClickEventArgs e)
+        {
+            switch (e.Button.ButtonType)
+            {
+                case NavigatorButtonType.Custom:
+                    e.Handled = true;
+                    if (e.Button.Hint == "ShowHideFilter")
+                    {
+                        gridViewMilestones.OptionsView.ShowAutoFilterRow =
+                            !gridViewMilestones.OptionsView.ShowAutoFilterRow;
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        //---------------------------------------------------------------------------------------------
+
+        public void GridView_ShownEditor(object sender, EventArgs e)
+        {
+            //UIBLLInteraction.Instance.MainForm.spellChecker1.SetShowSpellCheckMenu((sender as GridView).ActiveEditor, true);
+        }
+
+        private void spinEditEnergyGuaranteerisk_EditValueChanging(object sender, DevExpress.XtraEditors.Controls.ChangingEventArgs e)
+        {
+            if(TabProject!= null)
+            {
+                if(TabProject.StatusId == 8)
+                {
+                    if(Convert.ToInt16(e.NewValue) == 0)
+                    {
+                        e.Cancel = true;
+                        UIBLLInteraction.Instance.mainErrorProvider.SetError(spinEditEnergyGuaranteerisk,
+                        "This field's value can't be 0 while the project status is ESCO Implemented.",
+                        ErrorType.Information);    
+                    }
+                    else
+                    {
+                        UIBLLInteraction.Instance.mainErrorProvider.SetError(spinEditEnergyGuaranteerisk,string.Empty,ErrorType.None);
+                    }                    
+                }
+                else
+                {
+                    UIBLLInteraction.Instance.mainErrorProvider.SetError(spinEditEnergyGuaranteerisk,string.Empty,ErrorType.None);
+                }
+            }
+        }
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+    }
+}

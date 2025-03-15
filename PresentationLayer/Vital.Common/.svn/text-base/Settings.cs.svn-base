@@ -1,0 +1,246 @@
+﻿using System;
+using System.Configuration;
+using System.Data.SqlClient;
+
+namespace Equiom.Tco.Common
+{
+    /// <summary>
+    /// Holds the configuration settings for TCO project
+    /// </summary>
+    /// <remarks>
+    /// .Net provides two build in methods for handling config settings:
+    /// 1) using the ConfigurationManager class, but this methods is not type safe and doesn't cache the settings.
+    /// 2) using the Settings Designer, this method is type safe and does cache the settings but: 
+    ///     a) it requires that all settings have default values (bad design)
+    ///     b) it will not throw any exceptions if the value for the setting is wrong (again bad design).
+    ///     c) it will through NullReferenceException if the setting doesn't exist (another bad design).
+    ///     
+    /// This is why we are not using either way, and are creating our custom config manager
+    /// </remarks>
+    public class Settings
+    {
+        #region Constants
+
+        const string CONFIG_SETTING_LOG_TO_EVENT_LOG = "LogToEventLog";
+        const string CONFIG_SETTING_TCO_DB_CONNECTION_STRING = "TcoDBConnectionString";
+        //const string CONFIG_SETTING_TCO_CACHE_DB_CONNECTION_STRING = "TcoCacheDBConnectionString";
+
+        //SQL errors
+        const string CONNECTION_TIMEOUT_SQL_ERROR_MESSAGE = "An error has occurred while establishing a connection to the server";
+        const int DATABASE_NOT_FOUND_SQL_EXCEPTION_ERROR_NUMBER = 4060;
+
+        #endregion
+
+        #region Fields
+
+        private bool _logToEventLog = false;
+        private string _TcoDBConnectionString = null;
+        //private string _TcoCacheDBConnectionString = null;
+
+        private static Settings _instance = null;
+
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        /// True if messages should be logged to EventLog, false otherwise
+        /// </summary>
+        public bool LogToEventLog
+        {
+            get
+            {
+                return _logToEventLog;
+            }
+        }
+
+        /// <summary>
+        /// Returns the connection string to TCO database
+        /// </summary>
+        public string TcoDBConnectionString
+        {
+            get
+            {
+                return _TcoDBConnectionString;
+            }
+        }
+
+        ///// <summary>
+        ///// Returns the connection string to TCO Cache database
+        ///// </summary>
+        //public string TcoCacheDBConnectionString
+        //{
+        //    get
+        //    {
+        //        return _TcoCacheDBConnectionString;
+        //    }
+        //}
+
+        //TODO: add the rest of the settings for the project
+        #endregion
+
+        #region Constructors
+
+        /// <summary>
+        /// Initializes the application settings.
+        /// </summary>
+        private Settings()
+        {
+            //initialize member variables from config settings
+            _logToEventLog              = GetBoolConfigSetting(CONFIG_SETTING_LOG_TO_EVENT_LOG);
+            _TcoDBConnectionString      = GetConnectionStringConfigSetting(CONFIG_SETTING_TCO_DB_CONNECTION_STRING);
+           // _TcoCacheDBConnectionString = GetConnectionStringConfigSetting(CONFIG_SETTING_TCO_CACHE_DB_CONNECTION_STRING);
+        }
+
+        /// <summary>
+        /// Ensures only one instance of the class is created
+        /// </summary>
+        internal static Settings GetInstance()
+        {
+            if (_instance == null)
+            {
+                _instance = new Settings();
+            }
+
+            return _instance;
+        }
+
+        #endregion
+ 
+        #region Settings Retrieval Methods
+
+        // helper method to get setting value as string
+        private static string GetConfigSettingValue(string settingName)
+        {
+            string value = null;
+
+            //Get the setting value (this method doesn't throw exceptions!, bad design)
+            value = ConfigurationManager.AppSettings[settingName];
+
+            //throw exception if setting not found
+            if (value == null)
+            {
+                throw new ConfigurationException(ConfigurationExceptionErrorCode.SettingNotFound, settingName, value);
+            }
+
+            return value;
+        }
+
+        /// <summary>
+        /// Returns the value of a string configuration setting
+        /// </summary>
+        /// <param name="settingName">Setting name</param>
+        /// <returns>Value of the setting</returns>
+        private static string GetStringConfigSetting(string settingName)
+        {
+            string value = null;
+
+            try
+            {
+                //get value as string
+                value = GetConfigSettingValue(settingName);
+
+                //return value
+                return value;
+            }
+            catch (Exception exp)
+            {
+                throw GenerateProperConfigurationException(exp, settingName, value);
+            }
+        }
+
+        /// <summary>
+        /// Returns the value of a boolean configuration setting
+        /// </summary>
+        /// <param name="settingName">Setting name</param>
+        /// <returns>Value of the setting</returns>
+        private static bool GetBoolConfigSetting(string settingName)
+        {
+            string value = null;
+
+            try
+            {
+                //get value as string
+                value = GetConfigSettingValue(settingName);
+
+                //conver value to correct type
+                return bool.Parse(value);
+            }
+            catch (Exception exp)
+            {
+                throw GenerateProperConfigurationException(exp, settingName, value);
+            }
+
+        }
+
+        /// <summary>
+        /// Returns the value of a string configuration setting
+        /// </summary>
+        /// <param name="settingName">Setting name</param>
+        /// <returns>Value of the setting</returns>
+        private static string GetConnectionStringConfigSetting(string settingName)
+        {
+            string value = null;
+
+            try
+            {
+                //get value as string
+                value = GetConfigSettingValue(settingName);
+
+                //open the connection string then immediatly close it to verify the connection string
+                using (SqlConnection connection = new SqlConnection(value))
+                {
+                    connection.Open();
+                }
+
+            }
+            catch (ArgumentException)
+            {
+                throw new ConfigurationException(ConfigurationExceptionErrorCode.ConnectionStringSettingIsInvalid, settingName, value);
+            }
+            catch (SqlException sqlException)
+            {
+                if (sqlException.Number == DATABASE_NOT_FOUND_SQL_EXCEPTION_ERROR_NUMBER)
+                {
+                    throw new ConfigurationException(ConfigurationExceptionErrorCode.ConnectionStringSettingHasInvalidDatabaseName, settingName, value);
+                }
+                else if(sqlException.Message.Contains(CONNECTION_TIMEOUT_SQL_ERROR_MESSAGE))
+                {
+                    throw new ConfigurationException(ConfigurationExceptionErrorCode.ConnectionStringTimeout, settingName);
+                }
+                else
+                {
+                    GenerateProperConfigurationException(sqlException, settingName, value);
+                }
+            }
+            catch (Exception exp)
+            {
+                throw GenerateProperConfigurationException(exp, settingName, value);
+            }
+
+            //return value
+            return value;
+ 
+        }
+
+        //TODO: add more type-safe methods as needed
+        #endregion
+
+        #region Helper Methods
+
+        //helper method to generate proper configuration exception based on the original exception that occured during setting retrieval
+        private static ConfigurationException GenerateProperConfigurationException(Exception originalException, string settingName, string settingValue)
+        {
+            if ((originalException is FormatException) || (originalException is OverflowException))
+            {
+                return new ConfigurationException(ConfigurationExceptionErrorCode.SettingValueIsInvalid,settingName, settingValue, originalException);
+            }
+            else
+            {
+                return new ConfigurationException(ConfigurationExceptionErrorCode.GeneralConfigurationError,settingName, originalException);
+            }
+        }
+        #endregion
+    }
+
+}

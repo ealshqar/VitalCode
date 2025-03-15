@@ -1,0 +1,669 @@
+//////////////////////////////////////////////////////////////////////////////
+//  
+//  <sourcefile name="XtraUserControlComponentsList.cs" creationdate="2/4/09" owner="anasa" >
+//
+//      <project>McKinstry TCO Application</project>
+//  
+//      <description>The tab page for the list of components in the tool</description>
+//      
+//      <copyright year="2008" company="McKinstry">
+//          <notice>
+//              Copyright © 2008 McKinstry. All rights reserved
+//  
+//              Developed for McKinstry by
+//                  Equiom - MENA
+//                  www.equiom.com
+//          </notice>
+//  
+//  	<history date="2/4/09" modby="anasa">created</history>
+//  
+//////////////////////////////////////////////////////////////////////////////
+
+#region Library Calls
+
+//---------------------------------------------------------------------------------------------
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows.Forms;
+using DevExpress.Utils;
+using DevExpress.XtraGrid.Views.Base;
+using DevExpress.XtraGrid.Views.Grid;
+using DevExpress.XtraGrid.Views.Grid.ViewInfo;
+using Equiom.Tco.BusinessLogicLayer;
+using Equiom.Tco.DataAccessLayer;
+using Application=Equiom.Tco.Common.Application;
+using Component=Equiom.Tco.BusinessLogicLayer.Component;
+using DevExpress.XtraEditors;
+//---------------------------------------------------------------------------------------------
+
+#endregion
+
+namespace TCO.DesktopClientDevexpress.UI_Components.User_Controls.Main_Tabs
+{
+    public partial class XtraUserControlComponentsList : XtraTabPageEntity
+    {
+        #region Constants
+
+        //---------------------------------------------------------------------------------------------
+        private const string COMPONENT_HAS_NO_VALUE_ERROR =
+            "The component you selected is empty or corrupted.";
+
+        private const string PARENT_PROJECT_IS_ADDED_ERROR =
+            "The parent project is already added to the navigation panel.";
+
+        private const string PROJECT_HAS_NO_VALUE_ERROR =
+            "The project you selected has no value and can't be added to navigation panel.";
+
+        private const string PROJECT_VIEW_HAS_NO_VALUE_ERROR = "Project view record has no value";
+        private const string COMPONENT_COPY_CONFIRM = "Are you sure you want to create a copy of this component(s)?";
+        private const string COMPONENT_COPIED_OPENED_ERROR = "You are not allowed to copy a component while editing it, please save or cancel changes on the opened tab first.";
+        private const string COMPONENT_TO_OPENED_ERROR = "You are not allowed to copy a component to a building while editing it or its project, please save or cancel changes on the building or project opened tab first.";
+        private const string PROJECT_LOCKED_ERROR = "The selected project is locked and no items can be copied into it.";
+        private const string COMPONENT_COPY_WARNING = "It is your responsibility to thoroughly check all Component First Cost, Capex, Asset Impacts and O&M Information for your copy.";
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Fields
+
+        //---------------------------------------------------------------------------------------------
+        private bool areComponentFieldsSet;
+        private BusinessObjectList<ComponentView> componentsListViewCollection;
+        private Dictionary<int, ComponentView> componentsListViewDictionary;
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Properties
+
+        //---------------------------------------------------------------------------------------------
+        public BusinessObjectList<ComponentView> ComponentsListViewCollection
+        {
+            get { return componentsListViewCollection; }
+            set { componentsListViewCollection = value; }
+        }
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Constructors
+
+        //---------------------------------------------------------------------------------------------
+        public XtraUserControlComponentsList()
+        {
+            InitializeComponent();
+        }
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Methods
+
+        #region Overriding Methods
+
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Initialize the binding for the controls in the tab
+        /// </summary>
+        public override void SetBinding()
+        {
+            SetComponentFieldNames();
+            BindComponents();
+        }
+
+        /// <summary>
+        /// Refreshes the current collection
+        /// </summary>
+        public override void CustomRefresh()
+        {
+            gridControlComponentsList.DataBindings.Clear();
+            gridControlComponentsList.DataSource = null;
+            BindComponents();
+        }
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region UI Methods
+
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Set the names of the field for the columns of the buildings view
+        /// </summary>
+        private void SetComponentFieldNames()
+        {
+            if (!areComponentFieldsSet)
+            {
+                areComponentFieldsSet = true;
+
+                gridColumnComponentName.FieldName = Component.NAME_PROPERTY_NAME;
+                gridColumnComponentDescription.FieldName = ComponentView.PROPOSED_DESCRIPTION_PROPERTY_NAME;
+                gridColumnComponentBuildingName.FieldName = ComponentView.BUILDING_NAME_PROPERTY_NAME;
+                gridColumnCRMBuildingID.FieldName = ComponentView.CRM_BUILDING_ID_PROPERTY_NAME;
+                gridColumnComponentProjectName.FieldName = ComponentView.PROJECT_NAME_PROPERTY_NAME;
+                gridColumnComponentWorkForCustomer.FieldName = ComponentView.WORK_FOR_CUSTOMER_PROPERTY_NAME;
+                gridColumnFirstCost.FieldName = ComponentView.FIRST_COST_PROPERTY_NAME;
+                gridColumnComponentState.FieldName = ComponentView.STATE_PROPERTY_NAME;
+                gridColumnComponentStartingCondition.FieldName = ComponentView.STARTING_CONDITION_PROPERTY_NAME;
+                gridColumnComponentDateCreated.FieldName = ComponentView.CREATED_DATE_TIME_PROPERTY_NAME;
+                gridColumnComponentDateLastModified.FieldName = ComponentView.LAST_MODIFIED_DATE_TIME_PROPERTY_NAME;
+                gridColumnImplemented.FieldName = ComponentView.IMPLEMENTED_PROPERTY_NAME;
+                gridColumnComponentClosestMatch.FieldName = ComponentView.CLOSEST_MATCH_PROPERTY_NAME;
+                gridColumnComponentOtherMatches.FieldName = ComponentView.OTHER_CLOSEST_MATCHES_PROPERTY_NAME;
+                gridColumnBuildingSF.FieldName = "BuildingSF";
+                gridColumnTechnicalContact.FieldName = "TechnicalContact";
+                gridColumnPrimaryContact.FieldName = "PrimaryContact";
+                gridColumnTcoProjectNumber.FieldName = "TcoProjectNumber";
+                gridColumnCgcProjectNumbers.FieldName = "CgcProjectNumbers";
+                gridColumnBuildingTypes.FieldName = "BuildingTypes";
+                gridColumnVerticalMarket.FieldName = "VerticalMarket";
+                gridColumnEnergySimplePayback.FieldName = "EnergySimplePayback";
+                gridColumnCity.FieldName = ComponentView.CITY_PROPERTY_NAME;
+            }
+        }
+
+        /// <summary>
+        /// Binds the grid control and the drop downs with the collection of data
+        /// </summary>
+        public void BindComponents()
+        {
+            try
+            {
+                componentsListViewCollection = ComponentView.GetAll();
+            }
+            catch (DataAccessException dataAccessException)
+            {
+                Application.Logger.LogException(dataAccessException);
+                UIBLLInteraction.Instance.ShowException(dataAccessException);
+            }
+            if (componentsListViewCollection != null)
+            {
+                //Issue an event even when adding/removing items and not just for item changes
+                componentsListViewCollection.RaiseListChangedEvents = true;
+                componentsListViewCollection.ListChanged += componentsListViewCollection_ListChanged;
+
+                //Assign the collection to the grid's datasource
+                gridControlComponentsList.DataSource = componentsListViewCollection;
+
+                //Create a dictionary to make it easy to find objects
+                componentsListViewDictionary = new Dictionary<int, ComponentView>();
+                foreach (ComponentView building in componentsListViewCollection)
+                {
+                    componentsListViewDictionary.Add(building.Id, building);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Refresh the gridControlBuildingsList control when the list of buildings changes
+        /// </summary>
+        private void RefreshComponentsListGrid()
+        {
+            gridControlComponentsList.RefreshDataSource();
+        }
+
+        /// <summary>
+        /// Adds the parent project to the collection of the projects
+        /// </summary>
+        /// <param name="parentProjectId"></param>
+        /// <param name="isOpening"></param>
+        private static void AddParentProjectToNavigationPanel(int parentProjectId, bool isOpening)
+        {
+            //Variable to hold the value of the found project if it was found
+            Project checkProject = null;
+            if (UIBLLInteraction.Instance.ProjectsCollection.Count != 0)
+            {
+                foreach (Project project in UIBLLInteraction.Instance.ProjectsCollection)
+                {
+                    if (project != null)
+                    {
+                        if (project.Id.Value == parentProjectId)
+                        {
+                            checkProject = project;
+                            break;
+                        }
+                    }
+                }
+            }
+            //If the project is not in the panel, get it from the DB and create an object for it
+            //and add it to the collection of projects.
+            if (checkProject == null)
+            {
+                try
+                {
+                    checkProject = Project.GetById(parentProjectId);
+                    if (checkProject != null)
+                    {
+                        UIBLLInteraction.Instance.ProjectsCollection.Add(checkProject);
+                    }
+                    else
+                    {
+                        MessageBox.Show(PROJECT_HAS_NO_VALUE_ERROR, UIBLLInteraction.ERROR_MESSAGE_TITLE,
+                                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        Application.Logger.LogError(PROJECT_VIEW_HAS_NO_VALUE_ERROR);
+                    }
+                }
+                catch (DataAccessException dataAccessException)
+                {
+                    Application.Logger.LogException(dataAccessException);
+                    UIBLLInteraction.Instance.ShowException(dataAccessException);
+                }
+            }
+            else if (!isOpening)
+            {
+                MessageBox.Show(PARENT_PROJECT_IS_ADDED_ERROR, UIBLLInteraction.ERROR_MESSAGE_TITLE,
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// Opens the object for a building view in a building tab
+        /// </summary>
+        private void OpenSelectedComponent()
+        {
+            //Variable to the hold the value for the parent project
+            var parentProject = new Project();
+            //Object to hold the value of the found building object
+            Component componentToOpen = null;
+            //Get the current selected view building
+            ComponentView selectedComponent = GetSelectedComponent();
+            if (selectedComponent != null)
+            {
+                //Search for the project using the ID
+                foreach (Project project in UIBLLInteraction.Instance.ProjectsCollection)
+                {
+                    if (project != null)
+                    {
+                        if (project.Id.Value == selectedComponent.ProjectId)
+                        {
+                            parentProject = project;
+                            break;
+                        }
+                    }
+                }
+                try
+                {
+                    parentProject.LazyLoadChildren();
+                    foreach (Component component in parentProject.Components)
+                    {
+                        if (component != null)
+                        {
+                            if (component.Id.Value == selectedComponent.Id)
+                            {
+                                componentToOpen = component;
+                                break;
+                            }
+                        }
+                    }
+                    //If the object is not null somehow, then open it in a new tab
+                    if (componentToOpen != null)
+                    {
+                        var objectToOpen = componentToOpen as EntityBusinessObject;
+                        UIBLLInteraction.Instance.Open(ref objectToOpen);
+                    }
+                }
+                catch (DataAccessException dataAccessException)
+                {
+                    UIBLLInteraction.Instance.ShowException(dataAccessException);
+                    Application.Logger.LogException(dataAccessException);
+                }
+            }
+            else
+            {
+                MessageBox.Show(COMPONENT_HAS_NO_VALUE_ERROR, UIBLLInteraction.ERROR_MESSAGE_TITLE, MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// Get the current selected building view from the grid
+        /// </summary>
+        /// <returns></returns>
+        private ComponentView GetSelectedComponent()
+        {
+            return gridViewComponentsList.GetFocusedRow() as ComponentView;
+        }
+
+
+        /// <summary>
+        /// Get the current selected building view from the grid
+        /// </summary>
+        /// <returns></returns>
+        private ComponentView GetSelectedComponent(int rowHandle)
+        {
+            return gridViewComponentsList.GetRow(rowHandle) as ComponentView;
+        }
+
+        /// <summary>
+        /// Loads the component from the DB
+        /// </summary>
+        /// <returns></returns>
+        private Component GetSelectedComponentObject()
+        {
+            if (GetSelectedComponent() != null)
+            {
+                try
+                {
+                    return Component.GetById(GetSelectedComponent().Id);
+                }
+                catch (DataAccessException dataAccessException)
+                {
+                    Application.Logger.LogException(dataAccessException);
+                    return null;
+                }
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Loads the component from the DB
+        /// </summary>
+        /// <returns></returns>
+        private Component GetSelectedComponentObject(ComponentView componentView)
+        {
+            if (componentView != null)
+            {
+                try
+                {
+                    return Component.GetById(componentView.Id);
+                }
+                catch (DataAccessException dataAccessException)
+                {
+                    Application.Logger.LogException(dataAccessException);
+                    return null;
+                }
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        private void CopyComponent()
+        {
+            int[] selectedComponents = gridViewComponentsList.GetSelectedRows();
+            string errorReport = string.Empty;
+            int copiedComponents = 0;
+            bool isCopyToEdited = UIBLLInteraction.Instance.CheckTabEditedByObject(UIBLLInteraction.Instance.GetNavSelectedProject());
+
+            if (!isCopyToEdited)
+            {
+                Project selectedProject = UIBLLInteraction.Instance.GetNavSelectedProject();
+                if (selectedProject != null)
+                {
+                    if (!selectedProject.isProjectLocked())
+                    {
+                        if (XtraMessageBox.Show(COMPONENT_COPY_CONFIRM, "TCO",
+                            MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
+                        {
+                            Building selectedBuilding = UIBLLInteraction.Instance.GetNavSelectedBuilding();
+                            if (selectedBuilding != null)
+                            {
+                                CopyComponentsToBuilding(selectedComponents, ref errorReport, ref copiedComponents, isCopyToEdited, selectedBuilding);
+                            }
+                            else
+                            {
+                                if (selectedProject.Buildings.Count > 0)
+                                {
+                                    foreach (Building currentBuilding in selectedProject.Buildings)
+                                    {
+                                        CopyComponentsToBuilding(selectedComponents, ref errorReport, ref copiedComponents, isCopyToEdited, currentBuilding);
+                                    }
+                                }
+                                else
+                                {
+                                    UIBLLInteraction.ShowError("The selected project has no buildings.");
+                                }
+                            }   
+                        }
+                    }
+                    else
+                    {
+                        UIBLLInteraction.ShowError(PROJECT_LOCKED_ERROR);
+                    }
+                }
+                else
+                {
+                    UIBLLInteraction.ShowError("No Project is selected.");
+                }
+            }
+            else
+            {
+                UIBLLInteraction.ShowError(COMPONENT_TO_OPENED_ERROR);
+            }
+            if (!string.IsNullOrEmpty(errorReport))
+            {
+                if (selectedComponents.Length > 1)
+                {
+                    UIBLLInteraction.ShowError("Not all components were copied, here are the errors occured:\n" + errorReport);
+                }
+                else
+                {
+                    UIBLLInteraction.ShowError(errorReport);
+                }
+            }
+            if (copiedComponents > 0)
+            {
+                UIBLLInteraction.Instance.RefreshComponentsView();
+                UIBLLInteraction.Instance.ComponentsNav.RefreshGroup();
+                UIBLLInteraction.ShowWarning(COMPONENT_COPY_WARNING);
+            }
+        }
+
+        private void CopyComponentsToBuilding(int[] selectedComponents, ref string errorReport, ref int copiedComponents, bool isCopyToEdited, Building currentBuilding)
+        {
+            if (currentBuilding != null)
+            {
+                if (!UIBLLInteraction.Instance.CheckTabOpenedAndEditedByIDAndType(currentBuilding.Id.Value, typeof(Building)))
+                {
+                    foreach (int rowHandle in selectedComponents)
+                    {
+                        if (rowHandle >= 0)
+                        {
+                            ComponentView currentComponent = GetSelectedComponent(rowHandle);
+                            bool isCopyFromEdited = UIBLLInteraction.Instance.CheckTabOpenedAndEditedByIDAndType(currentComponent.Id, typeof(Component));
+
+                            if (!isCopyToEdited)
+                            {
+                                Component currentComponentObject = GetSelectedComponentObject(currentComponent);
+                                if (currentComponentObject != null)
+                                {
+                                    //var nameDialog = new SetNameDialog
+                                    //{
+                                    //    CurrentText = GetSelectedComponentObject().Name,
+                                    //    MaxLength = Component.NAME_MAX_LENGTH,
+                                    //    Item = null
+                                    //};
+                                    //(nameDialog.Item as Component).ProjectId = selectedBuilding.ParentProject.Id.Value;
+                                    //(nameDialog.Item as Component).ParentBuilding = selectedBuilding;
+                                    ////Component.ParentProject = selectedBuilding.ParentProject;
+                                    ////Component.ParentBuilding = selectedBuilding;
+                                    //nameDialog.ShowDialog();
+                                    //if (nameDialog.DialogResult == DialogResult.OK && nameDialog.TextCorrect)
+                                    //{
+                                    //    UIBLLInteraction.Instance.RefreshComponentsView();
+                                    //    UIBLLInteraction.Instance.ComponentsNav.RefreshGroup();
+                                    //    UIBLLInteraction.ShowWarning(COMPONENT_COPY_WARNING);
+                                    //}
+                                    Component sourceComponent = GetSelectedComponentObject();
+                                    Component copiedComponent = sourceComponent.Copy(currentBuilding, true);
+                                    copiedComponents += 1;
+                                }
+                                else
+                                {
+                                    //UIBLLInteraction.ShowError(BUILDING_HAS_NO_VALUE_ERROR);
+                                    errorReport += "- " + currentComponent.Name + " : " + COMPONENT_HAS_NO_VALUE_ERROR + "\n";
+                                }
+                            }
+                            else
+                            {
+                                //UIBLLInteraction.ShowError(BUIDLING_COPIED_OPENED_ERROR);
+                                errorReport += "- " + currentComponent.Name + " : " + COMPONENT_TO_OPENED_ERROR + "\n";
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    errorReport += "- " + currentBuilding.Name + " : Building tab is opened and is being edited.\n";
+                }
+            }
+            else
+            {
+                errorReport += "- One of the buildings is empty or corrupted.\n";
+            }
+        }
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        //---------------------------------------------------------------------------------------------
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Handlers
+
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Calls a method to refresh the buildings list grid control whenever a change occurs in the 
+        /// list of view buildings
+        /// </summary>
+        /// <param name="sender">projectsListViewCollection</param>
+        /// <param name="e"></param>
+        private void componentsListViewCollection_ListChanged(object sender, ListChangedEventArgs e)
+        {
+            RefreshComponentsListGrid();
+        }
+
+        /// <summary>
+        /// Handles clicking an item in the context menu
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void contextMenuStripComponent_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            contextMenuStripComponent.Hide();
+            ComponentView selectedComponent = GetSelectedComponent();
+            if (selectedComponent != null)
+            {
+                if (e.ClickedItem == toolStripMenuItemComponentLoadParent)
+                {
+                    AddParentProjectToNavigationPanel(selectedComponent.ProjectId, false);
+                }
+                else if (e.ClickedItem == toolStripMenuItemOpenComponent)
+                {
+                    AddParentProjectToNavigationPanel(selectedComponent.ProjectId, true);
+                    OpenSelectedComponent();
+                }
+                else if (e.ClickedItem == ToolStripMenuItemcopyToNavigationPanelSelectedBuilding)
+                {
+                    CopyComponent();
+                }
+            }
+            else
+            {
+                MessageBox.Show(COMPONENT_HAS_NO_VALUE_ERROR, UIBLLInteraction.ERROR_MESSAGE_TITLE, MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// Opens the current focused building when double clicking the view
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void gridViewComponentsList_DoubleClick(object sender, EventArgs e)
+        {
+            GridHitInfo gridViewComponentsListHitInfo =
+                gridViewComponentsList.CalcHitInfo(gridControlComponentsList.PointToClient(Cursor.Position));
+            ComponentView selectedComponent = GetSelectedComponent();
+            if (gridViewComponentsListHitInfo.InRow)
+            {
+                if (selectedComponent != null)
+                {
+                    AddParentProjectToNavigationPanel(selectedComponent.ProjectId, true);
+                    OpenSelectedComponent();
+                }
+                else
+                {
+                    MessageBox.Show(COMPONENT_HAS_NO_VALUE_ERROR, UIBLLInteraction.ERROR_MESSAGE_TITLE,
+                                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void contextMenuStripComponent_Opening(object sender, CancelEventArgs e)
+        {
+            GridHitInfo gridControlComponentsListHitInfo =
+                gridViewComponentsList.CalcHitInfo(gridControlComponentsList.PointToClient(Cursor.Position));
+            contextMenuStripComponent.Enabled = gridControlComponentsListHitInfo.InRow;
+            ToolStripMenuItemcopyToNavigationPanelSelectedBuilding.Enabled = (UIBLLInteraction.Instance.GetNavSelectedProject() != null);
+            if (UIBLLInteraction.Instance.GetNavSelectedBuilding() != null)
+            {
+                ToolStripMenuItemcopyToNavigationPanelSelectedBuilding.Text = "Copy this component(s) to the highlighted project and building";
+            }
+            else
+            {
+                ToolStripMenuItemcopyToNavigationPanelSelectedBuilding.Text = "Copy this component(s) to every building in the highlighted project.";
+            }
+        }
+
+        private void toolTipControllerMain_GetActiveObjectInfo(object sender,
+                                                               ToolTipControllerGetActiveObjectInfoEventArgs e)
+        {
+            if (e.SelectedControl == gridControlComponentsList)
+            {
+                ToolTipControlInfo info = null;
+                try
+                {
+                    var view = gridControlComponentsList.GetViewAt(e.ControlMousePosition) as GridView;
+                    if (view != null)
+                    {
+                        GridHitInfo hitInfo = view.CalcHitInfo(e.ControlMousePosition);
+                        if (hitInfo.InRowCell && hitInfo.RowHandle >= 0)
+                        {
+                            string text = string.Empty;
+                            try
+                            {
+                                text =
+                                    gridViewComponentsList.GetRowCellValue(hitInfo.RowHandle, hitInfo.Column).ToString();
+                            }
+                            catch (NullReferenceException)
+                            {
+                            }
+                            if (text != null)
+                            {
+                                if (text != string.Empty)
+                                {
+                                    string tooltip = UIBLLInteraction.ProcessLongToolTips(text);
+                                    info = new ToolTipControlInfo(
+                                        new CellToolTipInfo(hitInfo.RowHandle, hitInfo.Column, "cell"),
+                                        tooltip, hitInfo.Column.Caption, ToolTipIconType.Information);
+                                }
+                            }
+                            return;
+                        }
+                    }
+                }
+                finally
+                {
+                    e.Info = info;
+                }
+            }
+        }
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+    }
+}

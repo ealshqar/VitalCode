@@ -1,0 +1,142 @@
+using System.Windows.Forms;
+using System;
+using DevExpress.XtraBars;
+using Equiom.Tco.BusinessLogicLayer;
+
+namespace TCO.DesktopClientDevexpress
+{
+    public partial class ContextButtons : DevExpress.XtraEditors.XtraUserControl
+    {
+        #region Declarations
+        //---------------------------------------------------------------------------------------------
+        private ListBoxItem currentSelectedItem;
+        private EntityType contextEntity;
+        private const string NO_ITEM_SELECTED = "No item is currnetly selected.";
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        # region Properties
+        //---------------------------------------------------------------------------------------------
+        public ListBoxItem CurrentSelectedItem
+        {
+            get
+            {
+                return currentSelectedItem;
+            }
+            set
+            {
+                currentSelectedItem = value;
+            }
+        }
+
+        public EntityType ContextEntity
+        {
+            get
+            {
+                return contextEntity;
+            }
+            set
+            {
+                contextEntity = value;
+            }
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+        
+        #region Methods
+        //---------------------------------------------------------------------------------------------
+        public ContextButtons()
+        {
+            InitializeComponent();
+            //Determine the actions for each button in the bar
+            this.barButtonItemOpen.Tag = CommonEntityActions.Open;
+            this.barButtonItemNew.Tag = CommonEntityActions.Add_new;
+            //this.barButtonItemCopy.Tag = CommonEntityActions.Copy;
+            //this.barButtonItemSave.Tag = CommonEntityActions.Save;
+        }
+
+        /// <summary>
+        /// Determine the action to be prefromed when clicking an item
+        /// </summary>
+        /// <param name="sender">The sender of the event</param>
+        private void ItemClickAction(BarItem clickedItem)
+        {
+            //UIBLLInteraction.Instance.CommonActionSelect((CommonEntityActions)clickedItem.Tag, contextEntity, (ListBoxItem)CurrentSelectedItem);
+            switch ((CommonEntityActions)clickedItem.Tag)
+            {
+                case CommonEntityActions.Add_new:
+                    //UIBLLInteraction.Instance.New(ContextEntity);
+                    break;
+                //case CommonEntityActions.BookMark:
+                //    MessageBox.Show("BookMark");
+                //    break;
+                //case CommonEntityActions.Check_out:
+                //    try
+                //    {
+                //        currentSelectedItem.BusinessObject.IsCheckedOut = true;
+                //        UIBLLInteraction.Instance.CheckIcon(currentSelectedItem);
+                //    }
+                //    catch (NullReferenceException nullReferenceException)
+                //    {
+                //        MessageBox.Show(NO_ITEM_SELECTED, UIBLLInteraction.ERROR_MESSAGE_TITLE, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //    }
+                //    break;
+                //case CommonEntityActions.Copy:
+                //    MessageBox.Show("Copy");
+                //    break;
+                //case CommonEntityActions.Delete:
+                //    MessageBox.Show("Delete");
+                //    break;
+                //case CommonEntityActions.Lock:
+                //    try
+                //    {
+                //        currentSelectedItem.BusinessObject.IsLocked = true;
+                //        UIBLLInteraction.Instance.CheckIcon(currentSelectedItem);
+                //    }
+                //    catch (NullReferenceException nullReferenceException)
+                //    {
+                //        MessageBox.Show(NO_ITEM_SELECTED, UIBLLInteraction.ERROR_MESSAGE_TITLE, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //    }
+                //    break;
+                //case CommonEntityActions.Mark_as_favorite:
+                //    try
+                //    {
+                //        currentSelectedItem.BusinessObject.IsFavorite = true;
+                //        UIBLLInteraction.Instance.CheckIcon(currentSelectedItem);
+                //    }
+                //    catch (NullReferenceException nullReferenceException)
+                //    {
+                //        MessageBox.Show(NO_ITEM_SELECTED, UIBLLInteraction.ERROR_MESSAGE_TITLE, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //    }
+                //    break;
+                case CommonEntityActions.Open:
+                    try
+                    {
+                        EntityBusinessObject openedObject = currentSelectedItem.BusinessObject;
+                        UIBLLInteraction.Instance.Open(ref openedObject);
+                    }
+                    catch (NullReferenceException nullReferenceException)
+                    {
+                        MessageBox.Show(NO_ITEM_SELECTED, UIBLLInteraction.ERROR_MESSAGE_TITLE, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    break;
+                //case CommonEntityActions.Save:
+                //    MessageBox.Show("Save");
+                //    break;
+                default:
+                    break;
+            }
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        #region Handlers
+        //---------------------------------------------------------------------------------------------
+        private void barButtonItem_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            ItemClickAction(e.Item);
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+    }
+}

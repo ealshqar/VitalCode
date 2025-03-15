@@ -1,0 +1,261 @@
+namespace TCO.DesktopClientDevexpress
+{
+    partial class XtraUserControlProjectsList
+    {
+        /// <summary> 
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary> 
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Component Designer generated code
+
+        /// <summary> 
+        /// Required method for Designer support - do not modify 
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(XtraUserControlProjectsList));
+            this.gridControlProjectsList = new DevExpress.XtraGrid.GridControl();
+            this.contextMenuStripProject = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.toolStripMenuItemOpen = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemAdd = new System.Windows.Forms.ToolStripMenuItem();
+            this.gridViewProjectsList = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.gridColumnNumber = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumnName = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumnWFC = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumnStartDate = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumnCreatedDateTime = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumnLastModifiedDateTime = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumnCGCProjectNumbers = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumnDirectorName = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumnProgramManagerName = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumnStatus = new DevExpress.XtraGrid.Columns.GridColumn();
+            ((System.ComponentModel.ISupportInitialize)(this.dxErrorProviderMain)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridControlProjectsList)).BeginInit();
+            this.contextMenuStripProject.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridViewProjectsList)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // toolTipControllerMain
+            // 
+            this.toolTipControllerMain.AutoPopDelay = 10000;
+            this.toolTipControllerMain.GetActiveObjectInfo += new DevExpress.Utils.ToolTipControllerGetActiveObjectInfoEventHandler(this.toolTipControllerMain_GetActiveObjectInfo);
+            // 
+            // errorImageList
+            // 
+            this.errorImageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("errorImageList.ImageStream")));
+            this.errorImageList.Images.SetKeyName(0, "messageboxerror.ico");
+            // 
+            // gridControlProjectsList
+            // 
+            this.gridControlProjectsList.ContextMenuStrip = this.contextMenuStripProject;
+            this.gridControlProjectsList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gridControlProjectsList.EmbeddedNavigator.Name = "";
+            this.gridControlProjectsList.Location = new System.Drawing.Point(0, 0);
+            this.gridControlProjectsList.MainView = this.gridViewProjectsList;
+            this.gridControlProjectsList.Name = "gridControlProjectsList";
+            this.gridControlProjectsList.Size = new System.Drawing.Size(887, 519);
+            this.gridControlProjectsList.TabIndex = 4;
+            this.gridControlProjectsList.ToolTipController = this.toolTipControllerMain;
+            this.gridControlProjectsList.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
+            this.gridViewProjectsList});
+            this.gridControlProjectsList.DoubleClick += new System.EventHandler(this.gridControlProjectsList_DoubleClick);
+            // 
+            // contextMenuStripProject
+            // 
+            this.contextMenuStripProject.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItemOpen,
+            this.toolStripMenuItemAdd});
+            this.contextMenuStripProject.Name = "contextMenuStripRightClick";
+            this.contextMenuStripProject.Size = new System.Drawing.Size(190, 48);
+            this.toolTipControllerMain.SetSuperTip(this.contextMenuStripProject, null);
+            this.contextMenuStripProject.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.contextMenuStripRightClick_ItemClicked);
+            this.contextMenuStripProject.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStripProject_Opening);
+            // 
+            // toolStripMenuItemOpen
+            // 
+            this.toolStripMenuItemOpen.Name = "toolStripMenuItemOpen";
+            this.toolStripMenuItemOpen.Size = new System.Drawing.Size(189, 22);
+            this.toolStripMenuItemOpen.Text = "Open Project";
+            // 
+            // toolStripMenuItemAdd
+            // 
+            this.toolStripMenuItemAdd.Name = "toolStripMenuItemAdd";
+            this.toolStripMenuItemAdd.Size = new System.Drawing.Size(189, 22);
+            this.toolStripMenuItemAdd.Text = "Add to Navigation Panel";
+            // 
+            // gridViewProjectsList
+            // 
+            this.gridViewProjectsList.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+            this.gridColumnNumber,
+            this.gridColumnName,
+            this.gridColumnWFC,
+            this.gridColumnStartDate,
+            this.gridColumnCreatedDateTime,
+            this.gridColumnLastModifiedDateTime,
+            this.gridColumnCGCProjectNumbers,
+            this.gridColumnDirectorName,
+            this.gridColumnProgramManagerName,
+            this.gridColumnStatus});
+            this.gridViewProjectsList.GridControl = this.gridControlProjectsList;
+            this.gridViewProjectsList.Name = "gridViewProjectsList";
+            this.gridViewProjectsList.OptionsBehavior.Editable = false;
+            this.gridViewProjectsList.OptionsCustomization.AllowColumnMoving = false;
+            this.gridViewProjectsList.OptionsCustomization.AllowGroup = false;
+            this.gridViewProjectsList.OptionsNavigation.EnterMoveNextColumn = true;
+            this.gridViewProjectsList.OptionsSelection.EnableAppearanceFocusedRow = false;
+            this.gridViewProjectsList.OptionsView.ColumnAutoWidth = false;
+            this.gridViewProjectsList.OptionsView.ShowAutoFilterRow = true;
+            this.gridViewProjectsList.OptionsView.ShowGroupPanel = false;
+            // 
+            // gridColumnNumber
+            // 
+            this.gridColumnNumber.Caption = "TCO Project Number";
+            this.gridColumnNumber.FieldName = "Number";
+            this.gridColumnNumber.Name = "gridColumnNumber";
+            this.gridColumnNumber.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
+            this.gridColumnNumber.Visible = true;
+            this.gridColumnNumber.VisibleIndex = 0;
+            this.gridColumnNumber.Width = 137;
+            // 
+            // gridColumnName
+            // 
+            this.gridColumnName.Caption = "Project Name";
+            this.gridColumnName.FieldName = "Name";
+            this.gridColumnName.Name = "gridColumnName";
+            this.gridColumnName.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
+            this.gridColumnName.Visible = true;
+            this.gridColumnName.VisibleIndex = 1;
+            this.gridColumnName.Width = 207;
+            // 
+            // gridColumnWFC
+            // 
+            this.gridColumnWFC.Caption = "Work for Customer (Company)";
+            this.gridColumnWFC.FieldName = "WorkForCustomerCompanyName";
+            this.gridColumnWFC.Name = "gridColumnWFC";
+            this.gridColumnWFC.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
+            this.gridColumnWFC.Visible = true;
+            this.gridColumnWFC.VisibleIndex = 2;
+            this.gridColumnWFC.Width = 231;
+            // 
+            // gridColumnStartDate
+            // 
+            this.gridColumnStartDate.Caption = "Project Start Date";
+            this.gridColumnStartDate.FieldName = "StartDate";
+            this.gridColumnStartDate.Name = "gridColumnStartDate";
+            this.gridColumnStartDate.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
+            this.gridColumnStartDate.Visible = true;
+            this.gridColumnStartDate.VisibleIndex = 3;
+            this.gridColumnStartDate.Width = 172;
+            // 
+            // gridColumnCreatedDateTime
+            // 
+            this.gridColumnCreatedDateTime.Caption = "Date Created";
+            this.gridColumnCreatedDateTime.FieldName = "CreatedDateTime";
+            this.gridColumnCreatedDateTime.Name = "gridColumnCreatedDateTime";
+            this.gridColumnCreatedDateTime.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
+            this.gridColumnCreatedDateTime.Visible = true;
+            this.gridColumnCreatedDateTime.VisibleIndex = 4;
+            this.gridColumnCreatedDateTime.Width = 189;
+            // 
+            // gridColumnLastModifiedDateTime
+            // 
+            this.gridColumnLastModifiedDateTime.Caption = "Date Last Modified";
+            this.gridColumnLastModifiedDateTime.FieldName = "LastModifiedDateTime";
+            this.gridColumnLastModifiedDateTime.Name = "gridColumnLastModifiedDateTime";
+            this.gridColumnLastModifiedDateTime.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
+            this.gridColumnLastModifiedDateTime.Visible = true;
+            this.gridColumnLastModifiedDateTime.VisibleIndex = 5;
+            this.gridColumnLastModifiedDateTime.Width = 150;
+            // 
+            // gridColumnCGCProjectNumbers
+            // 
+            this.gridColumnCGCProjectNumbers.Caption = "CGC Project Numbers";
+            this.gridColumnCGCProjectNumbers.FieldName = "CgcProjectNumbers";
+            this.gridColumnCGCProjectNumbers.Name = "gridColumnCGCProjectNumbers";
+            this.gridColumnCGCProjectNumbers.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
+            this.gridColumnCGCProjectNumbers.Visible = true;
+            this.gridColumnCGCProjectNumbers.VisibleIndex = 6;
+            this.gridColumnCGCProjectNumbers.Width = 169;
+            // 
+            // gridColumnDirectorName
+            // 
+            this.gridColumnDirectorName.Caption = "Primary Contact";
+            this.gridColumnDirectorName.FieldName = "PrimaryContactName";
+            this.gridColumnDirectorName.Name = "gridColumnDirectorName";
+            this.gridColumnDirectorName.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
+            this.gridColumnDirectorName.Visible = true;
+            this.gridColumnDirectorName.VisibleIndex = 7;
+            this.gridColumnDirectorName.Width = 177;
+            // 
+            // gridColumnProgramManagerName
+            // 
+            this.gridColumnProgramManagerName.Caption = "Technical contact";
+            this.gridColumnProgramManagerName.FieldName = "TechnicalContactName";
+            this.gridColumnProgramManagerName.Name = "gridColumnProgramManagerName";
+            this.gridColumnProgramManagerName.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
+            this.gridColumnProgramManagerName.Visible = true;
+            this.gridColumnProgramManagerName.VisibleIndex = 8;
+            this.gridColumnProgramManagerName.Width = 105;
+            // 
+            // gridColumnStatus
+            // 
+            this.gridColumnStatus.Caption = "Project Status";
+            this.gridColumnStatus.FieldName = "Status";
+            this.gridColumnStatus.Name = "gridColumnStatus";
+            this.gridColumnStatus.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
+            this.gridColumnStatus.Visible = true;
+            this.gridColumnStatus.VisibleIndex = 9;
+            this.gridColumnStatus.Width = 104;
+            // 
+            // XtraUserControlProjectsList
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.gridControlProjectsList);
+            this.Name = "XtraUserControlProjectsList";
+            this.Size = new System.Drawing.Size(887, 637);
+            this.toolTipControllerMain.SetSuperTip(this, null);
+            this.Controls.SetChildIndex(this.gridControlProjectsList, 0);
+            ((System.ComponentModel.ISupportInitialize)(this.dxErrorProviderMain)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridControlProjectsList)).EndInit();
+            this.contextMenuStripProject.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.gridViewProjectsList)).EndInit();
+            this.ResumeLayout(false);
+
+        }
+
+        #endregion
+
+        private DevExpress.XtraGrid.GridControl gridControlProjectsList;
+        private DevExpress.XtraGrid.Views.Grid.GridView gridViewProjectsList;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumnNumber;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumnName;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumnWFC;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumnStartDate;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumnCreatedDateTime;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumnLastModifiedDateTime;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumnCGCProjectNumbers;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumnDirectorName;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumnProgramManagerName;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStripProject;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemOpen;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemAdd;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumnStatus;
+    }
+}

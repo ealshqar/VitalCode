@@ -1,0 +1,1091 @@
+//////////////////////////////////////////////////////////////////////////////
+//  
+//  <sourcefile name="ribbonFrmMain.cs" creationdate="8/4/08" owner="anasa" >
+//
+//      <project>McKinstry TCO Application</project>
+//  
+//      <description>Ribbon Main form of the client using Devexpress controls</description>
+//      
+//      <copyright year="2008" company="McKinstry">
+//          <notice>
+//              Copyright © 2008 McKinstry. All rights reserved
+//  
+//              Developed for McKinstry by
+//                  Equiom - MENA
+//                  www.equiom.com
+//          </notice>
+//  
+//  	<history date="8/4/08" modby="anasa">created</history>
+//  
+//////////////////////////////////////////////////////////////////////////////
+
+#region Library Calls
+
+//---------------------------------------------------------------------------------------------
+using System;
+using System.ComponentModel;
+using System.Drawing;
+using System.IO;
+using System.Windows.Forms;
+using System.Xml;
+using System.Xml.XPath;
+using DevExpress.XtraBars;
+using DevExpress.XtraBars.Docking;
+using DevExpress.XtraBars.Ribbon;
+using DevExpress.XtraLayout;
+using DevExpress.XtraSpellChecker;
+using DevExpress.XtraTab;
+using DevExpress.XtraTab.ViewInfo;
+using Equiom.Tco.BusinessLogicLayer;
+using Equiom.Tco.DataAccessLayer;
+using TCO.DesktopClientDevexpress.Properties;
+
+//---------------------------------------------------------------------------------------------
+
+#endregion
+
+#region Enumerations
+
+//---------------------------------------------------------------------------------------------
+[Flags]
+internal enum ConnectionState
+{
+    INTERNET_CONNECTION_MODEM = 0x1,
+    INTERNET_CONNECTION_LAN = 0x2,
+    INTERNET_CONNECTION_PROXY = 0x4,
+    INTERNET_RAS_INSTALLED = 0x10,
+    INTERNET_CONNECTION_OFFLINE = 0x20,
+    INTERNET_CONNECTION_CONFIGURED = 0x40
+}
+
+public enum EntityType
+{
+    Starred,
+    Scenarios,
+    Components,
+    Buildings,
+    Projects
+}
+
+//---------------------------------------------------------------------------------------------
+
+#endregion
+
+namespace TCO.DesktopClientDevexpress
+{
+    public partial class ribbonFrmMain : RibbonForm
+    {
+        #region API's
+
+        //---------------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Constants
+
+        //---------------------------------------------------------------------------------------------
+        private const string CLEAN_DELETED_QUESTION = "All Deleted items will be removed, are you sure?";
+        private const string Group_IS_NUll_ERROR = "The navigation group has no value.";
+        private const string ITEM_HAS_NO_ACTION_MSG = "The item you clicked has no action specified yet.";
+        private const string MAIN_FORM_IS_NUll_ERROR = "Failed to load the main form of the application.";
+        private const string RECENT_PROJECTS_FILE_NAME = "RecentProjects.config";
+        private const string TABS_UNSAVED_ERROR = "Some opened tabs are unsaved, please save them before closing.";
+        private const string XML_NAVIGATOR_IS_NUll_ERROR = "Failed to load recent projects.";
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Fields
+
+        //---------------------------------------------------------------------------------------------
+        public int changeState;
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Properties
+
+        //---------------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Constructors
+
+        //---------------------------------------------------------------------------------------------
+        public ribbonFrmMain()
+        {
+            InitializeComponent();
+        }
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Methods
+
+        #region UI Methods
+
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Call the method of the creator that will create the navigation groups in the navigation panel
+        /// </summary>
+        private void InitializeUI()
+        {
+            //Start the timer that will monitor the internet connectivity changes
+            //connectionTimer = new System.Threading.Timer(UpdateTimer, null, 2500, 2000);
+
+            dockPanelLoading.Refresh();
+
+            CreateHotKeyMessageFilter();
+            SetDictionaryProperties();
+            SetApplicationIcon();
+            SetNavGroupsProperties();
+            LoadRecentProjects();
+            SetUIBLLInteractionDetailsTab();
+            UIBLLInteraction.Instance.CheckAndCreateRecentReportCriteriaFile();
+            UIBLLInteraction.Instance.OpenListTab(TabTypes.ProjectList);
+        }
+
+        /// <summary>
+        /// Sets the properties and the handlers for the navigation groups
+        /// </summary>
+        private void SetNavGroupsProperties()
+        {
+            //Set the handlers to the event of clearning selection in the navigation group
+            ProjectsNav.SelectedItemChanged += ProjectsNav_SelectedItemChanged;
+            BuildingsNav.SelectedItemChanged += BuildingsNav_SelectedItemChanged;
+            ScenariosNav.SelectedItemChanged += ScenariosNav_SelectedItemChanged;
+
+            //Set the handlers to the event of changing selection in the navigation group
+            ProjectsNav.NoItemIsSelected += ProjectsNav_NoItemIsSelected;
+            BuildingsNav.NoItemIsSelected += BuildingsNav_NoItemIsSelected;
+            ScenariosNav.NoItemIsSelected += ScenariosNav_NoItemIsSelected;
+
+            UIBLLInteraction.Instance.ProjectsNav = ProjectsNav;
+            UIBLLInteraction.Instance.BuildingsNav = BuildingsNav;
+            UIBLLInteraction.Instance.ScenariosNav = ScenariosNav;
+            UIBLLInteraction.Instance.ComponentsNav = ComponentsNav;
+
+            ProjectsNav.DataSource = UIBLLInteraction.Instance.ProjectsCollection;
+        }
+
+        /// <summary>
+        /// Sets the Icon of the application
+        /// </summary>
+        private void SetApplicationIcon()
+        {
+            IntPtr ptr = Resources.TCO.GetHicon();
+            Icon toolIcon = Icon.FromHandle(ptr);
+            Icon = toolIcon;
+        }
+
+        /// <summary>
+        /// Sets the spell checker properties
+        /// </summary>
+        private void SetDictionaryProperties()
+        {
+            dockPanelNavigationPanel.Visibility = DockVisibility.Hidden;
+            spellChecker1.Dictionaries[0].AlphabetPath = Application.StartupPath + "\\EnglishAlphabet.txt";
+            spellChecker1.Dictionaries[0].DictionaryPath = Application.StartupPath + "\\American.xlg";
+            spellChecker1.Dictionaries[1].AlphabetPath = Application.StartupPath + "\\EnglishAlphabet.txt";
+            spellChecker1.Dictionaries[1].DictionaryPath = Application.StartupPath + "\\American.xlg";
+            ((SpellCheckerISpellDictionary) spellChecker1.Dictionaries[1]).GrammarPath = Application.StartupPath +
+                                                                                         "\\English.aff";
+            try
+            {
+                spellChecker1.Dictionaries[0].Load();
+                spellChecker1.Dictionaries[1].Load();
+            }
+            catch (ArgumentException argumentException)
+            {
+                Equiom.Tco.Common.Application.Logger.LogException(argumentException);
+            }
+            dockPanelLoading.Visibility = DockVisibility.Hidden;
+            dockPanelNavigationPanel.Visibility = DockVisibility.Visible;
+        }
+
+        /// <summary>
+        /// Sets the hot key listener for the application
+        /// </summary>
+        private static void CreateHotKeyMessageFilter()
+        {
+            //This code is used to create filter for the application that allows monitoring the Keyboard for hot keys
+            var hotKeyFilter = new ProjectHotKeyFilter();
+            Application.AddMessageFilter(hotKeyFilter);
+        }
+
+        /// <summary>
+        /// Close the selected tab of the tab control by asking for Ok method of the tab page, this will make sure
+        /// that the user saved his changes before closing.
+        /// </summary>
+        private static void CloseTabPage(Control tabPage)
+        {
+            //Determine the status of the tab when the close button was clicked, if it is a new tab, then this should
+            //mean a tab cancel operation, but if it is an existing one, then this should mean finished work on a tab
+            try
+            {
+                if (tabPage != null)
+                {
+                    var closedTab = tabPage.Controls[0] as XtraTabPageEntity;
+                    if (closedTab != null)
+                    {
+                        closedTab.CancelOrCancelCloseAction(true);
+                    }
+                }
+            }
+            catch (NullReferenceException nullReferenceException)
+            {
+                Equiom.Tco.Common.Application.Logger.LogException(nullReferenceException);
+            }
+        }
+
+        /// <summary>
+        /// Calls the appropriate action when clicking a menu item.
+        /// </summary>
+        /// <param name="e"></param>
+        private void PerformRibbonItemClick(ItemClickEventArgs e)
+        {
+            if (e.Item != null)
+            {
+                if (isListItem(e.Item))
+                {
+                    //Do action in checking method
+                }
+                else if (isEditingItem(e.Item))
+                {
+                    //Do action in checking method
+                }
+                else
+                {
+                    MessageBox.Show(ITEM_HAS_NO_ACTION_MSG, UIBLLInteraction.INFORMATION_MESSAGE_TITLE,
+                                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Check if the item clicked is a list item and performs the specified aciton
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
+        private bool isListItem(BarItem item)
+        {
+            bool isListItem = true;
+            if (item == barButtonItemBuildings)
+            {
+                UIBLLInteraction.Instance.OpenListTab(TabTypes.BuildingsList);
+            }
+            else if (item == barButtonItemProjects)
+            {
+                UIBLLInteraction.Instance.OpenListTab(TabTypes.ProjectList);
+            }
+            else if (item == barButtonItemComponents)
+            {
+                dockPanelLoading.Visibility = DockVisibility.Visible;
+                dockPanelLoading.Refresh();
+                dockPanelLoading.ResumeLayout(true);
+                UIBLLInteraction.Instance.OpenListTab(TabTypes.ComponentList);
+                dockPanelLoading.Visibility = DockVisibility.Hidden;
+            }
+            else if (item == barButtonItemAdmin)
+            {
+                UIBLLInteraction.Instance.OpenListTab(TabTypes.Admin);
+            }
+            else if (item == barButtonItemAnnualCashFlow)
+            {
+                UIBLLInteraction.Instance.OpenListTab(TabTypes.AnnualCashFlow);
+            }
+            else if (item == barButtonItemUtilitesReport)
+            {
+                UIBLLInteraction.Instance.OpenListTab(TabTypes.UtilityReport);
+            }
+            else if (item == barButtonItemBudgetSummary)
+            {
+                UIBLLInteraction.Instance.OpenListTab(TabTypes.BudgetSummaryReport);
+            }
+            else if (item == barButtonItemTotalFinancialSummary)
+            {
+                UIBLLInteraction.Instance.OpenListTab(TabTypes.TotalFinancialSummary);
+            }
+            else if (item == barButtonItemOAndMReport)
+            {
+                UIBLLInteraction.Instance.OpenListTab(TabTypes.MaintenanceAndOperations);
+            }
+            else if (item == barButtonItemAssetImpactReport)
+            {
+                UIBLLInteraction.Instance.OpenListTab(TabTypes.AssetImpactsReport);
+            }
+            else if (item == barButtonItemUtilityRatesReport)
+            {
+                UIBLLInteraction.Instance.OpenListTab(TabTypes.UtilityRatesReport);
+            }
+            else if (item == barButtonItemBuildingUtilityRates)
+            {
+                UIBLLInteraction.Instance.OpenListTab(TabTypes.BuildingUtilityRatesReport);
+            }
+            else if (item == barButtonItemCapRenewalReport)
+            {
+                UIBLLInteraction.Instance.OpenListTab(TabTypes.CapRenewalReport);
+            }
+            else
+            {
+                isListItem = false;
+            }
+            return isListItem;
+        }
+
+        /// <summary>
+        /// Checks if the item is an editing item and performs the specified action
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
+        private bool isEditingItem(BarItem item)
+        {
+            bool isEditingItem = true;
+
+            if (xtraTabControlDetailsArea.TabPages.Count != 0)
+            {
+                if (xtraTabControlDetailsArea.SelectedTabPage != null)
+                {
+                    var currentTabToEdit = xtraTabControlDetailsArea.SelectedTabPage.Controls[0] as XtraTabPageEntity;
+                    if (currentTabToEdit != null)
+                    {
+                        if (item == barButtonItemEdit)
+                        {
+                            currentTabToEdit.UnlockTab();
+                        }
+                        else if (item == barButtonItemCancel)
+                        {
+                            currentTabToEdit.CancelOrCancelCloseAction(false);
+                        }
+                        else if (item == barButtonItemSave)
+                        {
+                            currentTabToEdit.SaveAction();
+                        }
+                        else if (item == barButtonItemSaveClose)
+                        {
+                            currentTabToEdit.SaveAndCloseAction();
+                        }
+                        else if (item == barButtonItemLock)
+                        {
+                            currentTabToEdit.LockAction();
+                        }
+                            //else if (item == barButtonItemRefresh)
+                            //{
+                            //    currentTabToEdit.RefreshAction();
+                            //}
+                            //else if (item == barButtonItemCleanDeleted)
+                            //{
+                            //    CleanNavigationFromDeletedItems();
+                            //}
+                        else
+                        {
+                            isEditingItem = false;
+                        }
+                    }
+                }
+            }
+            return isEditingItem;
+        }
+
+        /// <summary>
+        /// Updates the state of the edit buttons according to the current selected tab page.
+        /// </summary>
+        private void UpdateItemsAccordingToSelectedPage()
+        {
+            if (xtraTabControlDetailsArea.TabPages.Count != 0)
+            {
+                if (xtraTabControlDetailsArea.SelectedTabPage != null)
+                {
+                    var currentSelectedTab = xtraTabControlDetailsArea.SelectedTabPage.Controls[0] as XtraTabPageEntity;
+                    if (currentSelectedTab != null)
+                    {
+                        if (currentSelectedTab.TabType == TabTypes.ProjectList ||
+                            currentSelectedTab.TabType == TabTypes.BuildingsList ||
+                            currentSelectedTab.TabType == TabTypes.ComponentList ||
+                            currentSelectedTab.TabType == TabTypes.Admin ||
+                            currentSelectedTab.TabType == TabTypes.AnnualCashFlow ||
+                            currentSelectedTab.TabType == TabTypes.UtilityReport ||
+                            currentSelectedTab.TabType == TabTypes.BudgetSummaryReport ||
+                            currentSelectedTab.TabType == TabTypes.TotalFinancialSummary ||
+                            currentSelectedTab.TabType == TabTypes.AssetImpactsReport ||
+                            currentSelectedTab.TabType == TabTypes.CapRenewalReport ||
+                            currentSelectedTab.TabType == TabTypes.MaintenanceAndOperations ||
+                            currentSelectedTab.TabType == TabTypes.UtilityRatesReport ||
+                            currentSelectedTab.TabType == TabTypes.BuildingUtilityRatesReport)
+                        {
+                            currentSelectedTab.UpdateActionButtons();
+                            currentSelectedTab.PerfromAfterSelectionAction();
+                        }
+                        else if (currentSelectedTab.TabObject != null)
+                        {
+                            currentSelectedTab.UpdateActionButtons();
+                            currentSelectedTab.PerfromAfterSelectionAction();
+                        }
+                        spellChecker1.ParentContainer = xtraTabControlDetailsArea.SelectedTabPage.Controls[0];
+                    }
+                }
+            }
+            else
+            {
+                UIBLLInteraction.Instance.IsSaveButtonEnabled(false);
+                UIBLLInteraction.Instance.IsSaveAndCloseButtonEnabled(false);
+                UIBLLInteraction.Instance.IsCancelButtonEnabled(false);
+                UIBLLInteraction.Instance.IsEditButtonEnabled(false);
+                UIBLLInteraction.Instance.IsLockButtonEnabled(false);
+                UIBLLInteraction.Instance.IsRefreshButtonEnabled(false);
+            }
+        }
+
+        /// <summary>
+        /// Set the tab in the UIBLLInteraction object to able to use it for tabbed pages handling
+        /// </summary>
+        /// <returns></returns>
+        public void SetUIBLLInteractionDetailsTab()
+        {
+            try
+            {
+                UIBLLInteraction.Instance.FormTabControl = xtraTabControlDetailsArea;
+                UIBLLInteraction.Instance.MainForm = this;
+            }
+            catch (NullReferenceException)
+            {
+                MessageBox.Show(MAIN_FORM_IS_NUll_ERROR, UIBLLInteraction.ERROR_MESSAGE_TITLE, MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// Refreshes the current selected project
+        /// </summary>
+        public void RefreshProjects()
+        {
+            foreach (Project project in UIBLLInteraction.Instance.ProjectsCollection)
+            {
+                if (project != null)
+                {
+                    if (!project.IsTabEdited)
+                    {
+                        try
+                        {
+                            project.Reload();
+                        }
+                        catch (DataAccessException)
+                        {
+                            project.IsDeletedInDataBase = true;
+                        }
+                    }
+                }
+            }
+
+            //if this code causes problems ... Try using this approach:
+
+            // get projects from DB
+            //BusinessObjectList<Project> refreshedProjects = new BusinessObjectList<Project>();
+
+            //foreach (Project project in m_ProjectsCollection)
+            //{
+            //    refreshedProjects.Add(Project.GetById(project.Id.Value));
+            //}
+            //Project.CopyProjects(refreshedProjects, m_ProjectsCollection);
+        }
+
+        /// <summary>
+        /// Removes deleted items in the DB from the current collections
+        /// </summary>
+        public void CleanNavigationFromDeletedItems()
+        {
+            if (
+                MessageBox.Show(CLEAN_DELETED_QUESTION, UIBLLInteraction.QUESTION_MESSAGE_TITLE,
+                                MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
+            {
+            }
+        }
+
+        /// <summary>
+        /// Returns true if the save button is enabled
+        /// </summary>
+        /// <returns></returns>
+        public bool IsSaveButtonEnabled()
+        {
+            return barButtonItemSave.Enabled;
+        }
+
+        /// <summary>
+        /// Returns true if the edit button is enabled
+        /// </summary>
+        /// <returns></returns>
+        public bool IsEditButtonEnabled()
+        {
+            return barButtonItemEdit.Enabled;
+        }
+
+        /// <summary>
+        /// Returns true if the disable button is enabled
+        /// </summary>
+        /// <returns></returns>
+        public bool IsDisableButtonEnabled()
+        {
+            return barButtonItemLock.Enabled;
+        }
+
+        /// <summary>
+        /// Returns true if the cancel button is enabled
+        /// </summary>
+        /// <returns></returns>
+        public bool IsCancelButtonEnabled()
+        {
+            return barButtonItemCancel.Enabled;
+        }
+
+        /// <summary>
+        /// Returns true if the refresh button is enabled
+        /// </summary>
+        /// <returns></returns>
+        public bool IsRefreshButtonEnabled()
+        {
+            return false; //barButtonItemRefresh.Enabled;
+        }
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Recents
+
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Reads the recent project XML file and loads the recent projects in it from the DB
+        /// </summary>
+        private static void LoadRecentProjects()
+        {
+            try
+            {
+                //Get the document from the folder
+                var doc = new XPathDocument(Application.StartupPath + "\\" + RECENT_PROJECTS_FILE_NAME);
+                //Create a navigator to navigate through nodes of projects
+                try
+                {
+                    XPathNavigator nav = ((IXPathNavigable) doc).CreateNavigator();
+                    XPathNodeIterator iter;
+                    try
+                    {
+                        //get the next project ID node
+                        iter = nav.Select("/RecentProjects/ProjectId");
+                        while (iter.MoveNext())
+                        {
+                            XPathNodeIterator newIter = iter.Current.SelectDescendants(XPathNodeType.Element, false);
+                            try
+                            {
+                                //Get the project from the data base and add it to the collection
+                                try
+                                {
+                                    Project recentProject = null;
+                                    try
+                                    {
+                                        recentProject = Project.GetById(Convert.ToInt32(newIter.Current.Value));
+                                    }
+                                    catch (OverflowException OverflowException)
+                                    {
+                                        Equiom.Tco.Common.Application.Logger.LogException(OverflowException);
+                                    }
+                                    catch (InvalidCastException invalidCastException)
+                                    {
+                                        Equiom.Tco.Common.Application.Logger.LogException(invalidCastException);
+                                    }
+                                    catch (FormatException formatException)
+                                    {
+                                        Equiom.Tco.Common.Application.Logger.LogException(formatException);
+                                    }
+                                    if (recentProject != null)
+                                    {
+                                        if (!UIBLLInteraction.Instance.ProjectsCollection.Contains(recentProject))
+                                        {
+                                            UIBLLInteraction.Instance.ProjectsCollection.Add(recentProject);
+                                        }
+                                    }
+                                }
+                                catch (FormatException)
+                                {
+                                    MessageBox.Show(XML_NAVIGATOR_IS_NUll_ERROR, UIBLLInteraction.ERROR_MESSAGE_TITLE,
+                                                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                }
+                            }
+                                //Catch exceptions during loading project from DB
+                            catch (DataAccessException dataAccessException)
+                            {
+                                //UIBLLInteraction.Instance.ShowException(dataAccessException);
+                                Equiom.Tco.Common.Application.Logger.LogException(dataAccessException);
+                                MessageBox.Show(XML_NAVIGATOR_IS_NUll_ERROR, UIBLLInteraction.ERROR_MESSAGE_TITLE,
+                                                MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                                //Catch exceptions during adding duplicated project
+                            catch (ArgumentException argumentException)
+                            {
+                                Equiom.Tco.Common.Application.Logger.LogException(argumentException);
+                            }
+                                //Catch exceptions during using value that is null
+                            catch (NullReferenceException nullReferenceException)
+                            {
+                                Equiom.Tco.Common.Application.Logger.LogException(nullReferenceException);
+                            }
+                        }
+                    }
+                        //Catch exceptions during using a null value iterator
+                    catch (NullReferenceException nullReferenceException)
+                    {
+                        Equiom.Tco.Common.Application.Logger.LogException(nullReferenceException);
+                    }
+                }
+                catch (NullReferenceException)
+                {
+                    MessageBox.Show(XML_NAVIGATOR_IS_NUll_ERROR, UIBLLInteraction.ERROR_MESSAGE_TITLE,
+                                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                //try
+                //{
+                //    ProjectsGroup.MarkGroupAsSelected();
+                //}
+                //catch (NullReferenceException nullReferenceException)
+                //{
+                //    MessageBox.Show(Group_IS_NUll_ERROR, UIBLLInteraction.ERROR_MESSAGE_TITLE, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //}
+            }
+            catch (FileNotFoundException fileNotFoundException)
+            {
+                Equiom.Tco.Common.Application.Logger.LogException(fileNotFoundException);
+            }
+        }
+
+        /// <summary>
+        /// Update the XML file containing the list of recent projects with the current list of projects in the
+        /// navigation panel
+        /// </summary>
+        private static void UpdateRecentProjects()
+        {
+            try
+            {
+                string path = Application.StartupPath + "\\" + RECENT_PROJECTS_FILE_NAME;
+                var recentProjectsXMLTextWriter = new XmlTextWriter(path, null) {Formatting = Formatting.Indented};
+                recentProjectsXMLTextWriter.WriteStartDocument(false);
+                recentProjectsXMLTextWriter.WriteStartElement("RecentProjects");
+                if (UIBLLInteraction.Instance.ProjectsCollection != null)
+                {
+                    foreach (Project project in UIBLLInteraction.Instance.ProjectsCollection)
+                    {
+                        try
+                        {
+                            recentProjectsXMLTextWriter.WriteElementString("ProjectId", project.Id.ToString());
+                        }
+                        catch (NullReferenceException nullReferenceException)
+                        {
+                            Equiom.Tco.Common.Application.Logger.LogException(nullReferenceException);
+                        }
+                    }
+                }
+                recentProjectsXMLTextWriter.WriteEndElement();
+                recentProjectsXMLTextWriter.Flush();
+                recentProjectsXMLTextWriter.Close();
+            }
+            catch (FileNotFoundException fileNotFoundException)
+            {
+                MessageBox.Show(
+                    fileNotFoundException.Message,
+                    UIBLLInteraction.ERROR_MESSAGE_TITLE,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
+        }
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        //---------------------------------------------------------------------------------------------
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Handlers
+
+        #region Selection Changed
+
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Called when the seleted scenario change to refresh the lists of components
+        /// </summary>
+        private static void ScenariosNav_SelectedItemChanged(EntityBusinessObject item, EventArgs e)
+        {
+            var selectedScenario = item as Scenario;
+            if (selectedScenario != null)
+            {
+                UIBLLInteraction.Instance.FilterComponentsBySelection();
+            }
+        }
+
+        /// <summary>
+        /// Called when the seleted building change to refresh the lists of components
+        /// </summary>
+        private static void BuildingsNav_SelectedItemChanged(EntityBusinessObject item, EventArgs e)
+        {
+            var selectedBuilding = item as Building;
+            if (selectedBuilding != null)
+            {
+                if (UIBLLInteraction.Instance.AreAllChildrenLoaded(selectedBuilding))
+                {
+                    UIBLLInteraction.Instance.FilterComponentsBySelection();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Called when the seleted project change to refresh the lists of buildings, components and scenarios
+        /// </summary>
+        private void ProjectsNav_SelectedItemChanged(EntityBusinessObject item, EventArgs e)
+        {
+            //Get the current selected project and refill all entites according to it
+            try
+            {
+                //Get the current selected project and set the business object collections for childs
+                var selectedProject = item as Project;
+                if (selectedProject != null)
+                {
+                    if (UIBLLInteraction.Instance.AreAllChildrenLoaded(selectedProject))
+                    {
+                        try
+                        {
+                            var buildingsBindingSource = new BindingSource {DataSource = selectedProject.Buildings};
+                            BuildingsNav.DataSource = buildingsBindingSource;
+
+                            var scenariosBindingSource = new BindingSource {DataSource = selectedProject.Scenarios};
+                            ScenariosNav.DataSource = scenariosBindingSource;
+
+                            var componentsBindingSource = new BindingSource {DataSource = selectedProject.Components};
+                            ComponentsNav.DataSource = componentsBindingSource;
+
+                            //Add listeners to each building to refresh components list
+                            foreach (Building building in selectedProject.Buildings)
+                            {
+                                if (building != null)
+                                {
+                                    building.Components.RaiseListChangedEvents = true;
+                                    building.Components.ListChanged +=
+                                        BuildingsOrScenariosComponents_ListChanged;
+                                }
+                            }
+                            //Add listeners to each scenario to refresh components list
+                            foreach (Scenario scenario in selectedProject.Scenarios)
+                            {
+                                if (scenario != null)
+                                {
+                                    scenario.Components.RaiseListChangedEvents = true;
+                                    scenario.Components.ListChanged +=
+                                        BuildingsOrScenariosComponents_ListChanged;
+                                }
+                            }
+                            BuildingsNav.ClearSelection();
+                            ScenariosNav.ClearSelection();
+                            ComponentsNav.ClearSelection();
+                        }
+                        catch (NullReferenceException)
+                        {
+                            MessageBox.Show(Group_IS_NUll_ERROR, UIBLLInteraction.ERROR_MESSAGE_TITLE,
+                                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                }
+            }
+            catch (DataAccessException dataAccessException)
+            {
+                Equiom.Tco.Common.Application.Logger.LogException(dataAccessException);
+            }
+        }
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region No Item Selected
+
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Refresh the lists of components when no scenario is selected
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private static void ScenariosNav_NoItemIsSelected(object sender, EventArgs e)
+        {
+            UIBLLInteraction.Instance.FilterComponentsBySelection();
+        }
+
+        /// <summary>
+        /// Refresh the lists of components when no building is selected
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private static void BuildingsNav_NoItemIsSelected(object sender, EventArgs e)
+        {
+            UIBLLInteraction.Instance.FilterComponentsBySelection();
+        }
+
+        /// <summary>
+        /// Clear child collections when no project is selected
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ProjectsNav_NoItemIsSelected(object sender, EventArgs e)
+        {
+            BuildingsNav.ClearSelection();
+            ScenariosNav.ClearSelection();
+            ComponentsNav.ClearSelection();
+
+            BuildingsNav.DataSource = null;
+            ScenariosNav.DataSource = null;
+            ComponentsNav.DataSource = null;
+        }
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region List Changed
+
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// This method is called when the list of buildings or scenarios changes to refresh the list of components
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private static void BuildingsOrScenariosComponents_ListChanged(object sender, ListChangedEventArgs e)
+        {
+            if (e.ListChangedType == ListChangedType.ItemAdded ||
+                e.ListChangedType == ListChangedType.ItemDeleted)
+            {
+                UIBLLInteraction.Instance.FilterComponentsBySelection();
+            }
+        }
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region Timers
+
+        private void OnRefreshTimer(object sender, EventArgs e)
+        {
+            UIBLLInteraction.Instance.RefreshProjectsUIFromCache();
+        }
+
+        #endregion
+
+        #region Other
+
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Calls a method to close the selected tab page of the tab control
+        /// </summary>
+        /// <param name="sender">The sender of the event</param>
+        /// <param name="e">The event args</param>
+        private void xtraTabControlDetailsArea_CloseButtonClick(object sender, EventArgs e)
+        {
+            if (xtraTabControlDetailsArea != null)
+            {
+                var arg = e as ClosePageButtonEventArgs;
+                try
+                {
+                    if (arg != null) CloseTabPage(arg.Page as XtraTabPage);
+                }
+                catch (NullReferenceException)
+                {
+                }
+                UpdateItemsAccordingToSelectedPage();
+            }
+        }
+
+        /// <summary>
+        /// Calls a method to close the hottracked tab when clicking by middle mouse button
+        /// </summary>
+        /// <param name="sender">The sender of the event</param>
+        /// <param name="e">The Mouse Event Args</param>
+        private void xtraTabControlDetailsArea_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Middle)
+            {
+                if (xtraTabControlDetailsArea != null)
+                {
+                    if (xtraTabControlDetailsArea.HotTrackedTabPage != null)
+                    {
+                        CloseTabPage(xtraTabControlDetailsArea.HotTrackedTabPage);
+                        UpdateItemsAccordingToSelectedPage();
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Calls methods that should be called on the load event of the form
+        /// </summary>
+        /// <param name="sender">The sender of the event</param>
+        /// <param name="e">The event args</param>
+        private void ribbonFrmMain_Load(object sender, EventArgs e)
+        {
+            InitializeUI();
+        }
+
+        /// <summary>
+        /// On the form close action, the recent projects XML file should be updated
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ribbonFrmMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            bool shouldClose = true;
+            AnnualCashFlowReportTab annualCashFlowReportTab = null;
+            UtilityReportTab utilityReportTab = null;
+            if (UIBLLInteraction.Instance.EntityEditDictionary.Count != 0 ||
+                UIBLLInteraction.Instance.OtherTabsEditDictionary.Count != 0)
+            {
+                shouldClose = false;
+            }
+            foreach (XtraTabPage tab in xtraTabControlDetailsArea.TabPages)
+            {
+                if (tab != null)
+                {
+                    var entityControl = tab.Controls[0] as XtraTabPageEntity;
+                    if (entityControl != null)
+                    {
+                        if (entityControl.TabType == TabTypes.Project ||
+                            entityControl.TabType == TabTypes.Component ||
+                            entityControl.TabType == TabTypes.Building)
+                        {
+                            if (entityControl.TabState == EntityTabState.Unlocked ||
+                                entityControl.TabState == EntityTabState.Modified)
+                            {
+                                shouldClose = false;
+                                break;
+                            }
+                        }
+                        else if (entityControl.TabType == TabTypes.AnnualCashFlow)
+                        {
+                            annualCashFlowReportTab = entityControl as AnnualCashFlowReportTab;
+                        }
+                        else if (entityControl.TabType == TabTypes.UtilityReport)
+                        {
+                            utilityReportTab = entityControl as UtilityReportTab;
+                        }
+                    }
+                }
+            }
+            if (shouldClose)
+            {
+                UpdateRecentProjects();
+            }
+            else
+            {
+                e.Cancel = true;
+                MessageBox.Show(TABS_UNSAVED_ERROR, UIBLLInteraction.ERROR_MESSAGE_TITLE, MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// Calls the right action when clicking a ribbon button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ribbon_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            PerformRibbonItemClick(e);
+        }
+
+        /// <summary>
+        /// When selecting a tab, this method will update the satate of the ribbon button according to the selected tab
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void xtraTabControlDetailsArea_SelectedPageChanged(object sender, TabPageChangedEventArgs e)
+        {
+            UpdateItemsAccordingToSelectedPage();
+        }
+
+        /// <summary>
+        /// Prevet the spelll checker from checking to large words which will make it stop responding
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void spellChecker1_BeforeCheckWord(object sender, BeforeCheckWordEventArgs e)
+        {
+            if (e.Word.Length >= 15)
+            {
+                e.Cancel = true;
+            }
+        }
+
+        /// <summary>
+        /// When clicking a group header, it will mark the group as selected and clear selection in it
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void LayoutControlGroup_MouseDown(object sender, MouseEventArgs e)
+        {
+            ClearSelection(sender);
+            MarkGroupAsSelected(sender);
+        }
+
+        /// <summary>
+        /// Gives the seleced group an icon do distingush it from other groups
+        /// </summary>
+        public void MarkGroupAsSelected(object sender)
+        {
+            var currentGroup = sender as LayoutGroup;
+
+            foreach (BaseLayoutItem group in layoutControlNavigationPanel.Items)
+            {
+                if (group is LayoutControlGroup)
+                {
+                    if (group != currentGroup)
+                    {
+                        (group as LayoutControlGroup).CaptionImage = null;
+                    }
+                }
+            }
+            if (currentGroup != null) currentGroup.CaptionImage = Resources.CheckOut;
+        }
+
+        /// <summary>
+        /// Makes sure that the clicked group will clear selection in its grid
+        /// </summary>
+        /// <param name="sender"></param>
+        public void ClearSelection(object sender)
+        {
+            var navigationGridControl =
+                ((LayoutControlItem) ((LayoutControlGroup) sender).Items[0]).Control as NavigationGridControl;
+            if (navigationGridControl != null) navigationGridControl.ClearSelection();
+            navPanelxtraTabControl.Focus();
+        }
+
+        /// <summary>
+        /// calls a method to refresh the current selected project
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void simpleButtonRefreshProject_Click(object sender, EventArgs e)
+        {
+            RefreshProjects();
+        }
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+
+        //---------------------------------------------------------------------------------------------
+
+        //---------------------------------------------------------------------------------------------
+
+        #endregion
+    }
+}

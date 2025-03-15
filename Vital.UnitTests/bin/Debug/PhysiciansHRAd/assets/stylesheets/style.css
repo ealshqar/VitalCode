@@ -1,0 +1,175 @@
+body{
+    margin: 0;
+    color: #ffffff;
+    font-family: Calibri,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 13px;
+}
+body *{
+    position: relative;
+}
+* {
+    box-sizing: border-box;
+}
+*::before, *::after {
+    box-sizing: border-box;
+}
+a {
+    color: #ffffff;
+    text-decoration: none;
+}
+a:hover {
+    color: orange;
+}
+.container {
+    display: block;
+    float: left;
+    padding-left: 10%;
+    padding-right: 10%;
+    width: 100%;
+    padding-bottom: 40px;
+}
+.container > div{
+    float: left;
+}
+.col-12 {
+    width: 100%;
+}
+.col-6 {
+    width: 50%;
+}
+.clearfix{
+    clear: both;
+}
+.m-b-lg {
+    margin-bottom: 3%;
+}
+.m-b-sm {
+    margin-bottom: 1%;
+}
+h1 {
+  font-size: 22px;
+  font-weight: 500;
+}
+h2 {
+  font-size: 20px;
+  font-weight: 500;
+}
+ol {
+    padding-left: 25px;
+}
+ol > li {
+    margin-bottom: 5px;
+}
+.text-underline {
+    text-decoration: underline;
+}
+.color-orange{
+    color: orange;
+}
+.text-center {
+    text-align: center;
+}
+.text-shadow{
+    text-shadow: 0px 2px 12px #000;
+}
+.text-bold{
+    font-weight: 600;
+}
+.btn {
+    border: 1px solid #fff !important;
+    cursor: pointer;
+    padding: 10px;
+    color: #ffffff !important;
+}
+.inline-block {
+    display: inline-block;
+}
+.btn.btn-lg {
+    border: 2px solid #fff !important;
+    font-size: 26px;
+    font-weight: 600;
+    padding: 10px 20px;
+}
+.btn.btn-outline-orange:hover {
+    border-color: orange !important;
+    color: orange !important;
+}
+.text-lg {
+    font-size: 45px;
+    margin-bottom: 19px;
+    margin-top: 8px;
+}
+.shadow{
+    top: 0;
+    left: 0;
+    display: block;
+    height: 100%;
+    opacity: 1 !important;
+    position: fixed;
+    width: 100%;
+}
+.shadow:after{
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.45) 100%, transparent 100%);
+    bottom: 0;
+    content: "";
+    height: 100%;
+    left: 0;
+    position: absolute;
+    width: 100%;
+}
+.cover-image {
+    background: #2f4050 url("../images/cover.jpg") no-repeat scroll 50% 25% / cover !important;
+    display: block;
+    height: 100%;
+    opacity: 1 !important;
+    position: absolute;
+    text-shadow: 0 2px 5px #000;
+    width: 100%;
+    -webkit-filter: blur(3px);
+    -moz-filter: blur(3px);
+    -o-filter: blur(3px);
+    -ms-filter: blur(3px);
+    filter: blur(3px);
+}
+.logo{
+    margin-top: 40px;
+}
+.headline {
+    border-bottom: 2px solid #ffffff;
+    border-top: 2px solid #ffffff;
+    padding-bottom: 15px;
+    padding-top: 15px;
+    width: 70%;
+}
+.footer {
+    background: rgba(0, 0, 0, 0) linear-gradient(to top, rgba(0, 0, 0, 0.46) 56%, transparent 100%) repeat scroll 0 0;
+    bottom: 0;
+    height: 43px;
+    padding-top: 19px;
+    position: fixed;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    .logo{
+        width: 100%;
+    }
+}
+@media (max-width: 850px) {
+   .col-6 {
+        width: 100%;
+   }
+   .footer .col-6{
+        width: 50%;
+   }
+   h1 {
+        font-size: 20px;
+   }
+}
+@media (max-height: 680px) {
+   h1 {
+        font-size: 21px;
+   }
+   h2 {
+        font-size: 18px;
+   }
+}

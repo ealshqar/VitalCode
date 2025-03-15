@@ -1,0 +1,414 @@
+//////////////////////////////////////////////////////////////////////////////
+//  
+//  <sourcefile name="XtraFormMain.cs" creationdate="12/1/08" owner="anasa" >
+//
+//      <project>McKinstry TCO Application</project>
+//  
+//      <description>Main form of the client using Devexpress controls</description>
+//      
+//      <copyright year="2008" company="McKinstry">
+//          <notice>
+//              Copyright © 2008 McKinstry. All rights reserved
+//  
+//              Developed for McKinstry by
+//                  Equiom - MENA
+//                  www.equiom.com
+//          </notice>
+//  
+//  	<history date="12/1/08" modby="anasa">created</history>
+//  
+//////////////////////////////////////////////////////////////////////////////
+
+#region Library Calls
+//---------------------------------------------------------------------------------------------
+using System;
+using System.Runtime.InteropServices;
+using System.Windows.Forms;
+using DevExpress.XtraTab;
+using System.Drawing;
+using System.Drawing.Imaging;
+using DevExpress.XtraLayout;
+using DevExpress.XtraEditors;
+using Equiom.Tco.BusinessLogicLayer;
+//---------------------------------------------------------------------------------------------
+#endregion
+
+namespace TCO.DesktopClientDevexpress
+{
+    public partial class XtraFormMain : DevExpress.XtraEditors.XtraForm
+    {
+        #region API's
+        //---------------------------------------------------------------------------------------------
+        [DllImport("wininet.dll", CharSet = CharSet.Auto)]
+        static extern bool InternetGetConnectedState(ref ConnectionState lpdwFlags, int dwReserved);
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        #region Declarations
+        //---------------------------------------------------------------------------------------------
+        //Timer used to continuously check on the internet connection in the tool
+        private System.Threading.Timer connectionTimer;
+        private ConnectionState CONNECTION_STATE_DESCRIPTION = 0;
+        
+        public System.Windows.Forms.ImageList imageList = new System.Windows.Forms.ImageList();
+       
+        //Internet Statuses
+        private const string ONLINE = "Online";
+        private const string OFFLINE = "Offline";
+
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        #region Properties
+        //---------------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        #region Constructors
+        //---------------------------------------------------------------------------------------------
+        public XtraFormMain()
+        {
+            InitializeComponent();
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        #region Methods
+        //---------------------------------------------------------------------------------------------
+
+        #region Initialize UI Functionality
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Call the method of the creator that will create the navigation groups in the navigation panel
+        /// </summary>
+        /// <param name="sender">The sender of the event</param>
+        /// <param name="e">The event args</param>
+        private void InitializeUI()
+        {
+            //Start the timer that will monitor the internet connectivity changes
+            connectionTimer = new System.Threading.Timer(UpdateTimer, null, 2500, 2000);
+            SetUIBLLInteractionDetailsTab();
+            CreateNavigationGroups(navigationPanelLayoutControlGroup, contextButtonsMain);
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        #region Tabs related actions
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Set the tab control to accept the data dargged into it
+        /// </summary>
+        /// <param name="e">The event args</param>
+        private void TabDragEnter(System.Windows.Forms.DragEventArgs e)
+        {
+            // change the drag cursor to show that the tab is ready and set to accept data entry
+            // either to Copy or Move
+            if (e.AllowedEffect == DragDropEffects.Copy)
+            {
+                e.Effect = DragDropEffects.Copy;
+            }
+            else
+            {
+                e.Effect = DragDropEffects.Move;
+            }
+        }
+
+        /// <summary>
+        /// Drop the data in the control and ask for specified action
+        /// </summary>
+        /// <param name="e">The event args</param>
+        private void TabDragDrop(System.Windows.Forms.DragEventArgs e)
+        {
+            //Get the data from the handler
+            ListBoxItem item = (ListBoxItem)e.Data.GetData("TCO.DesktopClientDevexpress.ListBoxItem");
+            foreach (Object group in navigationPanelLayoutControlGroup.Items)
+            {
+                //if (group.GetType() == typeof(NavigationGroup))
+                //{
+                //    if (((NavigationGroup)group).GroupListBox.Items.Contains(item))
+                //    {
+                //        item.ItemEntity = ((NavigationGroup)group).GroupType;
+                //    }
+                //}
+            }
+            //Call the specified action
+            //TODO: Use the new code from the ribbon form when this form will be used
+            //UIBLLInteraction.Instance.CommonActionSelect(CommonEntityActions.Open, item.ItemEntity, item);
+        }
+
+        /// <summary>
+        /// Close the selected tab of the tab control by asking for Ok method of the tab page, this will make sure
+        /// that the user saved his changes before closing.
+        /// </summary>
+        /// <param name="e">The event args</param>
+        private void CloseTabPage(XtraTabPage tabPage)
+        {
+            //Determine the status of the tab when the close button was clicked, if it is a new tab, then this should
+            //mean a tab cancel operation, but if it is an existing one, then this should mean finished work on a tab
+
+            XtraTabPageEntity closedTab = tabPage.Controls[0] as XtraTabPageEntity;
+            BusinessObject tabObject = closedTab.TabObject;
+
+            if (tabObject != null)
+            {
+                closedTab.CancelOrCancelCloseAction(true);
+                //if (closedTab.TabState == BusinessObjectState.New)
+                //{
+                //    closedTab.CancelOrCancelCloseAction(true);
+                //}
+                //else
+                //{
+                //    closedTab.OkAction();
+                //}
+            }
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        #region Menus actions
+        //---------------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        #region Internet Connection Status Methods
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Set the connection status using the API
+        /// </summary>
+        private void ChangeConnectionStatus()
+        {
+            if (InternetGetConnectedState(ref CONNECTION_STATE_DESCRIPTION, 0))
+            {
+                ChangeConnectionLabel(true);
+            }
+            else
+            {
+                ChangeConnectionLabel(false);
+            }
+        }
+
+        /// <summary>
+        /// Do the changes in regarding the connection status in the UI like changing caption and icon
+        /// </summary>
+        /// <param name="isOnline">Determine if the connection is on or off</param>
+        private void ChangeConnectionLabel(Boolean isOnline)
+        {
+            if (isOnline)
+            {
+                barStaticItemInternetStatus.Glyph = TCO.DesktopClientDevexpress.Properties.Resources.Online;
+                barStaticItemInternetStatus.Caption = ONLINE;
+            }
+            else
+            {
+                barStaticItemInternetStatus.Glyph = TCO.DesktopClientDevexpress.Properties.Resources.Offline;
+                barStaticItemInternetStatus.Caption = OFFLINE;
+            }
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        #region Navigation Panel Methods
+        //--------------------------------------------------------------------------------------------- 
+        /// <summary>
+        /// Set the Image list properties and assign it
+        /// </summary>
+        /// <returns></returns>
+        private void SetImageListProperties()
+        {
+            imageList.TransparentColor = System.Drawing.Color.White;
+            imageList.ImageSize = new System.Drawing.Size(52, 18);
+            //Assign the image list instance to the UIBLLnteraction class instance where we are going to use the image list.
+            UIBLLInteraction.Instance.entityImageList = imageList;
+        }
+
+        //Create 4 navigation panels for all entities and for each group create a class for the context menu
+
+        /// <summary>
+        /// Create a group for each entity in the project
+        /// </summary>
+        /// <param name="groupParent"> The control to add the groups into</param>
+        /// <returns></returns>
+        public void CreateNavigationGroups(LayoutControlGroup groupParent, ContextButtons contextButtons)
+        {
+            // Loop through the values of the EntityType enumeration to create groups for Projects, Buildings, Components etc.
+            foreach (EntityType entity in System.Enum.GetValues(typeof(EntityType)))
+            {
+                AddGroup(groupParent, entity, contextButtons);
+            }
+            //REVIEW[Anas]: In the first Foreach loop we created the UI and the groups and we fill the groups with data in the second 
+            //foreach loop, this will make the UI appear faster to the user even if it comes empty a little bit in the begining.
+            foreach (EntityType entityValue in System.Enum.GetValues(typeof(EntityType)))
+            {
+                //Move through the created groups in the nav panel and fill them with data, we used the type object because
+                //the nav panel contains Groups and splitters so we need to use a general representation when doing search.
+                foreach (Object createdGroup in groupParent.Items)
+                {
+                    //REVIEW[Anas]: use casting for multiple times to save us from creating new objecs with the bad effect on the
+                    //readabillity
+                    //if (createdGroup.GetType() == typeof(NavigationGroup))
+                    //{
+                    //    if (((NavigationGroup)createdGroup).GroupType == entityValue)
+                    //    {
+                    //        //This is a UI looking thing, when the tool starts, i want all the groups to be minimized except
+                    //        //for the first group, this will make the tool look good in the begining
+                    //        if (((NavigationGroup)createdGroup).GroupType != EntityType.Projects)
+                    //        {
+                    //            ((NavigationGroup)createdGroup).Expanded = false;
+                    //        }
+                    //        UIBLLInteraction.Instance.FillList(entityValue, (NavigationGroup)createdGroup);
+                    //    }
+                    //}
+                }
+            }
+        }
+
+        /// <summary>
+        /// Create an individual group
+        /// </summary>
+        /// <param name="groupParent"> The control to add the groups into</param>
+        /// <param name="entity"> The entity type of the group</param>
+        /// <returns></returns>
+        private void AddGroup(LayoutControlGroup groupParent, EntityType entity, ContextButtons contextButtons)
+        {
+            ////Create an object of the NavigationGroup class.
+            //NavigationGroup groupChild = new NavigationGroup();
+            ////Specifiy the entity type of the group that will be used for identification and naming
+            //groupChild.GroupType = entity;
+            //groupParent.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { groupChild.CreateGroup() });
+            ////Add a splitter control in the specified location in the parnet group
+            //groupParent.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { CreateSplitter(groupParent.Width, groupChild.Height + groupChild.Y) });
+            ////Make the size of the added group dynamic and changable to allow the functionatlity of the splitter to be working.
+            //groupChild.SetSizeConstraintsType(false);
+            ////Set the image list of the list box as the image list of the UIBLLInteraction class instance to make sure that 
+            ////UI & UIBLLInteraction are using the same imagelistInstance
+            //groupChild.GroupListBox.ImageList = UIBLLInteraction.Instance.entityImageList;
+            ////Link the groups with the context buttons bar at the top of the form
+            //groupChild.ContextButtonsBar = contextButtons;
+        }
+
+        /// <summary>
+        /// Create a group for each entity in the project
+        /// </summary>
+        /// <param name="Width"> The width of the splitter item</param>
+        /// <param name="Height">The hight at which to put the splitter item</param>
+        /// <returns>splitterItem : The splitter item to be added in the layout</returns>
+        private SplitterItem CreateSplitter(int iWidth, int iHeight)
+        {
+            SplitterItem splitterItem = new SplitterItem();
+            ((System.ComponentModel.ISupportInitialize)(splitterItem)).BeginInit();
+            splitterItem.Location = new System.Drawing.Point(0, iHeight);
+            splitterItem.Size = new System.Drawing.Size(iWidth, 6);
+            ((System.ComponentModel.ISupportInitialize)(splitterItem)).EndInit();
+            return splitterItem;
+        }
+
+        /// <summary>
+        /// Set the tab in the UIBLLInteraction object to able to use it for tabbed pages handling
+        /// </summary>
+        /// <returns></returns>
+        public void SetUIBLLInteractionDetailsTab()
+        {
+            UIBLLInteraction.Instance.FormTabControl = xtraTabControlDetailsArea;
+            //Set the properties of the image list and assign it to the InteractionInstance
+            SetImageListProperties();
+        }
+        //--------------------------------------------------------------------------------------------- 
+        #endregion   
+
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        #region Handlers
+        //---------------------------------------------------------------------------------------------
+        #region Main Form
+        //---------------------------------------------------------------------------------------------
+        private void XtraFormMain_Load(object sender, EventArgs e)
+        {
+            InitializeUI();
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        #region Tab Control
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Calls a methods that will update the status of the tab controls to recieve dragged data
+        /// </summary>
+        /// <param name="sender">The sender of the event</param>
+        /// <param name="e">The event args</param>
+        private void xtraTabControlDetailsArea_DragEnter(object sender, System.Windows.Forms.DragEventArgs e)
+        {
+            TabDragEnter(e);
+        }
+
+        /// <summary>
+        /// Calls methods that will drop the data in the control and ask for specified action
+        /// </summary>
+        /// <param name="sender">The sender of the event</param>
+        /// <param name="e">The event args</param>
+        private void xtraTabControlDetailsArea_DragDrop(object sender, System.Windows.Forms.DragEventArgs e)
+        {
+            TabDragDrop(e);
+        }
+
+        /// <summary>
+        /// Calls a method to close the selected tab page of the tab control
+        /// </summary>
+        /// <param name="sender">The sender of the event</param>
+        /// <param name="e">The event args</param>
+        private void xtraTabControlDetailsArea_CloseButtonClick(object sender, EventArgs e)
+        {
+            CloseTabPage(xtraTabControlDetailsArea.SelectedTabPage);
+        }
+
+        /// <summary>
+        /// Calls a method to close the hottracked tab when clicking by middle mouse button
+        /// </summary>
+        /// <param name="sender">The sender of the event</param>
+        /// <param name="e">The Mouse Event Args</param>
+        private void xtraTabControlDetailsArea_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Middle)
+            {
+                if (xtraTabControlDetailsArea.HotTrackedTabPage != null)
+                {
+                    CloseTabPage(xtraTabControlDetailsArea.HotTrackedTabPage);
+                }
+            }
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        #region Internet Connection Timer
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Calls a method to change the status of the connectivity flag
+        /// </summary>
+        /// <param name="sender">The sender of the event</param>
+        /// <param name="e">The event args</param>
+        private void UpdateTimer(object sender, System.EventArgs e)
+        {
+            ChangeConnectionStatus();
+        }
+
+        private void UpdateTimer(object status)
+        {
+            try
+            {
+                if (connectionTimer != null)
+                {
+                    object[] pList = { this, System.EventArgs.Empty };
+                    Invoke(new System.EventHandler(UpdateTimer), pList);
+                }
+            }
+            catch (Exception e)
+            {
+
+            }
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+        //---------------------------------------------------------------------------------------------
+        #endregion
+    }
+}

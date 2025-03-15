@@ -1,0 +1,171 @@
+﻿//////////////////////////////////////////////////////////////////////////////
+//  
+//  <sourcefile name="ControlCreator.cs" creationdate="07/12/08" owner="anasa" >
+//
+//      <project>McKinstry TCO Application</project>
+//  
+//      <description>Create controls in the client</description>
+//      
+//      <copyright year="2008" company="McKinstry">
+//          <notice>
+//              Copyright © 2008 McKinstry. All rights reserved
+//  
+//              Developed for McKinstry by
+//                  Equiom - MENA
+//                  www.equiom.com
+//          </notice>
+//  
+//  	<history date="07/12/08" modby="anasa">created</history>
+//  
+//////////////////////////////////////////////////////////////////////////////
+
+using System;
+using DevExpress.XtraLayout;
+using DevExpress.XtraTab;
+
+namespace TCO.DesktopClientDevexpress
+{
+    public class ControlCreator
+    {
+        #region Declarations
+        //---------------------------------------------------------------------------------------------
+        //Define an instance of the UIBLLInteraction class and then pass it to all other classes 
+        //so they will be using the same controls on the same form instance
+        XtraTabControl ribbonFormXtraTabControl;
+        LayoutControlGroup formLayoutControlGroup;
+
+        public XtraTabControl FormTabControl
+        {
+            get
+            {
+                return ribbonFormXtraTabControl;
+            }
+            set
+            {
+                ribbonFormXtraTabControl = value;
+            }
+        }
+        public LayoutControlGroup FormLayoutControlGroup
+        {
+            get
+            {
+                return formLayoutControlGroup;
+            }
+            set
+            {
+                formLayoutControlGroup = value;
+            }
+        }
+        public System.Windows.Forms.ImageList imageList = new System.Windows.Forms.ImageList();
+        //--------------------------------------------------------------------------------------------- 
+        #endregion  
+
+        #region Navigation Panel Methods
+        //--------------------------------------------------------------------------------------------- 
+        /// <summary>
+        /// Set the Image list properties and assign it
+        /// </summary>
+        /// <returns></returns>
+        private void SetImageListProperties()
+        {
+            imageList.TransparentColor = System.Drawing.Color.White;
+            imageList.ImageSize = new System.Drawing.Size(52, 18);
+            //Assign the image list instance to the UIBLLnteraction class instance where we are going to use the image list.
+            UIBLLInteraction.Instance.entityImageList = imageList;
+        }
+
+        //Create 4 navigation panels for all entities and for each group create a class for the context menu
+
+        /// <summary>
+        /// Create a group for each entity in the project
+        /// </summary>
+        /// <param name="groupParent"> The control to add the groups into</param>
+        /// <returns></returns>
+        public void CreateNavigationGroups(LayoutControlGroup groupParent, ContextButtons contextButtons)
+        {
+            //Set the properties of the image list and assign it to the InteractionInstance
+            SetImageListProperties();
+            // Loop through the values of the EntityType enumeration to create groups for Projects, Buildings, Components etc.
+            foreach (EntityType entity in System.Enum.GetValues(typeof(EntityType)))
+            {
+                AddGroup(groupParent, entity, contextButtons);
+            }
+            //REVIEW[Anas]: In the first Foreach loop we created the UI and the groups and we fill the groups with data in the second 
+            //foreach loop, this will make the UI appear faster to the user even if it comes empty a little bit in the begining.
+            foreach (EntityType entityValue in System.Enum.GetValues(typeof(EntityType)))
+            {
+                //Move through the created groups in the nav panel and fill them with data, we used the type object because
+                //the nav panel contains Groups and splitters so we need to use a general representation when doing search.
+                foreach (Object createdGroup in groupParent.Items)
+                {
+                    //REVIEW[Anas]: use casting for multiple times to save us from creating new objecs with the bad effect on the
+                    //readabillity
+                    //if (createdGroup.GetType() == typeof(NavigationGroup))
+                    //{
+                    //    if (((NavigationGroup)createdGroup).GroupType == entityValue)
+                    //    {
+                    //        //This is a UI looking thing, when the tool starts, i want all the groups to be minimized except
+                    //        //for the first group, this will make the tool look good in the begining
+                    //        if (((NavigationGroup)createdGroup).GroupType != EntityType.Projects)
+                    //        {
+                    //            ((NavigationGroup)createdGroup).Expanded = false;
+                    //        }
+                    //        UIBLLInteraction.Instance.FillList(entityValue, (NavigationGroup)createdGroup);
+                    //    }
+                    //}
+                }
+            }
+        }
+
+        /// <summary>
+        /// Create an individual group
+        /// </summary>
+        /// <param name="groupParent"> The control to add the groups into</param>
+        /// <param name="entity"> The entity type of the group</param>
+        /// <returns></returns>
+        private void AddGroup(LayoutControlGroup groupParent, EntityType entity, ContextButtons contextButtons)
+        {
+            //Create an object of the NavigationGroup class.
+            //NavigationGroup groupChild = new NavigationGroup();
+            ////Specifiy the entity type of the group that will be used for identification and naming
+            //groupChild.GroupType = entity;
+            //groupParent.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { groupChild.CreateGroup() });
+            ////Add a splitter control in the specified location in the parnet group
+            //groupParent.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { CreateSplitter(groupParent.Width, groupChild.Height + groupChild.Y) });
+            ////Make the size of the added group dynamic and changable to allow the functionatlity of the splitter to be working.
+            //groupChild.SetSizeConstraintsType(false);
+            ////Set the image list of the list box as the image list of the UIBLLInteraction class instance to make sure that 
+            ////UI & UIBLLInteraction are using the same imagelistInstance
+            //groupChild.GroupListBox.ImageList = UIBLLInteraction.Instance.entityImageList;
+            ////Link the groups with the context buttons bar at the top of the form
+            //groupChild.ContextButtonsBar = contextButtons;
+        }
+
+        /// <summary>
+        /// Create a group for each entity in the project
+        /// </summary>
+        /// <param name="Width"> The width of the splitter item</param>
+        /// <param name="Height">The hight at which to put the splitter item</param>
+        /// <returns>splitterItem : The splitter item to be added in the layout</returns>
+        private SplitterItem CreateSplitter(int iWidth, int iHeight)
+        {
+            SplitterItem splitterItem = new SplitterItem();
+            ((System.ComponentModel.ISupportInitialize)(splitterItem)).BeginInit();
+            splitterItem.Location = new System.Drawing.Point(0, iHeight);
+            splitterItem.Size = new System.Drawing.Size(iWidth, 6);
+            ((System.ComponentModel.ISupportInitialize)(splitterItem)).EndInit();
+            return splitterItem;
+        }
+
+        /// <summary>
+        /// Set the tab in the UIBLLInteraction object to able to use it for tabbed pages handling
+        /// </summary>
+        /// <returns></returns>
+        public void SetUIBLLInteractionDetailsTab()
+        {
+            UIBLLInteraction.Instance.FormTabControl = FormTabControl;
+        }
+        //--------------------------------------------------------------------------------------------- 
+        #endregion   
+    }
+}

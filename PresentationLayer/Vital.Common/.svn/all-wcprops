@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/tco/!svn/ver/1574/branches/dev%20refactored/Equiom.Tco.Common
+END
+Logger.cs
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/tco/!svn/ver/1399/branches/dev%20refactored/Equiom.Tco.Common/Logger.cs
+END
+CommonEnums.cs
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/tco/!svn/ver/1574/branches/dev%20refactored/Equiom.Tco.Common/CommonEnums.cs
+END
+Settings.cs
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/tco/!svn/ver/1574/branches/dev%20refactored/Equiom.Tco.Common/Settings.cs
+END
+Application.cs
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/tco/!svn/ver/1407/branches/dev%20refactored/Equiom.Tco.Common/Application.cs
+END
+Equiom.Tco.Common.csproj
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/tco/!svn/ver/1407/branches/dev%20refactored/Equiom.Tco.Common/Equiom.Tco.Common.csproj
+END
+ConfigurationException.cs
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/tco/!svn/ver/1574/branches/dev%20refactored/Equiom.Tco.Common/ConfigurationException.cs
+END

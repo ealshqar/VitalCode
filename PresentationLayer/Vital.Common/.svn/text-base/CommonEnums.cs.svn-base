@@ -1,0 +1,21 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace Equiom.Tco.Common
+{
+    /// <summary>
+    /// Error codes for ConfigurationException
+    /// </summary>
+    public enum ConfigurationExceptionErrorCode
+    {
+        GeneralConfigurationError = 0,
+        SettingNotFound,
+        SettingValueIsInvalid,
+        ConnectionStringSettingIsInvalid,
+        ConnectionStringSettingHasInvalidDatabaseName,
+        ConnectionStringTimeout
+    }; 
+
+}

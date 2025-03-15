@@ -1,0 +1,383 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{ADA57A75-5E31-4FAF-829C-4AA513513E2B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Vital.Business.Shared</RootNamespace>
+    <AssemblyName>Vital.Business.Shared</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\Vital.Business.Shared.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Release\Vital.Business.Shared.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\Vital.Business.Shared.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Release\Vital.Business.Shared.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ClickOnce Deployment|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\ClickOnce Deployment\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\Vital.Business.Shared.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ClickOnce Deployment|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\ClickOnce Deployment\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\Vital.Business.Shared.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ClickOnce Deployment|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\ClickOnce Deployment\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\Vital.Business.Shared.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DevExpress.Data.v12.2, Version=12.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Assemblies\Devexpress\DevExpress.Data.v12.2.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Caching, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Assemblies\Caching\Microsoft.Practices.EnterpriseLibrary.Caching.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.0.8.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Assemblies\Web\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp">
+      <HintPath>..\..\..\..\Assemblies\ReshSharp\RestSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Caching\CachingManager.cs" />
+    <Compile Include="DomainObjects\AppImages\AppImage.cs" />
+    <Compile Include="DomainObjects\AppInfos\AppInfo.cs" />
+    <Compile Include="DomainObjects\AutoTestDestination\AutoTest.cs" />
+    <Compile Include="DomainObjects\AutoTestDestination\AutoTestResult.cs" />
+    <Compile Include="DomainObjects\AutoTestDestination\AutoTestResultProduct.cs" />
+    <Compile Include="DomainObjects\AutoTestDestination\ClinicProductPricing.cs" />
+    <Compile Include="DomainObjects\AutoTestDestination\DosageOption.cs" />
+    <Compile Include="DomainObjects\AutoTestDestination\Product.cs" />
+    <Compile Include="DomainObjects\AutoTestDestination\ProductForm.cs" />
+    <Compile Include="DomainObjects\AutoTestDestination\ProductSize.cs" />
+    <Compile Include="DomainObjects\AutoTestSource\AutoItem.cs" />
+    <Compile Include="DomainObjects\AutoTestSource\AutoItemRelation.cs" />
+    <Compile Include="DomainObjects\AutoTestSource\AutoProtocol.cs" />
+    <Compile Include="DomainObjects\AutoTestSource\AutoProtocolRevision.cs" />
+    <Compile Include="DomainObjects\AutoTestSource\AutoProtocolStage.cs" />
+    <Compile Include="DomainObjects\AutoTestSource\AutoProtocolStageRevision.cs" />
+    <Compile Include="DomainObjects\AutoTestSource\AutoTestStage.cs" />
+    <Compile Include="DomainObjects\AutoTestSource\StageAnnouncement.cs" />
+    <Compile Include="DomainObjects\AutoTestSource\StageAutoItem.cs" />
+    <Compile Include="DomainObjects\AutoTestSource\TestingPoint.cs" />
+    <Compile Include="DomainObjects\BusinessObject.cs" />
+    <Compile Include="DomainObjects\FrequencyTests\FrequencyDirectory.cs" />
+    <Compile Include="DomainObjects\FrequencyTests\FrequencyTest.cs" />
+    <Compile Include="DomainObjects\FrequencyTests\FrequencyTestResult.cs" />
+    <Compile Include="DomainObjects\Hardware\AutoCSAReadingModel.cs" />
+    <Compile Include="DomainObjects\Hardware\AutoTestingPoint.cs" />
+    <Compile Include="DomainObjects\Memory Shell Objects\ReadingPointSet.cs" />
+    <Compile Include="DomainObjects\Settings\HwProfile.cs" />
+    <Compile Include="DomainObjects\ShippingOrders\OrderItem.cs" />
+    <Compile Include="DomainObjects\ShippingOrders\ShippingOrder.cs" />
+    <Compile Include="DomainObjects\DomainEntityPropertyRelational.cs" />
+    <Compile Include="DomainObjects\DomainEntityRefluctionBase.cs" />
+    <Compile Include="DomainObjects\DomainEntity.cs" />
+    <Compile Include="DomainObjects\Factors\Factor.cs" />
+    <Compile Include="DomainObjects\Hardware\ComPortInfo.cs" />
+    <Compile Include="DomainObjects\Images\Image.cs" />
+    <Compile Include="DomainObjects\Invoices\Invoice.cs" />
+    <Compile Include="DomainObjects\Items\Item.cs" />
+    <Compile Include="DomainObjects\Items\ItemDetails.cs" />
+    <Compile Include="DomainObjects\Items\ItemRelation.cs" />
+    <Compile Include="DomainObjects\Items\ItemTarget.cs" />
+    <Compile Include="DomainObjects\Lookups\Lookup.cs" />
+    <Compile Include="DomainObjects\Memory Shell Objects\ShippingOrder.cs" />
+    <Compile Include="DomainObjects\PatientSchedules\ScheduleLine.cs" />
+    <Compile Include="DomainObjects\PatientSchedules\TestSchedule.cs" />
+    <Compile Include="DomainObjects\Patients\Patient.cs" />
+    <Compile Include="DomainObjects\Patients\PatientHistory.cs" />
+    <Compile Include="DomainObjects\Items\ItemRelationProperty.cs" />
+    <Compile Include="DomainObjects\Items\ItemProperty.cs" />
+    <Compile Include="DomainObjects\Properties\Property.cs" />
+    <Compile Include="DomainObjects\Readings\Reading.cs" />
+    <Compile Include="DomainObjects\Services\Service.cs" />
+    <Compile Include="DomainObjects\Settings\Setting.cs" />
+    <Compile Include="DomainObjects\SpotChecks\SpotCheck.cs" />
+    <Compile Include="DomainObjects\SpotChecks\SpotCheckResult.cs" />
+    <Compile Include="DomainObjects\TestProtocols\ProtocolItem.cs" />
+    <Compile Include="DomainObjects\TestProtocols\ProtocolStep.cs" />
+    <Compile Include="DomainObjects\TestProtocols\TestProtocol.cs" />
+    <Compile Include="DomainObjects\Tests\IssueNavigationStep.cs" />
+    <Compile Include="DomainObjects\Tests\Test.cs" />
+    <Compile Include="DomainObjects\Tests\TestImprintableItem.cs" />
+    <Compile Include="DomainObjects\Tests\TestIssue.cs" />
+    <Compile Include="DomainObjects\Tests\TestResult.cs" />
+    <Compile Include="DomainObjects\Tests\TestResultFactor.cs" />
+    <Compile Include="DomainObjects\Tests\TestService.cs" />
+    <Compile Include="DomainObjects\Users\User.cs" />
+    <Compile Include="DomainObjects\VitalForceSheet\VFSItem.cs" />
+    <Compile Include="DomainObjects\VitalForceSheet\VFSItemSource.cs" />
+    <Compile Include="DomainObjects\VitalForceSheet\VFSReportGroup.cs" />
+    <Compile Include="DomainObjects\VitalForceSheet\VFSSecondaryItem.cs" />
+    <Compile Include="DomainObjects\VitalForceSheet\VFS.cs" />
+    <Compile Include="DomainObjects\VitalForceSheet\VFSSecondaryItemSource.cs" />
+    <Compile Include="Enums\BusinessEnums.cs" />
+    <Compile Include="Enums\CachableDataEnum.cs" />
+    <Compile Include="Exceptions\VitalConfigurationException.cs" />
+    <Compile Include="Exceptions\VitalHardwareException.cs" />
+    <Compile Include="Exceptions\VitalBaseException.cs" />
+    <Compile Include="Exceptions\VitalLogicalException.cs" />
+    <Compile Include="Filters\AppImageFilter.cs" />
+    <Compile Include="Filters\AppInfoFilter.cs" />
+    <Compile Include="Filters\AutoItemRelationsFilter.cs" />
+    <Compile Include="Filters\AutoItemsFilter.cs" />
+    <Compile Include="Filters\AutoProtocolRevisionsFilter.cs" />
+    <Compile Include="Filters\AutoProtocolsFilter.cs" />
+    <Compile Include="Filters\AutoProtocolStageRevisionsFilter.cs" />
+    <Compile Include="Filters\AutoProtocolStagesFilter.cs" />
+    <Compile Include="Filters\AutoTestResultProductFilter.cs" />
+    <Compile Include="Filters\AutoTestResultsFilter.cs" />
+    <Compile Include="Filters\AutoTestsFilter.cs" />
+    <Compile Include="Filters\AutoTestStagesFilter.cs" />
+    <Compile Include="Filters\BaseFilter.cs" />
+    <Compile Include="Filters\CachingFilter.cs" />
+    <Compile Include="Filters\ClinicProductPricingsFilter.cs" />
+    <Compile Include="Filters\ImagesFilter.cs" />
+    <Compile Include="Filters\SerialPortConnectionFilter.cs" />
+    <Compile Include="Filters\DosageOptionsFilter.cs" />
+    <Compile Include="Filters\FrequencyTestResultsFilter.cs" />
+    <Compile Include="Filters\FrequencyTestsFilter.cs" />
+    <Compile Include="Filters\HwProfilesFilter.cs" />
+    <Compile Include="Filters\InvoicesFilter.cs" />
+    <Compile Include="Filters\IssueNavigationStepsFilter.cs" />
+    <Compile Include="Filters\ItemDetailsFilter.cs" />
+    <Compile Include="Filters\ItemRelationsFilter.cs" />
+    <Compile Include="Filters\ItemsFilter.cs" />
+    <Compile Include="Filters\ItemTargetsFilter.cs" />
+    <Compile Include="Filters\LookupsFilter.cs" />
+    <Compile Include="Filters\OrderItemsFilter.cs" />
+    <Compile Include="Filters\PatientHistoryFilter.cs" />
+    <Compile Include="Filters\PatientsFilter.cs" />
+    <Compile Include="Filters\ProductFormsFilter.cs" />
+    <Compile Include="Filters\ProductsFilter.cs" />
+    <Compile Include="Filters\ProductSizesFilter.cs" />
+    <Compile Include="Filters\PropertiesFilter.cs" />
+    <Compile Include="Filters\ProtocolItemsFilter.cs" />
+    <Compile Include="Filters\ProtocolStepsFilter.cs" />
+    <Compile Include="Filters\ReadingsFilter.cs" />
+    <Compile Include="Filters\RelationalPropertiesFilter.cs" />
+    <Compile Include="Filters\ScheduleLinesFilter.cs" />
+    <Compile Include="Filters\SerailPortNumberFilter.cs" />
+    <Compile Include="Filters\ServicesFilter.cs" />
+    <Compile Include="Filters\SettingsFilter.cs" />
+    <Compile Include="Filters\ShippingOrdersFilter.cs" />
+    <Compile Include="Filters\SingleItemFilter.cs" />
+    <Compile Include="Filters\SpotCheckResultsFilter.cs" />
+    <Compile Include="Filters\SpotChecksFilter.cs" />
+    <Compile Include="Filters\StageAnnouncementsFilter.cs" />
+    <Compile Include="Filters\StageAutoItemsFilter.cs" />
+    <Compile Include="Filters\TestImprintableItemsFilter.cs" />
+    <Compile Include="Filters\TestingPointsFilter.cs" />
+    <Compile Include="Filters\TestIssuesFilter.cs" />
+    <Compile Include="Filters\TestProtocolsFilter.cs" />
+    <Compile Include="Filters\TestResultFactorsFilter.cs" />
+    <Compile Include="Filters\TestResultsFilter.cs" />
+    <Compile Include="Filters\TestSchedulesFilter.cs" />
+    <Compile Include="Filters\TestServicesFilter.cs" />
+    <Compile Include="Filters\TestsFilter.cs" />
+    <Compile Include="Filters\VFSItemsFilter.cs" />
+    <Compile Include="Filters\VFSItemSourceFilter.cs" />
+    <Compile Include="Filters\VFSSecondaryItemFilter.cs" />
+    <Compile Include="Filters\VFSSecondaryItemSourceFilter.cs" />
+    <Compile Include="Filters\VFSsFilter.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Shared\AutoCSAProtocol.cs" />
+    <Compile Include="Shared\CachedParent.cs" />
+    <Compile Include="Shared\CacheResult.cs" />
+    <Compile Include="Shared\Check.cs" />
+    <Compile Include="Shared\CollectionExtension.cs" />
+    <Compile Include="Shared\CrossLayersSharedLogic.cs" />
+    <Compile Include="Shared\DatabaseVerificationObject.cs" />
+    <Compile Include="Shared\DateTimeExtension.cs" />
+    <Compile Include="Shared\DBCheckState.cs" />
+    <Compile Include="Shared\DomainEntityExtensions.cs" />
+    <Compile Include="Shared\ExceptionExtensions.cs" />
+    <Compile Include="Shared\ExpressionHelper.cs" />
+    <Compile Include="Shared\InternetHelper.cs" />
+    <Compile Include="Shared\LookupEnumInfo.cs" />
+    <Compile Include="Shared\ProcessResult.cs" />
+    <Compile Include="Shared\PrototypeProtocol.cs" />
+    <Compile Include="Shared\SharedEnums.cs" />
+    <Compile Include="Shared\SortKey.cs" />
+    <Compile Include="Shared\StaticKeys.cs" />
+    <Compile Include="Shared\StringExtensions.cs" />
+    <Compile Include="Shared\VitalLogicExecuter.cs" />
+    <Compile Include="Shared\VitalLogicScripts.cs" />
+    <Compile Include="Shared\VitalValidationError.cs" />
+    <Compile Include="Exceptions\VitalDatabaseException.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

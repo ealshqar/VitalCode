@@ -1,0 +1,205 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <metadata name="contextMenuStripShippingOrders.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>368, 17</value>
+  </metadata>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="toolStripMenuItemDeleteOrder.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAK
+        6QAACukB/XXO0wAAABh0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzT7MfTgAAAe1JREFUOE+lkEFI
+        G0EUhtfGFo21eFDbnYnJzMYomoSuFQMGmhRKoVAKHnsqCF7Ek3dFox5s2oB6UQ9ShR5yq9FADViTFoqg
+        RWljqRTUg3j1qJfC883orLt71MO3897/v/fP7moAcCsczdGzztcHCXPcrtk5TJj9h8kng3bNKv69iL3Z
+        M0Pwu53B33g0bx8S7CfMVDkahHLEgP1kRwa+zVcIXZp/Xsa925EgbHIq2Wr1w6/u65DyUzO1HTbQI5Kt
+        Ng67sXCXFVCo9laUOP1QCvpAgkPfW/zwszua3Ul2DP0IcyiiZvkGLZaaHtVYAYpC0JdZMygUkDVGYB3f
+        ZKOdwxemX2qXXvFTG69UO44AQQ5DlnFQgrd+xiDV5wz69WO4+a593rGsyBp0M4v/wsXpSpdp3axwNIJF
+        TkeXGPmPgJtFTnLueUczx2lqHgcVc1c4NZqHk3NnwFQooE0zMjodIKCYEiejqzOMpmVth5H8TLO/ygrI
+        tDDvu4AOLorDj0N3hJ9mJDPp8tOcxqwAwaTR1DuG6WN+HfDcOOt5JZcV4wHyXnrIBPfNHj+PS1/zaJI6
+        PGrf6g0jA7QxX1PpMbGPoN4pwFr0rE9vWOinD5ewrkceyADxwCEPIr9JippWjX2tHdTu2/x7qHlkrcSb
+        AdoFvKofAHGjlVEAAAAASUVORK5CYII=
+</value>
+  </data>
+  <metadata name="contextMenuStripTests.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <data name="ToolStripMenuItemNew.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABHNCSVQICAgIfAhkiAAAAAFzUkdCAK7O
+        HOkAAAAEZ0FNQQAAsY8L/GEFAAAACXBIWXMAAArpAAAK6QH9dc7TAAAAGHRFWHRTb2Z0d2FyZQBBZG9i
+        ZSBGaXJld29ya3NPsx9OAAAD90lEQVRIS7WUbUxbVRjHqyuaaMRpJgxkDu9EkPmhug8uvsTEzK9+MvGz
+        LjrdkqlxZNM549hAHNtKYUDCnEGmopgOkBRkCiuTbeKc2yiddAsU+t7e2957+8ZQk7/PuWvruQwiH9yH
+        X+55nvT8/+d5ztNjAHBLWTQ5NjZvkCQxjzAyQlLQGJUkYzgYMs543XmL7VmKmxLhcGirKEamSDhA+Bkk
+        niHql0Qx2G+zdS7ctxS6gMRXRcJhkGgOEkYsKiFKyLEYZDmGbzo70dLcbOX3LoUuIINHIpEwVFVFKpVC
+        Os1Ic6SgKDKOH+/AkaZGfNHe/p8mukCMRARqDxiRCH0joramtuRIxOPoPmFFTc1+tLa04PNjx6wGg+E2
+        XodHF5CYZsAqSCaTSDFSjJQGyymyDL/Ph+97e/Bd17f07cWI/VQHr8OjC7IVsN7nTp65hyzMgFXB2pVM
+        JKBSy+g3Hl6HRxfQBQvsDhRFQYI250gmNDGGLk/IZEgGf/A6PLqALlkzYKfOkjt9ZpKyxCSZ8kxcYr+b
+        5HV4dEEoFBQIbRTj1AYe1hYGWycTaahxGbIqUotU1s7lGQQDASEYDGj9v3HS6L8npjVDlZNw+YbRNlaO
+        1l9KMHK1Dmr0+vIMAn6/4Pf7tLJVVdGmKb6AVPw6Lnq/xoHRPNSfMaLb8SpkcZkGPq9XIMDalJ0mVkUs
+        FkVCmUNa/Rt/JYBxTx9qT9+H2p/z0ePYjjkJE7wOjy7wejyCZ3YW7LmIsWch8zTEqS1XQidx2tOEc96j
+        6J2swj57CfaNFKPt15cw6Dwkms89s+vw2Y2vm88+buQ1dQbTU1PCjNsNapVmok0U/RdikoJDo8/hvcF7
+        sPPHAuweKsFeezk+PlWOj4YfxgdDxai2V2i5vfaKdbymzsA1OSlcdbngJwMx+zzQfbCRrB56Hm/0rMS2
+        viK8bVuLnYPriUrsGCjDdtsaVA08hqofKlm+jNfUGTjGx4UJhwOsCpoouosQwqxdooLRa1Z8dXEPui7X
+        oPHMZmw5UYa3usuxu38T2kZ2RN/te6L+nT5T1a6BZ+/gNXUGv1+4UErAPT2NUDB4w0AzCUGVkkjG5jGv
+        AD85rHi5fQ1e6RBQ1/8mgi71Gq/DszBx+2/nz48SYEaXL10CVQXnxASuOJ0aMy4PvhxuxQuWUrzYtA7v
+        d22G2zl7ZIFOjtxihcFwNz27RRtMJtPhgwf3NFosn1jM5jpLQ8OnxAFGg9lcf7T5s9qtNa+1P1VdMff0
+        /vV/bvpwoy1/xcoy2l9JPEo8ROQvZnAnsYpMCol7ifuJBzLxaqKIKM7wYEFFoWn1k4UbaL2WKKW9jBKi
+        gLjrJoNbxaLJ/w8Y/gHYL7hNuL/yKAAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="ToolStripMenuItemOpen.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAAFzUkdCAK7O
+        HOkAAAAEZ0FNQQAAsY8L/GEFAAAACXBIWXMAAArpAAAK6QH9dc7TAAAAGHRFWHRTb2Z0d2FyZQBBZG9i
+        ZSBGaXJld29ya3NPsx9OAAABi0lEQVQ4T2P4//8/RRirICkYqyAyXnpRj3XxRWtHbHIgjFUQGc86o2gx
+        64z2/7lnzRdgk4cznrx3ZDzwoJN93/0GOD7xZBrb1FOqHn3HxP5PPqH+f+ZpawxDwETfMTOxKSdtHk45
+        afsGFdu/nnDc+GPnYdn/HYdl/vcd0/4/5aQdiiFgovOIvnrLQZX/TQcUgFgRCSv8bz6oBMQqYAwS6zxi
+        8H/CCYfJKAbU79dRrdmr8Z8YXL1H9X/jfqP/LQctZeEGlGwzUC3aqvWfGFy4Rft/0RbtO9W7DDnhBmSt
+        M1RKW6P7HxdOXwvFIPYa3RcZaw0VQfrgBsQuNWGKW2IQEL/UMC5uqUEsEo6JWWzQHjFf9384EAPpl1GL
+        DJRhmuEG4MNe080N3Sfp/fecrPcscKmZPLo8mGBmYOAHYgUgVgdibSDWA2IDJgYGXTEtAWeTMs2DsnZi
+        AQwMDPJQNSC1/MgGsAAxFxDzgiSAWACIBYFYCKiJD6yQgYEDKgdSA1LLAjeAEoxVkHj8nwEAQBZe8AGK
+        FxkAAAAASUVORK5CYII=
+</value>
+  </data>
+  <metadata name="dockManagerShipping.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>193, 17</value>
+  </metadata>
+  <data name="memoEditMyOrders.EditValue" xml:space="preserve">
+    <value>- Under My Orders group, you will find a list of all the order that are to be sent to you directly and got created on the selected date and wasn't shipped, you can create a new shipping order, open existing order and send an order to the shipping department.
+
+- You can change the date to view your orders for Today and any other time.
+
+- Each day can have a single offline order (Order created but not yet sent), its prefered that any modifications on the order get done using the existing order record before sending it.
+
+- Green records indicate orders that are being sent already, gray ones are for records that are not sent.
+
+- You can send multiple shipment order for the same day and customize the shipment details in a different way each time.</value>
+  </data>
+  <data name="memoEditTestOrders.EditValue" xml:space="preserve">
+    <value>- Under Test Orders group, you will find a list of all the tests that got created on the selected date and wasn't shipped, you can create a new shipping order, open existing order and send an order to the shipping department.
+
+- You can change the date to view tests for Today and any other time.
+
+- Each test can have a single offline order (Order created but not yet sent), its prefered that any modifications on the order get done using the existing order record before sending it.
+
+- Green records indicate orders that are being sent already, gray ones are for records that are not sent or for tests that do not have offline order created already.
+
+- You can send multiple shipment for the same test and customize the shipment details in a different way each time.</value>
+  </data>
+</root>

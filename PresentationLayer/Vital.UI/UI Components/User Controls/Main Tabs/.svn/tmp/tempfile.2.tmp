@@ -1,0 +1,1470 @@
+//////////////////////////////////////////////////////////////////////////////
+//  
+//  <sourcefile name="XtraTabPageEntity.cs" creationdate="8/13/08" owner="anasa" >
+//
+//      <project>McKinstry TCO Application</project>
+//  
+//      <description>General Entity tab where all other child tabs share properties and methods</description>
+//      
+//      <copyright year="2008" company="McKinstry">
+//          <notice>
+//              Copyright © 2008 McKinstry. All rights reserved
+//  
+//              Developed for McKinstry by
+//                  Equiom - MENA
+//                  www.equiom.com
+//          </notice>
+//  
+//  	<history date="8/13/08" modby="anasa">created</history>
+//  
+//////////////////////////////////////////////////////////////////////////////
+
+#region Library Calls
+//---------------------------------------------------------------------------------------------
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Windows.Forms;
+using DevExpress.XtraEditors;
+using DevExpress.XtraGrid.Views.Grid;
+using DevExpress.XtraTab;
+using Equiom.Tco.BusinessLogicLayer;
+using TCO.DesktopClientDevexpress.Properties;
+using Equiom.Tco.DataAccessLayer;
+using DevExpress.XtraGrid.Views.Grid.ViewInfo;
+using DevExpress.XtraGrid.Views.Base;
+using DevExpress.Utils;
+//---------------------------------------------------------------------------------------------
+#endregion
+
+#region Enumerations
+//---------------------------------------------------------------------------------------------
+/// <summary>
+/// Possible types for a a tab
+/// </summary>
+public enum TabTypes
+{
+    Undefined,
+    Project,
+    Building,
+    Component,
+    ProjectList,
+    BuildingsList,
+    ComponentList,
+    Admin,
+    AnnualCashFlow,
+    UtilityReport,
+    BudgetSummaryReport,
+    TotalFinancialSummary,
+    AssetImpactsReport,
+    CapRenewalReport,
+    MaintenanceAndOperations
+}
+
+/// <summary>
+/// Possible states for a a tab
+/// </summary>
+public enum EntityTabState
+{
+    New = 0,        //New tab is opened (No ID is locked)
+    Unchanged = 1,  //Edit button wasn't clicked and no field value was changed (No ID is locked)
+    Modified = 2,   //Edit button was clicked and a fields or property was changed (ID is locked and object changed)
+    Unlocked = 3    //Edit button was clicked without changing any field value (ID is locked only)
+}
+
+//Determines if edit mode is changed by user or code
+public enum EditModeChangeMode
+{
+    ByUser,
+    ByCode
+}
+
+public enum BarInfoTypes
+{
+    EditInfo,
+    ProjectLockInfo,
+    DeleteInfo,
+    None
+}
+//---------------------------------------------------------------------------------------------
+#endregion
+
+namespace TCO.DesktopClientDevexpress
+{
+    public partial class XtraTabPageEntity : XtraUserControl
+    {
+        #region Constants
+        //---------------------------------------------------------------------------------------------
+        public const string EDITVALUE_PROPERTYNAME = "EditValue";
+        public const string TEXT_PROPERTYNAME = "Text";
+        public const string DATASOURCE_PROPERTYNAME = "DataSource";
+        public const string SELECTEDINDEX_PROPERTYNAME = "SelectedIndex";
+        public const string SOME_FIELDS_ARE_INVALID_ERROR = "Some fields are invalid";
+        public const string CHANGES_WILL_BE_CANCELED_MESSAGE = "Changes will be canceled, Are you sure?";
+        public const string PROJECTS_LIST_TAB_NAME = "Projects List";
+        public const string BUILDINGS_LIST_TAB_NAME = "Buildings List";
+        public const string Components_LIST_TAB_NAME = "Components List";
+        public const string ADMIN_LIST_TAB_NAME = "Admin List";
+        public const string REPORTS_TAB_NAME = "Annual Cash Flow Report";
+        public const string UTILITY_REPORT_TAB_NAME = "Utility Report";
+        public const string SFC_REPORT_TAB_NAME = "Budget Summary Report";
+        public const string TotalFinancialSummary_TAB_NAME = "Total Financial Summary Report";
+        public const string AssetImpactsReport_TAB_NAME = "Asset Impacts Detail Report";
+<<<<<<< .mine
+        public const string CapRenewalReport_TAB_NAME = "Cap Renewal Detail Report";
+        public const string MaintenanceAndOperations_TAB_NAME = "Maintenance And Operations Detail Report";
+=======
+        public const string CapRenewalReport_TAB_NAME = "Cap Renewal Detail Report";
+        public const string MaintenanceAndOperations_TAB_NAME = "Operations and Maintenance Detail Report";
+>>>>>>> .r2427
+        
+        public const string CLEAR_HANDLERS_ERROR = "An error occured during closing the tab.";
+        public const string ITEM_HAS_NO_VALUE_ERROR = "Item has no value.";
+        public const string ITEM_IS_NOT_SAVED = "The item you selected is not saved yet, please save it first in order to load its information.";
+
+        public const string DELETED_INFO = "This tab currently is not editable, the opened item was deleted by another user and it is not usable.";
+        public const string EDIT_INFO_INFO = "This tab currently is not editable, another related tab is being edited now, please finish changes on that tab first to enable this one.";
+        public const string PROJECT_LOCKED_INFO = "This tab currently is not editable, the status of its parent project is TCO Final or ESCO Implemented and it is locked.";
+        public const string REFRESH_CONFIRM_QUESTION = "This tab information will be loaded from the database, all your changes will be lost, are you sure?";
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        #region Fields
+        //---------------------------------------------------------------------------------------------
+        private EntityTabState _tabState = EntityTabState.New;
+        //---------------------------------------------------------------------------------------------
+        #endregion
+         
+        #region Properties
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Determine the type of the tab opened, Project or Projects View for instance
+        /// </summary>
+        public TabTypes TabType { get; set; }
+
+        /// <summary>
+        /// Determines the state of the tab like New, unchanged, modified, unlocked
+        /// </summary>
+        public EntityTabState TabState
+        {
+            get
+            {
+                return _tabState;
+            }
+            set
+            {
+                _tabState = value;
+                switch (_tabState)
+                {
+                    case EntityTabState.Modified:
+                        //UpdateApplyButton(true);
+                        break;
+                    case EntityTabState.Unchanged:
+                        //UpdateApplyButton(false);
+                        break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Sets and gets the text of the tab
+        /// </summary>
+        public string TabText
+        {
+            get
+            {
+                return (ParentTab == null) ? string.Empty : ParentTab.Text;
+            }
+            set
+            {
+                ParentTab.Text = value;
+            }
+        }
+
+        /// <summary>
+        /// This is a pointer to the XtraTabPage containing the entity user control
+        /// </summary>
+        public XtraTabPage ParentTab
+        {
+            get
+            {
+                return Parent as XtraTabPage;
+            }
+            set
+            {
+                Parent = value;
+            }
+        }
+
+        /// <summary>
+        /// This will set or get the business object of the tab
+        /// </summary>
+        public EntityBusinessObject TabObject { get; set; }
+
+        /// <summary>
+        /// This will set and get the icon of the tab depending on the tab's type
+        /// </summary>
+        public Image TabTypeImage { get; set; }
+
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        #region Constructors
+        //---------------------------------------------------------------------------------------------
+        public XtraTabPageEntity()
+        {
+            InitializeComponent();
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        #region Methods
+        //---------------------------------------------------------------------------------------------
+        #region Virtual
+        //---------------------------------------------------------------------------------------------
+        #region Initialization & Binding
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Set the business object by getting the current business object when open or create a new
+        /// one when new tab is created and this will occur specificly for each business object type
+        /// </summary>
+        /// <param name="isNew">Determine if a new tab is created or if a tab is opened</param>
+        /// <param name="parentObject"></param>
+        public virtual void PerformSpecificIntializationSteps(bool isNew, EntityBusinessObject parentObject) { }
+
+        /// <summary>
+        /// Binds the controls for each entity user control specificly depending on its business object type
+        /// </summary>
+        public virtual void SetBinding() { }
+
+        /// <summary>
+        /// Set the edit mode of the tab and its controls
+        /// </summary>
+        /// <param name="isEditable"></param>
+        /// <param name="isChangedByUser">Indicate that the changed happend by a user click on edit button and not initialization</param>
+        public virtual void SetEditMode(bool isEditable, bool isChangedByUser) { }
+
+        /// <summary>
+        /// Used to refresh the contents of the project, building and component lists
+        /// </summary>
+        public virtual void CustomRefresh(){}
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        #region Parent related actions
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Set the parent ID to the business object in a tab
+        /// </summary>
+        /// <param name="parentObject">The parent object</param>
+        public virtual void SetParentID(EntityBusinessObject parentObject) { }
+
+        /// <summary>
+        /// Adds the ID of the parent for the current object in the Lock dictionary for locking purposes
+        /// </summary>
+        public virtual void AddParentIDToEditDictionary() { }
+
+        /// <summary>
+        /// Gets the parent project Id of the current opened tab
+        /// </summary>
+        /// <returns></returns>
+        public virtual int GetParentProjectID()
+        {
+            return -1;
+        }
+
+        /// <summary>
+        /// Add the new created child object to the parent's collection of childs
+        /// </summary>
+        public virtual void AddBusinessObjectToCollection() { }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        #region Save related actions
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Preform custom save actions for tabs that doesn't present EntityBusinessObject
+        /// </summary>
+        /// <returns>True if saved successfully</returns>
+        public virtual bool CustomSave()
+        {
+            return true;
+        }
+
+        /// <summary>
+        /// Preform custom cancel action for tabs that doesn't present EntityBusinessObject
+        /// </summary>
+        public virtual void CustomCancel(){}
+
+        /// <summary>
+        /// Posts the values in the controls that are not yet comitted to the datasource because the user
+        /// clicked save or cancel without leaving the editor to another editor first.
+        /// </summary>
+        public virtual void PostValues() { }
+
+        /// <summary>
+        /// Perfroms any specific actions needed for the tab after the saving
+        /// </summary>
+        public virtual void AfterSaveActions() { }
+
+        /// <summary>
+        /// Perfroms any specific actions needed for the tab before the saving
+        /// </summary>
+        public virtual void BeforeSaveActions() { }
+
+        /// <summary>
+        /// Revert the current business object changes
+        /// </summary>
+        public virtual void RestoreBusinessObjectValue() { }
+
+        /// <summary>
+        /// Performs specific actions afrer canceling chnages.
+        /// </summary>
+        public virtual void AfterCancelActions() { }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        #region Validation
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Determines if a change in one of the business object's properties should notify the parent
+        /// tab or not, by default this will return true unless the inherting tab instance specifiy something
+        /// else.
+        /// </summary>
+        /// <param name="propertyName"></param>
+        /// <returns></returns>
+        public virtual bool ShouldPropertyNotifyTab(string propertyName)
+        {
+            return true;
+        }
+
+        public virtual void PerformCustomValidation() { }
+
+        public virtual void PerformPostCustomValidation() { }
+
+        /// <summary>
+        /// Calls a sequence to validate the tab and show or hide error icons in addition to 
+        /// error summary
+        /// </summary>
+        /// <returns></returns>
+        public bool ValidateTab()
+        {
+            PerformCustomValidation();
+            TabObject.Validate();
+            PerformPostCustomValidation();
+            dxErrorProviderMain.UpdateBinding();
+            SetTabIcon();
+            ShowHideErrorIcons();
+            return TabObject.IsValid;
+        }
+
+        /// <summary>
+        /// Shows or hides the error icons in the tabs for the whole tab and for detail tabs
+        /// </summary>
+        public virtual void ShowHideErrorIcons() { }
+        //---------------------------------------------------------------------------------------------
+        #endregion 
+
+        #region Closing
+        //---------------------------------------------------------------------------------------------
+        public virtual void ClearHandlers(){}
+
+        public virtual void PerformBeforeCloseActions() { }
+        //---------------------------------------------------------------------------------------------
+        #endregion 
+
+        #region UI
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Performs any actions needed after a tab is selected and became the active tab
+        /// </summary>
+        public virtual void PerfromAfterSelectionAction() { }
+        //---------------------------------------------------------------------------------------------
+        #endregion 
+        //---------------------------------------------------------------------------------------------
+        #endregion 
+
+        #region ButtonsActions
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Performs the action of the Ok button
+        /// </summary>
+        public void SaveAndCloseAction()
+        {
+            SaveOrSaveAndClose(true);
+        }
+
+        /// <summary>
+        /// Performs the action of the Apply button
+        /// </summary>
+        public void SaveAction()
+        {
+            SaveOrSaveAndClose(false);
+        }
+
+        /// <summary>
+        /// Activates the tab edit mode
+        /// </summary>
+        public void EditAction()
+        {
+            UnlockTab();
+        }
+
+        /// <summary>
+        /// Locks the tab and prevents editing
+        /// </summary>
+        public void LockAction()
+        {
+            if (TabType == TabTypes.Admin)
+            {
+                UIBLLInteraction.Instance.ReleaseTab(TabType);
+                SetEditMode(true, true);
+                TabState = EntityTabState.Unchanged;
+                UpdateActionButtons();    
+            }
+            else
+            {
+                UIBLLInteraction.Instance.ReleaseProject(GetParentProjectID());
+                SetEditMode(true, true);
+                TabState = EntityTabState.Unchanged;
+                UpdateActionButtons();    
+            }
+        }
+
+        /// <summary>
+        /// Refreshes the tab's object
+        /// </summary>
+        public void RefreshAction()
+        {
+            if (TabType == TabTypes.ProjectList ||
+                    TabType == TabTypes.BuildingsList ||
+                    TabType == TabTypes.ComponentList)
+            {
+                CustomRefresh();
+            }
+            else
+            {
+                if (TabState == EntityTabState.Modified)
+                {
+                    if (MessageBox.Show(REFRESH_CONFIRM_QUESTION, UIBLLInteraction.QUESTION_MESSAGE_TITLE, MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
+                    {
+                        TabObject.Reload();
+                    }
+                }
+                else
+                {
+                    TabObject.Reload();
+                }
+            }
+            
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        #region UI Changes
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Create an XtraTabPage and put the user control in it
+        /// </summary>
+        private void CreateTab()
+        {
+            //Creates a tab instance
+            var parentTab = new XtraTabPage {PageVisible = true};
+            //Page should be set to visible or it won't appear by default
+            //Set the dock to fill so it will fill all the available area
+            Dock = DockStyle.Fill;
+            //Add the current entity user control in it
+            parentTab.Controls.Add(this);
+            //Add the tab to the tab pages and give it focus
+            UIBLLInteraction.Instance.FormTabControl.TabPages.Add(parentTab);
+            UIBLLInteraction.Instance.FormTabControl.SelectedTabPage = parentTab;
+
+        }
+
+        /// <summary>
+        /// Sets the icon for the tab, this also includes error icon if there are any errors
+        /// </summary>
+        public void SetTabIcon()
+        {
+            //Set the icon depending on the tab type and if there are any errors then add error icon
+            ParentTab.Image = (TabObject.IsValid) ? MergeImages(false) : MergeImages(true);
+            ParentTab.Tooltip = (TabObject.IsValid) ? null : TabObject.ErrorsSummary;
+        }
+
+        /// <summary>
+        /// This will update the state of the action buttons in the ribbon when the state of the tab changes
+        /// </summary>
+        public void UpdateActionButtons()
+        {
+            // Check first if the tab is selected or not because only selected tab should change the state
+            // of the action buttons in the ribbon
+            if (UIBLLInteraction.Instance.IsThisTabSelected(ParentTab))
+            {
+                //if the tab is list view tab, then all buttons will be disabled except close button
+                if (TabType == TabTypes.ProjectList || 
+                    TabType == TabTypes.BuildingsList || 
+                    TabType == TabTypes.ComponentList)
+                {
+                    UIBLLInteraction.Instance.IsRefreshButtonEnabled(true);
+                    UIBLLInteraction.Instance.IsLockButtonEnabled(false);
+                    UIBLLInteraction.Instance.IsEditButtonEnabled(false);
+                    UIBLLInteraction.Instance.IsSaveButtonEnabled(false);
+                    UIBLLInteraction.Instance.IsSaveAndCloseButtonEnabled(false);
+                    UIBLLInteraction.Instance.IsCancelButtonEnabled(false);
+                    SetEditInfoBarProperties(BarInfoTypes.None);
+                }
+                else if (TabType == TabTypes.AnnualCashFlow ||
+                         TabType == TabTypes.UtilityReport ||
+                         TabType == TabTypes.BudgetSummaryReport||
+                         TabType == TabTypes.TotalFinancialSummary ||
+<<<<<<< .mine
+                         TabType == TabTypes.AssetImpactsReport ||
+                         TabType == TabTypes.CapRenewalReport)
+=======
+                         TabType == TabTypes.AssetImpactsReport ||
+                         TabType == TabTypes.CapRenewalReport ||
+                         TabType == TabTypes.MaintenanceAndOperations)
+>>>>>>> .r2427
+                {
+                    UIBLLInteraction.Instance.IsRefreshButtonEnabled(false);
+                    UIBLLInteraction.Instance.IsLockButtonEnabled(false);
+                    UIBLLInteraction.Instance.IsEditButtonEnabled(false);
+                    UIBLLInteraction.Instance.IsSaveButtonEnabled(false);
+                    UIBLLInteraction.Instance.IsSaveAndCloseButtonEnabled(false);
+                    UIBLLInteraction.Instance.IsCancelButtonEnabled(false);
+                    SetEditInfoBarProperties(BarInfoTypes.None);
+                }
+                else if (TabType == TabTypes.Admin)
+                {
+                    // Save, Save & Close and Cancel will be enabled only for opened modified tabs or "Create New" tabs
+                    // that was edited by the user in the UI so by default they will be disabled.
+                    UIBLLInteraction.Instance.IsSaveAndCloseButtonEnabled(false);
+                    UIBLLInteraction.Instance.IsSaveButtonEnabled(false);
+                    UIBLLInteraction.Instance.IsCancelButtonEnabled(false);
+
+                    // Disable the Edit button by default and then enable it if all the terms are valid
+                    UIBLLInteraction.Instance.IsEditButtonEnabled(false);
+                    UIBLLInteraction.Instance.IsRefreshButtonEnabled(false);
+                    UIBLLInteraction.Instance.IsLockButtonEnabled(false);
+                    SetEditInfoBarProperties(BarInfoTypes.None);
+                    if (TabState == EntityTabState.Modified)
+                    {
+                        UIBLLInteraction.Instance.IsSaveAndCloseButtonEnabled(true);
+                        UIBLLInteraction.Instance.IsSaveButtonEnabled(true);
+                        UIBLLInteraction.Instance.IsCancelButtonEnabled(true);
+                    }
+                    else if (TabState == EntityTabState.Unchanged)
+                    {
+                        UIBLLInteraction.Instance.IsEditButtonEnabled(true);
+                    }
+                    else if (TabState == EntityTabState.Unlocked)
+                    {
+                        UIBLLInteraction.Instance.IsLockButtonEnabled(true);
+                    }
+                }
+                else
+                {
+                    // Save, Save & Close and Cancel will be enabled only for opened modified tabs or "Create New" tabs
+                    // that was edited by the user in the UI so by default they will be disabled.
+                    UIBLLInteraction.Instance.IsSaveAndCloseButtonEnabled(false);
+                    UIBLLInteraction.Instance.IsSaveButtonEnabled(false);
+                    UIBLLInteraction.Instance.IsCancelButtonEnabled(false);
+
+                    // Disable the Edit button by default and then enable it if all the terms are valid
+                    UIBLLInteraction.Instance.IsEditButtonEnabled(false);
+                    UIBLLInteraction.Instance.IsRefreshButtonEnabled(false);
+                    UIBLLInteraction.Instance.IsLockButtonEnabled(false);
+
+                    SetEditInfoBarProperties(BarInfoTypes.EditInfo);
+
+                    if (TabObject != null)
+                    {
+                        if (TabObject.IsDeletedInDataBase)
+                        {
+                            UIBLLInteraction.Instance.IsSaveAndCloseButtonEnabled(false);
+                            UIBLLInteraction.Instance.IsSaveButtonEnabled(false);
+                            UIBLLInteraction.Instance.IsCancelButtonEnabled(false);
+                            UIBLLInteraction.Instance.IsEditButtonEnabled(false);
+                            SetEditInfoBarProperties(BarInfoTypes.None);
+                            SetEditMode(true, false);
+                            UIBLLInteraction.Instance.ReleaseProject(GetParentProjectID());
+                            TabState = EntityTabState.Unchanged;
+                            SetEditInfoBarProperties(BarInfoTypes.DeleteInfo);
+                        }
+                        else
+                        {
+                            //Project project = UIBLLInteraction.Instance.ProjectsGroup.GetObjectByID(GetParentProjectID()) as Project;
+                            var project = UIBLLInteraction.Instance.ProjectsNav.GetObjectByID<Project>(GetParentProjectID()) as Project;
+                            if(TabState != EntityTabState.New && TabObject.State != BusinessObjectState.New)
+                            {
+                                UIBLLInteraction.Instance.IsRefreshButtonEnabled(true);
+                            }
+                            if (TabObject.State == BusinessObjectState.Modified || TabState == EntityTabState.Modified)
+                            {
+                                UIBLLInteraction.Instance.IsSaveAndCloseButtonEnabled(true);
+                                UIBLLInteraction.Instance.IsSaveButtonEnabled(true);
+                                UIBLLInteraction.Instance.IsCancelButtonEnabled(true);
+                                SetEditInfoBarProperties(BarInfoTypes.None);
+                                if (project != null && TabObject.GetType() != typeof(Project))
+                                {
+                                    if (project.StatusId == 4 || project.StatusId == 8)
+                                    {
+                                        SetEditInfoBarProperties(BarInfoTypes.ProjectLockInfo);
+                                        UIBLLInteraction.Instance.IsSaveAndCloseButtonEnabled(false);
+                                        UIBLLInteraction.Instance.IsSaveButtonEnabled(false);
+                                        UIBLLInteraction.Instance.IsCancelButtonEnabled(false);
+                                    }
+                                }
+                                //if (TabObject.ChangeState == 2)
+                                //{
+                                //    UIBLLInteraction.Instance.IsRefreshButtonEnabled(true);
+                                //}
+                            }
+                            else if (TabObject.State == BusinessObjectState.New)
+                            {
+                                SetEditInfoBarProperties(BarInfoTypes.None);
+                                if (TabState == EntityTabState.Modified)
+                                {
+                                    UIBLLInteraction.Instance.IsSaveAndCloseButtonEnabled(true);
+                                    UIBLLInteraction.Instance.IsSaveButtonEnabled(true);
+                                    UIBLLInteraction.Instance.IsCancelButtonEnabled(true);
+                                }
+                                if (project != null && TabObject.GetType() != typeof(Project))
+                                {
+                                    if (project.StatusId == 4 || project.StatusId == 8)
+                                    {
+                                        SetEditInfoBarProperties(BarInfoTypes.ProjectLockInfo);
+                                        UIBLLInteraction.Instance.IsSaveAndCloseButtonEnabled(false);
+                                        UIBLLInteraction.Instance.IsSaveButtonEnabled(false);
+                                        UIBLLInteraction.Instance.IsCancelButtonEnabled(false);
+                                    }
+                                }
+                            }
+
+                            // Terms are valid only if the tab status is unchanged so "Create New" tabs wouldn't apply and ...
+                            // If opened tabs are not unlocked meaning that their controls are all ready only and they are not editable and ...
+                            // If their parent ID is not locked so they are free then thay can be edited.
+
+                            if (TabObject.State == BusinessObjectState.Unchanged)
+                            {
+                                if (TabState != EntityTabState.Unlocked)
+                                {
+                                    if (!UIBLLInteraction.Instance.IsProjectLocked(GetParentProjectID()))
+                                    {
+                                        if (project != null && TabObject.GetType() != typeof(Project))
+                                        {
+                                            if (project.StatusId == 4 || project.StatusId == 8)
+                                            {
+                                                SetEditInfoBarProperties(BarInfoTypes.ProjectLockInfo);
+                                            }
+                                            else
+                                            {
+                                                UIBLLInteraction.Instance.IsEditButtonEnabled(true);
+                                                SetEditInfoBarProperties(BarInfoTypes.None);
+                                            }
+                                        }
+                                        else
+                                        {
+                                            UIBLLInteraction.Instance.IsEditButtonEnabled(true);
+                                            SetEditInfoBarProperties(BarInfoTypes.None);
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    if (project != null && TabObject.GetType() != typeof(Project))
+                                    {
+                                        if (project.StatusId == 4 || project.StatusId == 8)
+                                        {
+                                            SetEditInfoBarProperties(BarInfoTypes.ProjectLockInfo);
+                                        }
+                                        else
+                                        {
+                                            UIBLLInteraction.Instance.IsLockButtonEnabled(true);
+                                            SetEditInfoBarProperties(BarInfoTypes.None);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        UIBLLInteraction.Instance.IsLockButtonEnabled(true);
+                                        SetEditInfoBarProperties(BarInfoTypes.None);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Sets the text and icon of the bar info
+        /// </summary>
+        /// <param name="infoType"></param>
+        public void SetEditInfoBarProperties(BarInfoTypes infoType)
+        {
+            barStaticItemEditInfo.Visibility = DevExpress.XtraBars.BarItemVisibility.Always;
+            switch(infoType)
+            {
+                case BarInfoTypes.ProjectLockInfo:
+                    barStaticItemEditInfo.Caption = PROJECT_LOCKED_INFO;
+                    barStaticItemEditInfo.Glyph = Resources.Lock;
+                    break;
+                case BarInfoTypes.EditInfo:
+                    barStaticItemEditInfo.Caption = EDIT_INFO_INFO;
+                    barStaticItemEditInfo.Glyph = Resources.Help;
+                    break;
+                case BarInfoTypes.DeleteInfo:
+                    barStaticItemEditInfo.Caption = DELETED_INFO;
+                    barStaticItemEditInfo.Glyph = Resources.Deleted;
+                    break;
+                case BarInfoTypes.None:
+                    barStaticItemEditInfo.Caption = string.Empty;
+                    barStaticItemEditInfo.Glyph = Resources.Help;
+                    barStaticItemEditInfo.Visibility = DevExpress.XtraBars.BarItemVisibility.Never;
+                    break;
+                default:
+                    break;
+            }
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        #region Initialization
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Call common actions when creating new object or when opening an existing one
+        /// </summary>
+        private void StartCommonInitializationActions(bool isNew, EntityBusinessObject parentObject)
+        {
+            //Create a tab and put the current entity user control in the tab page created
+            CreateTab();
+            InitializeTabObject(isNew, parentObject);
+            //Initilize the binding of the controls for each entity type as specified, this will be
+            //overriden in the subclasses for the XtraTabPageEntity class
+            SetBinding();
+        }
+
+        /// <summary>
+        /// This will initialize the tab object by setting its subclass type and tying it to an event handler
+        /// that will monitor property changes in the business object
+        /// </summary>
+        /// <param name="isNew"></param>
+        /// <param name="parentObject"></param>
+        private void InitializeTabObject(bool isNew,EntityBusinessObject parentObject)
+        {
+            //Create the business object
+            PerformSpecificIntializationSteps(isNew, parentObject);
+            //Set the data source for the Error Providor control and initialize it
+            //dxErrorProviderMain.DataSource = TabObject;
+            //dxErrorProviderMain.ClearErrors();
+            TabObject.PropertyChanged += TabObject_PropertyChanged;
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        #region Actions
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Opens the tab of the business object
+        /// </summary>
+        /// <param name="openedObject">Passed object</param>
+        /// <param name="tabType"></param>
+        public void Open(EntityBusinessObject openedObject, TabTypes tabType)
+        {
+            //If the object is null, then it will be a special type tab
+            if (openedObject == null)
+            {
+                if(tabType == TabTypes.Admin)
+                {
+                        TabState = EntityTabState.Unchanged;
+                }
+                CreateTab();
+                switch (tabType)
+                {
+                    case TabTypes.ProjectList:
+                        TabText = PROJECTS_LIST_TAB_NAME;
+                        break;
+                    case TabTypes.BuildingsList:
+                        TabText = BUILDINGS_LIST_TAB_NAME;
+                        break;
+                    case TabTypes.ComponentList:
+                        TabText = Components_LIST_TAB_NAME;
+                        break;
+                    case TabTypes.Admin:
+                        TabText = ADMIN_LIST_TAB_NAME;
+                        break;
+                    case TabTypes.AnnualCashFlow:
+                        TabText = REPORTS_TAB_NAME;
+                        break;
+                    case TabTypes.UtilityReport:
+                        TabText = UTILITY_REPORT_TAB_NAME;
+                        break;
+                    case TabTypes.BudgetSummaryReport:
+                        TabText = SFC_REPORT_TAB_NAME;
+                        break;
+                    case TabTypes.TotalFinancialSummary:
+                        TabText = TotalFinancialSummary_TAB_NAME;
+                        break;
+                    case TabTypes.AssetImpactsReport:
+                        TabText = AssetImpactsReport_TAB_NAME;
+                        break;
+<<<<<<< .mine
+                    case TabTypes.CapRenewalReport:
+                        TabText = CapRenewalReport_TAB_NAME;
+                        break;
+=======
+                    case TabTypes.CapRenewalReport:
+                        TabText = CapRenewalReport_TAB_NAME;
+                        break;
+                    case TabTypes.MaintenanceAndOperations:
+                        TabText = MaintenanceAndOperations_TAB_NAME;
+                        break;
+>>>>>>> .r2427
+                    default:
+                        break;
+                }
+                SetEditMode(true, false);
+                SetBinding();
+                UpdateActionButtons();
+            }
+            else
+            {
+                //By default, state of opened tab should be Unchanged
+                TabState = EntityTabState.Unchanged;
+                //Set the initialized object of the tab to the passed object
+                TabObject = openedObject;
+                //Call some methods that are common when opening a new tab or an existing object
+                StartCommonInitializationActions(false,null);
+                SetEditMode(true,false);
+                SetTabIcon();
+                UpdateActionButtons();
+            }
+        }
+
+        /// <summary>
+        /// Initialize a new tab for the business object
+        /// </summary>
+        public void New(EntityBusinessObject parentObject)
+        {
+            //By default state of Create New tabs is New
+            TabState = EntityTabState.New;
+            StartCommonInitializationActions(true, parentObject);
+            SetTabIcon();
+            dxErrorProviderMain.ClearErrors();
+            UpdateActionButtons();
+        }
+
+        /// <summary>
+        /// Performs the action of the Cancel or cancel and close buttons
+        /// </summary>
+        public void CancelOrCancelCloseAction(bool isClosing)
+        {
+            if (TabType == TabTypes.ProjectList ||
+                TabType == TabTypes.BuildingsList ||
+                TabType == TabTypes.ComponentList ||
+                TabType == TabTypes.Admin ||
+                TabType == TabTypes.AnnualCashFlow||
+                TabType == TabTypes.UtilityReport ||
+                TabType == TabTypes.BudgetSummaryReport ||
+                TabType == TabTypes.TotalFinancialSummary ||
+<<<<<<< .mine
+                TabType == TabTypes.AssetImpactsReport ||
+                TabType == TabTypes.CapRenewalReport)
+=======
+                TabType == TabTypes.AssetImpactsReport ||
+                TabType == TabTypes.CapRenewalReport ||
+                TabType == TabTypes.MaintenanceAndOperations)
+>>>>>>> .r2427
+            {
+                if (isClosing)
+                {
+                    if (TabType == TabTypes.Admin)
+                    {
+                        if (TabState == EntityTabState.Modified)
+                        {
+                            if (MessageBox.Show(CHANGES_WILL_BE_CANCELED_MESSAGE, UIBLLInteraction.WARNING_MESSAGE_TITLE, MessageBoxButtons.YesNo,MessageBoxIcon.Warning) == DialogResult.Yes)
+                            {
+                                CustomCancel();
+                                UIBLLInteraction.Instance.ReleaseTab(TabType);
+                                UIBLLInteraction.Instance.CloseTabPage(ParentTab);
+                            }
+                        }
+                        else if (TabState == EntityTabState.Unlocked)
+                        {
+                            UIBLLInteraction.Instance.ReleaseTab(TabType);
+                            UIBLLInteraction.Instance.CloseTabPage(ParentTab);
+                        }
+                        else
+                        {
+                            UIBLLInteraction.Instance.CloseTabPage(ParentTab);
+                        }
+                    }
+                    else
+                    {
+                        UIBLLInteraction.Instance.CloseTabPage(ParentTab);
+                    }
+                }
+                else
+                {
+                    if (TabType == TabTypes.Admin)
+                    {
+                        if (TabState == EntityTabState.Modified)
+                        {
+                            if (MessageBox.Show(CHANGES_WILL_BE_CANCELED_MESSAGE, UIBLLInteraction.WARNING_MESSAGE_TITLE, MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                            {
+                                CustomCancel();
+                                TabState = EntityTabState.Unlocked;
+                                UpdateActionButtons();
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if (TabObject != null)
+                {
+                    try
+                    {
+                        // New tabs will be closed without revert if the user didn't modify the tab or modified it since
+                        // it will not make a difference to revert since this will cause no beneifit to the user since 
+                        // the tab will close anyway
+                        if (TabObject.State == BusinessObjectState.New)
+                        {
+                            var project = UIBLLInteraction.Instance.ProjectsNav.GetObjectByID<Project>(GetParentProjectID()) as Project;
+                            bool shouldAsk = true;
+
+                            if (isClosing)
+                            {
+                                if (project != null && TabObject.GetType() != typeof(Project))
+                                {
+                                    if (project.StatusId == 4 || project.StatusId == 8)
+                                    {
+                                        shouldAsk = false;
+                                    }
+                                }
+                                if (TabState == EntityTabState.Modified)
+                                {
+                                    if (shouldAsk)
+                                    {
+                                        if (MessageBox.Show(CHANGES_WILL_BE_CANCELED_MESSAGE, UIBLLInteraction.WARNING_MESSAGE_TITLE, MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                                        {
+                                            UIBLLInteraction.Instance.CloseTabPage(ParentTab);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        UIBLLInteraction.Instance.CloseTabPage(ParentTab);
+                                    }
+                                }
+                                else
+                                {
+                                    UIBLLInteraction.Instance.CloseTabPage(ParentTab);
+                                }
+                            }
+                            else //we revert changes only if the tab was canceling without closing
+                            {
+                                if (TabState == EntityTabState.Modified)
+                                {
+                                    if (MessageBox.Show(CHANGES_WILL_BE_CANCELED_MESSAGE, UIBLLInteraction.WARNING_MESSAGE_TITLE, MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                                    {
+                                        PostValues();
+                                        RevertChanges();
+                                        //Status of the tab should be restored to new
+                                        TabState = EntityTabState.New;
+                                    }
+                                }
+                                else
+                                {
+                                    PostValues();
+                                    RevertChanges();
+                                    //Status of the tab should be restored to new
+                                    TabState = EntityTabState.New;
+                                }
+                                UpdateActionButtons();
+                            }
+                        }
+                        else
+                        {
+                            switch (TabState)
+                            {
+                                // Unchanged case occurs only when clicking Close button since if the tab state is unchanged,
+                                // The Cancel button will be disabled and this code can be called only from Close, in this case
+                                // There are no changes to revert and we should only close the tab without releasing its project ID also.
+                                case EntityTabState.Unchanged:
+                                    UIBLLInteraction.Instance.CloseTabPage(ParentTab);
+                                    break;
+                                // Unlocked case occurs when a tab is opened but and its edit button was clicked but without editing
+                                // any of its properties, in this case we don't need to revert changes since no changes occured but
+                                // we still need to release the ID from the dictionary since the tab will be closed and we shouldn't 
+                                // leave the ID since it will prevent other tabs from being editable, also this case will be called
+                                // only from the Close button since the Cancel button will be disabled.
+                                case EntityTabState.Unlocked:
+                                    UIBLLInteraction.Instance.ReleaseProject(GetParentProjectID());
+                                    UIBLLInteraction.Instance.CloseTabPage(ParentTab);
+                                    break;
+                                // This case occures if the user clicked the edit button and then edited the properties of the object,
+                                // for this case we need to revert changes, and if the user wants to close, then we should release he 
+                                // the parent's ID and also to restore flags status if the tab will not be closed since this code can
+                                // be called using Cancel or Close buttons.
+                                case EntityTabState.Modified:
+                                    if (MessageBox.Show(CHANGES_WILL_BE_CANCELED_MESSAGE, UIBLLInteraction.WARNING_MESSAGE_TITLE, MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                                    {
+                                        PostValues();
+                                        RevertChanges();
+                                        if (isClosing)
+                                        {
+                                            UIBLLInteraction.Instance.ReleaseProject(GetParentProjectID());
+                                            UIBLLInteraction.Instance.CloseTabPage(ParentTab);
+                                        }
+                                        else
+                                        {
+                                            // The status should be restored to unlocked since the user didn't close the tab by calling
+                                            // cancel button and so the ID wasn't removed and in this case we should restore the state
+                                            // of the tab to the unlocked status.
+                                            TabState = EntityTabState.Unlocked;
+                                        }
+                                        UpdateActionButtons();
+                                    }
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+                    }
+                    catch (NullReferenceException nullReferenceException)
+                    {
+                        //UIBLLInteraction.Instance.ShowException(nullReferenceException);
+                        Equiom.Tco.Common.Application.Logger.LogException(nullReferenceException);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Save the tab object if it is valid and close it if isClosing is true
+        /// </summary>
+        /// <returns></returns>
+        private void SaveOrSaveAndClose(bool isClosing)
+        {
+            if (TabType == TabTypes.Admin)
+            {
+                BeforeSaveActions();
+                //Set the data source as the collections of objects one by one
+
+                //dxErrorProviderMain.DataSource = TabObject;
+                //dxErrorProviderMain.UpdateBinding();
+                PostValues();
+                if (CustomSave())
+                {
+                    SetEditMode(true, false);
+                    AfterSaveActions();
+                    UIBLLInteraction.Instance.ReleaseTab(TabType);
+                    if (isClosing)
+                    {
+                        UIBLLInteraction.Instance.CloseTabPage(ParentTab);
+                    }
+                    TabState = EntityTabState.Unchanged;
+                    UpdateActionButtons();
+                }
+            }
+            else
+            {
+                dxErrorProviderMain.DataSource = TabObject;
+                dxErrorProviderMain.UpdateBinding();
+                PostValues();
+                try
+                {
+                    if (ValidateTab())
+                    {
+                        if (TabState == EntityTabState.Modified)
+                        {
+                            BeforeSaveActions();
+                            try
+                            {
+                                BusinessObjectState tabStateBeforeSave = TabObject.State;
+                                TabObject.Save();
+                                TabObject.IsTabEdited = false;
+                                TabObject.ErrorsSummary = string.Empty;
+                                SetEditMode(true, false);
+                                if (tabStateBeforeSave == BusinessObjectState.New)
+                                {
+                                    AddBusinessObjectToCollection();
+                                }
+                                AfterSaveActions();
+                                if (isClosing)
+                                {
+                                    if (tabStateBeforeSave != BusinessObjectState.New)
+                                    {
+                                        UIBLLInteraction.Instance.ReleaseProject(GetParentProjectID());
+                                    }
+                                    UIBLLInteraction.Instance.CloseTabPage(ParentTab);
+                                }
+                                else
+                                {
+                                    if (tabStateBeforeSave != BusinessObjectState.New)
+                                    {
+                                        UIBLLInteraction.Instance.ReleaseProject(GetParentProjectID());
+                                    }
+                                }
+                                TabState = EntityTabState.Unchanged;
+                                UpdateActionButtons();
+                            }
+                            catch (DataAccessException dataAccessException)
+                            {
+                                UIBLLInteraction.Instance.ShowException(dataAccessException);
+                                Equiom.Tco.Common.Application.Logger.LogException(dataAccessException);
+                                SetEditMode(false, false);
+                            }
+                        }
+                    }
+                }
+                catch (NullReferenceException nullReferenceException)
+                {
+                    //UIBLLInteraction.Instance.ShowException(nullReferenceException);
+                    Equiom.Tco.Common.Application.Logger.LogException(nullReferenceException);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Reverts the changes in the object for the current tab
+        /// </summary>
+        private void RevertChanges()
+        {
+            dxErrorProviderMain.DataSource = TabObject;
+            dxErrorProviderMain.UpdateBinding();
+            PostValues();
+            UIBLLInteraction.Instance.AllowComponentsFilteration = false;
+
+            //TabState = TabObject.State;
+            TabObject.RevertChanges();
+            AfterCancelActions();
+            TabObject.IsTabEdited = false;
+            TabObject.ErrorsSummary = string.Empty;
+            UIBLLInteraction.Instance.AllowComponentsFilteration = true;
+            UIBLLInteraction.Instance.FilterComponentsBySelection();
+            ValidateTab();
+        }
+
+        /// <summary>
+        /// Release the locked tab by removing its ID from the dictionary so any other object in 
+        /// the hirarchy can be edited
+        /// </summary>
+        public void UnlockTab()
+        {
+            if (TabType == TabTypes.Admin)
+            {
+                AddParentIDToEditDictionary();
+                SetEditMode(false, true);
+                TabState = EntityTabState.Unlocked;
+                UpdateActionButtons();
+            }
+            else
+            {
+                if (!UIBLLInteraction.Instance.IsProjectLocked(GetParentProjectID()))
+                {
+                    if (TabObject != null)
+                    {
+                        if (TabObject.State != BusinessObjectState.New)
+                        {
+                            AddParentIDToEditDictionary();
+                        }
+                        SetEditMode(false, true);
+                        TabState = EntityTabState.Unlocked;
+                        UpdateActionButtons();
+                    }
+                }
+            }
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        #region General Common Functionalities
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Binds a control to the specified property in the data source
+        /// </summary>
+        /// <param name="bindedControl"></param>
+        /// <param name="propertyName"></param>
+        /// <param name="dataSource"></param>
+        /// <param name="dataMember"></param>
+        public static void BindControl(Control bindedControl, string propertyName, object dataSource, string dataMember)
+        {
+            try
+            {
+                bindedControl.DataBindings.Add(propertyName, dataSource, dataMember, true);
+                bindedControl.DataBindings[0].DataSourceUpdateMode = DataSourceUpdateMode.OnPropertyChanged;
+                bindedControl.DataBindings[0].ControlUpdateMode = ControlUpdateMode.OnPropertyChanged;
+            }
+            catch (NullReferenceException nullReferenceException)
+            {
+                Equiom.Tco.Common.Application.Logger.LogException(nullReferenceException);
+                //UIBLLInteraction.Instance.ShowException(nullReferenceException);
+            }
+            catch (ArgumentException argumentException)
+            {
+                Equiom.Tco.Common.Application.Logger.LogException(argumentException);
+                //UIBLLInteraction.Instance.ShowException(argumentException);
+            }
+        }
+
+        /// <summary>
+        /// Deletes a collection of selected records in a grid view from the specified collection
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="gridView"></param>
+        /// <param name="objectsCollection"></param>
+        public static void DeleteSelectedGridViewObjects<T>(GridView gridView, BusinessObjectList<T> objectsCollection) where T : BusinessObject, new()
+        {
+            try
+            {
+                int[] selectedObjectsHandles = gridView.GetSelectedRows();
+                var tempDeletedObjects = new BusinessObjectList<T>();
+
+                foreach (int handle in selectedObjectsHandles)
+                {
+                    if (handle >= 0)
+                    {
+                        int index = gridView.GetDataSourceRowIndex(handle);
+                        T item = objectsCollection[index];
+                        tempDeletedObjects.Add(item);
+                    }
+                }
+                foreach (T entity in tempDeletedObjects)
+                {
+                    try
+                    {
+                        objectsCollection.Remove(entity);
+                    }
+                    catch (ArgumentOutOfRangeException argumentOutOfRangeException)
+                    {
+                        Equiom.Tco.Common.Application.Logger.LogException(argumentOutOfRangeException);
+                    }
+                    catch (ArgumentException argumentException)
+                    {
+                        Equiom.Tco.Common.Application.Logger.LogException(argumentException);
+                    }
+                    catch (DataAccessException dataAccessException)
+                    {
+                        UIBLLInteraction.Instance.ShowException(dataAccessException);
+                        Equiom.Tco.Common.Application.Logger.LogException(dataAccessException);
+                    }
+                }
+            }
+            catch (NullReferenceException nullReferenceException)
+            {
+                Equiom.Tco.Common.Application.Logger.LogException(nullReferenceException);
+                //UIBLLInteraction.Instance.ShowException(nullReferenceException);
+            }
+        }
+
+        /// <summary>
+        /// Adds the current collection of selected row into the parent child collection
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="gridView"></param>
+        /// <param name="objectsCollection"></param>
+        public static void AddSelectedGridViewObjects<T>(GridView gridView, BusinessObjectList<T> objectsCollection) where T : EntityBusinessObject, new()
+        {
+            int[] selectedObjectsHandles = gridView.GetSelectedRows();
+
+            var searchDictionary = new Dictionary<int, T>();
+            if (objectsCollection != null)
+            {
+                foreach (T exisingObject in objectsCollection)
+                {
+                    if (!searchDictionary.ContainsKey(exisingObject.Id.Value))
+                    {
+                        searchDictionary.Add(exisingObject.Id.Value, exisingObject);
+                    }
+                }
+
+                foreach (int handle in selectedObjectsHandles)
+                {
+                    gridView.UnselectRow(handle);
+                    var objectToAdd = gridView.GetRow(handle) as T;
+                    
+                    if (objectToAdd != null)
+                    {
+                        T tempObject;
+                        searchDictionary.TryGetValue(objectToAdd.Id.Value, out tempObject);
+                        if (tempObject == null)
+                        {
+                            objectsCollection.Add(objectToAdd);
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Merge the images of error icon and the icon for the tab
+        /// </summary>
+        /// <param name="isErrorIncluded">Determine if the error icon should be included or not</param>
+        /// <returns></returns>
+        public Image MergeImages(bool isErrorIncluded)
+        {
+            Image tempImage = Resources.TabEmptyIcon;
+            //Put the image in a graphics object for editing
+            Graphics graphics = Graphics.FromImage(tempImage);
+            if (TabTypeImage != null)
+            {
+                graphics.DrawImage(GetThumbnailImage(TabTypeImage), 1, 1, 16, 16);
+                graphics.DrawImage(GetThumbnailImage(TabTypeImage), 1, 1, 16, 16);
+            }
+            
+            if (isErrorIncluded)
+            {
+                graphics.DrawImage(Resources.Error, 18, 1, 16, 16);
+                graphics.Dispose();
+                return tempImage;
+            }
+            //Dispose the graphics object
+            graphics.Dispose();
+            return GetThumbnailImage(TabTypeImage);
+        }
+
+        /// <summary>
+        /// Return the passed image but with a smaller size
+        /// </summary>
+        /// <param name="largeImage"></param>
+        /// <returns></returns>
+        public Image GetThumbnailImage(Image largeImage)
+        {
+            return largeImage.GetThumbnailImage(16, 16, ThumbnailTargetMethod, new IntPtr()); 
+        }
+
+        /// <summary>
+        /// This method is used only as a parameter for the GetThumbnailImageAbort method of Image type
+        /// </summary>
+        /// <returns></returns>
+        public bool ThumbnailTargetMethod()
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// Extracts the error text for a property from the error summary so we don't need to validate the property
+        /// and gets the text for it, each property will be validated one which is better for perfromance.
+        /// </summary>
+        /// <param name="propertyName"></param>
+        /// <returns></returns>
+        public string GetErrorText(string propertyName)
+        {
+            //Make sure the name of the property appears in the error summary
+            if(TabObject != null)
+            {
+                if (TabObject.ErrorsSummary.ToUpper().Contains(propertyName.ToUpper()))
+                {
+                    int endIndex = 0;
+                    int startIndex = TabObject.ErrorsSummary.ToUpper().IndexOf(propertyName.ToUpper());
+                    if (startIndex != -1)
+                    {
+                        endIndex = TabObject.ErrorsSummary.ToUpper().IndexOf(".", startIndex);
+                    }
+                    int length = endIndex - startIndex;
+                    return TabObject.ErrorsSummary.Substring(startIndex, length);
+                }
+            }
+            return string.Empty;
+        }
+
+        /// <summary>
+        /// Returns true if the property name exists in the error summary
+        /// </summary>
+        /// <param name="propertyName"></param>
+        /// <returns></returns>
+        public bool IsPropertyInvalid(string propertyName)
+        {
+            if (TabObject != null)
+            {
+                if (TabObject.ErrorsSummary != null)
+                {
+                    return TabObject.ErrorsSummary.ToUpper().Contains(propertyName.ToUpper());
+                }
+                return false;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Posts the data in the current view to the datasource
+        /// </summary>
+        /// <param name="view"></param>
+        public static void GridViewPostValues(GridView view)
+        {
+            if (view != null)
+            {
+                view.PostEditor();
+                view.ValidateEditor();
+                view.UpdateCurrentRow();
+            }
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+        //---------------------------------------------------------------------------------------------
+        #endregion
+
+        #region Handlers
+        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Notify the current tab that a property has changed in its business object
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TabObject_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (ShouldPropertyNotifyTab(e.PropertyName) && TabState != EntityTabState.Unchanged)
+            {
+                TabState = EntityTabState.Modified;
+                TabObject.IsTabEdited = true;
+                UpdateActionButtons();
+            }
+            if(e.PropertyName == "IsDeletedInDataBase")
+            {
+                if(TabObject.IsDeletedInDataBase)
+                {
+                    UpdateActionButtons();    
+                }
+            }
+        }
+
+        /// <summary>
+        /// Shows a super tip hint when hovering over a dropdown's gridview
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public static void GridLookUpEditGridView_MouseMove(object sender, MouseEventArgs e)
+        {
+            GridView view = sender as GridView;
+            GridHitInfo hitInfo = view.CalcHitInfo(new Point(e.X, e.Y));
+            Point newPoint = e.Location;
+
+            if (hitInfo != null)
+            {
+                if (hitInfo.InRow)
+                {
+                    object cellValue = view.GetRowCellValue(hitInfo.RowHandle, hitInfo.Column);
+                    if (cellValue != null)
+                    {
+                        toolTipControllerStatic.ShowHint(cellValue.ToString(), hitInfo.Column.Caption, Cursor.Position);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Hides the tooltip hint when necessary
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public static void GridLookUpEditGridView_MouseLeave(object sender, EventArgs e)
+        {
+            toolTipControllerStatic.HideHint();
+        }
+        //---------------------------------------------------------------------------------------------
+        #endregion
+    }
+}

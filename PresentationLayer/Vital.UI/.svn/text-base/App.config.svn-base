@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+  <appSettings>
+    <!-- True to log messages to event log, false otherwise -->
+    <add key="LogToEventLog" value ="False"/>
+    <!-- Connection strings for TCO and TCOCache databases -->
+    <add key="TcoDBConnectionString" value ="Data Source=MAHA-PC;Initial Catalog=TCO;Integrated Security=True"/>
+    <!--add key="TcoCacheDBConnectionString" value ="Data Source=Nabeel-PC\SQLServer2005;Initial Catalog=DALCache;Integrated Security=True"/-->
+  </appSettings>
+  <system.diagnostics>
+    <trace autoflush="true" indentsize="4">
+      <listeners>
+        <!-- a text log file listener -->
+        <add name="LogFile" type="System.Diagnostics.TextWriterTraceListener" initializeData="TCO.log" />
+        <!-- removing the debugger (default) listener -->
+        <remove name="Default" />
+      </listeners>
+    </trace>
+    <switches>
+      <!-- 
+			This switch controls general messages. In order to 
+			receive general trace messages change the value to the 
+			appropriate level. 
+				"1" gives error messages only 
+				"2" gives errors and warnings
+				"3" gives errors, warnings and information
+				"4" gives errors, warnings, information and verbose messages
+			-->
+      <add name="LogSwitch" value="4" />
+    </switches>
+  </system.diagnostics>
+</configuration>
