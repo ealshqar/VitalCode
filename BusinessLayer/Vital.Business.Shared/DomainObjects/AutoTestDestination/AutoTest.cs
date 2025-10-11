@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -294,7 +294,7 @@ namespace Vital.Business.Shared.DomainObjects.AutoTestDestination
         {
             get
             {
-                return CurrentCsaState == CSAState.Connected;
+                return CurrentCsaState == CSAState.Connected || CurrentPrototypeState == PrototypeState.Connected;
             }
         }
 
@@ -305,7 +305,7 @@ namespace Vital.Business.Shared.DomainObjects.AutoTestDestination
         {
             get
             {
-                return CurrentCsaState == CSAState.Disconnected;
+                return CurrentCsaState == CSAState.Disconnected && CurrentPrototypeState == PrototypeState.Disconnected;
             }
         }
 
@@ -323,6 +323,21 @@ namespace Vital.Business.Shared.DomainObjects.AutoTestDestination
         /// The current reason of connection issue in CSA
         /// </summary>
         public string CurrentCsaReason { get; set; }
+
+        /// <summary>
+        /// The current connection state of the Prototype
+        /// </summary>
+        public PrototypeState CurrentPrototypeState { get; set; }
+
+        /// <summary>
+        /// The last connection state of the Prototype
+        /// </summary>
+        public PrototypeState LastPrototypeState { get; set; }
+
+        /// <summary>
+        /// The current reason of connection issue in Prototype
+        /// </summary>
+        public string CurrentPrototypeReason { get; set; }
 
         /// <summary>
         /// Bookmark to identify current stage
@@ -653,6 +668,10 @@ namespace Vital.Business.Shared.DomainObjects.AutoTestDestination
             //CSA state flags
             CurrentCsaState = CSAState.Disconnected;
             LastCsaState = CSAState.Disconnected;
+
+            //Prototype state flags
+            CurrentPrototypeState = PrototypeState.Disconnected;
+            LastPrototypeState = PrototypeState.Disconnected;
 
             //Scanning bookmarks for stage, stage item and item sub-item
             _stageBookmark = new ScanBookmark {Type = ScanBookmarkType.Stage, Source = ScanBookmarkSource.Automation};

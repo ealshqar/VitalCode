@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
@@ -5111,24 +5111,24 @@ namespace Vital.UI.UI_Components.Forms
 
             //CALL THIS FIRST UNTIL ABOVE IS RESOLVE: Use Fixed Setting For COM-PORT
 
-            UpdateCsaConnectionStatus(CSAState.Detecting);
+            UpdatePrototypeConnectionStatus(PrototypeState.Detecting);
 
             //Set the default reading mode
             AutoCsaEmdUnitManagerPhase2.Instance.SetReadingMode(AutoCSAReadingMode.StableReading);
 
             //Activate Prototype connection
-            //AutoCsaEmdUnitManagerPhase2.Instance.OpenPrototypeConnection();
-            AutoCsaEmdUnitManagerPhase2.Instance.OpenCSAConnection();
+            AutoCsaEmdUnitManagerPhase2.Instance.OpenPrototypeConnection();
+            //AutoCsaEmdUnitManagerPhase2.Instance.OpenCSAConnection();
             //AutoCsaEmdUnitManagerPhase2.Instance.OpenPrototypeConnection(new SerialPortConnectionFilter(HardwareType.Prototype) { ComPortNumber = 4 });
 
-            //CALL THIS SECOND UNTIL ABOVE IS RESOLVE: You CAN USE AUTODETECT
+            //CALL THIS SECOND UNTIL ABOVE is RESOLVE: You CAN USE AUTODETECT
 
-            //Activate CSA connection and specifying related events.
-            AutoCsaEmdUnitManagerPhase2.Instance.ActivateCSAConnection(CsaMeterValueChanged);
+            //Activate Prototype connection and specifying related events.
+            AutoCsaEmdUnitManagerPhase2.Instance.ActivatePrototypeConnection(PrototypeMeterValueChanged);
         }
 
         /// <summary>
-        /// Connects CSA handlers
+        /// Connects Prototype handlers
         /// </summary>
         private void ConnectCSAHandlers()
         {
@@ -5137,47 +5137,47 @@ namespace Vital.UI.UI_Components.Forms
             //AutoCsaEmdUnitManagerPhase2.Instance.CSAConnected += CsaConnectedEvent;
             //AutoCsaEmdUnitManagerPhase2.Instance.CSADisconnected += CsaDisconnectedEvent;
 
-            ////Prototype Handlers
-            //AutoCsaEmdUnitManagerPhase2.Instance.PrototypeDetecting += PrototypeDetectingEvent;
-            //AutoCsaEmdUnitManagerPhase2.Instance.PrototypeConnected += PrototypeConnectedEvent;
-            //AutoCsaEmdUnitManagerPhase2.Instance.PrototypeDisconnected += PrototypeDisconnectedEvent;
-            //AutoCsaEmdUnitManagerPhase2.Instance.PrototypResponseReceived += PrototypResponseReceived;
-            //CSA Handlers
-            AutoCsaEmdUnitManagerPhase2.Instance.Detecting += DetectingEvent;
-            AutoCsaEmdUnitManagerPhase2.Instance.Connected += ConnectedEvent;
-            AutoCsaEmdUnitManagerPhase2.Instance.Disconnected += DisconnectedEvent;
-            AutoCsaEmdUnitManagerPhase2.Instance.ResponseReceived += ResponseReceived;
+            //Prototype Handlers
+            AutoCsaEmdUnitManagerPhase2.Instance.PrototypeDetecting += PrototypeDetectingEvent;
+            AutoCsaEmdUnitManagerPhase2.Instance.PrototypeConnected += PrototypeConnectedEvent;
+            AutoCsaEmdUnitManagerPhase2.Instance.PrototypeDisconnected += PrototypeDisconnectedEvent;
+            AutoCsaEmdUnitManagerPhase2.Instance.PrototypResponseReceived += PrototypResponseReceived;
+            //CSA Handlers (disabled for prototype mode)
+            //AutoCsaEmdUnitManagerPhase2.Instance.Detecting += DetectingEvent;
+            //AutoCsaEmdUnitManagerPhase2.Instance.Connected += ConnectedEvent;
+            //AutoCsaEmdUnitManagerPhase2.Instance.Disconnected += DisconnectedEvent;
+            //AutoCsaEmdUnitManagerPhase2.Instance.ResponseReceived += ResponseReceived;
         }
 
         /// <summary>
-        /// Disconnects CSA handlers
+        /// Disconnects Prototype handlers
         /// </summary>
         private void DisconnectCSAHandlers()
         {
-            //Close the CSA connection
-            AutoCsaEmdUnitManagerPhase2.Instance.CancelCSAAutoDetection();
+            //Close the prototype connection
+            AutoCsaEmdUnitManagerPhase2.Instance.CancelPrototypeAutoDetection();
 
-            ////CSA Handlers
+            ////CSA Handlers (disabled for prototype mode)
             //AutoCsaEmdUnitManagerPhase2.Instance.CSADetecting -= CsaDetectingEvent;
             //AutoCsaEmdUnitManagerPhase2.Instance.CSAConnected -= CsaConnectedEvent;
             //AutoCsaEmdUnitManagerPhase2.Instance.CSADisconnected -= CsaDisconnectedEvent;
-            //CSA Handlers
-            AutoCsaEmdUnitManagerPhase2.Instance.Detecting -= DetectingEvent;
-            AutoCsaEmdUnitManagerPhase2.Instance.Connected -= ConnectedEvent;
-            AutoCsaEmdUnitManagerPhase2.Instance.Disconnected -= DisconnectedEvent;
-            AutoCsaEmdUnitManagerPhase2.Instance.ResponseReceived -= ResponseReceived;
+            //CSA Handlers (disabled for prototype mode)
+            //AutoCsaEmdUnitManagerPhase2.Instance.Detecting -= DetectingEvent;
+            //AutoCsaEmdUnitManagerPhase2.Instance.Connected -= ConnectedEvent;
+            //AutoCsaEmdUnitManagerPhase2.Instance.Disconnected -= DisconnectedEvent;
+            //AutoCsaEmdUnitManagerPhase2.Instance.ResponseReceived -= ResponseReceived;
 
-            //Dispose CSA connection after removing handlers
-            AutoCsaEmdUnitManagerPhase2.Instance.DisposeCSAConnection(CsaMeterValueChanged);
+            //Dispose prototype connection after removing handlers
+            AutoCsaEmdUnitManagerPhase2.Instance.DisposePrototypeConnection(PrototypeMeterValueChanged);
 
             //Prototype Handlers
-            //AutoCsaEmdUnitManagerPhase2.Instance.PrototypeDetecting -= PrototypeDetectingEvent;
-            //AutoCsaEmdUnitManagerPhase2.Instance.PrototypeConnected -= PrototypeConnectedEvent;
-            //AutoCsaEmdUnitManagerPhase2.Instance.PrototypeDisconnected -= PrototypeDisconnectedEvent;
+            AutoCsaEmdUnitManagerPhase2.Instance.PrototypeDetecting -= PrototypeDetectingEvent;
+            AutoCsaEmdUnitManagerPhase2.Instance.PrototypeConnected -= PrototypeConnectedEvent;
+            AutoCsaEmdUnitManagerPhase2.Instance.PrototypeDisconnected -= PrototypeDisconnectedEvent;
             
             //Close prototype connections
-            //AutoCsaEmdUnitManagerPhase2.Instance.ClosePrototypeConnection();
-            AutoCsaEmdUnitManagerPhase2.Instance.CloseCSAConnection();
+            AutoCsaEmdUnitManagerPhase2.Instance.ClosePrototypeConnection();
+            //AutoCsaEmdUnitManagerPhase2.Instance.CloseCSAConnection();
         }
 
         /// <summary>
@@ -5207,6 +5207,35 @@ namespace Vital.UI.UI_Components.Forms
 
             AddTemporaryNotesLine("CSA " + newState);
             AddTemporaryDescriptionLine("CSA " + newState);
+        }
+
+        /// <summary>
+        /// Updates the Prototype connection status flag
+        /// </summary>
+        /// <param name="newState"></param>
+        private void UpdatePrototypeConnectionStatus(PrototypeState newState)
+        {
+            //Update last and current state flags
+            AutoTest.LastPrototypeState = AutoTest.CurrentPrototypeState;
+            AutoTest.CurrentPrototypeState = newState;
+
+            //Set connection state text in the gauge control
+            gaugeControlCSA.PerformSafely(() => stateIndicatorComponentCSA.SetStateByName(AutoTest.CurrentPrototypeState.ToString()));
+
+            //If the test is in progress and the state is disconnected, then stop scanning.
+            if (AutoTest.CurrentTestStatus == AutoTestStatus.InProgress && newState == PrototypeState.Disconnected)
+            {
+                //Call stop scanning logic to make sure we stop scanning as quick as possible
+                //before performing other validation actions
+                StopScanning();
+
+                //Validation logic called in thread to avoid cutting it off in case the scanning thread was stopped
+                //if hardware failure was found
+                StartHardwareValidationThread();
+            }
+
+            AddTemporaryNotesLine("Prototype " + newState);
+            AddTemporaryDescriptionLine("Prototype " + newState);
         }
 
         #endregion
@@ -5360,22 +5389,22 @@ namespace Vital.UI.UI_Components.Forms
                     ToggleScanningState();
                 }
 
-                //If is the CSA is invalid
-                if (AutoTest.CurrentCsaState != CSAState.Connected)
+                //If is the Prototype is invalid
+                if (AutoTest.CurrentPrototypeState != PrototypeState.Connected)
                 {
                     //Set the reason.
-                    AutoTest.CurrentCsaReason = "Please make sure the CSA is connected.";
+                    AutoTest.CurrentPrototypeReason = "Please make sure the Prototype is connected.";
 
                     //Show error to use about connection state
-                    UiHelperClass.ShowInformation(AutoTest.CurrentCsaReason, "CSA Disconnected");
+                    UiHelperClass.ShowInformation(AutoTest.CurrentPrototypeReason, "Prototype Disconnected");
                 }
                 else
                 {
                     //Set the reason.
-                    //AutoTest.CurrentPrototypeReason = "Please make sure the Prototype is connected.";
+                    //AutoTest.CurrentCsaReason = "Please make sure the CSA is connected.";
 
                     //Show error to use about connection state
-                    //UiHelperClass.ShowInformation(AutoTest.CurrentPrototypeReason, "Prototype Disconnected");
+                    //UiHelperClass.ShowInformation(AutoTest.CurrentCsaReason, "CSA Disconnected");
                 }
             }
             else
@@ -7343,7 +7372,7 @@ namespace Vital.UI.UI_Components.Forms
             else
             {
                 //Detecting
-                UpdateCsaConnectionStatus(CSAState.Detecting);
+                UpdatePrototypeConnectionStatus(PrototypeState.Detecting);
             }
         }
 
@@ -7364,7 +7393,7 @@ namespace Vital.UI.UI_Components.Forms
             else
             {
                 //Connected
-                UpdateCsaConnectionStatus(CSAState.Connected);
+                UpdatePrototypeConnectionStatus(PrototypeState.Connected);
             }
         }
 
@@ -7385,7 +7414,7 @@ namespace Vital.UI.UI_Components.Forms
             else
             {
                 //Disconnected
-                UpdateCsaConnectionStatus(CSAState.Disconnected);
+                UpdatePrototypeConnectionStatus(PrototypeState.Disconnected);
             }
         }
 
@@ -7473,6 +7502,26 @@ namespace Vital.UI.UI_Components.Forms
                 try
                 {
                     if (IsDisposed) return; Invoke(new AutoCsaEmdUnitManagerPhase2.MeterValueChangedHandle(CsaMeterValueChanged), sender, reading, min, max);
+                }
+                catch { }
+            }
+            else
+            {
+                //Set meter reading value
+                SetMeterReadingValue(reading, true);
+            }
+        }
+
+        /// <summary>
+        /// Handle the prototype reading value change event
+        /// </summary>
+        private void PrototypeMeterValueChanged(object sender, int reading, int min, int max)
+        {
+            if (InvokeRequired)
+            {
+                try
+                {
+                    if (IsDisposed) return; Invoke(new AutoCsaEmdUnitManagerPhase2.MeterValueChangedHandle(PrototypeMeterValueChanged), sender, reading, min, max);
                 }
                 catch { }
             }
