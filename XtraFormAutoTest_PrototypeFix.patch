@@ -1,0 +1,79 @@
+// التعديل المطلوب في XtraFormAutoTest.cs
+// استبدال السطور 5119-5127 بالكود التالي:
+
+// الكود الحالي (معطل):
+//AutoCsaEmdUnitManagerPhase2.Instance.OpenPrototypeConnection();
+AutoCsaEmdUnitManagerPhase2.Instance.OpenCSAConnection();
+//AutoCsaEmdUnitManagerPhase2.Instance.OpenPrototypeConnection(new SerialPortConnectionFilter(HardwareType.Prototype) { ComPortNumber = 4 });
+
+// الكود الجديد (مفعل):
+// محاولة الاتصال مع الجهاز الجديد (Prototype) أولاً
+var prototypeResult = AutoCsaEmdUnitManagerPhase2.Instance.OpenPrototypeConnection(
+    new SerialPortConnectionFilter(HardwareType.Prototype) 
+    { 
+        ComPortNumber = 0,      // كشف تلقائي
+        AutoComPortDetection = true 
+    });
+
+if (!prototypeResult.IsSucceed)
+{
+    // إذا فشل، جرب منفذ محدد
+    prototypeResult = AutoCsaEmdUnitManagerPhase2.Instance.OpenPrototypeConnection(
+        new SerialPortConnectionFilter(HardwareType.Prototype) 
+        { 
+            ComPortNumber = 4,  // المنفذ المحدد في التعليق
+            AutoComPortDetection = false 
+        });
+}
+
+if (!prototypeResult.IsSucceed)
+{
+    // كحل أخير، جرب CSA القديم
+    AutoCsaEmdUnitManagerPhase2.Instance.OpenCSAConnection();
+}
+
+//=======================
+
+// تعديل ConnectCSAHandlers() - السطور 5140-5149:
+private void ConnectCSAHandlers()
+{
+    // تفعيل معالجات Prototype بدلاً من CSA
+    AutoCsaEmdUnitManagerPhase2.Instance.PrototypeDetecting += PrototypeDetectingEvent;
+    AutoCsaEmdUnitManagerPhase2.Instance.PrototypeConnected += PrototypeConnectedEvent;
+    AutoCsaEmdUnitManagerPhase2.Instance.PrototypeDisconnected += PrototypeDisconnectedEvent;
+    AutoCsaEmdUnitManagerPhase2.Instance.PrototypResponseReceived += PrototypResponseReceived;
+    
+    // إبقاء معالجات CSA كبديل
+    AutoCsaEmdUnitManagerPhase2.Instance.Detecting += DetectingEvent;
+    AutoCsaEmdUnitManagerPhase2.Instance.Connected += ConnectedEvent;
+    AutoCsaEmdUnitManagerPhase2.Instance.Disconnected += DisconnectedEvent;
+    AutoCsaEmdUnitManagerPhase2.Instance.ResponseReceived += ResponseReceived;
+}
+
+//=======================
+
+// إضافة معالج للاستجابات (بعد السطر 7398):
+private void PrototypResponseReceived(object sender, PrototypeResponse response, string originData)
+{
+    if (InvokeRequired)
+    {
+        try
+        {
+            if (IsDisposed) return;
+            Invoke(new AutoCsaEmdUnitManagerPhase2.OnPrototypResponseReceived(PrototypResponseReceived), 
+                   sender, response, originData);
+        }
+        catch { }
+    }
+    else
+    {
+        // معالجة استجابات الجهاز الجديد
+        AddTemporaryNotesLine($"Prototype Response: {response} - Data: {originData}");
+        
+        // تحديث حالة الاتصال عند استلام استجابة
+        if (AutoTest.CurrentCsaState != CSAState.Connected)
+        {
+            UpdateCsaConnectionStatus(CSAState.Connected);
+        }
+    }
+}
